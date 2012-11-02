@@ -1,0 +1,1054 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		436C48B116432AAF0031DBCA /* ARAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C489116432AAF0031DBCA /* ARAppDelegate.m */; };
+		436C48B216432AAF0031DBCA /* ARAugmentedPhotosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C489416432AAF0031DBCA /* ARAugmentedPhotosViewController.m */; };
+		436C48B316432AAF0031DBCA /* ARAugmentedPhotosViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 436C489516432AAF0031DBCA /* ARAugmentedPhotosViewController.xib */; };
+		436C48B416432AAF0031DBCA /* ARSiteImagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C489716432AAF0031DBCA /* ARSiteImagesViewController.m */; };
+		436C48B516432AAF0031DBCA /* ARSiteImagesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 436C489816432AAF0031DBCA /* ARSiteImagesViewController.xib */; };
+		436C48B616432AAF0031DBCA /* ARSitesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C489A16432AAF0031DBCA /* ARSitesViewController.m */; };
+		436C48B716432AAF0031DBCA /* ARSitesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 436C489B16432AAF0031DBCA /* ARSitesViewController.xib */; };
+		436C48B816432AAF0031DBCA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 436C489C16432AAF0031DBCA /* InfoPlist.strings */; };
+		436C48B916432AAF0031DBCA /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 436C48A016432AAF0031DBCA /* Default-568h@2x.png */; };
+		436C48BA16432AAF0031DBCA /* state_failed.png in Resources */ = {isa = PBXBuildFile; fileRef = 436C48A116432AAF0031DBCA /* state_failed.png */; };
+		436C48BB16432AAF0031DBCA /* state_uploading.png in Resources */ = {isa = PBXBuildFile; fileRef = 436C48A216432AAF0031DBCA /* state_uploading.png */; };
+		436C48BC16432AAF0031DBCA /* ARShapeOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48A516432AAF0031DBCA /* ARShapeOverlayView.m */; };
+		436C48BD16432AAF0031DBCA /* BRCircleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48A716432AAF0031DBCA /* BRCircleView.m */; };
+		436C48BE16432AAF0031DBCA /* BROverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48A916432AAF0031DBCA /* BROverlayView.m */; };
+		436C48BF16432AAF0031DBCA /* BRPopupOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48AB16432AAF0031DBCA /* BRPopupOverlayView.m */; };
+		436C48C116432AAF0031DBCA /* UIAlertInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48AF16432AAF0031DBCA /* UIAlertInputView.m */; };
+		436C492316432AB20031DBCA /* AROverlayAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = 436C48C416432AB10031DBCA /* AROverlayAnimation.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		436C492416432AB20031DBCA /* AROverlayAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48C516432AB10031DBCA /* AROverlayAnimation.m */; };
+		436C492516432AB20031DBCA /* AROverlayAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48C516432AB10031DBCA /* AROverlayAnimation.m */; };
+		436C492616432AB20031DBCA /* ARConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 436C48C616432AB10031DBCA /* ARConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		436C492716432AB20031DBCA /* ARManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 436C48C716432AB10031DBCA /* ARManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		436C492816432AB20031DBCA /* ARManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48C816432AB10031DBCA /* ARManager.m */; };
+		436C492916432AB20031DBCA /* ARManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48C816432AB10031DBCA /* ARManager.m */; };
+		436C492A16432AB20031DBCA /* AROverlayUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = 436C48C916432AB10031DBCA /* AROverlayUtil.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		436C492B16432AB20031DBCA /* AROverlayUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48CA16432AB10031DBCA /* AROverlayUtil.m */; };
+		436C492C16432AB20031DBCA /* AROverlayUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48CA16432AB10031DBCA /* AROverlayUtil.m */; };
+		436C492D16432AB20031DBCA /* ASIHTTPRequest+JSONAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 436C48CC16432AB10031DBCA /* ASIHTTPRequest+JSONAdditions.h */; };
+		436C492E16432AB20031DBCA /* ASIHTTPRequest+JSONAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48CD16432AB10031DBCA /* ASIHTTPRequest+JSONAdditions.m */; };
+		436C492F16432AB20031DBCA /* ASIHTTPRequest+JSONAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48CD16432AB10031DBCA /* ASIHTTPRequest+JSONAdditions.m */; };
+		436C493016432AB20031DBCA /* NSData+Base64Encode.h in Headers */ = {isa = PBXBuildFile; fileRef = 436C48CE16432AB10031DBCA /* NSData+Base64Encode.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		436C493116432AB20031DBCA /* NSData+Base64Encode.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48CF16432AB10031DBCA /* NSData+Base64Encode.m */; };
+		436C493216432AB20031DBCA /* NSData+Base64Encode.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48CF16432AB10031DBCA /* NSData+Base64Encode.m */; };
+		436C493316432AB20031DBCA /* UIViewAdditions.h in Headers */ = {isa = PBXBuildFile; fileRef = 436C48D016432AB10031DBCA /* UIViewAdditions.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		436C493416432AB20031DBCA /* UIViewAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48D116432AB10031DBCA /* UIViewAdditions.m */; };
+		436C493516432AB20031DBCA /* UIViewAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48D116432AB10031DBCA /* UIViewAdditions.m */; };
+		436C493616432AB20031DBCA /* ARPhotoViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 436C48D316432AB10031DBCA /* ARPhotoViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		436C493716432AB20031DBCA /* ARPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48D416432AB10031DBCA /* ARPhotoViewController.m */; };
+		436C493816432AB20031DBCA /* ARPhotoViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48D416432AB10031DBCA /* ARPhotoViewController.m */; };
+		436C493916432AB20031DBCA /* ARPhotoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 436C48D516432AB10031DBCA /* ARPhotoViewController.xib */; };
+		436C493A16432AB20031DBCA /* ARPhotoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 436C48D516432AB10031DBCA /* ARPhotoViewController.xib */; };
+		436C493B16432AB20031DBCA /* PARWorks.h in Headers */ = {isa = PBXBuildFile; fileRef = 436C48D616432AB10031DBCA /* PARWorks.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		436C493D16432AB20031DBCA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 436C48D716432AB10031DBCA /* InfoPlist.strings */; };
+		436C493E16432AB20031DBCA /* ASIAuthenticationDialog.h in Headers */ = {isa = PBXBuildFile; fileRef = 436C48DB16432AB10031DBCA /* ASIAuthenticationDialog.h */; };
+		436C493F16432AB20031DBCA /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48DC16432AB10031DBCA /* ASIAuthenticationDialog.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc "; }; };
+		436C494016432AB20031DBCA /* ASIAuthenticationDialog.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48DC16432AB10031DBCA /* ASIAuthenticationDialog.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc "; }; };
+		436C494116432AB20031DBCA /* ASICacheDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 436C48DD16432AB10031DBCA /* ASICacheDelegate.h */; };
+		436C494216432AB20031DBCA /* ASIDataCompressor.h in Headers */ = {isa = PBXBuildFile; fileRef = 436C48DE16432AB10031DBCA /* ASIDataCompressor.h */; };
+		436C494316432AB20031DBCA /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48DF16432AB10031DBCA /* ASIDataCompressor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc "; }; };
+		436C494416432AB20031DBCA /* ASIDataCompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48DF16432AB10031DBCA /* ASIDataCompressor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc "; }; };
+		436C494516432AB20031DBCA /* ASIDataDecompressor.h in Headers */ = {isa = PBXBuildFile; fileRef = 436C48E016432AB10031DBCA /* ASIDataDecompressor.h */; };
+		436C494616432AB20031DBCA /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48E116432AB10031DBCA /* ASIDataDecompressor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc "; }; };
+		436C494716432AB20031DBCA /* ASIDataDecompressor.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48E116432AB10031DBCA /* ASIDataDecompressor.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc "; }; };
+		436C494816432AB20031DBCA /* ASIDownloadCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 436C48E216432AB10031DBCA /* ASIDownloadCache.h */; };
+		436C494916432AB20031DBCA /* ASIDownloadCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48E316432AB10031DBCA /* ASIDownloadCache.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc "; }; };
+		436C494A16432AB20031DBCA /* ASIDownloadCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48E316432AB10031DBCA /* ASIDownloadCache.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc "; }; };
+		436C494B16432AB20031DBCA /* ASIFormDataRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 436C48E416432AB10031DBCA /* ASIFormDataRequest.h */; };
+		436C494C16432AB20031DBCA /* ASIFormDataRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48E516432AB10031DBCA /* ASIFormDataRequest.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc "; }; };
+		436C494D16432AB20031DBCA /* ASIFormDataRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48E516432AB10031DBCA /* ASIFormDataRequest.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc "; }; };
+		436C494E16432AB20031DBCA /* ASIHTTPRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 436C48E616432AB10031DBCA /* ASIHTTPRequest.h */; };
+		436C494F16432AB20031DBCA /* ASIHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48E716432AB10031DBCA /* ASIHTTPRequest.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc "; }; };
+		436C495016432AB20031DBCA /* ASIHTTPRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48E716432AB10031DBCA /* ASIHTTPRequest.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc "; }; };
+		436C495116432AB20031DBCA /* ASIHTTPRequestConfig.h in Headers */ = {isa = PBXBuildFile; fileRef = 436C48E816432AB10031DBCA /* ASIHTTPRequestConfig.h */; };
+		436C495216432AB20031DBCA /* ASIHTTPRequestDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 436C48E916432AB10031DBCA /* ASIHTTPRequestDelegate.h */; };
+		436C495316432AB20031DBCA /* ASIInputStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 436C48EA16432AB10031DBCA /* ASIInputStream.h */; };
+		436C495416432AB20031DBCA /* ASIInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48EB16432AB10031DBCA /* ASIInputStream.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc "; }; };
+		436C495516432AB20031DBCA /* ASIInputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48EB16432AB10031DBCA /* ASIInputStream.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc "; }; };
+		436C495616432AB20031DBCA /* ASINetworkQueue.h in Headers */ = {isa = PBXBuildFile; fileRef = 436C48EC16432AB10031DBCA /* ASINetworkQueue.h */; };
+		436C495716432AB20031DBCA /* ASINetworkQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48ED16432AB10031DBCA /* ASINetworkQueue.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc "; }; };
+		436C495816432AB20031DBCA /* ASINetworkQueue.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48ED16432AB10031DBCA /* ASINetworkQueue.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc "; }; };
+		436C495916432AB20031DBCA /* ASIProgressDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 436C48EE16432AB10031DBCA /* ASIProgressDelegate.h */; };
+		436C495A16432AB20031DBCA /* ASIOARequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 436C48F016432AB10031DBCA /* ASIOARequest.h */; };
+		436C495B16432AB20031DBCA /* ASIOARequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48F116432AB10031DBCA /* ASIOARequest.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc "; }; };
+		436C495C16432AB20031DBCA /* ASIOARequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48F116432AB10031DBCA /* ASIOARequest.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc "; }; };
+		436C495D16432AB20031DBCA /* ASIOAuthParameter.h in Headers */ = {isa = PBXBuildFile; fileRef = 436C48F216432AB10031DBCA /* ASIOAuthParameter.h */; };
+		436C495E16432AB20031DBCA /* ASIOAuthParameter.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48F316432AB10031DBCA /* ASIOAuthParameter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc "; }; };
+		436C495F16432AB20031DBCA /* ASIOAuthParameter.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48F316432AB10031DBCA /* ASIOAuthParameter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc "; }; };
+		436C496216432AB20031DBCA /* Reachability.h in Headers */ = {isa = PBXBuildFile; fileRef = 436C48F816432AB10031DBCA /* Reachability.h */; };
+		436C496316432AB20031DBCA /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48F916432AB10031DBCA /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc "; }; };
+		436C496416432AB20031DBCA /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48F916432AB10031DBCA /* Reachability.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc "; }; };
+		436C496516432AB20031DBCA /* JSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 436C48FB16432AB10031DBCA /* JSON.h */; };
+		436C496616432AB20031DBCA /* NSObject+SBJSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 436C48FC16432AB10031DBCA /* NSObject+SBJSON.h */; };
+		436C496716432AB20031DBCA /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48FD16432AB10031DBCA /* NSObject+SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc "; }; };
+		436C496816432AB20031DBCA /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48FD16432AB10031DBCA /* NSObject+SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc "; }; };
+		436C496916432AB20031DBCA /* NSString+SBJSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 436C48FE16432AB10031DBCA /* NSString+SBJSON.h */; };
+		436C496A16432AB20031DBCA /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48FF16432AB10031DBCA /* NSString+SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc "; }; };
+		436C496B16432AB20031DBCA /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48FF16432AB10031DBCA /* NSString+SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc "; }; };
+		436C496C16432AB20031DBCA /* SBJSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 436C490016432AB10031DBCA /* SBJSON.h */; };
+		436C496D16432AB20031DBCA /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C490116432AB10031DBCA /* SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc "; }; };
+		436C496E16432AB20031DBCA /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C490116432AB10031DBCA /* SBJSON.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc "; }; };
+		436C496F16432AB20031DBCA /* SBJsonBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 436C490216432AB10031DBCA /* SBJsonBase.h */; };
+		436C497016432AB20031DBCA /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C490316432AB10031DBCA /* SBJsonBase.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc "; }; };
+		436C497116432AB20031DBCA /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C490316432AB10031DBCA /* SBJsonBase.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc "; }; };
+		436C497216432AB20031DBCA /* SBJsonParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 436C490416432AB10031DBCA /* SBJsonParser.h */; };
+		436C497316432AB20031DBCA /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C490516432AB10031DBCA /* SBJsonParser.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc "; }; };
+		436C497416432AB20031DBCA /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C490516432AB10031DBCA /* SBJsonParser.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc "; }; };
+		436C497516432AB20031DBCA /* SBJsonWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 436C490616432AB10031DBCA /* SBJsonWriter.h */; };
+		436C497616432AB20031DBCA /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C490716432AB10031DBCA /* SBJsonWriter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc "; }; };
+		436C497716432AB20031DBCA /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C490716432AB10031DBCA /* SBJsonWriter.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc "; }; };
+		436C497816432AB20031DBCA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C490816432AB10031DBCA /* main.m */; };
+		436C497916432AB20031DBCA /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C490816432AB10031DBCA /* main.m */; };
+		436C497A16432AB20031DBCA /* ARAugmentedPhoto.h in Headers */ = {isa = PBXBuildFile; fileRef = 436C490A16432AB10031DBCA /* ARAugmentedPhoto.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		436C497B16432AB20031DBCA /* ARAugmentedPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C490B16432AB10031DBCA /* ARAugmentedPhoto.m */; };
+		436C497C16432AB20031DBCA /* ARAugmentedPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C490B16432AB10031DBCA /* ARAugmentedPhoto.m */; };
+		436C497D16432AB20031DBCA /* AROverlay.h in Headers */ = {isa = PBXBuildFile; fileRef = 436C490C16432AB10031DBCA /* AROverlay.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		436C497E16432AB20031DBCA /* AROverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C490D16432AB10031DBCA /* AROverlay.m */; };
+		436C497F16432AB20031DBCA /* AROverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C490D16432AB10031DBCA /* AROverlay.m */; };
+		436C498016432AB20031DBCA /* AROverlayPoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 436C490E16432AB10031DBCA /* AROverlayPoint.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		436C498116432AB20031DBCA /* AROverlayPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C490F16432AB10031DBCA /* AROverlayPoint.m */; };
+		436C498216432AB20031DBCA /* AROverlayPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C490F16432AB10031DBCA /* AROverlayPoint.m */; };
+		436C498316432AB20031DBCA /* ARSite.h in Headers */ = {isa = PBXBuildFile; fileRef = 436C491016432AB10031DBCA /* ARSite.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		436C498416432AB20031DBCA /* ARSite.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C491116432AB10031DBCA /* ARSite.m */; };
+		436C498516432AB20031DBCA /* ARSite.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C491116432AB10031DBCA /* ARSite.m */; };
+		436C498616432AB20031DBCA /* ARSiteImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 436C491216432AB10031DBCA /* ARSiteImage.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		436C498716432AB20031DBCA /* ARSiteImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C491316432AB10031DBCA /* ARSiteImage.m */; };
+		436C498816432AB20031DBCA /* ARSiteImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C491316432AB10031DBCA /* ARSiteImage.m */; };
+		436C498916432AB20031DBCA /* ARSiteOverlayPoint.h in Headers */ = {isa = PBXBuildFile; fileRef = 436C491416432AB10031DBCA /* ARSiteOverlayPoint.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		436C498A16432AB20031DBCA /* ARSiteOverlayPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C491516432AB10031DBCA /* ARSiteOverlayPoint.m */; };
+		436C498B16432AB20031DBCA /* ARSiteOverlayPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C491516432AB10031DBCA /* ARSiteOverlayPoint.m */; };
+		436C498E16432AB20031DBCA /* PARWorks SDK-Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = 436C491716432AB10031DBCA /* PARWorks SDK-Prefix.pch */; };
+		436C498F16432AB20031DBCA /* ARAugmentedView.h in Headers */ = {isa = PBXBuildFile; fileRef = 436C491916432AB10031DBCA /* ARAugmentedView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		436C499016432AB20031DBCA /* ARAugmentedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C491A16432AB10031DBCA /* ARAugmentedView.m */; };
+		436C499116432AB20031DBCA /* ARAugmentedView.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C491A16432AB10031DBCA /* ARAugmentedView.m */; };
+		436C499216432AB20031DBCA /* AROverlayView.h in Headers */ = {isa = PBXBuildFile; fileRef = 436C491B16432AB10031DBCA /* AROverlayView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		436C499316432AB20031DBCA /* AROverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C491C16432AB10031DBCA /* AROverlayView.m */; };
+		436C499416432AB20031DBCA /* AROverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C491C16432AB10031DBCA /* AROverlayView.m */; };
+		436C499516432AB20031DBCA /* CachedImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = 436C491D16432AB10031DBCA /* CachedImageView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		436C499616432AB20031DBCA /* CachedImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C491E16432AB10031DBCA /* CachedImageView.m */; };
+		436C499716432AB20031DBCA /* CachedImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C491E16432AB10031DBCA /* CachedImageView.m */; };
+		436C499816432AB20031DBCA /* GridCellView.h in Headers */ = {isa = PBXBuildFile; fileRef = 436C491F16432AB10031DBCA /* GridCellView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		436C499916432AB20031DBCA /* GridCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C492016432AB10031DBCA /* GridCellView.m */; };
+		436C499A16432AB20031DBCA /* GridCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C492016432AB10031DBCA /* GridCellView.m */; };
+		436C499B16432AB20031DBCA /* GridView.h in Headers */ = {isa = PBXBuildFile; fileRef = 436C492116432AB10031DBCA /* GridView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		436C499C16432AB20031DBCA /* GridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C492216432AB10031DBCA /* GridView.m */; };
+		436C499D16432AB20031DBCA /* GridView.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C492216432AB10031DBCA /* GridView.m */; };
+		4371F0CA15E34E7300D754A8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4371F0C915E34E7300D754A8 /* UIKit.framework */; };
+		4371F0CC15E34E7300D754A8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4371F0CB15E34E7300D754A8 /* Foundation.framework */; };
+		4371F0CE15E34E7300D754A8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4371F0CD15E34E7300D754A8 /* CoreGraphics.framework */; };
+		43889B1D15E98D93001B0C4D /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43889B1C15E98D93001B0C4D /* CFNetwork.framework */; };
+		43889B2015E98D99001B0C4D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43889B1F15E98D99001B0C4D /* SystemConfiguration.framework */; };
+		43889B2215E98DA1001B0C4D /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 43889B2115E98DA1001B0C4D /* libz.dylib */; };
+		43889B2615E98DC2001B0C4D /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43889B2515E98DC2001B0C4D /* MobileCoreServices.framework */; };
+		43D330DE16097E4C0043B64C /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43D330DD16097E4C0043B64C /* CoreLocation.framework */; };
+		A0F662D415FEFBD100FA709B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0F662D315FEFBD100FA709B /* QuartzCore.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		435833F415EC852100E90CBD /* PARWorks.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PARWorks.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		436C488E16432AAF0031DBCA /* Administration-App-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Administration-App-Info.plist"; sourceTree = "<group>"; };
+		436C488F16432AAF0031DBCA /* Administration-App-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Administration-App-Prefix.pch"; sourceTree = "<group>"; };
+		436C489016432AAF0031DBCA /* ARAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARAppDelegate.h; sourceTree = "<group>"; };
+		436C489116432AAF0031DBCA /* ARAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARAppDelegate.m; sourceTree = "<group>"; };
+		436C489316432AAF0031DBCA /* ARAugmentedPhotosViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARAugmentedPhotosViewController.h; sourceTree = "<group>"; };
+		436C489416432AAF0031DBCA /* ARAugmentedPhotosViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARAugmentedPhotosViewController.m; sourceTree = "<group>"; };
+		436C489516432AAF0031DBCA /* ARAugmentedPhotosViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ARAugmentedPhotosViewController.xib; sourceTree = "<group>"; };
+		436C489616432AAF0031DBCA /* ARSiteImagesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARSiteImagesViewController.h; sourceTree = "<group>"; };
+		436C489716432AAF0031DBCA /* ARSiteImagesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARSiteImagesViewController.m; sourceTree = "<group>"; };
+		436C489816432AAF0031DBCA /* ARSiteImagesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ARSiteImagesViewController.xib; sourceTree = "<group>"; };
+		436C489916432AAF0031DBCA /* ARSitesViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARSitesViewController.h; sourceTree = "<group>"; };
+		436C489A16432AAF0031DBCA /* ARSitesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARSitesViewController.m; sourceTree = "<group>"; };
+		436C489B16432AAF0031DBCA /* ARSitesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ARSitesViewController.xib; sourceTree = "<group>"; };
+		436C489D16432AAF0031DBCA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		436C48A016432AAF0031DBCA /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		436C48A116432AAF0031DBCA /* state_failed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = state_failed.png; sourceTree = "<group>"; };
+		436C48A216432AAF0031DBCA /* state_uploading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = state_uploading.png; sourceTree = "<group>"; };
+		436C48A416432AAF0031DBCA /* ARShapeOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARShapeOverlayView.h; sourceTree = "<group>"; };
+		436C48A516432AAF0031DBCA /* ARShapeOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARShapeOverlayView.m; sourceTree = "<group>"; };
+		436C48A616432AAF0031DBCA /* BRCircleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRCircleView.h; sourceTree = "<group>"; };
+		436C48A716432AAF0031DBCA /* BRCircleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRCircleView.m; sourceTree = "<group>"; };
+		436C48A816432AAF0031DBCA /* BROverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BROverlayView.h; sourceTree = "<group>"; };
+		436C48A916432AAF0031DBCA /* BROverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BROverlayView.m; sourceTree = "<group>"; };
+		436C48AA16432AAF0031DBCA /* BRPopupOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRPopupOverlayView.h; sourceTree = "<group>"; };
+		436C48AB16432AAF0031DBCA /* BRPopupOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRPopupOverlayView.m; sourceTree = "<group>"; };
+		436C48AE16432AAF0031DBCA /* UIAlertInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIAlertInputView.h; sourceTree = "<group>"; };
+		436C48AF16432AAF0031DBCA /* UIAlertInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIAlertInputView.m; sourceTree = "<group>"; };
+		436C48C416432AB10031DBCA /* AROverlayAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AROverlayAnimation.h; sourceTree = "<group>"; };
+		436C48C516432AB10031DBCA /* AROverlayAnimation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AROverlayAnimation.m; sourceTree = "<group>"; };
+		436C48C616432AB10031DBCA /* ARConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARConstants.h; sourceTree = "<group>"; };
+		436C48C716432AB10031DBCA /* ARManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARManager.h; sourceTree = "<group>"; };
+		436C48C816432AB10031DBCA /* ARManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARManager.m; sourceTree = "<group>"; };
+		436C48C916432AB10031DBCA /* AROverlayUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AROverlayUtil.h; sourceTree = "<group>"; };
+		436C48CA16432AB10031DBCA /* AROverlayUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AROverlayUtil.m; sourceTree = "<group>"; };
+		436C48CC16432AB10031DBCA /* ASIHTTPRequest+JSONAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ASIHTTPRequest+JSONAdditions.h"; sourceTree = "<group>"; };
+		436C48CD16432AB10031DBCA /* ASIHTTPRequest+JSONAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ASIHTTPRequest+JSONAdditions.m"; sourceTree = "<group>"; };
+		436C48CE16432AB10031DBCA /* NSData+Base64Encode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+Base64Encode.h"; sourceTree = "<group>"; };
+		436C48CF16432AB10031DBCA /* NSData+Base64Encode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+Base64Encode.m"; sourceTree = "<group>"; };
+		436C48D016432AB10031DBCA /* UIViewAdditions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIViewAdditions.h; sourceTree = "<group>"; };
+		436C48D116432AB10031DBCA /* UIViewAdditions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIViewAdditions.m; sourceTree = "<group>"; };
+		436C48D316432AB10031DBCA /* ARPhotoViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARPhotoViewController.h; sourceTree = "<group>"; };
+		436C48D416432AB10031DBCA /* ARPhotoViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARPhotoViewController.m; sourceTree = "<group>"; };
+		436C48D516432AB10031DBCA /* ARPhotoViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ARPhotoViewController.xib; sourceTree = "<group>"; };
+		436C48D616432AB10031DBCA /* PARWorks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PARWorks.h; sourceTree = "<group>"; };
+		436C48D716432AB10031DBCA /* InfoPlist.strings */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.strings; path = InfoPlist.strings; sourceTree = "<group>"; };
+		436C48DB16432AB10031DBCA /* ASIAuthenticationDialog.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIAuthenticationDialog.h; sourceTree = "<group>"; };
+		436C48DC16432AB10031DBCA /* ASIAuthenticationDialog.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIAuthenticationDialog.m; sourceTree = "<group>"; };
+		436C48DD16432AB10031DBCA /* ASICacheDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASICacheDelegate.h; sourceTree = "<group>"; };
+		436C48DE16432AB10031DBCA /* ASIDataCompressor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIDataCompressor.h; sourceTree = "<group>"; };
+		436C48DF16432AB10031DBCA /* ASIDataCompressor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIDataCompressor.m; sourceTree = "<group>"; };
+		436C48E016432AB10031DBCA /* ASIDataDecompressor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIDataDecompressor.h; sourceTree = "<group>"; };
+		436C48E116432AB10031DBCA /* ASIDataDecompressor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIDataDecompressor.m; sourceTree = "<group>"; };
+		436C48E216432AB10031DBCA /* ASIDownloadCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIDownloadCache.h; sourceTree = "<group>"; };
+		436C48E316432AB10031DBCA /* ASIDownloadCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIDownloadCache.m; sourceTree = "<group>"; };
+		436C48E416432AB10031DBCA /* ASIFormDataRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIFormDataRequest.h; sourceTree = "<group>"; };
+		436C48E516432AB10031DBCA /* ASIFormDataRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIFormDataRequest.m; sourceTree = "<group>"; };
+		436C48E616432AB10031DBCA /* ASIHTTPRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIHTTPRequest.h; sourceTree = "<group>"; };
+		436C48E716432AB10031DBCA /* ASIHTTPRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIHTTPRequest.m; sourceTree = "<group>"; };
+		436C48E816432AB10031DBCA /* ASIHTTPRequestConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIHTTPRequestConfig.h; sourceTree = "<group>"; };
+		436C48E916432AB10031DBCA /* ASIHTTPRequestDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIHTTPRequestDelegate.h; sourceTree = "<group>"; };
+		436C48EA16432AB10031DBCA /* ASIInputStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIInputStream.h; sourceTree = "<group>"; };
+		436C48EB16432AB10031DBCA /* ASIInputStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIInputStream.m; sourceTree = "<group>"; };
+		436C48EC16432AB10031DBCA /* ASINetworkQueue.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASINetworkQueue.h; sourceTree = "<group>"; };
+		436C48ED16432AB10031DBCA /* ASINetworkQueue.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASINetworkQueue.m; sourceTree = "<group>"; };
+		436C48EE16432AB10031DBCA /* ASIProgressDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIProgressDelegate.h; sourceTree = "<group>"; };
+		436C48F016432AB10031DBCA /* ASIOARequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIOARequest.h; sourceTree = "<group>"; };
+		436C48F116432AB10031DBCA /* ASIOARequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIOARequest.m; sourceTree = "<group>"; };
+		436C48F216432AB10031DBCA /* ASIOAuthParameter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ASIOAuthParameter.h; sourceTree = "<group>"; };
+		436C48F316432AB10031DBCA /* ASIOAuthParameter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ASIOAuthParameter.m; sourceTree = "<group>"; };
+		436C48F616432AB10031DBCA /* README-GHUnit */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "README-GHUnit"; sourceTree = "<group>"; };
+		436C48F816432AB10031DBCA /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		436C48F916432AB10031DBCA /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		436C48FB16432AB10031DBCA /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
+		436C48FC16432AB10031DBCA /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
+		436C48FD16432AB10031DBCA /* NSObject+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJSON.m"; sourceTree = "<group>"; };
+		436C48FE16432AB10031DBCA /* NSString+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SBJSON.h"; sourceTree = "<group>"; };
+		436C48FF16432AB10031DBCA /* NSString+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SBJSON.m"; sourceTree = "<group>"; };
+		436C490016432AB10031DBCA /* SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJSON.h; sourceTree = "<group>"; };
+		436C490116432AB10031DBCA /* SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJSON.m; sourceTree = "<group>"; };
+		436C490216432AB10031DBCA /* SBJsonBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonBase.h; sourceTree = "<group>"; };
+		436C490316432AB10031DBCA /* SBJsonBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonBase.m; sourceTree = "<group>"; };
+		436C490416432AB10031DBCA /* SBJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonParser.h; sourceTree = "<group>"; };
+		436C490516432AB10031DBCA /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
+		436C490616432AB10031DBCA /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
+		436C490716432AB10031DBCA /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
+		436C490816432AB10031DBCA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		436C490A16432AB10031DBCA /* ARAugmentedPhoto.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARAugmentedPhoto.h; sourceTree = "<group>"; };
+		436C490B16432AB10031DBCA /* ARAugmentedPhoto.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARAugmentedPhoto.m; sourceTree = "<group>"; };
+		436C490C16432AB10031DBCA /* AROverlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AROverlay.h; sourceTree = "<group>"; };
+		436C490D16432AB10031DBCA /* AROverlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AROverlay.m; sourceTree = "<group>"; };
+		436C490E16432AB10031DBCA /* AROverlayPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AROverlayPoint.h; sourceTree = "<group>"; };
+		436C490F16432AB10031DBCA /* AROverlayPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AROverlayPoint.m; sourceTree = "<group>"; };
+		436C491016432AB10031DBCA /* ARSite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARSite.h; sourceTree = "<group>"; };
+		436C491116432AB10031DBCA /* ARSite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARSite.m; sourceTree = "<group>"; };
+		436C491216432AB10031DBCA /* ARSiteImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARSiteImage.h; sourceTree = "<group>"; };
+		436C491316432AB10031DBCA /* ARSiteImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARSiteImage.m; sourceTree = "<group>"; };
+		436C491416432AB10031DBCA /* ARSiteOverlayPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARSiteOverlayPoint.h; sourceTree = "<group>"; };
+		436C491516432AB10031DBCA /* ARSiteOverlayPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARSiteOverlayPoint.m; sourceTree = "<group>"; };
+		436C491616432AB10031DBCA /* PARWorks SDK-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "PARWorks SDK-Info.plist"; sourceTree = "<group>"; };
+		436C491716432AB10031DBCA /* PARWorks SDK-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PARWorks SDK-Prefix.pch"; sourceTree = "<group>"; };
+		436C491916432AB10031DBCA /* ARAugmentedView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARAugmentedView.h; sourceTree = "<group>"; };
+		436C491A16432AB10031DBCA /* ARAugmentedView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARAugmentedView.m; sourceTree = "<group>"; };
+		436C491B16432AB10031DBCA /* AROverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AROverlayView.h; sourceTree = "<group>"; };
+		436C491C16432AB10031DBCA /* AROverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AROverlayView.m; sourceTree = "<group>"; };
+		436C491D16432AB10031DBCA /* CachedImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CachedImageView.h; sourceTree = "<group>"; };
+		436C491E16432AB10031DBCA /* CachedImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CachedImageView.m; sourceTree = "<group>"; };
+		436C491F16432AB10031DBCA /* GridCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridCellView.h; sourceTree = "<group>"; };
+		436C492016432AB10031DBCA /* GridCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridCellView.m; sourceTree = "<group>"; };
+		436C492116432AB10031DBCA /* GridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridView.h; sourceTree = "<group>"; };
+		436C492216432AB10031DBCA /* GridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridView.m; sourceTree = "<group>"; };
+		4371F0C515E34E7300D754A8 /* PARWorks Admin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PARWorks Admin.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4371F0C915E34E7300D754A8 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		4371F0CB15E34E7300D754A8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		4371F0CD15E34E7300D754A8 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		43889B1C15E98D93001B0C4D /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
+		43889B1F15E98D99001B0C4D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		43889B2115E98DA1001B0C4D /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
+		43889B2315E98DAA001B0C4D /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
+		43889B2515E98DC2001B0C4D /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		43D330DD16097E4C0043B64C /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		A0F662D315FEFBD100FA709B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		435833EF15EC852100E90CBD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4371F0C215E34E7300D754A8 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				43D330DE16097E4C0043B64C /* CoreLocation.framework in Frameworks */,
+				A0F662D415FEFBD100FA709B /* QuartzCore.framework in Frameworks */,
+				43889B2615E98DC2001B0C4D /* MobileCoreServices.framework in Frameworks */,
+				43889B2215E98DA1001B0C4D /* libz.dylib in Frameworks */,
+				43889B2015E98D99001B0C4D /* SystemConfiguration.framework in Frameworks */,
+				43889B1D15E98D93001B0C4D /* CFNetwork.framework in Frameworks */,
+				4371F0CA15E34E7300D754A8 /* UIKit.framework in Frameworks */,
+				4371F0CC15E34E7300D754A8 /* Foundation.framework in Frameworks */,
+				4371F0CE15E34E7300D754A8 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		436C488D16432AAF0031DBCA /* AR Administration App */ = {
+			isa = PBXGroup;
+			children = (
+				436C489C16432AAF0031DBCA /* InfoPlist.strings */,
+				436C488E16432AAF0031DBCA /* Administration-App-Info.plist */,
+				436C488F16432AAF0031DBCA /* Administration-App-Prefix.pch */,
+				436C489016432AAF0031DBCA /* ARAppDelegate.h */,
+				436C489116432AAF0031DBCA /* ARAppDelegate.m */,
+				436C489216432AAF0031DBCA /* Controllers */,
+				436C489E16432AAF0031DBCA /* Resources */,
+				436C48A316432AAF0031DBCA /* Views */,
+			);
+			path = "AR Administration App";
+			sourceTree = "<group>";
+		};
+		436C489216432AAF0031DBCA /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				436C489316432AAF0031DBCA /* ARAugmentedPhotosViewController.h */,
+				436C489416432AAF0031DBCA /* ARAugmentedPhotosViewController.m */,
+				436C489516432AAF0031DBCA /* ARAugmentedPhotosViewController.xib */,
+				436C489616432AAF0031DBCA /* ARSiteImagesViewController.h */,
+				436C489716432AAF0031DBCA /* ARSiteImagesViewController.m */,
+				436C489816432AAF0031DBCA /* ARSiteImagesViewController.xib */,
+				436C489916432AAF0031DBCA /* ARSitesViewController.h */,
+				436C489A16432AAF0031DBCA /* ARSitesViewController.m */,
+				436C489B16432AAF0031DBCA /* ARSitesViewController.xib */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		436C489E16432AAF0031DBCA /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				436C489F16432AAF0031DBCA /* Images */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		436C489F16432AAF0031DBCA /* Images */ = {
+			isa = PBXGroup;
+			children = (
+				436C48A016432AAF0031DBCA /* Default-568h@2x.png */,
+				436C48A116432AAF0031DBCA /* state_failed.png */,
+				436C48A216432AAF0031DBCA /* state_uploading.png */,
+			);
+			path = Images;
+			sourceTree = "<group>";
+		};
+		436C48A316432AAF0031DBCA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				436C48A416432AAF0031DBCA /* ARShapeOverlayView.h */,
+				436C48A516432AAF0031DBCA /* ARShapeOverlayView.m */,
+				436C48A616432AAF0031DBCA /* BRCircleView.h */,
+				436C48A716432AAF0031DBCA /* BRCircleView.m */,
+				436C48A816432AAF0031DBCA /* BROverlayView.h */,
+				436C48A916432AAF0031DBCA /* BROverlayView.m */,
+				436C48AA16432AAF0031DBCA /* BRPopupOverlayView.h */,
+				436C48AB16432AAF0031DBCA /* BRPopupOverlayView.m */,
+				436C48AE16432AAF0031DBCA /* UIAlertInputView.h */,
+				436C48AF16432AAF0031DBCA /* UIAlertInputView.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		436C48C216432AB10031DBCA /* AR Core */ = {
+			isa = PBXGroup;
+			children = (
+				436C490816432AB10031DBCA /* main.m */,
+				436C48D616432AB10031DBCA /* PARWorks.h */,
+				436C48D716432AB10031DBCA /* InfoPlist.strings */,
+				436C491616432AB10031DBCA /* PARWorks SDK-Info.plist */,
+				436C491716432AB10031DBCA /* PARWorks SDK-Prefix.pch */,
+				436C48C616432AB10031DBCA /* ARConstants.h */,
+				436C48C716432AB10031DBCA /* ARManager.h */,
+				436C48C816432AB10031DBCA /* ARManager.m */,
+				436C48C916432AB10031DBCA /* AROverlayUtil.h */,
+				436C48CA16432AB10031DBCA /* AROverlayUtil.m */,
+				436C48C316432AB10031DBCA /* Animations */,
+				436C48CB16432AB10031DBCA /* Categories */,
+				436C48D216432AB10031DBCA /* Controllers */,
+				436C48D816432AB10031DBCA /* Libraries */,
+				436C490916432AB10031DBCA /* Models */,
+				436C491816432AB10031DBCA /* Views */,
+			);
+			path = "AR Core";
+			sourceTree = "<group>";
+		};
+		436C48C316432AB10031DBCA /* Animations */ = {
+			isa = PBXGroup;
+			children = (
+				436C48C416432AB10031DBCA /* AROverlayAnimation.h */,
+				436C48C516432AB10031DBCA /* AROverlayAnimation.m */,
+			);
+			path = Animations;
+			sourceTree = "<group>";
+		};
+		436C48CB16432AB10031DBCA /* Categories */ = {
+			isa = PBXGroup;
+			children = (
+				436C48CC16432AB10031DBCA /* ASIHTTPRequest+JSONAdditions.h */,
+				436C48CD16432AB10031DBCA /* ASIHTTPRequest+JSONAdditions.m */,
+				436C48CE16432AB10031DBCA /* NSData+Base64Encode.h */,
+				436C48CF16432AB10031DBCA /* NSData+Base64Encode.m */,
+				436C48D016432AB10031DBCA /* UIViewAdditions.h */,
+				436C48D116432AB10031DBCA /* UIViewAdditions.m */,
+			);
+			path = Categories;
+			sourceTree = "<group>";
+		};
+		436C48D216432AB10031DBCA /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				436C48D316432AB10031DBCA /* ARPhotoViewController.h */,
+				436C48D416432AB10031DBCA /* ARPhotoViewController.m */,
+				436C48D516432AB10031DBCA /* ARPhotoViewController.xib */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		436C48D816432AB10031DBCA /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				436C48D916432AB10031DBCA /* ASI */,
+				436C48FA16432AB10031DBCA /* JSON */,
+			);
+			path = Libraries;
+			sourceTree = "<group>";
+		};
+		436C48D916432AB10031DBCA /* ASI */ = {
+			isa = PBXGroup;
+			children = (
+				436C48DA16432AB10031DBCA /* Classes */,
+				436C48F416432AB10031DBCA /* External */,
+			);
+			path = ASI;
+			sourceTree = "<group>";
+		};
+		436C48DA16432AB10031DBCA /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				436C48DB16432AB10031DBCA /* ASIAuthenticationDialog.h */,
+				436C48DC16432AB10031DBCA /* ASIAuthenticationDialog.m */,
+				436C48DD16432AB10031DBCA /* ASICacheDelegate.h */,
+				436C48DE16432AB10031DBCA /* ASIDataCompressor.h */,
+				436C48DF16432AB10031DBCA /* ASIDataCompressor.m */,
+				436C48E016432AB10031DBCA /* ASIDataDecompressor.h */,
+				436C48E116432AB10031DBCA /* ASIDataDecompressor.m */,
+				436C48E216432AB10031DBCA /* ASIDownloadCache.h */,
+				436C48E316432AB10031DBCA /* ASIDownloadCache.m */,
+				436C48E416432AB10031DBCA /* ASIFormDataRequest.h */,
+				436C48E516432AB10031DBCA /* ASIFormDataRequest.m */,
+				436C48E616432AB10031DBCA /* ASIHTTPRequest.h */,
+				436C48E716432AB10031DBCA /* ASIHTTPRequest.m */,
+				436C48E816432AB10031DBCA /* ASIHTTPRequestConfig.h */,
+				436C48E916432AB10031DBCA /* ASIHTTPRequestDelegate.h */,
+				436C48EA16432AB10031DBCA /* ASIInputStream.h */,
+				436C48EB16432AB10031DBCA /* ASIInputStream.m */,
+				436C48EC16432AB10031DBCA /* ASINetworkQueue.h */,
+				436C48ED16432AB10031DBCA /* ASINetworkQueue.m */,
+				436C48EE16432AB10031DBCA /* ASIProgressDelegate.h */,
+				436C48EF16432AB10031DBCA /* OAuth */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		436C48EF16432AB10031DBCA /* OAuth */ = {
+			isa = PBXGroup;
+			children = (
+				436C48F016432AB10031DBCA /* ASIOARequest.h */,
+				436C48F116432AB10031DBCA /* ASIOARequest.m */,
+				436C48F216432AB10031DBCA /* ASIOAuthParameter.h */,
+				436C48F316432AB10031DBCA /* ASIOAuthParameter.m */,
+			);
+			path = OAuth;
+			sourceTree = "<group>";
+		};
+		436C48F416432AB10031DBCA /* External */ = {
+			isa = PBXGroup;
+			children = (
+				436C48F516432AB10031DBCA /* GHUnit */,
+				436C48F716432AB10031DBCA /* Reachability */,
+			);
+			path = External;
+			sourceTree = "<group>";
+		};
+		436C48F516432AB10031DBCA /* GHUnit */ = {
+			isa = PBXGroup;
+			children = (
+				436C48F616432AB10031DBCA /* README-GHUnit */,
+			);
+			path = GHUnit;
+			sourceTree = "<group>";
+		};
+		436C48F716432AB10031DBCA /* Reachability */ = {
+			isa = PBXGroup;
+			children = (
+				436C48F816432AB10031DBCA /* Reachability.h */,
+				436C48F916432AB10031DBCA /* Reachability.m */,
+			);
+			path = Reachability;
+			sourceTree = "<group>";
+		};
+		436C48FA16432AB10031DBCA /* JSON */ = {
+			isa = PBXGroup;
+			children = (
+				436C48FB16432AB10031DBCA /* JSON.h */,
+				436C48FC16432AB10031DBCA /* NSObject+SBJSON.h */,
+				436C48FD16432AB10031DBCA /* NSObject+SBJSON.m */,
+				436C48FE16432AB10031DBCA /* NSString+SBJSON.h */,
+				436C48FF16432AB10031DBCA /* NSString+SBJSON.m */,
+				436C490016432AB10031DBCA /* SBJSON.h */,
+				436C490116432AB10031DBCA /* SBJSON.m */,
+				436C490216432AB10031DBCA /* SBJsonBase.h */,
+				436C490316432AB10031DBCA /* SBJsonBase.m */,
+				436C490416432AB10031DBCA /* SBJsonParser.h */,
+				436C490516432AB10031DBCA /* SBJsonParser.m */,
+				436C490616432AB10031DBCA /* SBJsonWriter.h */,
+				436C490716432AB10031DBCA /* SBJsonWriter.m */,
+			);
+			path = JSON;
+			sourceTree = "<group>";
+		};
+		436C490916432AB10031DBCA /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				436C490A16432AB10031DBCA /* ARAugmentedPhoto.h */,
+				436C490B16432AB10031DBCA /* ARAugmentedPhoto.m */,
+				436C490C16432AB10031DBCA /* AROverlay.h */,
+				436C490D16432AB10031DBCA /* AROverlay.m */,
+				436C490E16432AB10031DBCA /* AROverlayPoint.h */,
+				436C490F16432AB10031DBCA /* AROverlayPoint.m */,
+				436C491016432AB10031DBCA /* ARSite.h */,
+				436C491116432AB10031DBCA /* ARSite.m */,
+				436C491216432AB10031DBCA /* ARSiteImage.h */,
+				436C491316432AB10031DBCA /* ARSiteImage.m */,
+				436C491416432AB10031DBCA /* ARSiteOverlayPoint.h */,
+				436C491516432AB10031DBCA /* ARSiteOverlayPoint.m */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		436C491816432AB10031DBCA /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				436C491916432AB10031DBCA /* ARAugmentedView.h */,
+				436C491A16432AB10031DBCA /* ARAugmentedView.m */,
+				436C491B16432AB10031DBCA /* AROverlayView.h */,
+				436C491C16432AB10031DBCA /* AROverlayView.m */,
+				436C491D16432AB10031DBCA /* CachedImageView.h */,
+				436C491E16432AB10031DBCA /* CachedImageView.m */,
+				436C491F16432AB10031DBCA /* GridCellView.h */,
+				436C492016432AB10031DBCA /* GridCellView.m */,
+				436C492116432AB10031DBCA /* GridView.h */,
+				436C492216432AB10031DBCA /* GridView.m */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		4371F0BA15E34E7300D754A8 = {
+			isa = PBXGroup;
+			children = (
+				436C48C216432AB10031DBCA /* AR Core */,
+				436C488D16432AAF0031DBCA /* AR Administration App */,
+				4371F0C815E34E7300D754A8 /* Frameworks */,
+				4371F0C615E34E7300D754A8 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		4371F0C615E34E7300D754A8 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4371F0C515E34E7300D754A8 /* PARWorks Admin.app */,
+				435833F415EC852100E90CBD /* PARWorks.framework */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4371F0C815E34E7300D754A8 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				43D330DD16097E4C0043B64C /* CoreLocation.framework */,
+				A0F662D315FEFBD100FA709B /* QuartzCore.framework */,
+				43889B2515E98DC2001B0C4D /* MobileCoreServices.framework */,
+				43889B2315E98DAA001B0C4D /* CoreFoundation.framework */,
+				43889B2115E98DA1001B0C4D /* libz.dylib */,
+				43889B1F15E98D99001B0C4D /* SystemConfiguration.framework */,
+				43889B1C15E98D93001B0C4D /* CFNetwork.framework */,
+				4371F0C915E34E7300D754A8 /* UIKit.framework */,
+				4371F0CB15E34E7300D754A8 /* Foundation.framework */,
+				4371F0CD15E34E7300D754A8 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		435833F015EC852100E90CBD /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				436C492316432AB20031DBCA /* AROverlayAnimation.h in Headers */,
+				436C492616432AB20031DBCA /* ARConstants.h in Headers */,
+				436C492716432AB20031DBCA /* ARManager.h in Headers */,
+				436C493016432AB20031DBCA /* NSData+Base64Encode.h in Headers */,
+				436C493316432AB20031DBCA /* UIViewAdditions.h in Headers */,
+				436C493616432AB20031DBCA /* ARPhotoViewController.h in Headers */,
+				436C493B16432AB20031DBCA /* PARWorks.h in Headers */,
+				436C497A16432AB20031DBCA /* ARAugmentedPhoto.h in Headers */,
+				436C497D16432AB20031DBCA /* AROverlay.h in Headers */,
+				436C498016432AB20031DBCA /* AROverlayPoint.h in Headers */,
+				436C498316432AB20031DBCA /* ARSite.h in Headers */,
+				436C498616432AB20031DBCA /* ARSiteImage.h in Headers */,
+				436C498916432AB20031DBCA /* ARSiteOverlayPoint.h in Headers */,
+				436C498F16432AB20031DBCA /* ARAugmentedView.h in Headers */,
+				436C499216432AB20031DBCA /* AROverlayView.h in Headers */,
+				436C492A16432AB20031DBCA /* AROverlayUtil.h in Headers */,
+				436C499816432AB20031DBCA /* GridCellView.h in Headers */,
+				436C499B16432AB20031DBCA /* GridView.h in Headers */,
+				436C499516432AB20031DBCA /* CachedImageView.h in Headers */,
+				436C492D16432AB20031DBCA /* ASIHTTPRequest+JSONAdditions.h in Headers */,
+				436C493E16432AB20031DBCA /* ASIAuthenticationDialog.h in Headers */,
+				436C494116432AB20031DBCA /* ASICacheDelegate.h in Headers */,
+				436C494216432AB20031DBCA /* ASIDataCompressor.h in Headers */,
+				436C494516432AB20031DBCA /* ASIDataDecompressor.h in Headers */,
+				436C494816432AB20031DBCA /* ASIDownloadCache.h in Headers */,
+				436C494B16432AB20031DBCA /* ASIFormDataRequest.h in Headers */,
+				436C494E16432AB20031DBCA /* ASIHTTPRequest.h in Headers */,
+				436C495116432AB20031DBCA /* ASIHTTPRequestConfig.h in Headers */,
+				436C495216432AB20031DBCA /* ASIHTTPRequestDelegate.h in Headers */,
+				436C495316432AB20031DBCA /* ASIInputStream.h in Headers */,
+				436C495616432AB20031DBCA /* ASINetworkQueue.h in Headers */,
+				436C495916432AB20031DBCA /* ASIProgressDelegate.h in Headers */,
+				436C495A16432AB20031DBCA /* ASIOARequest.h in Headers */,
+				436C495D16432AB20031DBCA /* ASIOAuthParameter.h in Headers */,
+				436C496216432AB20031DBCA /* Reachability.h in Headers */,
+				436C496516432AB20031DBCA /* JSON.h in Headers */,
+				436C496616432AB20031DBCA /* NSObject+SBJSON.h in Headers */,
+				436C496916432AB20031DBCA /* NSString+SBJSON.h in Headers */,
+				436C496C16432AB20031DBCA /* SBJSON.h in Headers */,
+				436C496F16432AB20031DBCA /* SBJsonBase.h in Headers */,
+				436C497216432AB20031DBCA /* SBJsonParser.h in Headers */,
+				436C497516432AB20031DBCA /* SBJsonWriter.h in Headers */,
+				436C498E16432AB20031DBCA /* PARWorks SDK-Prefix.pch in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		435833F315EC852100E90CBD /* Static Library */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 435833FF15EC852100E90CBD /* Build configuration list for PBXNativeTarget "Static Library" */;
+			buildPhases = (
+				435833EE15EC852100E90CBD /* Sources */,
+				435833EF15EC852100E90CBD /* Frameworks */,
+				435833F015EC852100E90CBD /* Headers */,
+				435833F115EC852100E90CBD /* Resources */,
+				435833F215EC852100E90CBD /* ShellScript */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Static Library";
+			productName = HDAR;
+			productReference = 435833F415EC852100E90CBD /* PARWorks.framework */;
+			productType = "com.apple.product-type.bundle";
+		};
+		4371F0C415E34E7300D754A8 /* Administration App */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4371F0E315E34E7300D754A8 /* Build configuration list for PBXNativeTarget "Administration App" */;
+			buildPhases = (
+				4371F0C115E34E7300D754A8 /* Sources */,
+				4371F0C215E34E7300D754A8 /* Frameworks */,
+				4371F0C315E34E7300D754A8 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Administration App";
+			productName = "HD4ARClient-iOS";
+			productReference = 4371F0C515E34E7300D754A8 /* PARWorks Admin.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4371F0BC15E34E7300D754A8 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = AR;
+				LastUpgradeCheck = 0440;
+				ORGANIZATIONNAME = "Ben Gotow";
+			};
+			buildConfigurationList = 4371F0BF15E34E7300D754A8 /* Build configuration list for PBXProject "PARWorks iOS" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = 4371F0BA15E34E7300D754A8;
+			productRefGroup = 4371F0C615E34E7300D754A8 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4371F0C415E34E7300D754A8 /* Administration App */,
+				435833F315EC852100E90CBD /* Static Library */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		435833F115EC852100E90CBD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				436C493A16432AB20031DBCA /* ARPhotoViewController.xib in Resources */,
+				436C493D16432AB20031DBCA /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4371F0C315E34E7300D754A8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				436C48B316432AAF0031DBCA /* ARAugmentedPhotosViewController.xib in Resources */,
+				436C48B516432AAF0031DBCA /* ARSiteImagesViewController.xib in Resources */,
+				436C48B716432AAF0031DBCA /* ARSitesViewController.xib in Resources */,
+				436C48B816432AAF0031DBCA /* InfoPlist.strings in Resources */,
+				436C48B916432AAF0031DBCA /* Default-568h@2x.png in Resources */,
+				436C48BA16432AAF0031DBCA /* state_failed.png in Resources */,
+				436C48BB16432AAF0031DBCA /* state_uploading.png in Resources */,
+				436C493916432AB20031DBCA /* ARPhotoViewController.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		435833F215EC852100E90CBD /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /usr/bin/python;
+			shellScript = "# TAG: BUILD SCRIPT (do not remove this comment)\n# Build script generated using https://github.com/kstenerud/iOS-Universal-Framework Mk 8 (beta 2012-06-16)\nimport logging\n\n\n##############################################################################\n#\n# Configuration\n#\n##############################################################################\n\n# Select which kind of framework to build.\n#\n# Note: Due to issues with Xcode's build process, if you select\n#       'embeddedframework', it will still show the regular framework\n#       (as a symlink) along side of the embedded framework. Be sure to\n#       instruct your users to copy/move the embedded framework in this case!\n#\n# If your framework contains resources such as images, nibs, momds, plists,\n# zipfiles and such, choose 'embeddedframework'.\n#\n# If your framework contains no resources, choose 'framework'.\n#\nconfig_framework_type = 'framework'\n#config_framework_type = 'embeddedframework'\n\n# Open the build directory in Finder when the universal framework is\n# successfully built.\n#\n# This value can be overridden by setting the UFW_OPEN_BUILD_DIR env variable\n# to True or False.\n#\n# Recommended setting: True\n#\nconfig_open_build_dir = True\n\n# If true, ensures that all public headers are stored in the framework under\n# the same directory hierarchy as they were in the source tree.\n#\n# Xcode by default places all headers at the same top level, but every other\n# build tool in the known universe preserves directory structure. For simple\n# libraries it doesn't really matter much, but for ports of existing software\n# packages or for bigger libraries, it makes sense to have more structure.\n#\n# The default is set to \"False\" since that's what most Xcode users are used to.\n#\n# Recommended setting: True for deep hierarchy projects, False otherwise.\n#\nconfig_deep_header_hierarchy = False\n\n# Specify where the top of the public header hierarchy is. This path is\n# relative to the project's dir (PROJECT_DIR). You can reference environment\n# variables using templating syntax (e.g. \"${TARGET_NAME}/Some/Subdir\")\n#\n# NOTE: Only used if config_deep_header_hierarchy is True.\n#\n# If this is set to None, the script will attempt to figure out for itself\n# where the top of the header hierarchy is by looking for common path prefixes\n# in the public header files. This process can fail if:\n# - You only have one public header file.\n# - Your source header files don't all have a common root.\n#\n# A common approach is to use \"${TARGET_NAME}\", working under the assumption\n# that all of your header files share the common root of a directory under\n# your project with the same name as your target (which is the Xcode default).\n#\n# Recommended setting: \"${TARGET_NAME}\"\n#\nconfig_deep_header_top = \"${TARGET_NAME}\"\n\n# Warn when \"DerivedData\" is detected in any of the header, library, or\n# framework search paths. In almost all cases, references to directories under\n# DerivedData are added as a result of an Xcode bug and must be manually\n# removed.\n#\n# Recommended setting: True\n#\nconfig_warn_derived_data = True\n\n# Warn if no headers were marked public in this framework.\n#\n# Recommended setting: True\n#\nconfig_warn_no_public_headers = True\n\n# Cause the build to fail if any warnings are issued.\n#\n# Recommended setting: True\n#\nconfig_fail_on_warnings = True\n\n# Minimum log level\n#\n# Recommended setting: logging.INFO\n#\nconfig_log_level = logging.INFO\n\n\n##############################################################################\n#\n# Don't touch anything below here unless you know what you're doing.\n#\n##############################################################################\n\nimport collections\nimport json\nimport os\nimport re\nimport shlex\nimport shutil\nimport string\nimport subprocess\nimport sys\nimport time\nimport traceback\n\n\n##############################################################################\n#\n# Globals\n#\n##############################################################################\n\nlog = logging.getLogger('UFW')\n\nissued_warnings = False\n\n\n##############################################################################\n#\n# Classes\n#\n##############################################################################\n\n# Allows the slave build to communicate with the master build.\n#\nclass BuildState:\n\n    def __init__(self):\n        self.reload()\n\n    def reset(self):\n        self.slave_platform = None\n        self.slave_architectures = []\n        self.slave_linked_archive_paths = []\n        self.slave_built_fw_path = None\n        self.slave_built_embedded_fw_path = None\n\n    def set_slave_properties(self, architectures,\n                             linked_archive_paths,\n                             built_fw_path,\n                             built_embedded_fw_path):\n        self.slave_platform = os.environ['PLATFORM_NAME']\n        self.slave_architectures = architectures\n        self.slave_linked_archive_paths = linked_archive_paths\n        self.slave_built_fw_path = built_fw_path\n        self.slave_built_embedded_fw_path = built_embedded_fw_path\n\n    def get_save_path(self):\n        return os.path.join(os.environ['PROJECT_TEMP_DIR'], \"ufw_build_state.json\")\n\n    def persist(self):\n        filename = self.get_save_path()\n        parent = os.path.dirname(filename)\n        if not os.path.isdir(parent):\n            os.makedirs(parent)\n        with open(filename, \"w\") as f:\n            f.write(json.dumps(self.__dict__))\n\n    def reload(self):\n        self.reset()\n        filename = self.get_save_path()\n        if os.path.exists(filename):\n            with open(filename, \"r\") as f:\n                new_dict = json.loads(f.read())\n                if new_dict is not None:\n                    self.__dict__ = dict(self.__dict__.items() + new_dict.items())\n\n\n# Holds information about the current project and build environment.\n#\nclass Project:\n\n    def __init__(self, filename):\n        sourcecode_types = ['sourcecode.c.c',\n                            'sourcecode.c.objc',\n                            'sourcecode.cpp.cpp',\n                            'sourcecode.cpp.objcpp',\n                            'sourcecode.asm.asm',\n                            'sourcecode.asm.llvm',\n                            'sourcecode.nasm']\n\n        self.build_state = BuildState()\n        self.project_data = self.load_from_file(filename)\n        self.target = filter(lambda x: x['name'] == os.environ['TARGET_NAME'], self.project_data['targets'])[0]\n        self.public_headers = self.get_build_phase_files('PBXHeadersBuildPhase', lambda x: x.get('settings', False) and x['settings'].get('ATTRIBUTES', False) and 'Public' in x['settings']['ATTRIBUTES'])\n        self.static_libraries = self.get_build_phase_files('PBXFrameworksBuildPhase', lambda x: x['fileRef']['fileType'] == 'archive.ar' and x['fileRef']['sourceTree'] not in ['DEVELOPER_DIR', 'SDKROOT'])\n        self.static_frameworks = self.get_build_phase_files('PBXFrameworksBuildPhase', lambda x: x['fileRef']['fileType'] == 'wrapper.framework' and x['fileRef']['sourceTree'] not in ['DEVELOPER_DIR', 'SDKROOT'])\n        self.compilable_sources = self.get_build_phase_files('PBXSourcesBuildPhase', lambda x: x['fileRef']['fileType'] in sourcecode_types)\n        self.header_paths = [os.path.join(*x['pathComponents']) for x in self.public_headers]\n\n        self.headers_dir = os.path.join(os.environ['TARGET_BUILD_DIR'], os.environ['CONTENTS_FOLDER_PATH'], 'Headers')\n        self.libtool_path = os.path.join(os.environ['DT_TOOLCHAIN_DIR'], 'usr', 'bin', 'libtool')\n        self.project_filename = os.path.join(os.environ['PROJECT_FILE_PATH'], \"project.pbxproj\")\n        self.local_exe_path = os.path.join(os.environ['TARGET_BUILD_DIR'], os.environ['EXECUTABLE_PATH'])\n        self.local_architectures = os.environ['ARCHS'].split(' ')\n        self.local_built_fw_path = os.path.join(os.environ['TARGET_BUILD_DIR'], os.environ['WRAPPER_NAME'])\n        self.local_built_embedded_fw_path = os.path.splitext(self.local_built_fw_path)[0] + \".embeddedframework\"\n        self.local_linked_archive_paths = [self.get_linked_ufw_archive_path(arch) for arch in self.local_architectures]\n        self.local_platform = os.environ['PLATFORM_NAME']\n        other_platforms = os.environ['SUPPORTED_PLATFORMS'].split(' ')\n        other_platforms.remove(self.local_platform)\n        self.other_platform = other_platforms[0]\n\n        sdk_name = os.environ['SDK_NAME']\n        if not sdk_name.startswith(self.local_platform):\n            raise Exception(\"%s didn't start with %s\" % (sdk_name, self.local_platform))\n        self.sdk_version = sdk_name[len(self.local_platform):]\n\n    # Load an Xcode project file.\n    #\n    def load_from_file(self, filename):\n        project_file = json.loads(subprocess.check_output([\"plutil\", \"-convert\", \"json\", \"-o\", \"-\", filename]))\n        all_objects = project_file['objects']\n        del project_file['objects']\n        for obj in all_objects.values():\n            self.fix_keys(obj)\n        self.unpack_objects(self.build_dereference_list(all_objects, None, None, project_file))\n        self.unpack_objects(self.build_dereference_list(all_objects, None, None, all_objects.values()))\n        project_data = project_file['rootObject']\n        self.build_full_paths(project_data, splitpath(os.environ['SOURCE_ROOT']))\n        return project_data\n\n    def is_key(self, obj):        \n        return isinstance(obj, basestring) and len(obj) == 24 and re.search('^[0-9a-fA-F]+$', obj) is not None\n    \n    def build_dereference_list(self, all_objects, parent, key, obj):\n        deref_list = []\n        if self.is_key(obj):\n            dereferenced = all_objects.get(obj, obj)\n            if dereferenced is not obj:\n                deref_list.append((parent, key, obj, dereferenced))\n        elif isinstance(obj, collections.Mapping):\n            for k, v in obj.iteritems():\n                deref_list += self.build_dereference_list(all_objects, obj, k, v)\n        elif isinstance(obj, collections.Iterable) and not isinstance(obj, basestring):\n            for item in obj:\n                deref_list += self.build_dereference_list(all_objects, obj, None, item)\n        return deref_list\n    \n    def unpack_objects(self, deref_list):\n        for parent, key, orig, obj in deref_list:\n            if key is None:\n                parent.remove(orig)\n                parent.append(obj)\n            else:\n                parent[key] = obj\n\n    # Store the full path, separated into components, to a node inside the node\n    # as \"pathComponents\". Also recurse into that node if it's a group.\n    #\n    def build_full_paths(self, node, base_path):\n        # Some nodes are relative to a different source tree, specified as an\n        # env variable.\n        if node.get('sourceTree', '<group>') != '<group>':\n            new_base_path = os.environ.get(node['sourceTree'], None)\n            if new_base_path:\n                base_path = splitpath(new_base_path)\n        # Add the current node's path, if any.\n        if node.get('path', False):\n            base_path = base_path + splitpath(node['path'])\n        node['pathComponents'] = base_path\n        # Recurse if this is a group.\n        if node['isa'] == 'PBXGroup':\n            for child in node['children']:\n                self.build_full_paths(child, base_path)\n        elif node['isa'] == 'PBXProject':\n            self.build_full_paths(node['mainGroup'], base_path)\n            self.build_full_paths(node['productRefGroup'], base_path)\n            for child in node['targets']:\n                self.build_full_paths(child, base_path)\n            projectRefs = node.get('projectReferences', None)\n            if projectRefs is not None:\n                for child in projectRefs[0].values():\n                    self.build_full_paths(child, base_path)\n\n    # Fix up any inconvenient keys.\n    #\n    def fix_keys(self, obj):\n        key_remappings = {'lastKnownFileType': 'fileType', 'explicitFileType': 'fileType'}\n        for key in list(set(key_remappings.keys()) & set(obj.keys())):\n            obj[key_remappings[key]] = obj[key]\n            del obj[key]\n\n    # Get the files from a build phase.\n    #\n    def get_build_phase_files(self, build_phase_name, filter_func):\n        build_phase = filter(lambda x: x['isa'] == build_phase_name, self.target['buildPhases'])[0]\n        build_files = filter(filter_func, build_phase['files'])\n        return [x['fileRef'] for x in build_files]\n\n    # Get the truncated paths of all headers that start with the specified\n    # relative path. Paths are read and returned as fully separated lists.\n    # e.g. ['Some', 'Path', 'To', 'A', 'Header'] with relative_path of\n    # ['Some', 'Path'] gets truncated to ['To', 'A', 'Header']\n    #\n    def movable_headers_relative_to(self, relative_path):\n        rel_path_length = len(relative_path)\n        result = filter(lambda path: len(path) >= rel_path_length and\n                                     path[:rel_path_length] == relative_path, self.header_paths)\n        return [path[rel_path_length:] for path in result]\n\n    # Get the full path to where a linkable archive (library or framework)\n    # is supposed to be.\n    #\n    def get_linked_archive_path(self, architecture):\n        return os.path.join(os.environ['OBJECT_FILE_DIR_%s' % os.environ['CURRENT_VARIANT']],\n                            architecture,\n                            os.environ['EXECUTABLE_NAME'])\n\n    # Get the full path to our custom linked archive of the project.\n    #\n    def get_linked_ufw_archive_path(self, architecture):\n        return self.get_linked_archive_path(architecture) + \".ufwbuild\"\n\n    # Get the full path to the executable of an archive.\n    #\n    def get_exe_path(self, node):\n        path = os.path.join(*node['pathComponents'])\n        if node['fileType'] == 'wrapper.framework':\n            # Frameworks are directories, so go one deeper\n            path = os.path.join(path, os.path.splitext(node['pathComponents'][-1])[0])\n        return path\n\n    # Get the path to the directory containing the archive.\n    #\n    def get_containing_path(self, node):\n        return os.path.join(*node['pathComponents'])\n    \n    def get_archive_search_paths(self):\n        log.info(\"Search paths = %s\" % set([self.get_containing_path(fw) for fw in self.static_frameworks] + [self.get_containing_path(fw) for fw in self.static_libraries]))\n        return set([self.get_containing_path(fw) for fw in self.static_frameworks] + [self.get_containing_path(fw) for fw in self.static_libraries])\n\n    # Command to link all objects of a single architecture.\n    #\n    def get_single_arch_link_command(self, architecture):\n        cmd = [self.libtool_path,\n               \"-static\",\n               \"-arch_only\", architecture,\n               \"-syslibroot\", os.environ['SDKROOT'],\n               \"-L%s\" % os.environ['TARGET_BUILD_DIR'],\n               \"-filelist\", os.environ['LINK_FILE_LIST_%s_%s' % (os.environ['CURRENT_VARIANT'], architecture)]]\n        if os.environ.get('OTHER_LDFLAGS', False):\n            cmd += [os.environ['OTHER_LDFLAGS']]\n        if os.environ.get('WARNING_LDFLAGS', False):\n            cmd += [os.environ['WARNING_LDFLAGS']]\n#        cmd += [\"-L%s\" % libpath for libpath in self.get_archive_search_paths()]\n        cmd += [self.get_exe_path(fw) for fw in self.static_frameworks]\n        cmd += [self.get_exe_path(lib) for lib in self.static_libraries]\n        cmd += [\"-o\", self.get_linked_ufw_archive_path(architecture)]\n        return cmd\n\n    # Command to link all local architectures for the current configuration\n    # into an archive. This reads all libraries + the UFW-built archives and\n    # overwrites the final product.\n    #\n    def get_local_archs_link_command(self):\n        cmd = [self.libtool_path,\n               \"-static\"]\n        cmd += self.local_linked_archive_paths\n        cmd += [self.get_exe_path(fw) for fw in self.static_frameworks]\n        cmd += [self.get_exe_path(lib) for lib in self.static_libraries]\n        cmd += [\"-o\", os.path.join(os.environ['TARGET_BUILD_DIR'], os.environ['EXECUTABLE_PATH'])]\n        return cmd\n\n    # Command to link all architectures into a universal archive.\n    # This reads all UFW-built archives and overwrites the final product.\n    #\n    def get_all_archs_link_command(self):\n        cmd = [self.libtool_path,\n               \"-static\"]\n        cmd += self.local_linked_archive_paths + self.build_state.slave_linked_archive_paths\n        cmd += [\"-o\", os.path.join(os.environ['TARGET_BUILD_DIR'], os.environ['EXECUTABLE_PATH'])]\n        return cmd\n\n    # Build up an environment for the slave process. This uses BUILD_ROOT\n    # and TEMP_ROOT to convert all environment variables to values suitable\n    # for the slave build environment so that xcodebuild doesn't try to build\n    # in the project directory under \"build\".\n    #\n    def get_slave_environment(self):\n        ignored = ['LD_MAP_FILE_PATH',\n        'HEADER_SEARCH_PATHS',\n        'LIBRARY_SEARCH_PATHS',\n        'FRAMEWORK_SEARCH_PATHS']\n        build_root = os.environ['BUILD_ROOT']\n        temp_root = os.environ['TEMP_ROOT']\n        newenv = {}\n        for key, value in os.environ.items():\n            if key not in ignored and not key.startswith('LINK_FILE_LIST_'):\n                if build_root in value or temp_root in value:\n                    newenv[key] = value.replace(self.local_platform, self.other_platform)\n        return newenv\n\n    # Command to invoke xcodebuild on the slave platform.\n    #\n    def get_slave_project_build_command(self):\n        cmd = [\"xcodebuild\",\n               \"-project\",\n               os.environ['PROJECT_FILE_PATH'],\n               \"-target\",\n               os.environ['TARGET_NAME'],\n               \"-configuration\",\n               os.environ['CONFIGURATION'],\n               \"-sdk\",\n               self.other_platform + self.sdk_version]\n        cmd += [\"%s=%s\" % (key, value) for key, value in self.get_slave_environment().items()]\n        cmd += [\"UFW_MASTER_PLATFORM=\" + os.environ['PLATFORM_NAME']]\n        cmd += [os.environ['ACTION']]\n        return cmd\n\n\n\n##############################################################################\n#\n# Utility Functions\n#\n##############################################################################\n\n# Split a path into a list of path components.\n#\ndef splitpath(path, maxdepth=20):\n     (head, tail) = os.path.split(path)\n     return splitpath(head, maxdepth - 1) + [tail] if maxdepth and head and head != path else [ head or tail ]\n\n# Remove all subdirectories under a path.\n#\ndef remove_subdirs(path, ignore_files):\n    if os.path.exists(path):\n        for filename in filter(lambda x: x not in ignore_files, os.listdir(path)):\n            fullpath = os.path.join(path, filename)\n            if os.path.isdir(fullpath):\n                log.info(\"Remove %s\" % fullpath)\n                shutil.rmtree(fullpath)\n\n# Make whatever parent paths are necessary for a path to exist.\n#\ndef ensure_path_exists(path):\n    if not os.path.isdir(path):\n        os.makedirs(path)\n\n# Make whatever parent paths are necessary for a path's parent to exist.\n#\ndef ensure_parent_exists(path):\n    parent = os.path.dirname(path)\n    if not os.path.isdir(parent):\n        os.makedirs(parent)\n\n# Remove a file or dir if it exists.\n#\ndef remove_path(path):\n    if os.path.exists(path):\n        if os.path.isdir(path):\n            shutil.rmtree(path)\n        else:\n            os.remove(path)\n\n# Move a file or dir, replacing the destination if it exists.\n#\ndef move_file(src, dst):\n    if src == dst or not os.path.isfile(src):\n        return\n    log.info(\"Move %s to %s\" % (src, dst))\n    ensure_parent_exists(dst)\n    remove_path(dst)\n    shutil.move(src, dst)\n\n# Copy a file or dir, replacing the destination if it exists already.\n#\ndef copy_overwrite(src, dst):\n    if src != dst:\n        remove_path(dst)\n        ensure_parent_exists(dst)\n        shutil.copytree(src, dst, symlinks=True)\n\n# Attempt to symlink link_path -> link_to.\n# link_to must be a path relative to link_path's parent and must exist.\n# If link_path already exists, do nothing.\n#\ndef attempt_symlink(link_path, link_to):\n    # Only allow linking to an existing file\n    os.stat(os.path.abspath(os.path.join(link_path, \"..\", link_to)))\n\n    # Only make the link if it hasn't already been made\n    if not os.path.exists(link_path):\n        log.info(\"Symlink %s -> %s\" % (link_path, link_to))\n        os.symlink(link_to, link_path)\n\n# Takes the last entry in an array-based path and returns a normal path\n# relative to base_path.\n#\ndef top_level_file_path(base_path, path_list):\n    return os.path.join(base_path, os.path.split(path_list[-1])[-1])\n\n# Takes all entries in an array-based path and returns a normal path\n# relative to base_path.\n#\ndef full_file_path(base_path, path_list):\n    return os.path.join(*([base_path] + path_list))\n\n# Print a command before executing it.\n# Also print out all output from the command to STDOUT.\n#\ndef print_and_call(cmd):\n    log.info(\"Cmd \" + \" \".join(cmd))\n    p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)\n    result = p.communicate()[0]\n    if len(result) > 0:\n        log.info(result)\n    if p.returncode != 0:\n        raise subprocess.CalledProcessError(p.returncode, cmd)\n\n# Special print-and-call command for the slave build that strips out\n# xcodebuild's spammy list of environment variables.\n#\ndef print_and_call_slave_build(cmd, other_platform):\n    separator = '=== BUILD NATIVE TARGET '\n    p = subprocess.Popen(cmd, stdout=subprocess.PIPE, stderr=subprocess.STDOUT)\n    result = p.communicate()[0].split(separator)\n    if len(result) == 1:\n        result = result[0]\n    else:\n        result = separator + result[1]\n    log.info(\"Cmd \" + \" \".join(cmd) + \"\\n\" + result)\n    if p.returncode != 0:\n        raise subprocess.CalledProcessError(p.returncode, cmd)\n\n# Issue a warning and record that a warning has been issued.\n#\ndef issue_warning(msg, *args, **kwargs):\n    global issued_warnings\n    issued_warnings = True\n    log.warn(msg, *args, **kwargs)\n\n\n\n##############################################################################\n#\n# Main Application\n#\n##############################################################################\n\n# Check if we are running as master.\n#\ndef is_master():\n    return os.environ.get('UFW_MASTER_PLATFORM', os.environ['PLATFORM_NAME']) == os.environ['PLATFORM_NAME']\n\n# DerivedData should almost never appear in any framework, library, or header\n# search paths. However, Xcode will sometimes add them in, so we check to make\n# sure.\n#\ndef check_for_derived_data_in_search_paths(project):\n    search_path_keys = [\"FRAMEWORK_SEARCH_PATHS\", \"LIBRARY_SEARCH_PATHS\", \"HEADER_SEARCH_PATHS\"]\n    build_configs = project.target['buildConfigurationList']['buildConfigurations']\n    build_settings = filter(lambda x: x['name'] == os.environ['CONFIGURATION'], build_configs)[0]['buildSettings']\n    \n    found_something = False\n    for path_key in filter(lambda x: x in build_settings, search_path_keys):\n        path = build_settings[path_key]\n        if \"DerivedData\" in path:\n            found_something = True\n            log.warn(\"Derived data in %s\" % path)\n            issue_warning(\"'%s' contains reference to 'DerivedData'.\" % path_key)\n    if found_something:\n        log.warn(\"Check your build settings and remove any entries that contain paths inside the DerivedData folder.\")\n        log.warn(\"Otherwise you can disable this warning by changing 'config_warn_derived_data' in this script.\")\n\n# Link local architectures into their respective archives.\n#\ndef link_local_archs(project):\n    for arch in project.local_architectures:\n        print_and_call(project.get_single_arch_link_command(arch))\n\n# Link only the local architectures into the final product, not the slave\n# architectures. For iphoneos, this will be armv6, armv7. For simulator, this\n# will be i386.\n#\ndef link_combine_local_archs(project):\n    print_and_call(project.get_local_archs_link_command())\n\n# Link all architectures into the final product.\n#\ndef link_combine_all_archs(project):\n    print_and_call(project.get_all_archs_link_command())\n\n# Check if we should open the build directory after a successful build.\n#\ndef should_open_build_dir():\n    env_setting = os.environ.get('UFW_OPEN_BUILD_DIR', None)\n    if env_setting is not None:\n        return env_setting\n\n    return config_open_build_dir\n\n# Open the build dir in Finder.\n#\ndef open_build_dir():\n    print_and_call(['open', os.environ['TARGET_BUILD_DIR']])\n\n# Check if the build was started by selecting \"Archive\" under \"Product\" in\n# Xcode.\n#\ndef is_archive_build():\n    # ACTION is always 'build', but perhaps Apple will fix this someday?\n    archive_build = os.environ['ACTION'] == 'archive'\n\n    if not archive_build:\n        # This can be passed in as an env variable when building from command line.\n        archive_build = os.environ.get('UFW_ACTION', None) == 'archive'\n\n    build_dir = splitpath(os.environ['BUILD_DIR'])\n    if not archive_build:\n        # This partial path is used when you select \"archive\" from within Xcode.\n        archive_build = 'ArchiveIntermediates' in build_dir\n\n    # It only counts as a full archive build if this target is being built into\n    # its own build dir (not being built as a dependency of another target)\n    if archive_build:\n        archive_build = os.environ['TARGET_NAME'] in build_dir\n    \n    return archive_build\n\n# Xcode by default throws all public headers into the top level directory.\n# This function moves them to their expected deep hierarchy.\n#\ndef build_deep_header_hierarchy(project):\n    header_path_top = config_deep_header_top\n    if not header_path_top:\n        header_path_top = os.path.commonprefix(project.header_paths)\n    else:\n        header_path_top = splitpath(header_path_top)\n\n    built_headers_path = os.path.join(os.environ['TARGET_BUILD_DIR'], os.environ['PUBLIC_HEADERS_FOLDER_PATH'])\n    movable_headers = project.movable_headers_relative_to(header_path_top)\n\n    # Remove subdirs if they only contain files that have been rebuilt\n    ignore_headers = filter(lambda x: not os.path.isfile(top_level_file_path(built_headers_path, x)), movable_headers)\n    remove_subdirs(built_headers_path, [file[0] for file in ignore_headers])\n\n    # Move rebuilt headers into their proper subdirs\n    for header in movable_headers:\n        move_file(top_level_file_path(built_headers_path, header), full_file_path(built_headers_path, header))\n\n# Add all symlinks needed to make a full framework structure:\n#\n# MyFramework.framework\n# |-- MyFramework -> Versions/Current/MyFramework\n# |-- Headers -> Versions/Current/Headers\n# |-- Resources -> Versions/Current/Resources\n# `-- Versions\n#     |-- A\n#     |   |-- MyFramework\n#     |   |-- Headers\n#     |   |   `-- MyFramework.h\n#     |   `-- Resources\n#     |       |-- Info.plist\n#     |       |-- MyViewController.nib\n#     |       `-- en.lproj\n#     |           `-- InfoPlist.strings\n#     `-- Current -> A\n#\ndef add_symlinks_to_framework(project):\n    base_dir = project.local_built_fw_path\n    attempt_symlink(os.path.join(base_dir, \"Versions\", \"Current\"), os.environ['FRAMEWORK_VERSION'])\n    if os.path.isdir(os.path.join(base_dir, \"Versions\", \"Current\", \"Headers\")):\n        attempt_symlink(os.path.join(base_dir, \"Headers\"), os.path.join(\"Versions\", \"Current\", \"Headers\"))\n    if os.path.isdir(os.path.join(base_dir, \"Versions\", \"Current\", \"Resources\")):\n        attempt_symlink(os.path.join(base_dir, \"Resources\"), os.path.join(\"Versions\", \"Current\", \"Resources\"))\n    attempt_symlink(os.path.join(base_dir, os.environ['EXECUTABLE_NAME']), os.path.join(\"Versions\", \"Current\", os.environ['EXECUTABLE_NAME']))\n\n# Build an embedded framework structure.\n# An embedded framework contains the actual framework, plus a \"Resources\"\n# directory containing symlinks to all resources found in the actual framework,\n# with the exception of \"Info.plist\" and anything ending in \".lproj\":\n#\n# MyFramework.embeddedframework\n# |-- MyFramework.framework\n# |   |-- MyFramework -> Versions/Current/MyFramework\n# |   |-- Headers -> Versions/Current/Headers\n# |   |-- Resources -> Versions/Current/Resources\n# |   `-- Versions\n# |       |-- A\n# |       |   |-- MyFramework\n# |       |   |-- Headers\n# |       |   |   `-- MyFramework.h\n# |       |   `-- Resources\n# |       |       |-- Info.plist\n# |       |       |-- MyViewController.nib\n# |       |       `-- en.lproj\n# |       |           `-- InfoPlist.strings\n# |       `-- Current -> A\n# `-- Resources\n#     `-- MyViewController.nib -> ../MyFramework.framework/Resources/MyViewController.nib\n#\ndef build_embedded_framework(project):\n    fw_path = project.local_built_fw_path\n    embedded_path = project.local_built_embedded_fw_path\n    fw_name = os.environ['WRAPPER_NAME']\n    remove_path(embedded_path)\n    ensure_path_exists(embedded_path)\n    copy_overwrite(fw_path, os.path.join(embedded_path, fw_name))\n    ensure_path_exists(os.path.join(embedded_path, \"Resources\"))\n    symlink_source = os.path.join(\"..\", fw_name, \"Resources\")\n    symlink_path = os.path.join(embedded_path, \"Resources\")\n    if os.path.isdir(os.path.join(fw_path, \"Resources\")):\n        for file in filter(lambda x: x != \"Info.plist\" and not x.endswith(\".lproj\"), os.listdir(os.path.join(fw_path, \"Resources\"))):\n            attempt_symlink(os.path.join(symlink_path, file), os.path.join(symlink_source, file))\n\n    # Remove the normal framework and replace it with a symlink to the copy\n    # in the embedded framework. This is needed because Xcode runs its strip\n    # phase AFTER the script runs.\n    embed_fw_wrapper = os.path.splitext(os.environ['WRAPPER_NAME'])[0] + \".embeddedframework\"\n    remove_path(fw_path)\n    attempt_symlink(fw_path, os.path.join(embed_fw_wrapper, os.environ['WRAPPER_NAME']))\n\n\n# Run the build process in slave mode to build the other configuration\n# (device/simulator).\n#\ndef run_slave_build(project):\n    print_and_call_slave_build(project.get_slave_project_build_command(), project.other_platform)\n\n# Run the build process.\n#\ndef run_build():\n    project = Project(os.path.join(os.environ['PROJECT_FILE_PATH'], \"project.pbxproj\"))\n\n    # Issue warnings only if we're master.\n    if is_master():\n        if len(project.compilable_sources) == 0:\n            raise Exception(\"No compilable sources found. Please add at least one source file to build target %s.\" % os.environ['TARGET_NAME'])\n\n        if config_warn_derived_data:\n            check_for_derived_data_in_search_paths(project)\n        if config_warn_no_public_headers and len(project.public_headers) == 0:\n            issue_warning('No headers in build target %s were marked public. Please move at least one header to \"Public\" in the \"Copy Headers\" build phase.' % os.environ['TARGET_NAME'])\n\n    # Only build slave if this is an archive build.\n    if is_archive_build():\n        if is_master():\n            log.debug(\"Building as MASTER\")\n            # The slave-side linker tries to include this (nonexistent) path as\n            # a library path.\n            ensure_path_exists(project.get_slave_environment()['BUILT_PRODUCTS_DIR'])\n            project.build_state.persist()\n            run_slave_build(project)\n            project.build_state.reload()\n        else:\n            log.debug(\"Building as SLAVE\")\n            project.build_state.reload()\n            project.build_state.set_slave_properties(project.local_architectures,\n                                                     project.local_linked_archive_paths,\n                                                     project.local_built_fw_path,\n                                                     project.local_built_embedded_fw_path)\n            project.build_state.persist()\n\n    link_local_archs(project)\n    \n    # Only do a universal binary when building an archive.\n    if is_archive_build() and is_master():\n        link_combine_all_archs(project)\n    else:\n        link_combine_local_archs(project)\n\n    if config_deep_header_hierarchy:\n        build_deep_header_hierarchy(project)\n\n    add_symlinks_to_framework(project)\n    \n    if is_master():\n        if config_framework_type == 'embeddedframework':\n            build_embedded_framework(project)\n        elif config_framework_type != 'framework':\n            raise Exception(\"%s: Unknown framework type for config_framework_type\" % config_framework_type)\n\n\nif __name__ == \"__main__\":\n    log_handler = logging.StreamHandler()\n    log_handler.setFormatter(logging.Formatter(\"%(name)s (\" + os.environ['PLATFORM_NAME'] + \"): %(levelname)s: %(message)s\"))\n    log.addHandler(log_handler)\n    log.setLevel(config_log_level)\n\n    error_code = 0\n    prefix = \"M\" if is_master() else \"S\"\n    log_handler.setFormatter(logging.Formatter(\"%(name)s (\" + prefix + \" \" + os.environ['PLATFORM_NAME'] + \"): %(levelname)s: %(message)s\"))\n\n    log.debug(\"Begin build process\")\n\n    if config_deep_header_top:\n        config_deep_header_top = string.Template(config_deep_header_top).substitute(os.environ)\n\n    try:\n        run_build()\n        if issued_warnings:\n            if config_fail_on_warnings:\n                error_code = 1\n            log.warn(\"Build completed with warnings\")\n        else:\n            log.info(\"Build completed\")\n        if not is_archive_build():\n            log.info(\"Note: This is *NOT* a universal framework build. To build as a universal framework, do an archive build.\")\n            log.info(\"To do an archive build from command line, use \\\"xcodebuild -configuration Release UFW_ACTION=archive clean build\\\"\")\n    except Exception:\n        traceback.print_exc(file=sys.stdout)\n        error_code = 1\n        log.error(\"Build failed\")\n    finally:\n        if error_code == 0 and is_archive_build() and is_master():\n            log.info(\"Built framework is in \" + os.environ['TARGET_BUILD_DIR'])\n            if should_open_build_dir():\n                open_build_dir()\n        sys.exit(error_code)\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		435833EE15EC852100E90CBD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				436C492516432AB20031DBCA /* AROverlayAnimation.m in Sources */,
+				436C492916432AB20031DBCA /* ARManager.m in Sources */,
+				436C492C16432AB20031DBCA /* AROverlayUtil.m in Sources */,
+				436C492F16432AB20031DBCA /* ASIHTTPRequest+JSONAdditions.m in Sources */,
+				436C493216432AB20031DBCA /* NSData+Base64Encode.m in Sources */,
+				436C493516432AB20031DBCA /* UIViewAdditions.m in Sources */,
+				436C493816432AB20031DBCA /* ARPhotoViewController.m in Sources */,
+				436C494016432AB20031DBCA /* ASIAuthenticationDialog.m in Sources */,
+				436C494416432AB20031DBCA /* ASIDataCompressor.m in Sources */,
+				436C494716432AB20031DBCA /* ASIDataDecompressor.m in Sources */,
+				436C494A16432AB20031DBCA /* ASIDownloadCache.m in Sources */,
+				436C494D16432AB20031DBCA /* ASIFormDataRequest.m in Sources */,
+				436C495016432AB20031DBCA /* ASIHTTPRequest.m in Sources */,
+				436C495516432AB20031DBCA /* ASIInputStream.m in Sources */,
+				436C495816432AB20031DBCA /* ASINetworkQueue.m in Sources */,
+				436C495C16432AB20031DBCA /* ASIOARequest.m in Sources */,
+				436C495F16432AB20031DBCA /* ASIOAuthParameter.m in Sources */,
+				436C496416432AB20031DBCA /* Reachability.m in Sources */,
+				436C496816432AB20031DBCA /* NSObject+SBJSON.m in Sources */,
+				436C496B16432AB20031DBCA /* NSString+SBJSON.m in Sources */,
+				436C496E16432AB20031DBCA /* SBJSON.m in Sources */,
+				436C497116432AB20031DBCA /* SBJsonBase.m in Sources */,
+				436C497416432AB20031DBCA /* SBJsonParser.m in Sources */,
+				436C497716432AB20031DBCA /* SBJsonWriter.m in Sources */,
+				436C497916432AB20031DBCA /* main.m in Sources */,
+				436C497C16432AB20031DBCA /* ARAugmentedPhoto.m in Sources */,
+				436C497F16432AB20031DBCA /* AROverlay.m in Sources */,
+				436C498216432AB20031DBCA /* AROverlayPoint.m in Sources */,
+				436C498516432AB20031DBCA /* ARSite.m in Sources */,
+				436C498816432AB20031DBCA /* ARSiteImage.m in Sources */,
+				436C498B16432AB20031DBCA /* ARSiteOverlayPoint.m in Sources */,
+				436C499116432AB20031DBCA /* ARAugmentedView.m in Sources */,
+				436C499416432AB20031DBCA /* AROverlayView.m in Sources */,
+				436C499716432AB20031DBCA /* CachedImageView.m in Sources */,
+				436C499A16432AB20031DBCA /* GridCellView.m in Sources */,
+				436C499D16432AB20031DBCA /* GridView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4371F0C115E34E7300D754A8 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				436C48B116432AAF0031DBCA /* ARAppDelegate.m in Sources */,
+				436C48B216432AAF0031DBCA /* ARAugmentedPhotosViewController.m in Sources */,
+				436C48B416432AAF0031DBCA /* ARSiteImagesViewController.m in Sources */,
+				436C48B616432AAF0031DBCA /* ARSitesViewController.m in Sources */,
+				436C48BC16432AAF0031DBCA /* ARShapeOverlayView.m in Sources */,
+				436C48BD16432AAF0031DBCA /* BRCircleView.m in Sources */,
+				436C48BE16432AAF0031DBCA /* BROverlayView.m in Sources */,
+				436C48BF16432AAF0031DBCA /* BRPopupOverlayView.m in Sources */,
+				436C48C116432AAF0031DBCA /* UIAlertInputView.m in Sources */,
+				436C492416432AB20031DBCA /* AROverlayAnimation.m in Sources */,
+				436C492816432AB20031DBCA /* ARManager.m in Sources */,
+				436C492B16432AB20031DBCA /* AROverlayUtil.m in Sources */,
+				436C492E16432AB20031DBCA /* ASIHTTPRequest+JSONAdditions.m in Sources */,
+				436C493116432AB20031DBCA /* NSData+Base64Encode.m in Sources */,
+				436C493416432AB20031DBCA /* UIViewAdditions.m in Sources */,
+				436C493716432AB20031DBCA /* ARPhotoViewController.m in Sources */,
+				436C493F16432AB20031DBCA /* ASIAuthenticationDialog.m in Sources */,
+				436C494316432AB20031DBCA /* ASIDataCompressor.m in Sources */,
+				436C494616432AB20031DBCA /* ASIDataDecompressor.m in Sources */,
+				436C494916432AB20031DBCA /* ASIDownloadCache.m in Sources */,
+				436C494C16432AB20031DBCA /* ASIFormDataRequest.m in Sources */,
+				436C494F16432AB20031DBCA /* ASIHTTPRequest.m in Sources */,
+				436C495416432AB20031DBCA /* ASIInputStream.m in Sources */,
+				436C495716432AB20031DBCA /* ASINetworkQueue.m in Sources */,
+				436C495B16432AB20031DBCA /* ASIOARequest.m in Sources */,
+				436C495E16432AB20031DBCA /* ASIOAuthParameter.m in Sources */,
+				436C496316432AB20031DBCA /* Reachability.m in Sources */,
+				436C496716432AB20031DBCA /* NSObject+SBJSON.m in Sources */,
+				436C496A16432AB20031DBCA /* NSString+SBJSON.m in Sources */,
+				436C496D16432AB20031DBCA /* SBJSON.m in Sources */,
+				436C497016432AB20031DBCA /* SBJsonBase.m in Sources */,
+				436C497316432AB20031DBCA /* SBJsonParser.m in Sources */,
+				436C497616432AB20031DBCA /* SBJsonWriter.m in Sources */,
+				436C497816432AB20031DBCA /* main.m in Sources */,
+				436C497B16432AB20031DBCA /* ARAugmentedPhoto.m in Sources */,
+				436C497E16432AB20031DBCA /* AROverlay.m in Sources */,
+				436C498116432AB20031DBCA /* AROverlayPoint.m in Sources */,
+				436C498416432AB20031DBCA /* ARSite.m in Sources */,
+				436C498716432AB20031DBCA /* ARSiteImage.m in Sources */,
+				436C498A16432AB20031DBCA /* ARSiteOverlayPoint.m in Sources */,
+				436C499016432AB20031DBCA /* ARAugmentedView.m in Sources */,
+				436C499316432AB20031DBCA /* AROverlayView.m in Sources */,
+				436C499616432AB20031DBCA /* CachedImageView.m in Sources */,
+				436C499916432AB20031DBCA /* GridCellView.m in Sources */,
+				436C499C16432AB20031DBCA /* GridView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		436C489C16432AAF0031DBCA /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				436C489D16432AAF0031DBCA /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		4358340015EC852100E90CBD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_OBJCPP_ARC_ABI = YES;
+				CONTENTS_FOLDER_PATH = "$(WRAPPER_NAME)/Versions/$(FRAMEWORK_VERSION)";
+				DEAD_CODE_STRIPPING = NO;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "AR Core/PARWorks SDK-Prefix.pch";
+				INFOPLIST_FILE = "AR Core/PARWorks SDK-Info.plist";
+				INFOPLIST_PATH = "$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/Info.plist";
+				INSTALL_PATH = "$(BUILT_PRODUCTS_DIR)";
+				LINK_WITH_STANDARD_LIBRARIES = NO;
+				MACH_O_TYPE = mh_object;
+				PRODUCT_NAME = PARWorks;
+				SKIP_INSTALL = YES;
+				UNLOCALIZED_RESOURCES_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/Resources";
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Debug;
+		};
+		4358340115EC852100E90CBD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = (
+					armv6,
+					"$(ARCHS_STANDARD_32_BIT)",
+				);
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_OBJCPP_ARC_ABI = YES;
+				CONTENTS_FOLDER_PATH = "$(WRAPPER_NAME)/Versions/$(FRAMEWORK_VERSION)";
+				DEAD_CODE_STRIPPING = NO;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				FRAMEWORK_VERSION = A;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "AR Core/PARWorks SDK-Prefix.pch";
+				INFOPLIST_FILE = "AR Core/PARWorks SDK-Info.plist";
+				INFOPLIST_PATH = "$(UNLOCALIZED_RESOURCES_FOLDER_PATH)/Info.plist";
+				INSTALL_PATH = "$(BUILT_PRODUCTS_DIR)";
+				LINK_WITH_STANDARD_LIBRARIES = NO;
+				MACH_O_TYPE = mh_object;
+				PRODUCT_NAME = PARWorks;
+				SKIP_INSTALL = YES;
+				UNLOCALIZED_RESOURCES_FOLDER_PATH = "$(CONTENTS_FOLDER_PATH)/Resources";
+				WRAPPER_EXTENSION = framework;
+			};
+			name = Release;
+		};
+		4371F0E115E34E7300D754A8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		4371F0E215E34E7300D754A8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 5.1;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		4371F0E415E34E7300D754A8 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = NO;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ben Gotow (7EKP92J76Y)";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "AR Administration App/Administration-App-Prefix.pch";
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/AR Administration App/Administration-App-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SDKROOT)/usr/lib/system\"",
+				);
+				PRODUCT_NAME = "PARWorks Admin";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "810FBEA9-0F12-43C2-A201-BDE6124903EE";
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		4371F0E515E34E7300D754A8 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "AR Administration App/Administration-App-Prefix.pch";
+				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = YES;
+				INFOPLIST_FILE = "$(SRCROOT)/AR Administration App/Administration-App-Info.plist";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SDKROOT)/usr/lib/system\"",
+				);
+				PRODUCT_NAME = "PARWorks Admin";
+				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		435833FF15EC852100E90CBD /* Build configuration list for PBXNativeTarget "Static Library" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4358340015EC852100E90CBD /* Debug */,
+				4358340115EC852100E90CBD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4371F0BF15E34E7300D754A8 /* Build configuration list for PBXProject "PARWorks iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4371F0E115E34E7300D754A8 /* Debug */,
+				4371F0E215E34E7300D754A8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4371F0E315E34E7300D754A8 /* Build configuration list for PBXNativeTarget "Administration App" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4371F0E415E34E7300D754A8 /* Debug */,
+				4371F0E515E34E7300D754A8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4371F0BC15E34E7300D754A8 /* Project object */;
+}

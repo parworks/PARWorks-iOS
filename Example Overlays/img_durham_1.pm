@@ -1,0 +1,9 @@
+localization=true
+focallength=2895.9482
+score=84.1379
+fov=48.219112,37.107765
+name=Wall #1
+description=Part XYZ
+texture=null
+color=0.0,1.0,0.0
+vertices=195.48035,494.17365,0.0,904.1185,468.8005,0.0,930.2569,1138.8411,0.0,233.0769,1146.091,0.0

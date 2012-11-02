@@ -1,0 +1,426 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4376BC4216292899004995A3 /* brush_1_texture.png in Resources */ = {isa = PBXBuildFile; fileRef = 4376BC3D16292899004995A3 /* brush_1_texture.png */; };
+		4376BC4316292899004995A3 /* PaintViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4376BC3F16292899004995A3 /* PaintViewController.m */; };
+		4376BC4416292899004995A3 /* SimplePaintView.m in Sources */ = {isa = PBXBuildFile; fileRef = 4376BC4116292899004995A3 /* SimplePaintView.m */; };
+		4376BC47162928A3004995A3 /* PaintViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4376BC46162928A3004995A3 /* PaintViewController.xib */; };
+		A000674016290530007FADB2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A000673F16290530007FADB2 /* UIKit.framework */; };
+		A000674216290530007FADB2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A000674116290530007FADB2 /* Foundation.framework */; };
+		A000674416290530007FADB2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A000674316290530007FADB2 /* CoreGraphics.framework */; };
+		A000674A16290530007FADB2 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = A000674816290530007FADB2 /* InfoPlist.strings */; };
+		A000674C16290530007FADB2 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = A000674B16290530007FADB2 /* main.m */; };
+		A000675016290530007FADB2 /* DMAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = A000674F16290530007FADB2 /* DMAppDelegate.m */; };
+		A000675216290530007FADB2 /* Default.png in Resources */ = {isa = PBXBuildFile; fileRef = A000675116290530007FADB2 /* Default.png */; };
+		A000675416290530007FADB2 /* Default@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A000675316290530007FADB2 /* Default@2x.png */; };
+		A000675616290530007FADB2 /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A000675516290530007FADB2 /* Default-568h@2x.png */; };
+		A000675916290530007FADB2 /* DMViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A000675816290530007FADB2 /* DMViewController.m */; };
+		A000675C16290530007FADB2 /* DMViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A000675A16290530007FADB2 /* DMViewController.xib */; };
+		A0006767162907B0007FADB2 /* img.png in Resources */ = {isa = PBXBuildFile; fileRef = A0006766162907B0007FADB2 /* img.png */; };
+		A00067691629080A007FADB2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A00067681629080A007FADB2 /* QuartzCore.framework */; };
+		A000676E1629096A007FADB2 /* dot.png in Resources */ = {isa = PBXBuildFile; fileRef = A000676D1629096A007FADB2 /* dot.png */; };
+		A000677116290995007FADB2 /* HNSprayView.m in Sources */ = {isa = PBXBuildFile; fileRef = A000677016290995007FADB2 /* HNSprayView.m */; };
+		A000677816291159007FADB2 /* UIViewAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A00067771629114E007FADB2 /* UIViewAdditions.m */; };
+		A0B791821629F1600048C2C4 /* HNGraffitiView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0B791811629F1600048C2C4 /* HNGraffitiView.m */; };
+		A0B7918A162A6F5E0048C2C4 /* spray_1.png in Resources */ = {isa = PBXBuildFile; fileRef = A0B79184162A6F5E0048C2C4 /* spray_1.png */; };
+		A0B7918B162A6F5E0048C2C4 /* spray_2.png in Resources */ = {isa = PBXBuildFile; fileRef = A0B79185162A6F5E0048C2C4 /* spray_2.png */; };
+		A0B7918C162A6F5E0048C2C4 /* spray_3.png in Resources */ = {isa = PBXBuildFile; fileRef = A0B79186162A6F5E0048C2C4 /* spray_3.png */; };
+		A0B7918D162A6F5E0048C2C4 /* spray_4.png in Resources */ = {isa = PBXBuildFile; fileRef = A0B79187162A6F5E0048C2C4 /* spray_4.png */; };
+		A0B7918E162A6F5E0048C2C4 /* spray_5.png in Resources */ = {isa = PBXBuildFile; fileRef = A0B79188162A6F5E0048C2C4 /* spray_5.png */; };
+		A0B7918F162A6F5E0048C2C4 /* spray_6.png in Resources */ = {isa = PBXBuildFile; fileRef = A0B79189162A6F5E0048C2C4 /* spray_6.png */; };
+		A0B79190162A71B60048C2C4 /* UIImageView+AnimationAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = A000676316290548007FADB2 /* UIImageView+AnimationAdditions.m */; };
+		A0B79192162A75A50048C2C4 /* spray_can.png in Resources */ = {isa = PBXBuildFile; fileRef = A0B79191162A75A50048C2C4 /* spray_can.png */; };
+		A0B79194162AF9F60048C2C4 /* spray_can_with_spray.png in Resources */ = {isa = PBXBuildFile; fileRef = A0B79193162AF9F60048C2C4 /* spray_can_with_spray.png */; };
+		A0B79197162AFC6B0048C2C4 /* HNSprayCanLoadingView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0B79196162AFC6B0048C2C4 /* HNSprayCanLoadingView.m */; };
+		A0B79199162B03950048C2C4 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0B79198162B03950048C2C4 /* AVFoundation.framework */; };
+		A0B7919B162B04D10048C2C4 /* spray_can_shake.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A0B7919A162B04D10048C2C4 /* spray_can_shake.mp3 */; };
+		A0B7919D162B2A070048C2C4 /* spray_painting.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = A0B7919C162B2A070048C2C4 /* spray_painting.mp3 */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		4376BC3D16292899004995A3 /* brush_1_texture.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = brush_1_texture.png; sourceTree = "<group>"; };
+		4376BC3E16292899004995A3 /* PaintViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PaintViewController.h; sourceTree = "<group>"; };
+		4376BC3F16292899004995A3 /* PaintViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PaintViewController.m; sourceTree = "<group>"; };
+		4376BC4016292899004995A3 /* SimplePaintView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SimplePaintView.h; sourceTree = "<group>"; };
+		4376BC4116292899004995A3 /* SimplePaintView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SimplePaintView.m; sourceTree = "<group>"; };
+		4376BC46162928A3004995A3 /* PaintViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PaintViewController.xib; sourceTree = "<group>"; };
+		A000673B16290530007FADB2 /* Graffiti.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Graffiti.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		A000673F16290530007FADB2 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		A000674116290530007FADB2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		A000674316290530007FADB2 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		A000674716290530007FADB2 /* Graffiti-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "Graffiti-Info.plist"; sourceTree = "<group>"; };
+		A000674916290530007FADB2 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		A000674B16290530007FADB2 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		A000674D16290530007FADB2 /* Graffiti-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Graffiti-Prefix.pch"; sourceTree = "<group>"; };
+		A000674E16290530007FADB2 /* DMAppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DMAppDelegate.h; sourceTree = "<group>"; };
+		A000674F16290530007FADB2 /* DMAppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DMAppDelegate.m; sourceTree = "<group>"; };
+		A000675116290530007FADB2 /* Default.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Default.png; sourceTree = "<group>"; };
+		A000675316290530007FADB2 /* Default@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default@2x.png"; sourceTree = "<group>"; };
+		A000675516290530007FADB2 /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
+		A000675716290530007FADB2 /* DMViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DMViewController.h; sourceTree = "<group>"; };
+		A000675816290530007FADB2 /* DMViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DMViewController.m; sourceTree = "<group>"; };
+		A000675B16290530007FADB2 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DMViewController.xib; sourceTree = "<group>"; };
+		A000676216290548007FADB2 /* UIImageView+AnimationAdditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "UIImageView+AnimationAdditions.h"; sourceTree = "<group>"; };
+		A000676316290548007FADB2 /* UIImageView+AnimationAdditions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+AnimationAdditions.m"; sourceTree = "<group>"; };
+		A0006766162907B0007FADB2 /* img.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = img.png; sourceTree = "<group>"; };
+		A00067681629080A007FADB2 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		A000676D1629096A007FADB2 /* dot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dot.png; sourceTree = "<group>"; };
+		A000676F16290995007FADB2 /* HNSprayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HNSprayView.h; sourceTree = "<group>"; };
+		A000677016290995007FADB2 /* HNSprayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HNSprayView.m; sourceTree = "<group>"; };
+		A00067761629114E007FADB2 /* UIViewAdditions.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = UIViewAdditions.h; sourceTree = "<group>"; };
+		A00067771629114E007FADB2 /* UIViewAdditions.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = UIViewAdditions.m; sourceTree = "<group>"; };
+		A0B791801629F1600048C2C4 /* HNGraffitiView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HNGraffitiView.h; sourceTree = "<group>"; };
+		A0B791811629F1600048C2C4 /* HNGraffitiView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HNGraffitiView.m; sourceTree = "<group>"; };
+		A0B79184162A6F5E0048C2C4 /* spray_1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spray_1.png; sourceTree = "<group>"; };
+		A0B79185162A6F5E0048C2C4 /* spray_2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spray_2.png; sourceTree = "<group>"; };
+		A0B79186162A6F5E0048C2C4 /* spray_3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spray_3.png; sourceTree = "<group>"; };
+		A0B79187162A6F5E0048C2C4 /* spray_4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spray_4.png; sourceTree = "<group>"; };
+		A0B79188162A6F5E0048C2C4 /* spray_5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spray_5.png; sourceTree = "<group>"; };
+		A0B79189162A6F5E0048C2C4 /* spray_6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spray_6.png; sourceTree = "<group>"; };
+		A0B79191162A75A50048C2C4 /* spray_can.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spray_can.png; sourceTree = "<group>"; };
+		A0B79193162AF9F60048C2C4 /* spray_can_with_spray.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = spray_can_with_spray.png; sourceTree = "<group>"; };
+		A0B79195162AFC6B0048C2C4 /* HNSprayCanLoadingView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HNSprayCanLoadingView.h; sourceTree = "<group>"; };
+		A0B79196162AFC6B0048C2C4 /* HNSprayCanLoadingView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HNSprayCanLoadingView.m; sourceTree = "<group>"; };
+		A0B79198162B03950048C2C4 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		A0B7919A162B04D10048C2C4 /* spray_can_shake.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = spray_can_shake.mp3; sourceTree = "<group>"; };
+		A0B7919C162B2A070048C2C4 /* spray_painting.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = spray_painting.mp3; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		A000673816290530007FADB2 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A0B79199162B03950048C2C4 /* AVFoundation.framework in Frameworks */,
+				A00067691629080A007FADB2 /* QuartzCore.framework in Frameworks */,
+				A000674016290530007FADB2 /* UIKit.framework in Frameworks */,
+				A000674216290530007FADB2 /* Foundation.framework in Frameworks */,
+				A000674416290530007FADB2 /* CoreGraphics.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		A000673016290530007FADB2 = {
+			isa = PBXGroup;
+			children = (
+				A0B79198162B03950048C2C4 /* AVFoundation.framework */,
+				A00067681629080A007FADB2 /* QuartzCore.framework */,
+				A000674516290530007FADB2 /* Graffiti */,
+				A000673E16290530007FADB2 /* Frameworks */,
+				A000673C16290530007FADB2 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		A000673C16290530007FADB2 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A000673B16290530007FADB2 /* Graffiti.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A000673E16290530007FADB2 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A000673F16290530007FADB2 /* UIKit.framework */,
+				A000674116290530007FADB2 /* Foundation.framework */,
+				A000674316290530007FADB2 /* CoreGraphics.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A000674516290530007FADB2 /* Graffiti */ = {
+			isa = PBXGroup;
+			children = (
+				A000676A16290875007FADB2 /* CanAnimation */,
+				4376BC3E16292899004995A3 /* PaintViewController.h */,
+				4376BC3F16292899004995A3 /* PaintViewController.m */,
+				4376BC46162928A3004995A3 /* PaintViewController.xib */,
+				4376BC4016292899004995A3 /* SimplePaintView.h */,
+				4376BC4116292899004995A3 /* SimplePaintView.m */,
+				A000676216290548007FADB2 /* UIImageView+AnimationAdditions.h */,
+				A000676316290548007FADB2 /* UIImageView+AnimationAdditions.m */,
+				A000674E16290530007FADB2 /* DMAppDelegate.h */,
+				A000674F16290530007FADB2 /* DMAppDelegate.m */,
+				A000675716290530007FADB2 /* DMViewController.h */,
+				A000675816290530007FADB2 /* DMViewController.m */,
+				A000675A16290530007FADB2 /* DMViewController.xib */,
+				A000674616290530007FADB2 /* Supporting Files */,
+			);
+			path = Graffiti;
+			sourceTree = "<group>";
+		};
+		A000674616290530007FADB2 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				A0B79183162A6F5E0048C2C4 /* Sprays */,
+				4376BC3D16292899004995A3 /* brush_1_texture.png */,
+				A0006766162907B0007FADB2 /* img.png */,
+				A000676D1629096A007FADB2 /* dot.png */,
+				A000674716290530007FADB2 /* Graffiti-Info.plist */,
+				A000674816290530007FADB2 /* InfoPlist.strings */,
+				A000674B16290530007FADB2 /* main.m */,
+				A000674D16290530007FADB2 /* Graffiti-Prefix.pch */,
+				A000675116290530007FADB2 /* Default.png */,
+				A000675316290530007FADB2 /* Default@2x.png */,
+				A000675516290530007FADB2 /* Default-568h@2x.png */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		A000676A16290875007FADB2 /* CanAnimation */ = {
+			isa = PBXGroup;
+			children = (
+				A00067761629114E007FADB2 /* UIViewAdditions.h */,
+				A00067771629114E007FADB2 /* UIViewAdditions.m */,
+				A000676F16290995007FADB2 /* HNSprayView.h */,
+				A000677016290995007FADB2 /* HNSprayView.m */,
+				A0B791801629F1600048C2C4 /* HNGraffitiView.h */,
+				A0B791811629F1600048C2C4 /* HNGraffitiView.m */,
+				A0B79195162AFC6B0048C2C4 /* HNSprayCanLoadingView.h */,
+				A0B79196162AFC6B0048C2C4 /* HNSprayCanLoadingView.m */,
+			);
+			name = CanAnimation;
+			sourceTree = "<group>";
+		};
+		A0B79183162A6F5E0048C2C4 /* Sprays */ = {
+			isa = PBXGroup;
+			children = (
+				A0B7919C162B2A070048C2C4 /* spray_painting.mp3 */,
+				A0B7919A162B04D10048C2C4 /* spray_can_shake.mp3 */,
+				A0B79191162A75A50048C2C4 /* spray_can.png */,
+				A0B79193162AF9F60048C2C4 /* spray_can_with_spray.png */,
+				A0B79184162A6F5E0048C2C4 /* spray_1.png */,
+				A0B79185162A6F5E0048C2C4 /* spray_2.png */,
+				A0B79186162A6F5E0048C2C4 /* spray_3.png */,
+				A0B79187162A6F5E0048C2C4 /* spray_4.png */,
+				A0B79188162A6F5E0048C2C4 /* spray_5.png */,
+				A0B79189162A6F5E0048C2C4 /* spray_6.png */,
+			);
+			path = Sprays;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		A000673A16290530007FADB2 /* Graffiti */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A000675F16290530007FADB2 /* Build configuration list for PBXNativeTarget "Graffiti" */;
+			buildPhases = (
+				A000673716290530007FADB2 /* Sources */,
+				A000673816290530007FADB2 /* Frameworks */,
+				A000673916290530007FADB2 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Graffiti;
+			productName = Graffiti;
+			productReference = A000673B16290530007FADB2 /* Graffiti.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		A000673216290530007FADB2 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				CLASSPREFIX = DM;
+				LastUpgradeCheck = 0450;
+				ORGANIZATIONNAME = "Demetri Miller";
+			};
+			buildConfigurationList = A000673516290530007FADB2 /* Build configuration list for PBXProject "Graffiti" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+			);
+			mainGroup = A000673016290530007FADB2;
+			productRefGroup = A000673C16290530007FADB2 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A000673A16290530007FADB2 /* Graffiti */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		A000673916290530007FADB2 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A000674A16290530007FADB2 /* InfoPlist.strings in Resources */,
+				A000675216290530007FADB2 /* Default.png in Resources */,
+				A000675416290530007FADB2 /* Default@2x.png in Resources */,
+				A000675616290530007FADB2 /* Default-568h@2x.png in Resources */,
+				A000675C16290530007FADB2 /* DMViewController.xib in Resources */,
+				A0006767162907B0007FADB2 /* img.png in Resources */,
+				A000676E1629096A007FADB2 /* dot.png in Resources */,
+				4376BC4216292899004995A3 /* brush_1_texture.png in Resources */,
+				4376BC47162928A3004995A3 /* PaintViewController.xib in Resources */,
+				A0B7918A162A6F5E0048C2C4 /* spray_1.png in Resources */,
+				A0B7918B162A6F5E0048C2C4 /* spray_2.png in Resources */,
+				A0B7918C162A6F5E0048C2C4 /* spray_3.png in Resources */,
+				A0B7918D162A6F5E0048C2C4 /* spray_4.png in Resources */,
+				A0B7918E162A6F5E0048C2C4 /* spray_5.png in Resources */,
+				A0B7918F162A6F5E0048C2C4 /* spray_6.png in Resources */,
+				A0B79192162A75A50048C2C4 /* spray_can.png in Resources */,
+				A0B79194162AF9F60048C2C4 /* spray_can_with_spray.png in Resources */,
+				A0B7919B162B04D10048C2C4 /* spray_can_shake.mp3 in Resources */,
+				A0B7919D162B2A070048C2C4 /* spray_painting.mp3 in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		A000673716290530007FADB2 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A0B79190162A71B60048C2C4 /* UIImageView+AnimationAdditions.m in Sources */,
+				A000674C16290530007FADB2 /* main.m in Sources */,
+				A000675016290530007FADB2 /* DMAppDelegate.m in Sources */,
+				A000675916290530007FADB2 /* DMViewController.m in Sources */,
+				A000677816291159007FADB2 /* UIViewAdditions.m in Sources */,
+				A000677116290995007FADB2 /* HNSprayView.m in Sources */,
+				4376BC4316292899004995A3 /* PaintViewController.m in Sources */,
+				4376BC4416292899004995A3 /* SimplePaintView.m in Sources */,
+				A0B791821629F1600048C2C4 /* HNGraffitiView.m in Sources */,
+				A0B79197162AFC6B0048C2C4 /* HNSprayCanLoadingView.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		A000674816290530007FADB2 /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A000674916290530007FADB2 /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		A000675A16290530007FADB2 /* DMViewController.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				A000675B16290530007FADB2 /* en */,
+			);
+			name = DMViewController.xib;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		A000675D16290530007FADB2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				SDKROOT = iphoneos;
+			};
+			name = Debug;
+		};
+		A000675E16290530007FADB2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 6.0;
+				OTHER_CFLAGS = "-DNS_BLOCK_ASSERTIONS=1";
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A000676016290530007FADB2 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Graffiti/Graffiti-Prefix.pch";
+				INFOPLIST_FILE = "Graffiti/Graffiti-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		A000676116290530007FADB2 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "Graffiti/Graffiti-Prefix.pch";
+				INFOPLIST_FILE = "Graffiti/Graffiti-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		A000673516290530007FADB2 /* Build configuration list for PBXProject "Graffiti" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A000675D16290530007FADB2 /* Debug */,
+				A000675E16290530007FADB2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A000675F16290530007FADB2 /* Build configuration list for PBXNativeTarget "Graffiti" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A000676016290530007FADB2 /* Debug */,
+				A000676116290530007FADB2 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = A000673216290530007FADB2 /* Project object */;
+}

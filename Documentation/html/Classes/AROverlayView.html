@@ -1,0 +1,682 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="html/html; charset=utf-8" />
+		<title>AROverlayView Class Reference</title>
+		<meta id="xcode-display" name="xcode-display" content="render"/>
+		<meta name="viewport" content="width=550" />
+		<link rel="stylesheet" type="text/css" href="../css/styles.css" media="all" />
+		<link rel="stylesheet" type="text/css" media="print" href="../css/stylesPrint.css" />
+		<meta name="generator" content="appledoc 2.0.5 (build 759)" />
+	</head>
+	<body>
+		<header id="top_header">
+			<div id="library" class="hideInXcode">
+				<h1><a id="libraryTitle" href="../index.html">PARWorks iOS SDK Documentation </a></h1>
+				<a id="developerHome" href="../index.html">PARWorks, Inc.</a>
+			</div>
+			
+			<div id="title" role="banner">
+				<h1 class="hideInXcode">AROverlayView Class Reference</h1>
+			</div>
+			<ul id="headerButtons" role="toolbar">
+				<li id="toc_button">
+					<button aria-label="Show Table of Contents" role="checkbox" class="open" id="table_of_contents"><span class="disclosure"></span>Table of Contents</button>
+				</li>
+				<li id="jumpto_button" role="navigation">
+					<select id="jumpTo">
+	<option value="top">Jump To&#133;</option>
+	
+	
+	
+	
+	<option value="tasks">Tasks</option>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<option value="instance_methods">Instance Methods</option>
+	
+	<option value="//api/name/addDemoSubviewToOverlay">&nbsp;&nbsp;&nbsp;&nbsp;- addDemoSubviewToOverlay</option>
+	
+	<option value="//api/name/applyAttachmentStyleWithParent:">&nbsp;&nbsp;&nbsp;&nbsp;- applyAttachmentStyleWithParent:</option>
+	
+	<option value="//api/name/focusInParent:">&nbsp;&nbsp;&nbsp;&nbsp;- focusInParent:</option>
+	
+	<option value="//api/name/initWithFrame:points:">&nbsp;&nbsp;&nbsp;&nbsp;- initWithFrame:points:</option>
+	
+	<option value="//api/name/initWithOverlay:">&nbsp;&nbsp;&nbsp;&nbsp;- initWithOverlay:</option>
+	
+	<option value="//api/name/initWithPoints:">&nbsp;&nbsp;&nbsp;&nbsp;- initWithPoints:</option>
+	
+	<option value="//api/name/unfocusInParent:">&nbsp;&nbsp;&nbsp;&nbsp;- unfocusInParent:</option>
+	
+	
+	
+</select>
+				</li>
+			</ul>
+		</header>
+		<nav id="tocContainer" class="isShowingTOC">
+			<ul id="toc" role="tree">
+				
+
+
+
+<li role="treeitem" id="task_treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#tasks">Tasks</a></span><ul>
+	
+</ul></li>
+
+
+
+
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/addDemoSubviewToOverlay">addDemoSubviewToOverlay</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/applyAttachmentStyleWithParent:">applyAttachmentStyleWithParent:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/focusInParent:">focusInParent:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/initWithFrame:points:">initWithFrame:points:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/initWithOverlay:">initWithOverlay:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/initWithPoints:">initWithPoints:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/unfocusInParent:">unfocusInParent:</a></span></li>
+	
+</ul></li>
+
+
+			</ul>
+		</nav>
+		<article>
+			<div id="contents" class="isShowingTOC" role="main">
+				<a title="AROverlayView Class Reference" name="top"></a>
+				<div class="main-navigation navigation-top">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="header">
+					<div class="section-header">
+						<h1 class="title title-header">AROverlayView Class Reference</h1>
+					</div>		
+				</div>
+				<div id="container">	
+					
+					<div class="section section-specification"><table cellspacing="0"><tbody>
+						<tr>
+	<td class="specification-title">Inherits from</td>
+	<td class="specification-value">UIControl</td>
+</tr><tr>
+	<td class="specification-title">Declared in</td>
+	<td class="specification-value">AROverlayView.h<br />AROverlayView.m</td>
+</tr>
+						</tbody></table></div>
+					
+					
+					
+					
+					
+					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						<h2 class="subtitle subtitle-tasks">Tasks</h2>
+						
+						
+						
+						
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/initWithPoints:">&ndash;&nbsp;initWithPoints:</a></code>
+		<span class="tooltip"><p>Creates a new overlay with a frame set to the minimum bounding frame needed by the points.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/initWithFrame:points:">&ndash;&nbsp;initWithFrame:points:</a></code>
+		<span class="tooltip"><p>Creates a new overlay with the points passed.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/initWithOverlay:">&ndash;&nbsp;initWithOverlay:</a></code>
+		<span class="tooltip"><p>Creates a new overlay view using the <a href="../Classes/AROverlay.html">AROverlay</a> provided.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/focusInParent:">&ndash;&nbsp;focusInParent:</a></code>
+		<span class="tooltip"><p>Focuses the overlay, usually by enlarging it and centering it onscreen with more
+content displayed. This function can be replaced in subclasses to perform other behaviors
+when an overlay view is clicked.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/unfocusInParent:">&ndash;&nbsp;unfocusInParent:</a></code>
+		<span class="tooltip"><p>Unfocuses the overlay, usually returning it to it&rsquo;s state on top of the augmented image.
+This function can be replaced in subclasses to customize the behavior of the overlay view.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/applyAttachmentStyleWithParent:">&ndash;&nbsp;applyAttachmentStyleWithParent:</a></code>
+		<span class="tooltip"><p>Apply the current overlay attachment style transforming and positioning</p>
+
+<pre><code>it as needed.
+</code></pre></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/addDemoSubviewToOverlay">&ndash;&nbsp;addDemoSubviewToOverlay</a></code>
+		<span class="tooltip"><p>Adds a nyancat web view within the overlay. Useful for testing empty overlays.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+					</div>
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Instance Methods" name="instance_methods"></a>
+						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/addDemoSubviewToOverlay" title="addDemoSubviewToOverlay"></a>
+	<h3 class="subsubtitle method-title">addDemoSubviewToOverlay</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Adds a nyancat web view within the overlay. Useful for testing empty overlays.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)addDemoSubviewToOverlay</code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Adds a nyancat web view within the overlay. Useful for testing empty overlays.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">AROverlayView.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/applyAttachmentStyleWithParent:" title="applyAttachmentStyleWithParent:"></a>
+	<h3 class="subsubtitle method-title">applyAttachmentStyleWithParent:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Apply the current overlay attachment style transforming and positioning</p>
+
+<pre><code>it as needed.
+</code></pre>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)applyAttachmentStyleWithParent:(ARAugmentedView *)<em>parent</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>parent</em></dt>
+			<dd><p>The parent <a href="../Classes/ARAugmentedView.html">ARAugmentedView</a> that transforms should be applied relative to.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Apply the current overlay attachment style transforming and positioning</p>
+
+<pre><code>it as needed.
+</code></pre>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">AROverlayView.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/focusInParent:" title="focusInParent:"></a>
+	<h3 class="subsubtitle method-title">focusInParent:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Focuses the overlay, usually by enlarging it and centering it onscreen with more
+content displayed. This function can be replaced in subclasses to perform other behaviors
+when an overlay view is clicked.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)focusInParent:(ARAugmentedView *)<em>parent</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>The</em></dt>
+			<dd><p><a href="../Classes/ARAugmentedView.html">ARAugmentedView</a> that the overlay is being presented in.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Focuses the overlay, usually by enlarging it and centering it onscreen with more
+content displayed. This function can be replaced in subclasses to perform other behaviors
+when an overlay view is clicked.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">AROverlayView.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/initWithFrame:points:" title="initWithFrame:points:"></a>
+	<h3 class="subsubtitle method-title">initWithFrame:points:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Creates a new overlay with the points passed.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (id)initWithFrame:(CGRect)<em>frame</em> points:(NSArray *)<em>points</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>frame</em></dt>
+			<dd><ul>
+<li>The frame for the view when it has no transforms applied to it.
+                  It is recommended to set the frame such that it is smaller than the
+                  bounds of the image that will be displayed.</li>
+</ul>
+</dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>points</em></dt>
+			<dd><ul>
+<li>The unscaled coordinates for the overlay in its superview.</li>
+</ul>
+</dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Creates a new overlay with the points passed.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">AROverlayView.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/initWithOverlay:" title="initWithOverlay:"></a>
+	<h3 class="subsubtitle method-title">initWithOverlay:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Creates a new overlay view using the <a href="../Classes/AROverlay.html">AROverlay</a> provided.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (id)initWithOverlay:(AROverlay *)<em>model</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>model</em></dt>
+			<dd><p>The overlay that this <a href="AROverlayView.html">AROverlayView</a> will display.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Creates a new overlay view using the <a href="../Classes/AROverlay.html">AROverlay</a> provided.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">AROverlayView.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/initWithPoints:" title="initWithPoints:"></a>
+	<h3 class="subsubtitle method-title">initWithPoints:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Creates a new overlay with a frame set to the minimum bounding frame needed by the points.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (id)initWithPoints:(NSArray *)<em>points</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>points</em></dt>
+			<dd><ul>
+<li>The unscaled coordinates for the overlay in its superview.</li>
+</ul>
+</dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Creates a new overlay with a frame set to the minimum bounding frame needed by the points.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">AROverlayView.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/unfocusInParent:" title="unfocusInParent:"></a>
+	<h3 class="subsubtitle method-title">unfocusInParent:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Unfocuses the overlay, usually returning it to it&rsquo;s state on top of the augmented image.
+This function can be replaced in subclasses to customize the behavior of the overlay view.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)unfocusInParent:(ARAugmentedView *)<em>parent</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>The</em></dt>
+			<dd><p><a href="../Classes/ARAugmentedView.html">ARAugmentedView</a> that the overlay is being presented in.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Unfocuses the overlay, usually returning it to it&rsquo;s state on top of the augmented image.
+This function can be replaced in subclasses to customize the behavior of the overlay view.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">AROverlayView.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+				</div>
+				<div class="main-navigation navigation-bottom">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="footer">
+					<hr />
+					<div class="footer-copyright">
+						<p><span class="copyright">&copy; 2012 PARWorks, Inc.. All rights reserved. (Last updated: 2012-11-01)</span><br />
+						
+						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.0.5 (build 759)</a>.</span></p>
+						
+					</div>
+				</div>
+			</div>
+		</article>
+		<script type="text/javascript">
+			function jumpToChange()
+			{
+				window.location.hash = this.options[this.selectedIndex].value;
+			}
+			
+			function toggleTOC()
+			{
+				var contents = document.getElementById('contents');
+				var tocContainer = document.getElementById('tocContainer');
+				
+				if (this.getAttribute('class') == 'open')
+				{
+					this.setAttribute('class', '');
+					contents.setAttribute('class', '');
+					tocContainer.setAttribute('class', '');
+					
+					window.name = "hideTOC";
+				}
+				else
+				{
+					this.setAttribute('class', 'open');
+					contents.setAttribute('class', 'isShowingTOC');
+					tocContainer.setAttribute('class', 'isShowingTOC');
+					
+					window.name = "";
+				}
+				return false;
+			}
+			
+			function toggleTOCEntryChildren(e)
+			{
+				e.stopPropagation();
+				var currentClass = this.getAttribute('class');
+				if (currentClass == 'children') {
+					this.setAttribute('class', 'children open');
+				}
+				else if (currentClass == 'children open') {
+					this.setAttribute('class', 'children');
+				}
+				return false;
+			}
+			
+			function tocEntryClick(e)
+			{
+				e.stopPropagation();
+				return true;
+			}
+			
+			function init()
+			{
+				var selectElement = document.getElementById('jumpTo');
+				selectElement.addEventListener('change', jumpToChange, false);
+				
+				var tocButton = document.getElementById('table_of_contents');
+				tocButton.addEventListener('click', toggleTOC, false);
+				
+				var taskTreeItem = document.getElementById('task_treeitem');
+				if (taskTreeItem.getElementsByTagName('li').length > 0)
+				{
+					taskTreeItem.setAttribute('class', 'children');
+					taskTreeItem.firstChild.setAttribute('class', 'disclosure');
+				}
+				
+				var tocList = document.getElementById('toc');
+				
+				var tocEntries = tocList.getElementsByTagName('li');
+				for (var i = 0; i < tocEntries.length; i++) {
+					tocEntries[i].addEventListener('click', toggleTOCEntryChildren, false);
+				}
+				
+				var tocLinks = tocList.getElementsByTagName('a');
+				for (var i = 0; i < tocLinks.length; i++) {
+					tocLinks[i].addEventListener('click', tocEntryClick, false);
+				}
+				
+				if (window.name == "hideTOC") {
+					toggleTOC.call(tocButton);
+				}
+			}
+			
+			window.onload = init;
+		</script>
+	</body>
+</html>

@@ -1,0 +1,17 @@
+/.DS_Store
+/Demos/SIDemo/build
+/Demos/SIDemo/DerivedData
+/Demos/HackNash/build
+/Demos/HackNash/DerivedData
+/Demos/Graffiti/build
+/Demos/Graffiti/DerivedData
+/Demos/Graffiti/.DS_Store
+/Demos/HackNash/.DS_Store
+/Demos/SIDemo/.DS_Store
+/SDK/build
+/SDK/DerivedData
+/SDK/.DS_Store
+/SDK/PARWorks iOS.xcodeproj/xcuserdata
+/Demos/Graffiti/Graffiti.xcodeproj/xcuserdata
+/Demos/HackNash/HackNash.xcodeproj/xcuserdata
+/Demos/SIDemo/SIDemo.xcodeproj/xcuserdata
