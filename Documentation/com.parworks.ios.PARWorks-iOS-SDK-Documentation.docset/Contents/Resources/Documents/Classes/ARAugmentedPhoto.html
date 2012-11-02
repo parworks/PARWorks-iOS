@@ -1,0 +1,570 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="html/html; charset=utf-8" />
+		<title>ARAugmentedPhoto Class Reference</title>
+		<meta id="xcode-display" name="xcode-display" content="render"/>
+		<meta name="viewport" content="width=550" />
+		<link rel="stylesheet" type="text/css" href="../css/styles.css" media="all" />
+		<link rel="stylesheet" type="text/css" media="print" href="../css/stylesPrint.css" />
+		<meta name="generator" content="appledoc 2.0.5 (build 759)" />
+	</head>
+	<body>
+		<header id="top_header">
+			<div id="library" class="hideInXcode">
+				<h1><a id="libraryTitle" href="../index.html">PARWorks iOS SDK Documentation </a></h1>
+				<a id="developerHome" href="../index.html">PARWorks, Inc.</a>
+			</div>
+			
+			<div id="title" role="banner">
+				<h1 class="hideInXcode">ARAugmentedPhoto Class Reference</h1>
+			</div>
+			<ul id="headerButtons" role="toolbar">
+				<li id="toc_button">
+					<button aria-label="Show Table of Contents" role="checkbox" class="open" id="table_of_contents"><span class="disclosure"></span>Table of Contents</button>
+				</li>
+				<li id="jumpto_button" role="navigation">
+					<select id="jumpTo">
+	<option value="top">Jump To&#133;</option>
+	
+	
+	
+	
+	<option value="tasks">Tasks</option>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<option value="instance_methods">Instance Methods</option>
+	
+	<option value="//api/name/initWithImage:">&nbsp;&nbsp;&nbsp;&nbsp;- initWithImage:</option>
+	
+	<option value="//api/name/initWithImageFile:andPMFile:">&nbsp;&nbsp;&nbsp;&nbsp;- initWithImageFile:andPMFile:</option>
+	
+	<option value="//api/name/process">&nbsp;&nbsp;&nbsp;&nbsp;- process</option>
+	
+	<option value="//api/name/processJSONData:">&nbsp;&nbsp;&nbsp;&nbsp;- processJSONData:</option>
+	
+	<option value="//api/name/processPMData:">&nbsp;&nbsp;&nbsp;&nbsp;- processPMData:</option>
+	
+	
+	
+</select>
+				</li>
+			</ul>
+		</header>
+		<nav id="tocContainer" class="isShowingTOC">
+			<ul id="toc" role="tree">
+				
+
+
+
+<li role="treeitem" id="task_treeitem"><span class="nodisclosure"></span><span class="sectionName"><a href="#tasks">Tasks</a></span><ul>
+	
+</ul></li>
+
+
+
+
+
+
+
+
+
+<li role="treeitem" class="children"><span class="disclosure"></span><span class="sectionName"><a href="#instance_methods">Instance Methods</a></span><ul>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/initWithImage:">initWithImage:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/initWithImageFile:andPMFile:">initWithImageFile:andPMFile:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/process">process</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/processJSONData:">processJSONData:</a></span></li>
+	
+	<li><span class="nodisclosure"></span><span class="sectionName"><a href="#//api/name/processPMData:">processPMData:</a></span></li>
+	
+</ul></li>
+
+
+			</ul>
+		</nav>
+		<article>
+			<div id="contents" class="isShowingTOC" role="main">
+				<a title="ARAugmentedPhoto Class Reference" name="top"></a>
+				<div class="main-navigation navigation-top">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="header">
+					<div class="section-header">
+						<h1 class="title title-header">ARAugmentedPhoto Class Reference</h1>
+					</div>		
+				</div>
+				<div id="container">	
+					
+					<div class="section section-specification"><table cellspacing="0"><tbody>
+						<tr>
+	<td class="specification-title">Inherits from</td>
+	<td class="specification-value">NSObject</td>
+</tr><tr>
+	<td class="specification-title">Conforms to</td>
+	<td class="specification-value">GridCellViewDataProvider<br />NSCoding</td>
+</tr><tr>
+	<td class="specification-title">Declared in</td>
+	<td class="specification-value">ARAugmentedPhoto.h<br />ARAugmentedPhoto.m</td>
+</tr>
+						</tbody></table></div>
+					
+					
+					
+					
+					
+					
+					<div class="section section-tasks">
+						<a title="Tasks" name="tasks"></a>
+						<h2 class="subtitle subtitle-tasks">Tasks</h2>
+						
+						
+						
+						
+
+						<ul class="task-list">
+							<li>
+	<span class="tooltip">
+		<code><a href="#//api/name/initWithImage:">&ndash;&nbsp;initWithImage:</a></code>
+		<span class="tooltip"><p>Initializes a new <a href="ARAugmentedPhoto.html">ARAugmentedPhoto</a> ready for processing.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/initWithImageFile:andPMFile:">&ndash;&nbsp;initWithImageFile:andPMFile:</a></code>
+		<span class="tooltip"><p>Initializes a new <a href="ARAugmentedPhoto.html">ARAugmentedPhoto</a> that has already been processed and saved
+to disk elsewhere as two separate files.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/process">&ndash;&nbsp;process</a></code>
+		<span class="tooltip"><p>Begins the processing procedue by uploading the photo to the server, creating
+  a new work task, and setting up a timer to periodically check for results. This method
+  returns immediately but the <a href="#//api/name/process">process</a> of augmenting an image is asynchrnous. To listen
+  for results, implement an NSNotificationCenter observer for the
+  NOTIF_AUGMENTED_PHOTO_UPDATED notification with the <a href="ARAugmentedPhoto.html">ARAugmentedPhoto</a> instance as the
+  notification object.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/processJSONData:">&ndash;&nbsp;processJSONData:</a></code>
+		<span class="tooltip"><p>Processes the JSON response from the server into overlays.</p></span>
+	</span>
+	
+	
+</li><li>
+	<span class="tooltip">
+		<code><a href="#//api/name/processPMData:">&ndash;&nbsp;processPMData:</a></code>
+		<span class="tooltip"><p>Processes the .pm data received from the server or loaded from a file into overlays.</p></span>
+	</span>
+	
+	
+</li>
+						</ul>
+						
+					</div>
+					
+					
+					
+					
+					
+					
+					
+					
+					
+					<div class="section section-methods">
+						<a title="Instance Methods" name="instance_methods"></a>
+						<h2 class="subtitle subtitle-methods">Instance Methods</h2>
+						
+						<div class="section-method">
+	<a name="//api/name/initWithImage:" title="initWithImage:"></a>
+	<h3 class="subsubtitle method-title">initWithImage:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Initializes a new <a href="ARAugmentedPhoto.html">ARAugmentedPhoto</a> ready for processing.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (id)initWithImage:(UIImage *)<em>i</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>i</em></dt>
+			<dd><ul>
+<li>The UIImage that should be augmented.</li>
+</ul>
+</dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>A newly initialized <a href="ARAugmentedPhoto.html">ARAugmentedPhoto</a> instance</p>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Initializes a new <a href="ARAugmentedPhoto.html">ARAugmentedPhoto</a> ready for processing.</p><div class="warning"><p>This method should not be called directly. Use methods in the <a href="../Classes/ARManager.html">ARManager</a>
+or <a href="../Classes/ARSite.html">ARSite</a> classes to create new ARAugmentedPhotos.</p></div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">ARAugmentedPhoto.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/initWithImageFile:andPMFile:" title="initWithImageFile:andPMFile:"></a>
+	<h3 class="subsubtitle method-title">initWithImageFile:andPMFile:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Initializes a new <a href="ARAugmentedPhoto.html">ARAugmentedPhoto</a> that has already been processed and saved
+to disk elsewhere as two separate files.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (id)initWithImageFile:(NSString *)<em>iPath</em> andPMFile:(NSString *)<em>pmPath</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>iPath</em></dt>
+			<dd><p>The path to the image file</p></dd>
+		</dl>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>pmPath</em></dt>
+			<dd><p>The path to the file containing information about overlays
+and camera perspective written in the .pm file format.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	<div class="method-subsection return">
+		<h4 class="method-subtitle parameter-title">Return Value</h4>
+		<p>A newly initialized <a href="ARAugmentedPhoto.html">ARAugmentedPhoto</a> instance</p>
+	</div>
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Initializes a new <a href="ARAugmentedPhoto.html">ARAugmentedPhoto</a> that has already been processed and saved
+to disk elsewhere as two separate files.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">ARAugmentedPhoto.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/process" title="process"></a>
+	<h3 class="subsubtitle method-title">process</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Begins the processing procedue by uploading the photo to the server, creating
+  a new work task, and setting up a timer to periodically check for results. This method
+  returns immediately but the <a href="#//api/name/process">process</a> of augmenting an image is asynchrnous. To listen
+  for results, implement an NSNotificationCenter observer for the
+  NOTIF_AUGMENTED_PHOTO_UPDATED notification with the <a href="ARAugmentedPhoto.html">ARAugmentedPhoto</a> instance as the
+  notification object.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)process</code></div>
+	
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Begins the processing procedue by uploading the photo to the server, creating
+  a new work task, and setting up a timer to periodically check for results. This method
+  returns immediately but the <a href="#//api/name/process">process</a> of augmenting an image is asynchrnous. To listen
+  for results, implement an NSNotificationCenter observer for the
+  NOTIF_AUGMENTED_PHOTO_UPDATED notification with the <a href="ARAugmentedPhoto.html">ARAugmentedPhoto</a> instance as the
+  notification object.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">ARAugmentedPhoto.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/processJSONData:" title="processJSONData:"></a>
+	<h3 class="subsubtitle method-title">processJSONData:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Processes the JSON response from the server into overlays.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)processJSONData:(NSDictionary *)<em>data</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>data</em></dt>
+			<dd><p>The JSON dictionary that you would like to <a href="#//api/name/process">process</a> to populate the overlays array.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Processes the JSON response from the server into overlays.</p>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">ARAugmentedPhoto.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+						<div class="section-method">
+	<a name="//api/name/processPMData:" title="processPMData:"></a>
+	<h3 class="subsubtitle method-title">processPMData:</h3>
+	
+	
+	
+	<div class="method-subsection brief-description">
+		<p>Processes the .pm data received from the server or loaded from a file into overlays.</p>
+	</div>		
+	
+	
+	<div class="method-subsection method-declaration"><code>- (void)processPMData:(NSString *)<em>data</em></code></div>
+	
+	
+	<div class="method-subsection arguments-section parameters">
+		<h4 class="method-subtitle parameter-title">Parameters</h4>
+		
+		<dl class="argument-def parameter-def">
+			<dt><em>data</em></dt>
+			<dd><p>The string data that you would like to <a href="#//api/name/process">process</a> to populate the overlays array.</p></dd>
+		</dl>
+		
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection discussion-section">
+		<h4 class="method-subtitle">Discussion</h4>
+		<p>Processes the .pm data received from the server or loaded from a file into overlays.</p><div class="warning"><p>This format is deprecated.</p></div><div class="warning"><p>This function may be called directly if you are loading .pm files from disk,
+  but you should consider using the <a href="#//api/name/initWithImageFile:andPMFile:">initWithImageFile:andPMFile:</a> method instead.</p></div>
+	</div>
+	
+	
+	
+	
+	
+	
+	
+	<div class="method-subsection declared-in-section">
+		<h4 class="method-subtitle">Declared In</h4>
+		<code class="declared-in-ref">ARAugmentedPhoto.h</code><br />
+	</div>				
+	
+	
+</div>
+						
+					</div>
+					
+					
+				</div>
+				<div class="main-navigation navigation-bottom">
+					<ul>
+	<li><a href="../index.html">Index</a></li>
+	<li><a href="../hierarchy.html">Hierarchy</a></li>
+</ul>
+				</div>
+				<div id="footer">
+					<hr />
+					<div class="footer-copyright">
+						<p><span class="copyright">&copy; 2012 PARWorks, Inc.. All rights reserved. (Last updated: 2012-11-02)</span><br />
+						
+						<span class="generator">Generated by <a href="http://appledoc.gentlebytes.com">appledoc 2.0.5 (build 759)</a>.</span></p>
+						
+					</div>
+				</div>
+			</div>
+		</article>
+		<script type="text/javascript">
+			function jumpToChange()
+			{
+				window.location.hash = this.options[this.selectedIndex].value;
+			}
+			
+			function toggleTOC()
+			{
+				var contents = document.getElementById('contents');
+				var tocContainer = document.getElementById('tocContainer');
+				
+				if (this.getAttribute('class') == 'open')
+				{
+					this.setAttribute('class', '');
+					contents.setAttribute('class', '');
+					tocContainer.setAttribute('class', '');
+					
+					window.name = "hideTOC";
+				}
+				else
+				{
+					this.setAttribute('class', 'open');
+					contents.setAttribute('class', 'isShowingTOC');
+					tocContainer.setAttribute('class', 'isShowingTOC');
+					
+					window.name = "";
+				}
+				return false;
+			}
+			
+			function toggleTOCEntryChildren(e)
+			{
+				e.stopPropagation();
+				var currentClass = this.getAttribute('class');
+				if (currentClass == 'children') {
+					this.setAttribute('class', 'children open');
+				}
+				else if (currentClass == 'children open') {
+					this.setAttribute('class', 'children');
+				}
+				return false;
+			}
+			
+			function tocEntryClick(e)
+			{
+				e.stopPropagation();
+				return true;
+			}
+			
+			function init()
+			{
+				var selectElement = document.getElementById('jumpTo');
+				selectElement.addEventListener('change', jumpToChange, false);
+				
+				var tocButton = document.getElementById('table_of_contents');
+				tocButton.addEventListener('click', toggleTOC, false);
+				
+				var taskTreeItem = document.getElementById('task_treeitem');
+				if (taskTreeItem.getElementsByTagName('li').length > 0)
+				{
+					taskTreeItem.setAttribute('class', 'children');
+					taskTreeItem.firstChild.setAttribute('class', 'disclosure');
+				}
+				
+				var tocList = document.getElementById('toc');
+				
+				var tocEntries = tocList.getElementsByTagName('li');
+				for (var i = 0; i < tocEntries.length; i++) {
+					tocEntries[i].addEventListener('click', toggleTOCEntryChildren, false);
+				}
+				
+				var tocLinks = tocList.getElementsByTagName('a');
+				for (var i = 0; i < tocLinks.length; i++) {
+					tocLinks[i].addEventListener('click', tocEntryClick, false);
+				}
+				
+				if (window.name == "hideTOC") {
+					toggleTOC.call(tocButton);
+				}
+			}
+			
+			window.onload = init;
+		</script>
+	</body>
+</html>
