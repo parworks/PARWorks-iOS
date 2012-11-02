@@ -1,5 +1,0 @@
-xcode format:
-appledoc --include ./Documentation/. --index-desc ./Documentation/index-template.txt -o ./ -p "PARWorks iOS SDK Documentation" -v 1.0 -c "PARWorks, Inc." --company-id com.parworks.ios -d -n --docset-bundle-id com.parworks.ios  --docset-bundle-name "PARWorks iOS SDK Documentation"  --ignore=JSON --docset-copyright 2012 ./SDK/AR\ Core/.
-
-html format:
-appledoc --include ./Documentation/. --no-create-docset --index-desc ./Documentation/index-template.txt -o ./ -p "PARWorks iOS SDK Documentation" -v 1.0 -c "PARWorks, Inc." --company-id com.parworks.ios --ignore=JSON ./SDK/AR\ Core/.
