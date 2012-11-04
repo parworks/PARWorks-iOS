@@ -1,6 +1,6 @@
 //
 //  ARManager.m
-//  PARWorks iOS SDK
+//  PAR Works iOS SDK
 //
 //  Copyright 2012 PAR Works, Inc.
 //
@@ -208,7 +208,7 @@ static ARManager * sharedManager;
         [args setObject:[NSString stringWithFormat: @"%f", [[ARManager shared] deviceLocation].coordinate.longitude] forKey:@"lon"];
     }
 
-    ASIHTTPRequest * req = [self createRequest:REQ_SITE_ADD withMethod:@"GET" withArguments: args];
+    ASIHTTPRequest * req = [self createRequest:REQ_SITE_ADD withMethod:@"PUT" withArguments: args];
     ASIHTTPRequest * __weak weak = req;
     [req setCompletionBlock: ^(void) {
         [self handleResponseErrors: weak];

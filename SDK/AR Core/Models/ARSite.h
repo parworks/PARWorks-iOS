@@ -1,6 +1,6 @@
 //
 //  ARSite.h
-//  PARWorks iOS SDK
+//  PAR Works iOS SDK
 //
 //  Copyright 2012 PAR Works, Inc.
 //
@@ -26,7 +26,8 @@ typedef enum ARSiteStatus {
     ARSiteStatusNotProcessed = 0,
     ARSiteStatusProcessing = 1,
     ARSiteStatusProcessingFailed = 2,
-    ARSiteStatusProcessed = 3
+    ARSiteStatusProcessed = 3,
+    ARSiteStatusCreating = 4
 } ARSiteStatus;
     
 @interface ARSite : NSObject <NSCoding>

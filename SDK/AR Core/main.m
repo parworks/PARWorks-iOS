@@ -1,6 +1,6 @@
 //
 //  main.m
-//  PARWorks iOS SDK
+//  PAR Works iOS SDK
 //
 //  Created by Ben Gotow on 8/21/12.
 //  Copyright (c) 2012 Ben Gotow. All rights reserved.

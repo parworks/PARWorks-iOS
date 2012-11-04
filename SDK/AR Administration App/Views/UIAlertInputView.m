@@ -1,6 +1,6 @@
 //
 //  UIModalSaveView.m
-//  PARWorks iOS SDK
+//  PAR Works iOS SDK
 //
 //  Copyright 2012 PAR Works, Inc.
 //

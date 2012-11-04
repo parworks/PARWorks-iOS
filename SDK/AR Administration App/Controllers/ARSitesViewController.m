@@ -1,6 +1,6 @@
 //
 //  ARSitesViewController.m
-//  PARWorks iOS SDK
+//  PAR Works iOS SDK
 //
 //  Copyright 2012 PAR Works, Inc.
 //
@@ -20,9 +20,9 @@
 
 #import "ARSitesViewController.h"
 #import "ARAppDelegate.h"
-#import "HDAR.h"
 #import "ARSiteImagesViewController.h"
 #import "ASIHTTPRequest+JSONAdditions.h"
+#import "PARWorks.h"
 
 #define ADD_EXISTING    0
 #define ADD_NEW         1
@@ -126,7 +126,10 @@
     [s setIdentifier: [view textValue]];
 
     if ([view tag] == ADD_NEW)
-        [[ARManager shared] addSite: [s identifier] withCompletionBlock:NULL];
+        [[ARManager shared] addSite: [s identifier] withCompletionBlock: ^(void) {
+            [s setStatus: ARSiteStatusNotProcessed];
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object:s];
+        }];
 
     [delegate addSite: s];
     [_tableView reloadData];
@@ -194,7 +197,8 @@
     ARAppDelegate * d = (ARAppDelegate *)[[UIApplication sharedApplication] delegate];
     ARSite * site = [[d sites] objectAtIndex: [indexPath row]];
     ARSiteImagesViewController * vc = [[ARSiteImagesViewController alloc] initWithSite: site];
-    [self.navigationController pushViewController: vc animated:YES];
+    if ([site status] != ARSiteStatusCreating)
+        [self.navigationController pushViewController: vc animated:YES];
 }
 
 @end

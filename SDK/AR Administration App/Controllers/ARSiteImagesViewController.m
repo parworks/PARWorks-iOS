@@ -1,6 +1,6 @@
 //
 //  ARSiteImagesViewController.m
-//  PARWorks iOS SDK
+//  PAR Works iOS SDK
 //
 //  Copyright 2012 PAR Works, Inc.
 //
@@ -20,7 +20,7 @@
 
 #import "ARSiteImagesViewController.h"
 #import "ARPhotoViewController.h"
-#import "HDAR.h"
+#import "PARWorks.h"
 
 @implementation ARSiteImagesViewController
 
@@ -55,6 +55,9 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver: self];
     [self setGridView:nil];
+    [self setCameraCaptureButton:nil];
+    [self setCameraDoneButton:nil];
+    [self setCameraOverlayView:nil];
     [super viewDidUnload];
 }
 
@@ -98,6 +101,8 @@
     
     _picker = [[UIImagePickerController alloc] init];
     [_picker setDelegate: self];
+    [_picker setSourceType: UIImagePickerControllerSourceTypeCamera];
+    [_picker setCameraOverlayView: _cameraOverlayView];
 
     if ((buttonIndex != 2) && ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera]))
         _picker.sourceType = UIImagePickerControllerSourceTypeCamera;
@@ -107,10 +112,19 @@
     [self presentModalViewController: _picker animated:YES];
 }
 
+- (void)takePicture:(id)sender
+{
+    [_picker takePicture];
+}
+
+- (IBAction)doneTakingPictures:(id)sender
+{
+    [self dismissModalViewControllerAnimated: YES];
+}
+
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     UIImage * img = [info objectForKey: UIImagePickerControllerOriginalImage];
-    [self dismissModalViewControllerAnimated: YES];
 
     if (_imageIsSiteImage) {
         [_site addImage: img];

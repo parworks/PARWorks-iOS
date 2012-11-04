@@ -1,6 +1,6 @@
 //
 //  ARSiteImagesViewController.h
-//  PARWorks iOS SDK
+//  PAR Works iOS SDK
 //
 //  Copyright 2012 PAR Works, Inc.
 //
@@ -30,11 +30,17 @@
 
 @property (strong, nonatomic) ARSite * site;
 @property (strong, nonatomic) IBOutlet GridView *gridView;
+@property (weak, nonatomic) IBOutlet UIButton *cameraCaptureButton;
+@property (weak, nonatomic) IBOutlet UIButton *cameraDoneButton;
+@property (strong, nonatomic) IBOutlet UIView *cameraOverlayView;
 
 - (id)initWithSite:(ARSite*)s;
 
 - (BOOL)isLoadingForGridView:(GridView*)gv;
 - (NSArray*)objectCollectionForGridView:(GridView*)gv;
 - (void)object:(id)obj selectedInGridView:(GridView*)gv;
+
+- (IBAction)takePicture:(id)sender;
+- (IBAction)doneTakingPictures:(id)sender;
 
 @end

@@ -1,6 +1,6 @@
 //
 //  ARSite.m
-//  PARWorks iOS SDK
+//  PAR Works iOS SDK
 //
 //  Copyright 2012 PAR Works, Inc.
 //
@@ -115,8 +115,10 @@
         
     if (_invalid)
         return @"Site Invalid";
-    else
+    else if (_status != ARSiteStatusCreating)
         return [NSString stringWithFormat: @"%d 🗻, %d 📌 - %@", [[self images] count], [[self availableOverlays] count], s];
+    else
+        return @"Creating site...";
 }
 
 - (NSMutableArray*)images

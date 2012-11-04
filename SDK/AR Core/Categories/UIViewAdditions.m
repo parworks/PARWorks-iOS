@@ -1,6 +1,6 @@
 //
 //  UIViewAdditions.m
-//  PARWorks iOS SDK
+//  PAR Works iOS SDK
 //
 //  This class contains convenience functions for manipulating the frame of a view,
 //  just to make things a little bit cleaner. (Plus, you can't beat Obj-C categories)
