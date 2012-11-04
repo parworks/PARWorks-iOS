@@ -1,6 +1,6 @@
 //
-//  ARSitesViewController.h
-//  PAR Works iOS SDK
+//  GRAppDelegate.h
+//  Graffiti
 //
 //  Copyright 2012 PAR Works, Inc.
 //
@@ -19,15 +19,18 @@
 
 
 #import <UIKit/UIKit.h>
-#import "UIAlertInputView.h"
 
-@interface ARSitesViewController : UIViewController <UIActionSheetDelegate, UIAlertInputViewDelegate, UITableViewDataSource, UITableViewDelegate>
-{
-    
-    NSArray *_currentUserSites;
-}
+@class GRViewController;
 
-@property (nonatomic, weak) IBOutlet UITableView * tableView;
-@property (weak, nonatomic) IBOutlet UILabel *apiKeyLabel;
+typedef void(^GraffitiRetrievalBlock)(UIImage *image);
+
+@interface GRAppDelegate : UIResponder <UIApplicationDelegate>
+
+@property (strong, nonatomic) UIWindow *window;
+
+@property (strong, nonatomic) GRViewController *viewController;
+
+- (void)saveGraffiti:(UIImage*)img forSite:(NSString*)sitename;
+- (void)getGraffitiForSite:(NSString*)sitename withCompletionBlock:(GraffitiRetrievalBlock)block;
 
 @end

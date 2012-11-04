@@ -1,6 +1,6 @@
 //
-//  ARSitesViewController.h
-//  PAR Works iOS SDK
+//  DMColorPickerView.h
+//  Graffiti
 //
 //  Copyright 2012 PAR Works, Inc.
 //
@@ -19,15 +19,20 @@
 
 
 #import <UIKit/UIKit.h>
-#import "UIAlertInputView.h"
 
-@interface ARSitesViewController : UIViewController <UIActionSheetDelegate, UIAlertInputViewDelegate, UITableViewDataSource, UITableViewDelegate>
+#import "DMBrightSatPicker.h"
+#import "RSColorPickerView.h"
+
+@class DMColorPickerMask;
+@class DMColorPickerView;
+
+@interface DMColorPickerView : UIView  <DMBrightSatPickerDelegate, RSColorPickerViewDelegate>
 {
-    
-    NSArray *_currentUserSites;
+    DMBrightSatPicker   *_brightSatPicker;
+    RSColorPickerView   *_huePicker;
+    DMColorPickerMask   *_hueMask;
 }
 
-@property (nonatomic, weak) IBOutlet UITableView * tableView;
-@property (weak, nonatomic) IBOutlet UILabel *apiKeyLabel;
+@property(nonatomic, readonly) UIColor *currentColor;
 
 @end

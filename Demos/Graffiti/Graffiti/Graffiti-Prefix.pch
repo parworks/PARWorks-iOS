@@ -1,3 +1,4 @@
+
 //
 // Prefix header for all source files of the 'Graffiti' target in the 'Graffiti' project
 //
@@ -10,8 +11,15 @@
 
 #ifdef __OBJC__
     #import <AVFoundation/AVFoundation.h>
-    #import <UIKit/UIKit.h>
+    #import <CoreLocation/CoreLocation.h>
     #import <Foundation/Foundation.h>
     #import <QuartzCore/QuartzCore.h>
-    #import "UIViewAdditions.h"
+    #import <UIKit/UIKit.h>
+
+    #import "ASIHTTPRequest.h"
+    #import "PARWorks.h"
+    #import "UIView+Layout.h"
+
+    #define BROKEN_API 1
+
 #endif

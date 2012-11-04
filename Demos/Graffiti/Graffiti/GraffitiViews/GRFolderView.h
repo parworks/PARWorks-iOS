@@ -1,6 +1,6 @@
 //
-//  ARSitesViewController.h
-//  PAR Works iOS SDK
+//  GRColorPickerFolderView.h
+//  Graffiti
 //
 //  Copyright 2012 PAR Works, Inc.
 //
@@ -19,15 +19,21 @@
 
 
 #import <UIKit/UIKit.h>
-#import "UIAlertInputView.h"
 
-@interface ARSitesViewController : UIViewController <UIActionSheetDelegate, UIAlertInputViewDelegate, UITableViewDataSource, UITableViewDelegate>
-{
-    
-    NSArray *_currentUserSites;
-}
+#import "GRFolderButton.h"
+#import "UIView+Layout.h"
 
-@property (nonatomic, weak) IBOutlet UITableView * tableView;
-@property (weak, nonatomic) IBOutlet UILabel *apiKeyLabel;
+@class GRFolderButton;
 
+@interface GRFolderView : UIView
+
+@property(nonatomic, strong) GRFolderButton *folderButton;
+@property(nonatomic, assign, getter = isShowing) BOOL showing;
+
+/// Lifecycle
+- (id)initWithButtonOffsetY:(CGFloat)offsetY image:(UIImage *)image frame:(CGRect)frame;
+
+
+- (void)showInParent:(UIView *)view animated:(BOOL)animated;
+- (void)hideInParent:(UIView *)view animated:(BOOL)animated;
 @end

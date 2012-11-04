@@ -231,6 +231,22 @@ static ARManager * sharedManager;
     [req startAsynchronous];
 }
 
+- (void)sitesForCurrentAPIKey:(void (^)(NSArray *sites))completionBlock
+{
+    if (completionBlock)
+        [completionBlock copy];
+    
+    ASIHTTPRequest *req = [self createRequest:REQ_SITE_LIST withMethod:@"GET" withArguments:nil];
+    ASIHTTPRequest * __weak blockReq = req;
+    [req setCompletionBlock: ^(void) {
+        [self handleResponseErrors: blockReq];
+        NSArray *sites = [[blockReq responseJSON] objectForKey:@"sites"];
+        if (completionBlock)
+            completionBlock(sites);
+    }];
+    [req startAsynchronous];
+}
+
 - (void)findNearbySites:(int)resolution withCompletionBlock:(void (^)(NSArray *))completionBlock
 {
     if (!_locationEnabled)

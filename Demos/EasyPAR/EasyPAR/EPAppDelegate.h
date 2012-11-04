@@ -1,6 +1,6 @@
 //
-//  ARSitesViewController.h
-//  PAR Works iOS SDK
+//  EPAppDelegate.h
+//  EasyPAR
 //
 //  Copyright 2012 PAR Works, Inc.
 //
@@ -17,17 +17,14 @@
 //  limitations under the License.
 //
 
-
 #import <UIKit/UIKit.h>
-#import "UIAlertInputView.h"
 
-@interface ARSitesViewController : UIViewController <UIActionSheetDelegate, UIAlertInputViewDelegate, UITableViewDataSource, UITableViewDelegate>
-{
-    
-    NSArray *_currentUserSites;
-}
+@class EPViewController;
 
-@property (nonatomic, weak) IBOutlet UITableView * tableView;
-@property (weak, nonatomic) IBOutlet UILabel *apiKeyLabel;
+@interface EPAppDelegate : UIResponder <UIApplicationDelegate>
+
+@property (strong, nonatomic) UIWindow *window;
+
+@property (strong, nonatomic) EPViewController *viewController;
 
 @end

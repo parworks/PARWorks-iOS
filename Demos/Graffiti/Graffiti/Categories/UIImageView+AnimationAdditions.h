@@ -1,6 +1,6 @@
 //
-//  ARSitesViewController.h
-//  PAR Works iOS SDK
+//  UIImageView+AnimationAdditions.h
+//  Graffiti
 //
 //  Copyright 2012 PAR Works, Inc.
 //
@@ -19,15 +19,9 @@
 
 
 #import <UIKit/UIKit.h>
-#import "UIAlertInputView.h"
 
-@interface ARSitesViewController : UIViewController <UIActionSheetDelegate, UIAlertInputViewDelegate, UITableViewDataSource, UITableViewDelegate>
-{
-    
-    NSArray *_currentUserSites;
-}
+@interface UIImageView (AnimationAdditions)
 
-@property (nonatomic, weak) IBOutlet UITableView * tableView;
-@property (weak, nonatomic) IBOutlet UILabel *apiKeyLabel;
+- (id)initWithImageSeries:(NSString*)fileFormatString;
 
 @end

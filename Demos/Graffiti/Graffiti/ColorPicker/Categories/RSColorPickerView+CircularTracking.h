@@ -1,6 +1,6 @@
 //
-//  ARSitesViewController.h
-//  PAR Works iOS SDK
+//  RSColorPickerView+CircularTracking.h
+//  Graffiti
 //
 //  Copyright 2012 PAR Works, Inc.
 //
@@ -18,16 +18,10 @@
 //
 
 
-#import <UIKit/UIKit.h>
-#import "UIAlertInputView.h"
+#import "RSColorPickerView.h"
 
-@interface ARSitesViewController : UIViewController <UIActionSheetDelegate, UIAlertInputViewDelegate, UITableViewDataSource, UITableViewDelegate>
-{
-    
-    NSArray *_currentUserSites;
-}
+@interface RSColorPickerView (CircularTracking)
 
-@property (nonatomic, weak) IBOutlet UITableView * tableView;
-@property (weak, nonatomic) IBOutlet UILabel *apiKeyLabel;
+- (CGPoint)circularPointForTouchPoint:(CGPoint)touch withRadius:(CGFloat)radius;
 
 @end

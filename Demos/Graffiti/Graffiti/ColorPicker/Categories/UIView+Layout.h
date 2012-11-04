@@ -1,6 +1,6 @@
 //
-//  ARSitesViewController.h
-//  PAR Works iOS SDK
+//  UIView+Layout.h
+//  Graffiti
 //
 //  Copyright 2012 PAR Works, Inc.
 //
@@ -19,15 +19,20 @@
 
 
 #import <UIKit/UIKit.h>
-#import "UIAlertInputView.h"
 
-@interface ARSitesViewController : UIViewController <UIActionSheetDelegate, UIAlertInputViewDelegate, UITableViewDataSource, UITableViewDelegate>
-{
-    
-    NSArray *_currentUserSites;
-}
 
-@property (nonatomic, weak) IBOutlet UITableView * tableView;
-@property (weak, nonatomic) IBOutlet UILabel *apiKeyLabel;
+@interface UIView (Layout)
+
+// Position of the top-left corner in superview's coordinates
+@property CGPoint position;
+@property CGFloat x;
+@property CGFloat y;
+
+// Setting size keeps the position (top-left corner) constant
+@property CGSize size;
+@property CGFloat width;
+@property CGFloat height;
+
+CGFloat distanceBetweenPoints(CGPoint p1, CGPoint p2);
 
 @end

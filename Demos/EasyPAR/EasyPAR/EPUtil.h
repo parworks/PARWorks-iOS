@@ -1,6 +1,6 @@
 //
-//  ARSitesViewController.h
-//  PAR Works iOS SDK
+//  EPUtil.h
+//  EasyPAR
 //
 //  Copyright 2012 PAR Works, Inc.
 //
@@ -18,16 +18,11 @@
 //
 
 
-#import <UIKit/UIKit.h>
-#import "UIAlertInputView.h"
+#import <Foundation/Foundation.h>
 
-@interface ARSitesViewController : UIViewController <UIActionSheetDelegate, UIAlertInputViewDelegate, UITableViewDataSource, UITableViewDelegate>
-{
-    
-    NSArray *_currentUserSites;
-}
+@interface EPUtil : NSObject
 
-@property (nonatomic, weak) IBOutlet UITableView * tableView;
-@property (weak, nonatomic) IBOutlet UILabel *apiKeyLabel;
++ (int)smallImagesWithWidth:(int)width height:(int)height fromImage:(UIImage *)image withImageReadyCallback:(void (^)(int i, UIImage* img))imgCallback;
++ (int)arrayIndexForCols:(int)cols rowIndex:(int)r columnIndex:(int)c;
 
 @end

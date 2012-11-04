@@ -1,6 +1,6 @@
 //
-//  ARSitesViewController.h
-//  PAR Works iOS SDK
+//  GRBrushPickerFolderView.h
+//  Graffiti
 //
 //  Copyright 2012 PAR Works, Inc.
 //
@@ -18,16 +18,20 @@
 //
 
 
-#import <UIKit/UIKit.h>
-#import "UIAlertInputView.h"
+#import "GRFolderView.h"
 
-@interface ARSitesViewController : UIViewController <UIActionSheetDelegate, UIAlertInputViewDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface GRBrushPickerFolderView : GRFolderView <UICollectionViewDataSource, UICollectionViewDelegateFlowLayout>
 {
+    UICollectionView *_cv;
+    UICollectionViewFlowLayout *_layout;
     
-    NSArray *_currentUserSites;
+    NSMutableArray *_brushNames;
+    
+    int _initialCellSelectedIndex;
 }
 
-@property (nonatomic, weak) IBOutlet UITableView * tableView;
-@property (weak, nonatomic) IBOutlet UILabel *apiKeyLabel;
+@property(nonatomic, strong) UISlider *brushSizeSlider;
+@property(nonatomic, copy) NSString *currentBrushName;
+
 
 @end

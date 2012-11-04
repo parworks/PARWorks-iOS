@@ -1,6 +1,6 @@
 //
-//  ARSitesViewController.h
-//  PAR Works iOS SDK
+//  HNColorPickerFolderView.h
+//  Graffiti
 //
 //  Copyright 2012 PAR Works, Inc.
 //
@@ -18,16 +18,14 @@
 //
 
 
-#import <UIKit/UIKit.h>
-#import "UIAlertInputView.h"
+#import "GRFolderView.h"
 
-@interface ARSitesViewController : UIViewController <UIActionSheetDelegate, UIAlertInputViewDelegate, UITableViewDataSource, UITableViewDelegate>
+@class DMColorPickerView;
+
+@interface GRColorPickerFolderView : GRFolderView
 {
     
-    NSArray *_currentUserSites;
 }
-
-@property (nonatomic, weak) IBOutlet UITableView * tableView;
-@property (weak, nonatomic) IBOutlet UILabel *apiKeyLabel;
+@property(nonatomic, strong) DMColorPickerView *picker;
 
 @end

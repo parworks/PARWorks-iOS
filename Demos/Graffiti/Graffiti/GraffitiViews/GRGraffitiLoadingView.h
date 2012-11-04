@@ -1,6 +1,6 @@
 //
-//  ARSitesViewController.h
-//  PAR Works iOS SDK
+//  GRSprayCanLoadingView.h
+//  Graffiti
 //
 //  Copyright 2012 PAR Works, Inc.
 //
@@ -19,15 +19,16 @@
 
 
 #import <UIKit/UIKit.h>
-#import "UIAlertInputView.h"
+#import "UIView+Layout.h"
 
-@interface ARSitesViewController : UIViewController <UIActionSheetDelegate, UIAlertInputViewDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface GRGraffitiLoadingView : UIView
 {
-    
-    NSArray *_currentUserSites;
+    AVAudioPlayer *_player;
+    UIView *_dimView;
+    UIImageView *_sprayCan;
 }
 
-@property (nonatomic, weak) IBOutlet UITableView * tableView;
-@property (weak, nonatomic) IBOutlet UILabel *apiKeyLabel;
+- (void)startAnimating;
+- (void)stopAnimating;
 
 @end

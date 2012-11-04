@@ -1,6 +1,6 @@
 //
-//  ARSitesViewController.h
-//  PAR Works iOS SDK
+//  EPViewController.h
+//  EasyPAR
 //
 //  Copyright 2012 PAR Works, Inc.
 //
@@ -17,17 +17,26 @@
 //  limitations under the License.
 //
 
-
 #import <UIKit/UIKit.h>
-#import "UIAlertInputView.h"
 
-@interface ARSitesViewController : UIViewController <UIActionSheetDelegate, UIAlertInputViewDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface EPViewController : UIViewController <UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 {
+    IBOutlet UILabel *_loadingLabel;
+    CATextLayer *_loadingLayer;
     
-    NSArray *_currentUserSites;
+    UIImage *_image;
+    UIImageView * _shrinking;
+    CALayer * _shrinkingMask;
+    UIImageView * _scanline;
+    
+    NSMutableArray *_layers;
+    UIImagePickerController *_picker;
+    IBOutlet UIView *_cameraOverlayView;
+    BOOL _firstLoad;
 }
 
-@property (nonatomic, weak) IBOutlet UITableView * tableView;
-@property (weak, nonatomic) IBOutlet UILabel *apiKeyLabel;
+- (IBAction)translateLayersOffscreen;
+- (IBAction)resetLayerTransforms;
+- (IBAction)takePicture:(id)sender;
 
 @end

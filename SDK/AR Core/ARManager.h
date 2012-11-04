@@ -143,6 +143,14 @@
 - (void)removeSite:(NSString*)identifier withCompletionBlock:(void (^)(void))completionBlock;
 
 
+/** Retrieves a json list of all of the current user's sites based on the API key provided to
+ the ARManager.
+ 
+ @param completionBlock This block is called when the resonse has been received
+ */
+- (void)sitesForCurrentAPIKey:(void (^)(NSArray *sites))completionBlock;
+
+
 /** Finds nearby sites using a given resolution.
  
  @param resolution We use a geohashing algorithm that produces a single hash 

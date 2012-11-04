@@ -1,5 +1,5 @@
 //
-//  main.m
+//  GRColorPickerFolderView.m
 //  Graffiti
 //
 //  Copyright 2012 PAR Works, Inc.
@@ -17,13 +17,22 @@
 //  limitations under the License.
 //
 
-#import <UIKit/UIKit.h>
 
-#import "GRAppDelegate.h"
+#import "DMColorPickerView.h"
+#import "GRColorPickerFolderView.h"
 
-int main(int argc, char *argv[])
+@implementation GRColorPickerFolderView
+
+- (id)initWithButtonOffsetY:(CGFloat)offsetY image:(UIImage *)image frame:(CGRect)frame
 {
-    @autoreleasepool {
-        return UIApplicationMain(argc, argv, nil, NSStringFromClass([GRAppDelegate class]));
+    self = [super initWithButtonOffsetY:offsetY image:image frame:frame];
+    if (self) {
+        // Add the color picker to the view offset to account for the button.
+        _picker = [[DMColorPickerView alloc] initWithFrame:CGRectMake(0, 0, 280, 280)];
+        _picker.center = CGPointMake(self.width/2 + 30, self.height/2);
+        [self addSubview:_picker];        
     }
+    return self;
 }
+
+@end

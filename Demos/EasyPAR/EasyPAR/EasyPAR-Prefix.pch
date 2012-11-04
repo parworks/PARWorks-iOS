@@ -1,6 +1,5 @@
 //
-//  ARSitesViewController.h
-//  PAR Works iOS SDK
+// Prefix header for all source files of the 'EasyPAR' target in the 'EasyPAR' project
 //
 //  Copyright 2012 PAR Works, Inc.
 //
@@ -18,16 +17,18 @@
 //
 
 
-#import <UIKit/UIKit.h>
-#import "UIAlertInputView.h"
+#import <Availability.h>
 
-@interface ARSitesViewController : UIViewController <UIActionSheetDelegate, UIAlertInputViewDelegate, UITableViewDataSource, UITableViewDelegate>
-{
-    
-    NSArray *_currentUserSites;
-}
+#ifndef __IPHONE_4_0
+#warning "This project uses features only available in iOS SDK 4.0 and later."
+#endif
 
-@property (nonatomic, weak) IBOutlet UITableView * tableView;
-@property (weak, nonatomic) IBOutlet UILabel *apiKeyLabel;
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+    #import <CoreLocation/CoreLocation.h>
+    #import <Foundation/Foundation.h>
+    #import <QuartzCore/QuartzCore.h>
 
-@end
+    #import "PARWorks.h"
+    #import "ASIHTTPRequest.h"
+#endif

@@ -1,6 +1,6 @@
 //
-//  ARSitesViewController.h
-//  PAR Works iOS SDK
+//  DMColorPickerConstants.h
+//  Graffiti
 //
 //  Copyright 2012 PAR Works, Inc.
 //
@@ -18,16 +18,8 @@
 //
 
 
-#import <UIKit/UIKit.h>
-#import "UIAlertInputView.h"
+#import <Foundation/Foundation.h>
 
-@interface ARSitesViewController : UIViewController <UIActionSheetDelegate, UIAlertInputViewDelegate, UITableViewDataSource, UITableViewDelegate>
-{
-    
-    NSArray *_currentUserSites;
-}
-
-@property (nonatomic, weak) IBOutlet UITableView * tableView;
-@property (weak, nonatomic) IBOutlet UILabel *apiKeyLabel;
-
-@end
+#define kDMColorPickerMaskRadius 130
+#define kDMColorPickerMaskStrokeWidth 24
+#define kDMColorPickerIndicatorRadius 12

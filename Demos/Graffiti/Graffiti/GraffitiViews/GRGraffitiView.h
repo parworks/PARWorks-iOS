@@ -1,6 +1,6 @@
 //
-//  ARSitesViewController.h
-//  PAR Works iOS SDK
+//  GRGraffitiView.h
+//  Graffiti
 //
 //  Copyright 2012 PAR Works, Inc.
 //
@@ -19,15 +19,20 @@
 
 
 #import <UIKit/UIKit.h>
-#import "UIAlertInputView.h"
+#import "GRSprayView.h"
 
-@interface ARSitesViewController : UIViewController <UIActionSheetDelegate, UIAlertInputViewDelegate, UITableViewDataSource, UITableViewDelegate>
-{
-    
-    NSArray *_currentUserSites;
-}
+@class SimplePaintView;
+@class GRViewController;
 
-@property (nonatomic, weak) IBOutlet UITableView * tableView;
-@property (weak, nonatomic) IBOutlet UILabel *apiKeyLabel;
+@interface GRGraffitiView : AROverlayView <GRSprayViewDelegate, AROverlayViewAnimationDelegate>
+
+@property(nonatomic, weak) GRViewController * controller;
+@property(nonatomic, strong) SimplePaintView *backgroundView;
+@property(nonatomic, strong) SimplePaintView *graffitiMask;
+@property(nonatomic, strong) GRSprayView *sprayView;
+
+- (void)reveal;
+- (void)revealWithRandomType;
+- (void)revealWithType:(SprayViewRevealType)type;
 
 @end

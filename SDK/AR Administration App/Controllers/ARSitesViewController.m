@@ -31,6 +31,9 @@
 
 @synthesize tableView = _tableView;
 
+#pragma mark -
+#pragma mark Lifecycle
+
 - (id)init
 {
     self = [super init];
@@ -66,6 +69,7 @@
     UIBarButtonItem * add = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemAdd target:self action:@selector(addSite:)];
     [self.navigationItem setRightBarButtonItem:add animated:YES];
     
+    [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(refreshCurrentUserSites) userInfo:nil repeats:YES];
     [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(updateSitesStatus) userInfo:nil repeats:YES];
 }
 
@@ -100,6 +104,10 @@
     [v becomeFirstResponder];
 }
 
+- (void)refreshCurrentUserSites
+{
+    
+}
 
 - (void)siteUpdated:(NSNotification*)notif
 {
@@ -156,6 +164,12 @@
     return YES;
 }
 
+- (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
+{
+    // User sites and public sites
+    return 2;
+}
+
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView cellForRowAtIndexPath: indexPath];
@@ -177,7 +191,22 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section;
 {
     ARAppDelegate * d = (ARAppDelegate *)[[UIApplication sharedApplication] delegate];
-    return [[d sites] count];
+    NSInteger rows = 0;
+    switch (section) {
+        case 0: {
+            rows = _currentUserSites.count;
+            break;
+        }
+        case 1: {
+            ARAppDelegate * d = (ARAppDelegate *)[[UIApplication sharedApplication] delegate];
+            rows = [[d sites] count];
+            break;
+        }
+        default:
+            break;
+    }
+    
+    return rows;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
