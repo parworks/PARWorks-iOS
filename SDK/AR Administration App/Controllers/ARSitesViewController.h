@@ -27,5 +27,6 @@
 }
 
 @property (nonatomic, weak) IBOutlet UITableView * tableView;
+@property (weak, nonatomic) IBOutlet UILabel *apiKeyLabel;
 
 @end

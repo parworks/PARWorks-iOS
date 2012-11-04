@@ -60,6 +60,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
+    [_apiKeyLabel setText: PARWORKS_API_KEY];
     
     // create the upper right add button
     UIBarButtonItem * add = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemAdd target:self action:@selector(addSite:)];
@@ -126,6 +127,7 @@
     [s setIdentifier: [view textValue]];
 
     if ([view tag] == ADD_NEW)
+        [s setStatus: ARSiteStatusCreating];
         [[ARManager shared] addSite: [s identifier] withCompletionBlock: ^(void) {
             [s setStatus: ARSiteStatusNotProcessed];
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object:s];
@@ -137,6 +139,7 @@
 
 - (void)viewDidUnload
 {
+    [self setApiKeyLabel:nil];
     [super viewDidUnload];
 }
 

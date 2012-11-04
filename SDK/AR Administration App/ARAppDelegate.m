@@ -23,11 +23,6 @@
 #import "ARAugmentedPhotosViewController.h"
 #import "ARManager.h"
 
-#define SITES_PATH  [@"~/Documents/Sites.plist" stringByExpandingTildeInPath]
-
-#define PARWORKS_API_KEY @"1296e04a-224d-4840-8b31-3ad763fdc383"
-#define PARWORKS_API_SECRET @"28924d84-6b0d-43ce-8e35-20854548fd19"
-
 @implementation ARAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
@@ -93,7 +88,6 @@
 
 - (void)addSite:(ARSite*)site
 {
-    [site setStatus: ARSiteStatusCreating];
     [_sites addObject: site];
     [self save];
 }

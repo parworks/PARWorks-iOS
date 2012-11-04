@@ -103,7 +103,8 @@
     [_picker setDelegate: self];
     [_picker setSourceType: UIImagePickerControllerSourceTypeCamera];
     [_picker setCameraOverlayView: _cameraOverlayView];
-
+    [_picker setShowsCameraControls: NO];
+    
     if ((buttonIndex != 2) && ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera]))
         _picker.sourceType = UIImagePickerControllerSourceTypeCamera;
     else
