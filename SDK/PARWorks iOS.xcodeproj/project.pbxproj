@@ -144,6 +144,8 @@
 		4371F0CA15E34E7300D754A8 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4371F0C915E34E7300D754A8 /* UIKit.framework */; };
 		4371F0CC15E34E7300D754A8 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4371F0CB15E34E7300D754A8 /* Foundation.framework */; };
 		4371F0CE15E34E7300D754A8 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4371F0CD15E34E7300D754A8 /* CoreGraphics.framework */; };
+		4386D7151647051A001F96E8 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 4386D71316470519001F96E8 /* icon.png */; };
+		4386D7161647051A001F96E8 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 4386D7141647051A001F96E8 /* icon@2x.png */; };
 		43889B1D15E98D93001B0C4D /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43889B1C15E98D93001B0C4D /* CFNetwork.framework */; };
 		43889B2015E98D99001B0C4D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43889B1F15E98D99001B0C4D /* SystemConfiguration.framework */; };
 		43889B2215E98DA1001B0C4D /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 43889B2115E98DA1001B0C4D /* libz.dylib */; };
@@ -268,6 +270,8 @@
 		4371F0C915E34E7300D754A8 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		4371F0CB15E34E7300D754A8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4371F0CD15E34E7300D754A8 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		4386D71316470519001F96E8 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = Resources/Images/icon.png; sourceTree = "<group>"; };
+		4386D7141647051A001F96E8 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "icon@2x.png"; path = "Resources/Images/icon@2x.png"; sourceTree = "<group>"; };
 		43889B1C15E98D93001B0C4D /* CFNetwork.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CFNetwork.framework; path = System/Library/Frameworks/CFNetwork.framework; sourceTree = SDKROOT; };
 		43889B1F15E98D99001B0C4D /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		43889B2115E98DA1001B0C4D /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
@@ -307,6 +311,8 @@
 		436C488D16432AAF0031DBCA /* AR Administration App */ = {
 			isa = PBXGroup;
 			children = (
+				4386D71316470519001F96E8 /* icon.png */,
+				4386D7141647051A001F96E8 /* icon@2x.png */,
 				436C489C16432AAF0031DBCA /* InfoPlist.strings */,
 				436C488E16432AAF0031DBCA /* Administration-App-Info.plist */,
 				436C488F16432AAF0031DBCA /* Administration-App-Prefix.pch */,
@@ -742,6 +748,8 @@
 				436C48BA16432AAF0031DBCA /* state_failed.png in Resources */,
 				436C48BB16432AAF0031DBCA /* state_uploading.png in Resources */,
 				436C493916432AB20031DBCA /* ARPhotoViewController.xib in Resources */,
+				4386D7151647051A001F96E8 /* icon.png in Resources */,
+				4386D7161647051A001F96E8 /* icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

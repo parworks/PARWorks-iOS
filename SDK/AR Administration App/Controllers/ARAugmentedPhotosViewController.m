@@ -21,7 +21,7 @@
 #import "ARAugmentedPhotosViewController.h"
 #import "ARPhotoViewController.h"
 #import "ARAppDelegate.h"
-#import "HDAR.h"
+#import "PARWorks.h"
 
 @implementation ARAugmentedPhotosViewController
 

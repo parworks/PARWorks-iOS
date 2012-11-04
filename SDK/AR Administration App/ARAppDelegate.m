@@ -25,13 +25,15 @@
 
 #define SITES_PATH  [@"~/Documents/Sites.plist" stringByExpandingTildeInPath]
 
+#define PARWORKS_API_KEY @"28924d84-6b0d-43ce-8e35-20854548fd19"
+#define PARWORKS_API_SECRET @"1296e04a-224d-4840-8b31-3ad763fdc383"
 
 @implementation ARAppDelegate
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     // Setup the ARManager
-    [[ARManager shared] setApiKey:@"1296e04a-224d-4840-8b31-3ad763fdc383" andSecret: @"28924d84-6b0d-43ce-8e35-20854548fd19"];
+    [[ARManager shared] setApiKey:PARWORKS_API_KEY andSecret: PARWORKS_API_SECRET];
     [[ARManager shared] setLocationEnabled: YES];
     
     // load data
