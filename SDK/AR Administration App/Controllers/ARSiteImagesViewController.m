@@ -83,12 +83,12 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return YES;
 }
 
 - (void)addPhoto:(id)sender
 {
-    UIActionSheet * s = [[UIActionSheet alloc] initWithTitle:@"Image Type" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Site Image", @"Augmented Image", @"Augmented Image from Library", nil];
+    UIActionSheet * s = [[UIActionSheet alloc] initWithTitle:@"Image Type" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Add Site Image", @"Augment an Image", @"Augment a Saved Image", nil];
     [s showFromTabBar: self.tabBarController.tabBar];
 }
 
