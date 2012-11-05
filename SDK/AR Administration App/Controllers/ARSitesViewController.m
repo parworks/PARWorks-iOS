@@ -69,8 +69,8 @@
     UIBarButtonItem * add = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemAdd target:self action:@selector(addSite:)];
     [self.navigationItem setRightBarButtonItem:add animated:YES];
     
-    NSTimer *userSiteTimer = [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(refreshCurrentUserSites) userInfo:nil repeats:YES];
-    [userSiteTimer fire];
+//    NSTimer *userSiteTimer = [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(refreshCurrentUserSites) userInfo:nil repeats:YES];
+//    [userSiteTimer fire];
     
     [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(updateSitesStatus) userInfo:nil repeats:YES];
 }
@@ -200,7 +200,8 @@
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     // User sites and public sites
-    return 2;
+//    return 2;
+    return 1;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
@@ -210,10 +211,10 @@
     ARSite *siteToDelete;
 
     switch (indexPath.section) {
+//        case 0:
+//            siteToDelete = [[ARSite alloc] initWithIdentifier:_currentUserSites[indexPath.row]];
+//            break;
         case 0:
-            siteToDelete = [[ARSite alloc] initWithIdentifier:_currentUserSites[indexPath.row]];
-            break;
-        case 1:
             for (ARSite *site in d.sites) {
                 if ([[site.identifier lowercaseString] isEqualToString:[cell.textLabel.text lowercaseString]]) {
                     siteToDelete = site;
@@ -235,11 +236,11 @@
     ARAppDelegate * d = (ARAppDelegate *)[[UIApplication sharedApplication] delegate];
     NSInteger rows = 0;
     switch (section) {
+//        case 0: {
+//            rows = _currentUserSites.count;
+//            break;
+//        }
         case 0: {
-            rows = _currentUserSites.count;
-            break;
-        }
-        case 1: {
             rows = [[d sites] count];
             break;
         }
@@ -258,14 +259,14 @@
     ARAppDelegate * d = (ARAppDelegate *)[[UIApplication sharedApplication] delegate];
     ARSite * site;
     switch (indexPath.section) {
+//        case 0: {
+//            site = [[ARSite alloc] initWithIdentifier:_currentUserSites[indexPath.row]];
+//            site.status = ARSiteStatusUnknown;
+//            objc_setAssociatedObject(c, @"site", site, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+//            c.textLabel.text = _currentUserSites[indexPath.row];
+//            break;
+//        }
         case 0: {
-            site = [[ARSite alloc] initWithIdentifier:_currentUserSites[indexPath.row]];
-            site.status = ARSiteStatusUnknown;
-            objc_setAssociatedObject(c, @"site", site, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-            c.textLabel.text = _currentUserSites[indexPath.row];
-            break;
-        }
-        case 1: {
             site = [[d sites] objectAtIndex: [indexPath row]];
             [[c textLabel] setText: [site identifier]];
             [[c detailTextLabel] setText: [site description]];
@@ -286,10 +287,10 @@
     ARAppDelegate * d = (ARAppDelegate *)[[UIApplication sharedApplication] delegate];
     ARSite *site;
     switch (indexPath.section) {
+//        case 0:
+//            site = objc_getAssociatedObject(c, @"site");
+//            break;
         case 0:
-            site = objc_getAssociatedObject(c, @"site");
-            break;
-        case 1:
             site = [[d sites] objectAtIndex: [indexPath row]];
             break;
         default:

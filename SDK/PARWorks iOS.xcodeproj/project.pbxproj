@@ -20,7 +20,6 @@
 		436C48BB16432AAF0031DBCA /* state_uploading.png in Resources */ = {isa = PBXBuildFile; fileRef = 436C48A216432AAF0031DBCA /* state_uploading.png */; };
 		436C48BC16432AAF0031DBCA /* ARShapeOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48A516432AAF0031DBCA /* ARShapeOverlayView.m */; };
 		436C48BD16432AAF0031DBCA /* BRCircleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48A716432AAF0031DBCA /* BRCircleView.m */; };
-		436C48BE16432AAF0031DBCA /* BROverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48A916432AAF0031DBCA /* BROverlayView.m */; };
 		436C48BF16432AAF0031DBCA /* BRPopupOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48AB16432AAF0031DBCA /* BRPopupOverlayView.m */; };
 		436C48C116432AAF0031DBCA /* UIAlertInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48AF16432AAF0031DBCA /* UIAlertInputView.m */; };
 		436C492316432AB20031DBCA /* AROverlayAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = 436C48C416432AB10031DBCA /* AROverlayAnimation.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -151,6 +150,9 @@
 		43889B2215E98DA1001B0C4D /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 43889B2115E98DA1001B0C4D /* libz.dylib */; };
 		43889B2615E98DC2001B0C4D /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43889B2515E98DC2001B0C4D /* MobileCoreServices.framework */; };
 		43D330DE16097E4C0043B64C /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43D330DD16097E4C0043B64C /* CoreLocation.framework */; };
+		A0E91FD116475D3500D7AC07 /* BROverlayView.h in Headers */ = {isa = PBXBuildFile; fileRef = A0E91FCF16475D3500D7AC07 /* BROverlayView.h */; };
+		A0E91FD216475D3500D7AC07 /* BROverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E91FD016475D3500D7AC07 /* BROverlayView.m */; };
+		A0E91FD316475D3500D7AC07 /* BROverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E91FD016475D3500D7AC07 /* BROverlayView.m */; };
 		A0F662D415FEFBD100FA709B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0F662D315FEFBD100FA709B /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
@@ -177,8 +179,6 @@
 		436C48A516432AAF0031DBCA /* ARShapeOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARShapeOverlayView.m; sourceTree = "<group>"; };
 		436C48A616432AAF0031DBCA /* BRCircleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRCircleView.h; sourceTree = "<group>"; };
 		436C48A716432AAF0031DBCA /* BRCircleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRCircleView.m; sourceTree = "<group>"; };
-		436C48A816432AAF0031DBCA /* BROverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BROverlayView.h; sourceTree = "<group>"; };
-		436C48A916432AAF0031DBCA /* BROverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BROverlayView.m; sourceTree = "<group>"; };
 		436C48AA16432AAF0031DBCA /* BRPopupOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BRPopupOverlayView.h; sourceTree = "<group>"; };
 		436C48AB16432AAF0031DBCA /* BRPopupOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BRPopupOverlayView.m; sourceTree = "<group>"; };
 		436C48AE16432AAF0031DBCA /* UIAlertInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIAlertInputView.h; sourceTree = "<group>"; };
@@ -278,6 +278,8 @@
 		43889B2315E98DAA001B0C4D /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		43889B2515E98DC2001B0C4D /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		43D330DD16097E4C0043B64C /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		A0E91FCF16475D3500D7AC07 /* BROverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BROverlayView.h; sourceTree = "<group>"; };
+		A0E91FD016475D3500D7AC07 /* BROverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BROverlayView.m; sourceTree = "<group>"; };
 		A0F662D315FEFBD100FA709B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -366,8 +368,6 @@
 				436C48A516432AAF0031DBCA /* ARShapeOverlayView.m */,
 				436C48A616432AAF0031DBCA /* BRCircleView.h */,
 				436C48A716432AAF0031DBCA /* BRCircleView.m */,
-				436C48A816432AAF0031DBCA /* BROverlayView.h */,
-				436C48A916432AAF0031DBCA /* BROverlayView.m */,
 				436C48AA16432AAF0031DBCA /* BRPopupOverlayView.h */,
 				436C48AB16432AAF0031DBCA /* BRPopupOverlayView.m */,
 				436C48AE16432AAF0031DBCA /* UIAlertInputView.h */,
@@ -560,6 +560,8 @@
 				436C491A16432AB10031DBCA /* ARAugmentedView.m */,
 				436C491B16432AB10031DBCA /* AROverlayView.h */,
 				436C491C16432AB10031DBCA /* AROverlayView.m */,
+				A0E91FCF16475D3500D7AC07 /* BROverlayView.h */,
+				A0E91FD016475D3500D7AC07 /* BROverlayView.m */,
 				436C491D16432AB10031DBCA /* CachedImageView.h */,
 				436C491E16432AB10031DBCA /* CachedImageView.m */,
 				436C491F16432AB10031DBCA /* GridCellView.h */,
@@ -656,6 +658,7 @@
 				436C497216432AB20031DBCA /* SBJsonParser.h in Headers */,
 				436C497516432AB20031DBCA /* SBJsonWriter.h in Headers */,
 				436C498E16432AB20031DBCA /* PARWorks SDK-Prefix.pch in Headers */,
+				A0E91FD116475D3500D7AC07 /* BROverlayView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -812,6 +815,7 @@
 				436C499716432AB20031DBCA /* CachedImageView.m in Sources */,
 				436C499A16432AB20031DBCA /* GridCellView.m in Sources */,
 				436C499D16432AB20031DBCA /* GridView.m in Sources */,
+				A0E91FD316475D3500D7AC07 /* BROverlayView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -825,7 +829,6 @@
 				436C48B616432AAF0031DBCA /* ARSitesViewController.m in Sources */,
 				436C48BC16432AAF0031DBCA /* ARShapeOverlayView.m in Sources */,
 				436C48BD16432AAF0031DBCA /* BRCircleView.m in Sources */,
-				436C48BE16432AAF0031DBCA /* BROverlayView.m in Sources */,
 				436C48BF16432AAF0031DBCA /* BRPopupOverlayView.m in Sources */,
 				436C48C116432AAF0031DBCA /* UIAlertInputView.m in Sources */,
 				436C492416432AB20031DBCA /* AROverlayAnimation.m in Sources */,
@@ -864,6 +867,7 @@
 				436C499616432AB20031DBCA /* CachedImageView.m in Sources */,
 				436C499916432AB20031DBCA /* GridCellView.m in Sources */,
 				436C499C16432AB20031DBCA /* GridView.m in Sources */,
+				A0E91FD216475D3500D7AC07 /* BROverlayView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -991,7 +995,8 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = NO;
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ben Gotow (7EKP92J76Y)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Demetri Miller (36WPJ8C3NF)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AR Administration App/Administration-App-Prefix.pch";
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = YES;
@@ -1001,7 +1006,8 @@
 					"\"$(SDKROOT)/usr/lib/system\"",
 				);
 				PRODUCT_NAME = "PARWorks Admin";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "810FBEA9-0F12-43C2-A201-BDE6124903EE";
+				PROVISIONING_PROFILE = "556EC745-2F92-4AA4-BE29-340ABA0F448A";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
 				WRAPPER_EXTENSION = app;
 			};
@@ -1012,6 +1018,7 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer: Demetri Miller (36WPJ8C3NF)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AR Administration App/Administration-App-Prefix.pch";
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = YES;
@@ -1021,6 +1028,7 @@
 					"\"$(SDKROOT)/usr/lib/system\"",
 				);
 				PRODUCT_NAME = "PARWorks Admin";
+				PROVISIONING_PROFILE = "556EC745-2F92-4AA4-BE29-340ABA0F448A";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
 				WRAPPER_EXTENSION = app;
 			};
