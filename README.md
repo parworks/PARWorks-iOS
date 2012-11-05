@@ -8,13 +8,14 @@ The iOS SDK provides a native Objective-C interface to the PARWorks API, so you 
 
 The iOS SDK also comes with several sample applications:
 
-- SimpleDemo: Demonstrates basic use of the SDK to take a photo with the iPhone camera and augment it. The user takes a photo with the iPhone camera and the photo breaks apart into tiny pieces which fly off the screen as the image is "scanned" for overlays. When the result comes back from the server, the pieces fly back together and the image is shown with overlays drawn directly on to it. 
+- EasyPar: Demonstrates basic use of the SDK to take a photo with the iPhone camera and augment it. The user takes a photo with the iPhone camera and the photo breaks apart into tiny pieces which fly off the screen as the image is "scanned" for overlays. When the result comes back from the server, the pieces fly back together and the image is shown with overlays drawn directly on to it. 
 Other fun stuff: A complex animation that is great for impressive demos. Uses GCD and blocks to rapidly process image "shreds" on one processor while playing the animation on the other one.
 
 - GraffitiDemo: Demonstrates how to use the SDK to augment photos taken with the iPhone's camera, process them on the server, and display custom overlays. In this app, users are meant to explore their city, taking photos of specific walls. Each time they take a photo of an augmented wall, digital graffiti is displayed on top of the photo directly on the wall, and they can tap to enlarge and edit it, leaving their contribution for others to see when they photograph the wall.
 Other fun stuff: UIView subclass for CoreGraphics drawing, code for CALayer transitions along a path
 
-- PARWorks Management App: The management app allows you to create sites, view existing sites, add images to sites, augment images taken with the phone or in the photo library, and view overlays in augmented photos. We developed this app to test the functionality in the SDK, and it utilizes nearly every feature available. It's an easy way to create sites on the go, and allows you to quickly try out sites that you've created without having to create your own app.
+- PARWorks Administration App: The management app allows you to create sites, view existing sites, add images to sites, augment images taken with the phone or in the photo library, and view overlays in augmented photos. We developed this app to test the functionality in the SDK, and it utilizes nearly every feature available. It's an easy way to create sites on the go, and allows you to quickly try out sites that you've created without having to create your own app.
+**Note: When you use the PARWorks Administration app, make sure you update the API key located in ARAppDelegate.h! Otherwise you will not be able to manage sites in your account.**
 
 Getting Started with the SDK
 =========
@@ -36,7 +37,7 @@ Setting your API key:
 
 Add the line below to the beginning of your application delegate's application:didFinishLaunchingWithOptions: function. Replace "MY APP ID" with the app ID you were given on the PARWorks developer portal.
 
-    [[ARManager shared] setAppID: @"<MY APP ID>"];
+    [[ARManager shared] setApiKey: @"<MY API KEY>" andSecret: @"<MY API SECRET>"];
 
 Registering for Location Support
 ------------

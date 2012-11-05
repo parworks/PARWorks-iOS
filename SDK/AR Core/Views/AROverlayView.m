@@ -63,9 +63,6 @@
         self.layer.shadowRadius = 3.0;
         self.layer.shouldRasterize = YES;
         self.layer.rasterizationScale = [UIScreen mainScreen].scale;
-        
-//        self.layer.borderColor = [UIColor whiteColor].CGColor;
-//        self.layer.borderWidth = 1.0;
     }
     
     return self;

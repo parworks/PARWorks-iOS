@@ -145,13 +145,11 @@
 
     if ([view tag] == ADD_NEW) {
         [s setStatus: ARSiteStatusCreating];
+        [[ARManager shared] addSite: [s identifier] withCompletionBlock: ^(void) {
+            [s setStatus: ARSiteStatusNotProcessed];
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object:s];
+        }];
     }
-    
-    [[ARManager shared] addSite: [s identifier] withCompletionBlock: ^(void) {
-        [s setStatus: ARSiteStatusNotProcessed];
-        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object:s];
-    }];
-
     [delegate addSite: s];
     [_tableView reloadData];
 }
@@ -188,7 +186,7 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return YES;
 }
 
 

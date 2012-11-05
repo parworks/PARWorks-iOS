@@ -83,12 +83,12 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+    return YES;
 }
 
 - (void)addPhoto:(id)sender
 {
-    UIActionSheet * s = [[UIActionSheet alloc] initWithTitle:@"Image Type" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Site Image", @"Augmented Image", @"Augmented Image from Library", nil];
+    UIActionSheet * s = [[UIActionSheet alloc] initWithTitle:@"Image Type" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Add Site Image", @"Augment an Image", @"Augment a Saved Image", nil];
     [s showFromTabBar: self.tabBarController.tabBar];
 }
 
@@ -101,13 +101,12 @@
     
     _picker = [[UIImagePickerController alloc] init];
     [_picker setDelegate: self];
-    [_picker setSourceType: UIImagePickerControllerSourceTypeCamera];
-    [_picker setCameraOverlayView: _cameraOverlayView];
-    [_picker setShowsCameraControls: NO];
     
-    if ((buttonIndex != 2) && ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera]))
+    if ((buttonIndex != 2) && ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera])) {
         _picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-    else
+        [_picker setCameraOverlayView: _cameraOverlayView];
+        [_picker setShowsCameraControls: NO];
+    } else
         _picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
 
     [self presentModalViewController: _picker animated:YES];
@@ -127,6 +126,9 @@
 {
     UIImage * img = [info objectForKey: UIImagePickerControllerOriginalImage];
 
+    if (_picker.sourceType != UIImagePickerControllerSourceTypeCamera)
+        [_picker dismissModalViewControllerAnimated: YES];
+    
     if (_imageIsSiteImage) {
         [_site addImage: img];
     } else {
