@@ -21,10 +21,10 @@
 #import <UIKit/UIKit.h>
 #import "UIAlertInputView.h"
 
-@interface ARSitesViewController : UIViewController <UIActionSheetDelegate, UIAlertInputViewDelegate, UITableViewDataSource, UITableViewDelegate>
+@interface ARSitesViewController : UIViewController <UIActionSheetDelegate, UIAlertInputViewDelegate, UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate>
 {
-    
-    NSArray *_currentUserSites;
+    NSMutableArray *_currentUserSites;
+    NSIndexPath    *_deleteIndexPath;
 }
 
 @property (nonatomic, weak) IBOutlet UITableView * tableView;

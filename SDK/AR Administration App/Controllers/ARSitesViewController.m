@@ -17,7 +17,7 @@
 //  limitations under the License.
 //
 
-
+#import <objc/runtime.h>
 #import "ARSitesViewController.h"
 #import "ARAppDelegate.h"
 #import "ARSiteImagesViewController.h"
@@ -29,7 +29,6 @@
 
 @implementation ARSitesViewController
 
-@synthesize tableView = _tableView;
 
 #pragma mark -
 #pragma mark Lifecycle
@@ -57,6 +56,7 @@
     [self setTitle: @"Sites"];
     [self setTabBarItem: [[UITabBarItem alloc] initWithTabBarSystemItem: UITabBarSystemItemBookmarks tag:0]];
     
+    _currentUserSites = [[NSMutableArray alloc] init];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(siteUpdated:) name:NOTIF_SITE_UPDATED object:nil];
 }
 
@@ -69,7 +69,9 @@
     UIBarButtonItem * add = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemAdd target:self action:@selector(addSite:)];
     [self.navigationItem setRightBarButtonItem:add animated:YES];
     
-    [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(refreshCurrentUserSites) userInfo:nil repeats:YES];
+    NSTimer *userSiteTimer = [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(refreshCurrentUserSites) userInfo:nil repeats:YES];
+    [userSiteTimer fire];
+    
     [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(updateSitesStatus) userInfo:nil repeats:YES];
 }
 
@@ -106,7 +108,14 @@
 
 - (void)refreshCurrentUserSites
 {
-    
+    __weak ARSitesViewController *blockSelf = self;
+    __weak NSMutableArray *weakSites = _currentUserSites;
+    [[ARManager shared] sitesForCurrentAPIKey:^(NSArray *sites) {
+        [weakSites removeAllObjects];
+        
+        [weakSites addObjectsFromArray:sites];
+        [blockSelf.tableView reloadData];
+    }];
 }
 
 - (void)siteUpdated:(NSNotification*)notif
@@ -131,18 +140,44 @@
         return;
         
     ARAppDelegate * delegate = (ARAppDelegate *)[[UIApplication sharedApplication] delegate];
-    ARSite * s = [[ARSite alloc] init];
+    ARSite *s = [[ARSite alloc] init];
     [s setIdentifier: [view textValue]];
 
-    if ([view tag] == ADD_NEW)
+    if ([view tag] == ADD_NEW) {
         [s setStatus: ARSiteStatusCreating];
-        [[ARManager shared] addSite: [s identifier] withCompletionBlock: ^(void) {
-            [s setStatus: ARSiteStatusNotProcessed];
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object:s];
-        }];
+    }
+    
+    [[ARManager shared] addSite: [s identifier] withCompletionBlock: ^(void) {
+        [s setStatus: ARSiteStatusNotProcessed];
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object:s];
+    }];
 
     [delegate addSite: s];
     [_tableView reloadData];
+}
+
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == 0) {
+        return;
+    }
+    
+    // Delete the site
+    ARSite *site = objc_getAssociatedObject(alertView, @"site");
+    NSIndexPath *indexPath = objc_getAssociatedObject(alertView, @"indexPath");
+
+    ARAppDelegate * delegate = (ARAppDelegate *)[[UIApplication sharedApplication] delegate];
+    [delegate removeSite:site];
+    [_currentUserSites removeObjectAtIndex:indexPath.row];
+    
+    [_tableView beginUpdates];
+    [_tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
+    [_tableView endUpdates];
+    
+    
+    [[ARManager shared] removeSite:site.identifier withCompletionBlock:^{
+        NSLog(@"Deleted site: %@", site);
+    }];
 }
 
 - (void)viewDidUnload
@@ -175,17 +210,26 @@
     UITableViewCell *cell = [tableView cellForRowAtIndexPath: indexPath];
     ARAppDelegate * d = (ARAppDelegate *)[[UIApplication sharedApplication] delegate];
     ARSite *siteToDelete;
-    for (ARSite *site in d.sites) {
-        if ([[site.identifier lowercaseString] isEqualToString:[cell.textLabel.text lowercaseString]]) {
-            siteToDelete = site;
+
+    switch (indexPath.section) {
+        case 0:
+            siteToDelete = [[ARSite alloc] initWithIdentifier:_currentUserSites[indexPath.row]];
             break;
-        }
+        case 1:
+            for (ARSite *site in d.sites) {
+                if ([[site.identifier lowercaseString] isEqualToString:[cell.textLabel.text lowercaseString]]) {
+                    siteToDelete = site;
+                    break;
+                }
+            }
+        default:
+            break;
     }
     
-    [d removeSite:siteToDelete];
-    [tableView beginUpdates];
-    [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
-    [tableView endUpdates];
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Are you sure?" message:@"Deleting this site will remove all information including processed images. This operation cannot be undone." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes, I'm sure", nil];
+    objc_setAssociatedObject(av, @"site", siteToDelete, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    objc_setAssociatedObject(av, @"indexPath", indexPath, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    [av show];
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section;
@@ -198,7 +242,6 @@
             break;
         }
         case 1: {
-            ARAppDelegate * d = (ARAppDelegate *)[[UIApplication sharedApplication] delegate];
             rows = [[d sites] count];
             break;
         }
@@ -215,19 +258,46 @@
     if (!c) c = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"row"];
     
     ARAppDelegate * d = (ARAppDelegate *)[[UIApplication sharedApplication] delegate];
-    ARSite * site = [[d sites] objectAtIndex: [indexPath row]];
-    [[c textLabel] setText: [site identifier]];
-    [[c detailTextLabel] setText: [site description]];
+    ARSite * site;
+    switch (indexPath.section) {
+        case 0: {
+            site = [[ARSite alloc] initWithIdentifier:_currentUserSites[indexPath.row]];
+            site.status = ARSiteStatusUnknown;
+            objc_setAssociatedObject(c, @"site", site, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+            c.textLabel.text = _currentUserSites[indexPath.row];
+            break;
+        }
+        case 1: {
+            site = [[d sites] objectAtIndex: [indexPath row]];
+            [[c textLabel] setText: [site identifier]];
+            [[c detailTextLabel] setText: [site description]];
+            break;
+        }
+        default:
+            break;
+    }
     
     return c;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    UITableViewCell *c = [tableView cellForRowAtIndexPath:indexPath];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 
     ARAppDelegate * d = (ARAppDelegate *)[[UIApplication sharedApplication] delegate];
-    ARSite * site = [[d sites] objectAtIndex: [indexPath row]];
+    ARSite *site;
+    switch (indexPath.section) {
+        case 0:
+            site = objc_getAssociatedObject(c, @"site");
+            break;
+        case 1:
+            site = [[d sites] objectAtIndex: [indexPath row]];
+            break;
+        default:
+            break;
+    }
+    
     ARSiteImagesViewController * vc = [[ARSiteImagesViewController alloc] initWithSite: site];
     if ([site status] != ARSiteStatusCreating)
         [self.navigationController pushViewController: vc animated:YES];
