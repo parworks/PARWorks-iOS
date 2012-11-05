@@ -183,7 +183,10 @@
 {
     if ([data isKindOfClass: [NSDictionary class]] == NO)
         return;
-    
+
+    if (_overlays == nil)
+        self.overlays = [NSMutableArray array];
+
     NSMutableDictionary * overlayDicts = [data objectForKey: @"overlays"];
     for (NSDictionary * overlay in overlayDicts)
         [self addOverlay: [[AROverlay alloc] initWithDictionary: overlay]];

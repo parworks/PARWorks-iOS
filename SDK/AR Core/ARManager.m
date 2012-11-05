@@ -130,7 +130,7 @@ static ARManager * sharedManager;
     
 
     // create the full request path
-    NSMutableString * path = [NSMutableString stringWithFormat: @"https://%@/%@", API_ROOT, basePath];
+    NSMutableString * path = [NSMutableString stringWithFormat: @"http://%@/%@", API_ROOT, basePath];
     NSString * argSeparator = @"?";
     for (NSString * key in args) {
         [path appendFormat:@"%@%@=%@", argSeparator, key, [args objectForKey: key]];
