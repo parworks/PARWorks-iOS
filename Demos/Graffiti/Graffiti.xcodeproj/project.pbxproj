@@ -132,6 +132,7 @@
 		A0E91FBE164709A600D7AC07 /* camera-graphic.png in Resources */ = {isa = PBXBuildFile; fileRef = A0E91FBB164709A600D7AC07 /* camera-graphic.png */; };
 		A0E91FBF164709A600D7AC07 /* camera-icon-down.png in Resources */ = {isa = PBXBuildFile; fileRef = A0E91FBC164709A600D7AC07 /* camera-icon-down.png */; };
 		A0E91FC0164709A600D7AC07 /* camera-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A0E91FBD164709A600D7AC07 /* camera-icon.png */; };
+		A0E91FCC16475A7000D7AC07 /* BROverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E91FCB16475A7000D7AC07 /* BROverlayView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -341,6 +342,8 @@
 		A0E91FBB164709A600D7AC07 /* camera-graphic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera-graphic.png"; sourceTree = "<group>"; };
 		A0E91FBC164709A600D7AC07 /* camera-icon-down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera-icon-down.png"; sourceTree = "<group>"; };
 		A0E91FBD164709A600D7AC07 /* camera-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera-icon.png"; sourceTree = "<group>"; };
+		A0E91FCA16475A7000D7AC07 /* BROverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BROverlayView.h; sourceTree = "<group>"; };
+		A0E91FCB16475A7000D7AC07 /* BROverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BROverlayView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -819,6 +822,8 @@
 				A0DDF4E11643697D00BB9C82 /* ARAugmentedView.m */,
 				A0DDF4E21643697D00BB9C82 /* AROverlayView.h */,
 				A0DDF4E31643697D00BB9C82 /* AROverlayView.m */,
+				A0E91FCA16475A7000D7AC07 /* BROverlayView.h */,
+				A0E91FCB16475A7000D7AC07 /* BROverlayView.m */,
 				A0DDF4E41643697D00BB9C82 /* CachedImageView.h */,
 				A0DDF4E51643697D00BB9C82 /* CachedImageView.m */,
 				A0DDF4E61643697D00BB9C82 /* GridCellView.h */,
@@ -1018,6 +1023,7 @@
 				A0DDF5101643697D00BB9C82 /* GridCellView.m in Sources */,
 				A0DDF5111643697D00BB9C82 /* GridView.m in Sources */,
 				A00D3DF31646FC3D0070D248 /* GRCameraOverlayView.m in Sources */,
+				A0E91FCC16475A7000D7AC07 /* BROverlayView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
