@@ -134,13 +134,13 @@
     ARSite * s = [[ARSite alloc] init];
     [s setIdentifier: [view textValue]];
 
-    if ([view tag] == ADD_NEW)
+    if ([view tag] == ADD_NEW) {
         [s setStatus: ARSiteStatusCreating];
         [[ARManager shared] addSite: [s identifier] withCompletionBlock: ^(void) {
             [s setStatus: ARSiteStatusNotProcessed];
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object:s];
         }];
-
+    }
     [delegate addSite: s];
     [_tableView reloadData];
 }
