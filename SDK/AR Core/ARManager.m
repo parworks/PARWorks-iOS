@@ -160,29 +160,35 @@ static ARManager * sharedManager;
     NSString * sig = [self shaHashFor:salt withKey: _apiSecret];
 
     // attch to the request
-    [expandedArgs setObject:sig forKey:@"signature"];
-    [expandedArgs setObject:salt forKey:@"salt"];
-    [expandedArgs setObject:_apiKey forKey:@"apikey"];
+//    [expandedArgs setObject:sig forKey:@"signature"];
+//    [expandedArgs setObject:salt forKey:@"salt"];
+//    [expandedArgs setObject:_apiKey forKey:@"apikey"];
     
     // create the full request path
-    NSURL * url = [self urlForRequest: basePath withPathArgs: expandedArgs];
     ASIHTTPRequest * h;
-    
-    if ([method isEqualToString: @"GET"])
+    NSURL *url;
+//    url = [self urlForRequest: basePath withPathArgs: expandedArgs];
+    if ([method isEqualToString: @"GET"]) {
+        url = [self urlForRequest: basePath withPathArgs: expandedArgs];
         h = [[ASIHTTPRequest alloc] initWithURL: url];
-    else {
+    } else {
+        url = [self urlForRequest:basePath withPathArgs:nil];
         h = [[ASIFormDataRequest alloc] initWithURL: url];
         for (NSString * key in expandedArgs)
             [(ASIFormDataRequest*)h setPostValue: [expandedArgs objectForKey: key] forKey: key];
     }
+    
     [h setUserAgent:@"HD4AR-iOS"];
     [h setTimeOutSeconds: 60];
     [h addRequestHeader:@"Expect" value:@"100-Continue"];
     [h addRequestHeader:@"Content-Encoding" value:@"identity"];
     [h addRequestHeader:@"Content-Type" value:@"text/plain"];
-    [h addRequestHeader:@"X-ApiKey" value:_apiKey];
     [h addRequestHeader:@"X-AppVersion" value: _appVersion];
     [h addRequestHeader:@"X-Consumer" value:@"iOS"];
+    
+    [h addRequestHeader:@"ApiKey" value:_apiKey];
+    [h addRequestHeader:@"Salt" value:salt];
+    [h addRequestHeader:@"Signature" value:sig];
     
     ASIHTTPRequest * __weak hh = h;
     [h setFailedBlock: ^(void) {

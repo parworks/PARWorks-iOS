@@ -166,7 +166,7 @@
 
     ARAppDelegate * delegate = (ARAppDelegate *)[[UIApplication sharedApplication] delegate];
     [delegate removeSite:site];
-    [_currentUserSites removeObjectAtIndex:indexPath.row];
+//    [_currentUserSites removeObjectAtIndex:indexPath.row];
     
     [_tableView beginUpdates];
     [_tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
