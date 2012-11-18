@@ -40,6 +40,9 @@
 @property (strong, nonatomic) UIWindow * window;
 @property (strong, nonatomic) UITabBarController * tabController;
 
+- (void)setAPIKey:(NSString*)key andSecret:(NSString*)secret;
+- (void)authenticate;
+
 
 // ========================
 // @name Local Data Storage

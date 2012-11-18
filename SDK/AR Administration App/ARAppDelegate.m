@@ -20,6 +20,7 @@
 
 #import "ARAppDelegate.h"
 #import "ARSitesViewController.h"
+#import "ARAuthViewController.h"
 #import "ARAugmentedPhotosViewController.h"
 #import "ARManager.h"
 
@@ -27,10 +28,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // Setup the ARManager
-    [[ARManager shared] setApiKey:PARWORKS_API_KEY andSecret: PARWORKS_API_SECRET];
-    [[ARManager shared] setLocationEnabled: YES];
-    
     // load data
     _savesState = YES;
     _sites = [NSKeyedUnarchiver unarchiveObjectWithFile: SITES_PATH];
@@ -43,7 +40,6 @@
     // Add checks to save state
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(save) name:NOTIF_AUGMENTED_PHOTO_UPDATED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(save) name:NOTIF_SITE_UPDATED object:nil];
-    
     [[UIApplication sharedApplication] setIdleTimerDisabled: YES];
     
     // Override point for customization after application launch.
@@ -58,12 +54,37 @@
         [ncs addObject: [[UINavigationController alloc] initWithRootViewController: vc]];
     
     self.tabController.viewControllers = ncs;
-    
     self.window.rootViewController = self.tabController;
     [self.window makeKeyAndVisible];
+    
+    
+    // Setup the ARManager
+    NSString * key = [[NSUserDefaults standardUserDefaults] objectForKey: @"key"];
+    NSString * secret = [[NSUserDefaults standardUserDefaults] objectForKey: @"secret"];
+    if (key && secret) {
+        [[ARManager shared] setApiKey:key andSecret: secret];
+        [[ARManager shared] setLocationEnabled: YES];
+    } else {
+        [self authenticate];
+    }
+    
     return YES;
 }
 
+- (void)setAPIKey:(NSString*)key andSecret:(NSString*)secret
+{
+    [[NSUserDefaults standardUserDefaults] setObject:key forKey:@"key"];
+    [[NSUserDefaults standardUserDefaults] setObject:secret forKey:@"secret"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [[ARManager shared] setApiKey:key andSecret: secret];
+    [[ARManager shared] setLocationEnabled: YES];
+}
+
+- (void)authenticate
+{
+    ARAuthViewController * vc = [[ARAuthViewController alloc] init];
+    [[self.window rootViewController] presentModalViewController: vc animated:YES];
+}
 
 #pragma mark -
 #pragma mark Local Data Storage
