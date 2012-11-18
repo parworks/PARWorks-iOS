@@ -52,7 +52,7 @@
     
     if (![[_registerPasswordConfirmField text] isEqualToString: [_registerPasswordField text]])
         msg = @"Please make sure your passwords match.";
-    if ([[_registerEmailField text] rangeOfString:@"@@"].location == NSNotFound)
+    if ([[_registerEmailField text] rangeOfString:@"@"].location == NSNotFound)
         msg = @"Please provide a valid email address!";
     
     if (msg ){
@@ -165,6 +165,8 @@
     [_registerView shiftFrame: CGPointMake(0, -15)];
     [_registerView setAlpha: 1];
     [UIView commitAnimations];
+    
+    [_registerEmailField becomeFirstResponder];
 }
 
 - (IBAction)cancelRegistration:(id)sender
@@ -186,6 +188,8 @@
     [_loginView shiftFrame: CGPointMake(0, -15)];
     [_loginView setAlpha: 1];
     [UIView commitAnimations];
+
+    [_loginEmailField becomeFirstResponder];
 }
 
 
