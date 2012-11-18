@@ -43,6 +43,9 @@
 #define REQ_IMAGE_AUGMENT_GEO           @"/ar/image/augment/geo"
 #define REQ_IMAGE_AUGMENT_RESULT        @"/ar/image/augment/result"
 
+#define REQ_USER_REGISTER               @"/ar/mars/user/account/create"
+#define REQ_USER_GETKEY                 @"/ar/mars/user/account/getkey"
+
 #define NOTIF_SITE_UPDATED              @"nbu"
 #define NOTIF_AUGMENTED_PHOTO_UPDATED   @"napu"
 
