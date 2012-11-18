@@ -27,7 +27,6 @@
 @interface ARManager : NSObject <CLLocationManagerDelegate>
 {
     NSString * _apiSecret;
-    NSString * _apiKey;
     NSString * _appVersion;
     NSString * _appUsername;
     
@@ -39,6 +38,8 @@
 + (id)allocWithZone:(NSZone *)zone;
 - (id)copyWithZone:(NSZone *)zone;
 - (id)init;
+
+@property(nonatomic, readonly) NSString * apiKey;
 
 
 // ================================

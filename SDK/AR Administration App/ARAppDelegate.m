@@ -53,18 +53,19 @@
     for (UIViewController * vc in vcs)
         [ncs addObject: [[UINavigationController alloc] initWithRootViewController: vc]];
     
-    self.tabController.viewControllers = ncs;
-    self.window.rootViewController = self.tabController;
-    [self.window makeKeyAndVisible];
-    
-    
     // Setup the ARManager
     NSString * key = [[NSUserDefaults standardUserDefaults] objectForKey: @"key"];
     NSString * secret = [[NSUserDefaults standardUserDefaults] objectForKey: @"secret"];
     if (key && secret) {
         [[ARManager shared] setApiKey:key andSecret: secret];
         [[ARManager shared] setLocationEnabled: YES];
-    } else {
+    }
+    
+    self.tabController.viewControllers = ncs;
+    self.window.rootViewController = self.tabController;
+    [self.window makeKeyAndVisible];
+    
+    if (!key || !secret) {
         [self authenticate];
     }
     

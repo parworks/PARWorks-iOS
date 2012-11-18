@@ -72,7 +72,6 @@
     
     // Show the loading label while we load the user's sites.
     _tableView.alpha = _loadingIndicator.alpha = _loadingLabel.alpha = 0.0;
-    [self refreshCurrentUserSites];
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -80,7 +79,11 @@
     [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(siteUpdated:) name:NOTIF_SITE_UPDATED object:nil];
 
-    if (_isFirstLoad) {
+    if (![ARManager shared].apiKey) {
+        return;
+    }
+    
+    if (_currentUserSites.count == 0) {
         [self transitionContentLoading];
     } else {
         [self refreshCurrentUserSites];
