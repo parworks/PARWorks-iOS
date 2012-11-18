@@ -29,9 +29,11 @@
 #define REQ_SITE                        @"/ar/site"
 #define REQ_SITE_ADD                    @"/ar/site/add"
 #define REQ_SITE_LIST                   @"/ar/site/list"
+#define REQ_SITE_LIST_ALL               @"/ar/site/list/summary"
 #define REQ_SITE_REMOVE                 @"/ar/site/remove"
 #define REQ_SITE_NEARBY                 @"/ar/site/nearby"
 #define REQ_SITE_INFO                   @"/ar/site/info"
+#define REQ_SITE_INFO_SINGLE            @"/ar/site/info/summary"
 #define REQ_SITE_OVERLAYS               @"/ar/site/overlay"
 
 #define REQ_SITE_IMAGE                  @"/ar/site/image"

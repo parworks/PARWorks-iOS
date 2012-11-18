@@ -28,11 +28,11 @@
 #define ADD_NEW         1
 
 @implementation ARSitesViewController
+{
+    BOOL _isFirstLoad;
+}
 
-
-#pragma mark -
-#pragma mark Lifecycle
-
+#pragma mark - Lifecycle
 - (id)init
 {
     self = [super init];
@@ -53,11 +53,11 @@
 
 - (void)sharedInit
 {
+    _isFirstLoad = YES;
     [self setTitle: @"Sites"];
     [self setTabBarItem: [[UITabBarItem alloc] initWithTabBarSystemItem: UITabBarSystemItemBookmarks tag:0]];
     
     _currentUserSites = [[NSMutableArray alloc] init];
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(siteUpdated:) name:NOTIF_SITE_UPDATED object:nil];
 }
 
 - (void)viewDidLoad
@@ -66,13 +66,83 @@
     [_apiKeyLabel setText: PARWORKS_API_KEY];
     
     // create the upper right add button
-    UIBarButtonItem * add = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemAdd target:self action:@selector(addSite:)];
+    UIBarButtonItem * add = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemAdd target:self action:@selector(addNewSite)];
+    add.enabled = NO;
     [self.navigationItem setRightBarButtonItem:add animated:YES];
     
-//    NSTimer *userSiteTimer = [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(refreshCurrentUserSites) userInfo:nil repeats:YES];
-//    [userSiteTimer fire];
+    // Show the loading label while we load the user's sites.
+    _tableView.alpha = _loadingIndicator.alpha = _loadingLabel.alpha = 0.0;
+    [self refreshCurrentUserSites];
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(siteUpdated:) name:NOTIF_SITE_UPDATED object:nil];
+
+    if (_isFirstLoad) {
+        [self transitionContentLoading];
+    } else {
+        [self refreshCurrentUserSites];
+    }
     
-    [NSTimer scheduledTimerWithTimeInterval:30.0 target:self selector:@selector(updateSitesStatus) userInfo:nil repeats:YES];
+    if (_currentUserSites.count > 0) {
+        self.navigationItem.rightBarButtonItem.enabled = YES;
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [super viewWillDisappear:animated];
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+
+#pragma mark - Convenience
+- (void)transitionContentLoading
+{
+    self.navigationItem.rightBarButtonItem.enabled = NO;
+    [UIView animateWithDuration:0.2 animations:^{
+        _loadingIndicator.alpha = 1.0;
+        _loadingLabel.alpha = 1.0;
+    }];
+    [_loadingIndicator startAnimating];
+}
+
+- (void)transitionContentFinishedLoading
+{
+     self.navigationItem.rightBarButtonItem.enabled = YES;
+    _loadingIndicator.alpha = 0.0;
+    _loadingLabel.alpha = 0.0;
+
+    [UIView animateWithDuration:0.2 animations:^{
+        _tableView.alpha = 1.0;
+    }];
+}
+
+#pragma mark - Loading User Sites
+- (void)refreshCurrentUserSites
+{
+    __weak ARSitesViewController *blockSelf = self;
+    __weak NSMutableArray *weakSites = _currentUserSites;
+    [[ARManager shared] sitesForCurrentAPIKey:^(NSArray *sites) {
+        [weakSites removeAllObjects];
+        
+        // TODO: Create site objects for each site returned.
+        
+        [weakSites addObjectsFromArray:sites];
+        [blockSelf.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
+
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.25 * NSEC_PER_SEC);
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [blockSelf transitionContentFinishedLoading];
+        });
+    }];
+}
+
+- (void)siteUpdated:(NSNotification*)notif
+{
+    [self refreshCurrentUserSites];
 }
 
 - (void)updateSitesStatus
@@ -84,55 +154,14 @@
     }
 }
 
-- (void)addSite:(id)sender
-{
-    UIActionSheet * s = [[UIActionSheet alloc] initWithTitle:@"Action" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"New Site", @"Existing Site", nil];
-    [s showFromTabBar: self.tabBarController.tabBar];
-}
-
-- (void)addExistingSite
-{
-    UIAlertInputView * v = [[UIAlertInputView alloc] initWithDelegate: self andTitle:@"Existing Site Identifier" andDefaultValue: @""];
-    [v setTag: ADD_EXISTING];
-    [v show];
-    [v becomeFirstResponder];
-}
-
 - (void)addNewSite
 {
-    UIAlertInputView * v = [[UIAlertInputView alloc] initWithDelegate: self andTitle:@"Site Identifier" andDefaultValue: @""];
+    UIAlertInputView * v = [[UIAlertInputView alloc] initWithDelegate: self andTitle:@"New Site Identifier" andDefaultValue: @""];
     [v setTag: ADD_NEW];
     [v show];
     [v becomeFirstResponder];
 }
 
-- (void)refreshCurrentUserSites
-{
-    __weak ARSitesViewController *blockSelf = self;
-    __weak NSMutableArray *weakSites = _currentUserSites;
-    [[ARManager shared] sitesForCurrentAPIKey:^(NSArray *sites) {
-        [weakSites removeAllObjects];
-        
-        [weakSites addObjectsFromArray:sites];
-        [blockSelf.tableView reloadData];
-    }];
-}
-
-- (void)siteUpdated:(NSNotification*)notif
-{
-    [_tableView reloadData];
-}
-
-- (void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    if (buttonIndex == [actionSheet cancelButtonIndex])
-        return;
-        
-    if (buttonIndex == 0)
-        [self addNewSite];
-    else
-        [self addExistingSite];
-}
 
 -(void)alertInputView:(UIAlertInputView*)view clickedButtonAtIndex:(int)index
 {
@@ -166,22 +195,15 @@
 
     ARAppDelegate * delegate = (ARAppDelegate *)[[UIApplication sharedApplication] delegate];
     [delegate removeSite:site];
-//    [_currentUserSites removeObjectAtIndex:indexPath.row];
+    [_currentUserSites removeObjectAtIndex:indexPath.row];
     
     [_tableView beginUpdates];
     [_tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationAutomatic];
     [_tableView endUpdates];
     
-    
     [[ARManager shared] removeSite:site.identifier withCompletionBlock:^{
         NSLog(@"Deleted site: %@", site);
     }];
-}
-
-- (void)viewDidUnload
-{
-    [self setApiKeyLabel:nil];
-    [super viewDidUnload];
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
@@ -190,8 +212,7 @@
 }
 
 
-#pragma mark -
-#pragma mark UITableViewDelegate Functions
+#pragma mark - UITableViewDelegate Functions
 - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
 {
     return YES;
@@ -199,31 +220,13 @@
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
-    // User sites and public sites
-//    return 2;
     return 1;
 }
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
     UITableViewCell *cell = [tableView cellForRowAtIndexPath: indexPath];
-    ARAppDelegate * d = (ARAppDelegate *)[[UIApplication sharedApplication] delegate];
-    ARSite *siteToDelete;
-
-    switch (indexPath.section) {
-//        case 0:
-//            siteToDelete = [[ARSite alloc] initWithIdentifier:_currentUserSites[indexPath.row]];
-//            break;
-        case 0:
-            for (ARSite *site in d.sites) {
-                if ([[site.identifier lowercaseString] isEqualToString:[cell.textLabel.text lowercaseString]]) {
-                    siteToDelete = site;
-                    break;
-                }
-            }
-        default:
-            break;
-    }
+    ARSite *siteToDelete = [[ARSite alloc] initWithIdentifier:_currentUserSites[indexPath.row]];
     
     UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Are you sure?" message:@"Deleting this site will remove all information including processed images. This operation cannot be undone." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes, I'm sure", nil];
     objc_setAssociatedObject(av, @"site", siteToDelete, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
@@ -233,22 +236,7 @@
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section;
 {
-    ARAppDelegate * d = (ARAppDelegate *)[[UIApplication sharedApplication] delegate];
-    NSInteger rows = 0;
-    switch (section) {
-//        case 0: {
-//            rows = _currentUserSites.count;
-//            break;
-//        }
-        case 0: {
-            rows = [[d sites] count];
-            break;
-        }
-        default:
-            break;
-    }
-    
-    return rows;
+    return _currentUserSites.count;
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
@@ -256,25 +244,10 @@
     UITableViewCell * c = [tableView dequeueReusableCellWithIdentifier: @"row"];
     if (!c) c = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"row"];
     
-    ARAppDelegate * d = (ARAppDelegate *)[[UIApplication sharedApplication] delegate];
-    ARSite * site;
-    switch (indexPath.section) {
-//        case 0: {
-//            site = [[ARSite alloc] initWithIdentifier:_currentUserSites[indexPath.row]];
-//            site.status = ARSiteStatusUnknown;
-//            objc_setAssociatedObject(c, @"site", site, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-//            c.textLabel.text = _currentUserSites[indexPath.row];
-//            break;
-//        }
-        case 0: {
-            site = [[d sites] objectAtIndex: [indexPath row]];
-            [[c textLabel] setText: [site identifier]];
-            [[c detailTextLabel] setText: [site description]];
-            break;
-        }
-        default:
-            break;
-    }
+    ARSite * site = [[ARSite alloc] initWithIdentifier:_currentUserSites[indexPath.row]];
+    site.status = ARSiteStatusUnknown;
+    objc_setAssociatedObject(c, @"site", site, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
+    c.textLabel.text = _currentUserSites[indexPath.row];
     
     return c;
 }
@@ -284,19 +257,8 @@
     UITableViewCell *c = [tableView cellForRowAtIndexPath:indexPath];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 
-    ARAppDelegate * d = (ARAppDelegate *)[[UIApplication sharedApplication] delegate];
-    ARSite *site;
-    switch (indexPath.section) {
-//        case 0:
-//            site = objc_getAssociatedObject(c, @"site");
-//            break;
-        case 0:
-            site = [[d sites] objectAtIndex: [indexPath row]];
-            break;
-        default:
-            break;
-    }
-    
+    ARSite *site = objc_getAssociatedObject(c, @"site");
+
     ARSiteImagesViewController * vc = [[ARSiteImagesViewController alloc] initWithSite: site];
     if ([site status] != ARSiteStatusCreating)
         [self.navigationController pushViewController: vc animated:YES];
