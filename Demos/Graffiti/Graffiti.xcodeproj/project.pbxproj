@@ -7,6 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		43A4531D1665C3F300D594E9 /* camera-graphic.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A453171665C3F300D594E9 /* camera-graphic.png */; };
+		43A4531E1665C3F300D594E9 /* camera-graphic@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A453181665C3F300D594E9 /* camera-graphic@2x.png */; };
+		43A4531F1665C3F300D594E9 /* camera-icon-down.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A453191665C3F300D594E9 /* camera-icon-down.png */; };
+		43A453201665C3F300D594E9 /* camera-icon-down@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A4531A1665C3F300D594E9 /* camera-icon-down@2x.png */; };
+		43A453211665C3F300D594E9 /* camera-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A4531B1665C3F300D594E9 /* camera-icon.png */; };
+		43A453221665C3F300D594E9 /* camera-icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A4531C1665C3F300D594E9 /* camera-icon@2x.png */; };
 		A00066631628FD06007FADB2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A00066621628FD06007FADB2 /* UIKit.framework */; };
 		A00066651628FD06007FADB2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A00066641628FD06007FADB2 /* Foundation.framework */; };
 		A00066671628FD06007FADB2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A00066661628FD06007FADB2 /* CoreGraphics.framework */; };
@@ -129,13 +135,16 @@
 		A0DDF5101643697D00BB9C82 /* GridCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0DDF4E71643697D00BB9C82 /* GridCellView.m */; };
 		A0DDF5111643697D00BB9C82 /* GridView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0DDF4E91643697D00BB9C82 /* GridView.m */; };
 		A0DDF5181643717600BB9C82 /* img_durham_1.pm in Resources */ = {isa = PBXBuildFile; fileRef = A0DDF4381643694B00BB9C82 /* img_durham_1.pm */; };
-		A0E91FBE164709A600D7AC07 /* camera-graphic.png in Resources */ = {isa = PBXBuildFile; fileRef = A0E91FBB164709A600D7AC07 /* camera-graphic.png */; };
-		A0E91FBF164709A600D7AC07 /* camera-icon-down.png in Resources */ = {isa = PBXBuildFile; fileRef = A0E91FBC164709A600D7AC07 /* camera-icon-down.png */; };
-		A0E91FC0164709A600D7AC07 /* camera-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = A0E91FBD164709A600D7AC07 /* camera-icon.png */; };
 		A0E91FCC16475A7000D7AC07 /* BROverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E91FCB16475A7000D7AC07 /* BROverlayView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		43A453171665C3F300D594E9 /* camera-graphic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera-graphic.png"; sourceTree = "<group>"; };
+		43A453181665C3F300D594E9 /* camera-graphic@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera-graphic@2x.png"; sourceTree = "<group>"; };
+		43A453191665C3F300D594E9 /* camera-icon-down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera-icon-down.png"; sourceTree = "<group>"; };
+		43A4531A1665C3F300D594E9 /* camera-icon-down@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera-icon-down@2x.png"; sourceTree = "<group>"; };
+		43A4531B1665C3F300D594E9 /* camera-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera-icon.png"; sourceTree = "<group>"; };
+		43A4531C1665C3F300D594E9 /* camera-icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera-icon@2x.png"; sourceTree = "<group>"; };
 		A000665E1628FD06007FADB2 /* Graffiti.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Graffiti.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A00066621628FD06007FADB2 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		A00066641628FD06007FADB2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -339,9 +348,6 @@
 		A0DDF4E71643697D00BB9C82 /* GridCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridCellView.m; sourceTree = "<group>"; };
 		A0DDF4E81643697D00BB9C82 /* GridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridView.h; sourceTree = "<group>"; };
 		A0DDF4E91643697D00BB9C82 /* GridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridView.m; sourceTree = "<group>"; };
-		A0E91FBB164709A600D7AC07 /* camera-graphic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera-graphic.png"; sourceTree = "<group>"; };
-		A0E91FBC164709A600D7AC07 /* camera-icon-down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera-icon-down.png"; sourceTree = "<group>"; };
-		A0E91FBD164709A600D7AC07 /* camera-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera-icon.png"; sourceTree = "<group>"; };
 		A0E91FCA16475A7000D7AC07 /* BROverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BROverlayView.h; sourceTree = "<group>"; };
 		A0E91FCB16475A7000D7AC07 /* BROverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BROverlayView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -579,10 +585,13 @@
 				A0DDF4151643694B00BB9C82 /* brush_icon.png */,
 				A0DDF4161643694B00BB9C82 /* brush_icon@2x.png */,
 				A0DDF4171643694B00BB9C82 /* Brushes */,
-				A0E91FBB164709A600D7AC07 /* camera-graphic.png */,
-				A0E91FBC164709A600D7AC07 /* camera-icon-down.png */,
-				A0E91FBD164709A600D7AC07 /* camera-icon.png */,
 				A0DDF4281643694B00BB9C82 /* camera_button.png */,
+				43A453171665C3F300D594E9 /* camera-graphic.png */,
+				43A453181665C3F300D594E9 /* camera-graphic@2x.png */,
+				43A453191665C3F300D594E9 /* camera-icon-down.png */,
+				43A4531A1665C3F300D594E9 /* camera-icon-down@2x.png */,
+				43A4531B1665C3F300D594E9 /* camera-icon.png */,
+				43A4531C1665C3F300D594E9 /* camera-icon@2x.png */,
 				A0DDF4291643694B00BB9C82 /* camera_button@2x.png */,
 				A0DDF42A1643694B00BB9C82 /* color_picker_icon.png */,
 				A0DDF42B1643694B00BB9C82 /* color_picker_icon@2x.png */,
@@ -941,9 +950,12 @@
 				A0DDF4871643694B00BB9C82 /* img_durham_1.jpg in Resources */,
 				A0DDF4F11643697D00BB9C82 /* ARPhotoViewController.xib in Resources */,
 				A0DDF4FD1643697D00BB9C82 /* README-GHUnit in Resources */,
-				A0E91FBE164709A600D7AC07 /* camera-graphic.png in Resources */,
-				A0E91FBF164709A600D7AC07 /* camera-icon-down.png in Resources */,
-				A0E91FC0164709A600D7AC07 /* camera-icon.png in Resources */,
+				43A4531D1665C3F300D594E9 /* camera-graphic.png in Resources */,
+				43A4531E1665C3F300D594E9 /* camera-graphic@2x.png in Resources */,
+				43A4531F1665C3F300D594E9 /* camera-icon-down.png in Resources */,
+				43A453201665C3F300D594E9 /* camera-icon-down@2x.png in Resources */,
+				43A453211665C3F300D594E9 /* camera-icon.png in Resources */,
+				43A453221665C3F300D594E9 /* camera-icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

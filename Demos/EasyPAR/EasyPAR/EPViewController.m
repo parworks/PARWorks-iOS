@@ -159,8 +159,6 @@
     _scanline.frame = CGRectMake(0, -_scanline.frame.size.height, _scanline.frame.size.width, _scanline.frame.size.height);
     [CATransaction commit];
     
-    [_loadingLayer startLoadingAnimation];
-    
     CALayer *firstLayer = [_layers objectAtIndex:0];
 
     [UIView beginAnimations:nil context:nil];
@@ -255,6 +253,7 @@
             [self performSelector:@selector(translateLayerOffscreenAtIndex:) withObject:[NSNumber numberWithInt:index] afterDelay:(duration*i)+delay];
         }
     }
+    [_loadingLayer performSelector:@selector(startLoadingAnimation) withObject:nil afterDelay:(duration*(rows + 4))+delay];
 }
 
 - (void)translateLayerOffscreenAtIndex:(NSNumber *)index
@@ -327,7 +326,7 @@
         [self showAugmentingViewWithImageDelayed];
         
     } else {
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Uh oh!" message:@"We weren't able to find any overlays in that image. Please try again." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Uh oh!" message:@"We weren't able to find any overlays in that image. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [av show];
 
         [self showCameraPicker];

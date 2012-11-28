@@ -15,7 +15,11 @@ NSString * const layerTimerKey = @"timerKey";
 
 - (void)startLoadingAnimation
 {
+    [CATransaction begin];
+    [CATransaction setAnimationDuration: 0.3];
     self.opacity = 1.0;
+    [CATransaction commit];
+    
     NSTimer *timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(appendPeriod) userInfo:nil repeats:YES];
     objc_setAssociatedObject(self, (__bridge const void *)(layerTimerKey), timer, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
 }
