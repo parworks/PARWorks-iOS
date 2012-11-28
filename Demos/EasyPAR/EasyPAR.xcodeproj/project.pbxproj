@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		43A452EA1665BCFE00D594E9 /* mesh_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A452E81665BCFE00D594E9 /* mesh_background.png */; };
+		43A452EB1665BCFE00D594E9 /* mesh_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A452E91665BCFE00D594E9 /* mesh_background@2x.png */; };
+		43A452EF1665BDB400D594E9 /* environment_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A452ED1665BDB400D594E9 /* environment_background.png */; };
+		43A452F01665BDB400D594E9 /* environment_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A452EE1665BDB400D594E9 /* environment_background@2x.png */; };
 		43F33D641665A10D00F09ECA /* BROverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 43F33D631665A10D00F09ECA /* BROverlayView.m */; };
 		43F33D721665A2AA00F09ECA /* EnvironmentSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 43F33D701665A2A900F09ECA /* EnvironmentSelectorViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		43F33D731665A2AA00F09ECA /* EnvironmentSelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43F33D711665A2AA00F09ECA /* EnvironmentSelectorViewController.xib */; };
@@ -81,6 +85,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		43A452E81665BCFE00D594E9 /* mesh_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mesh_background.png; sourceTree = "<group>"; };
+		43A452E91665BCFE00D594E9 /* mesh_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "mesh_background@2x.png"; sourceTree = "<group>"; };
+		43A452ED1665BDB400D594E9 /* environment_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = environment_background.png; sourceTree = "<group>"; };
+		43A452EE1665BDB400D594E9 /* environment_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "environment_background@2x.png"; sourceTree = "<group>"; };
 		43F33D621665A10D00F09ECA /* BROverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BROverlayView.h; sourceTree = "<group>"; };
 		43F33D631665A10D00F09ECA /* BROverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BROverlayView.m; sourceTree = "<group>"; };
 		43F33D6F1665A2A900F09ECA /* EnvironmentSelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnvironmentSelectorViewController.h; sourceTree = "<group>"; };
@@ -463,6 +471,10 @@
 		A0DDF5DC164378FA00BB9C82 /* EasyPAR */ = {
 			isa = PBXGroup;
 			children = (
+				43A452ED1665BDB400D594E9 /* environment_background.png */,
+				43A452EE1665BDB400D594E9 /* environment_background@2x.png */,
+				43A452E81665BCFE00D594E9 /* mesh_background.png */,
+				43A452E91665BCFE00D594E9 /* mesh_background@2x.png */,
 				43F33D801665AB0D00F09ECA /* camera-graphic.png */,
 				43F33D811665AB0E00F09ECA /* camera-icon-down.png */,
 				43F33D821665AB0F00F09ECA /* camera-icon.png */,
@@ -590,6 +602,10 @@
 				43F33D831665AB0F00F09ECA /* camera-graphic.png in Resources */,
 				43F33D841665AB0F00F09ECA /* camera-icon-down.png in Resources */,
 				43F33D851665AB0F00F09ECA /* camera-icon.png in Resources */,
+				43A452EA1665BCFE00D594E9 /* mesh_background.png in Resources */,
+				43A452EB1665BCFE00D594E9 /* mesh_background@2x.png in Resources */,
+				43A452EF1665BDB400D594E9 /* environment_background.png in Resources */,
+				43A452F01665BDB400D594E9 /* environment_background@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -55,13 +55,16 @@
     _loadingLayer.contentsScale = [UIScreen mainScreen].scale;
     _loadingLayer.needsDisplayOnBoundsChange = NO;
     [self.view.layer addSublayer:_loadingLayer];
-
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
-    if (_firstLoad) {
+    if (!_selectedSite) {
+        [self selectSite: nil];
+        _selectedSite = YES;
+        
+    } else if (_firstLoad) {
         _cameraOverlayView = [[GRCameraOverlayView alloc] initWithFrame:self.view.bounds];
         [_cameraOverlayView.augmentButton addTarget:self action:@selector(takePicture:) forControlEvents:UIControlEventTouchUpInside];
 
@@ -88,6 +91,7 @@
 
 
 #pragma mark - Rotation
+
 - (NSUInteger)supportedInterfaceOrientations
 {
     return UIInterfaceOrientationMaskLandscape;
@@ -216,7 +220,7 @@
 - (IBAction)selectSite:(id)sender
 {
     EnvironmentSelectorViewController * e = [[EnvironmentSelectorViewController alloc] init];
-    [_picker presentViewController:e animated:YES completion:NULL];
+    [self presentViewController:e animated:YES completion:NULL];
 }
 
 - (IBAction)translateLayersOffscreen

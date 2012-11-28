@@ -1101,6 +1101,7 @@
 		A00066831628FD06007FADB2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ben Gotow (7EKP92J76Y)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Graffiti/Graffiti-Prefix.pch";
 				INFOPLIST_FILE = "Graffiti/Graffiti-Info.plist";
@@ -1109,6 +1110,7 @@
 					"\"$(SDKROOT)/usr/lib/system\"",
 				);
 				PRODUCT_NAME = Graffiti;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "810FBEA9-0F12-43C2-A201-BDE6124903EE";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;

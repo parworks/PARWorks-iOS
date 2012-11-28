@@ -33,7 +33,9 @@
     
     NSMutableArray              * _layers;
     UIImagePickerController     * _picker;
+    
     BOOL                        _firstLoad;
+    BOOL                        _selectedSite;
     
     ARAugmentedPhoto            * _augmentedPhoto;
 }

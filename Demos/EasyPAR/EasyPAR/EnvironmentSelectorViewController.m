@@ -22,6 +22,11 @@
     return self;
 }
 
+- (NSUInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskPortrait;
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -160,7 +165,7 @@
         if ([[servers objectAtIndex: i] isEqualToString: [delegate APIServer]])
             [c setAccessoryType: UITableViewCellAccessoryCheckmark];
     } else
-        [[c textLabel] setText: @"Add Server..."];
+        [[c textLabel] setText: @"Add Site..."];
     
     return c;
 }
