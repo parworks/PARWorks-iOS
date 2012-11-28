@@ -43,7 +43,7 @@
     UIActivityIndicatorView * _statusSpinner;
 }
 
-@property (nonatomic, strong) IBOutlet NSObject<GridViewDelegate> * delegate;
+@property (nonatomic, weak) IBOutlet NSObject<GridViewDelegate> * delegate;
 
 - (id)initWithFrame:(CGRect)frame;
 

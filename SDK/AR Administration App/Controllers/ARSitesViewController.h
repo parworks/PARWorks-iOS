@@ -29,5 +29,7 @@
 
 @property (nonatomic, weak) IBOutlet UITableView * tableView;
 @property (weak, nonatomic) IBOutlet UILabel *apiKeyLabel;
+@property (weak, nonatomic) IBOutlet UILabel *loadingLabel;
+@property (weak, nonatomic) IBOutlet UIActivityIndicatorView *loadingIndicator;
 
 @end

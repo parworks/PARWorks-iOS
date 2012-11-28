@@ -29,7 +29,7 @@
 }
 
 @property (strong, nonatomic) ARSite * site;
-@property (strong, nonatomic) IBOutlet GridView *gridView;
+@property (weak, nonatomic) IBOutlet GridView *gridView;
 @property (weak, nonatomic) IBOutlet UIButton *cameraCaptureButton;
 @property (weak, nonatomic) IBOutlet UIButton *cameraDoneButton;
 @property (strong, nonatomic) IBOutlet UIView *cameraOverlayView;
