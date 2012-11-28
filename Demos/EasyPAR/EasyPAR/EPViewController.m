@@ -22,9 +22,11 @@
 #import "EPViewController.h"
 #import "ASIHTTPRequest.h"
 #import "UIImageView+AnimationAdditions.h"
+#import "EnvironmentSelectorViewController.h"
 #import "CATextLayer+Loading.h"
 #import "PARWorks.h"
 #import "EPUtil.h"
+#import "EPAppDelegate.h"
 
 #define WIDTH 20
 #define HEIGHT 20
@@ -41,13 +43,39 @@
 {
     [super viewDidLoad];
     _firstLoad = YES;
-    [self setupLoadingLayer];
+    
+    // We use a text layer so we can get awesome implicit animations...
+    _loadingLayer.foregroundColor = [UIColor whiteColor].CGColor;
+    _loadingLayer = [CATextLayer layer];
+    _loadingLayer.opacity = 0.0;
+    _loadingLayer.string = @"Augmenting";
+    _loadingLayer.fontSize = 16.0;
+    _loadingLayer.frame = CGRectMake(self.view.frame.size.width/2 - 40, self.view.frame.size.height/2, self.view.frame.size.width/2, _loadingLayer.fontSize+4);
+    _loadingLayer.rasterizationScale = [UIScreen mainScreen].scale;
+    _loadingLayer.contentsScale = [UIScreen mainScreen].scale;
+    _loadingLayer.needsDisplayOnBoundsChange = NO;
+    [self.view.layer addSublayer:_loadingLayer];
+
 }
 
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     if (_firstLoad) {
+        _cameraOverlayView = [[GRCameraOverlayView alloc] initWithFrame:self.view.bounds];
+        [_cameraOverlayView.augmentButton addTarget:self action:@selector(takePicture:) forControlEvents:UIControlEventTouchUpInside];
+
+        _shrinkingMask = [[CALayer alloc] init];
+        _shrinking = [[UIImageView alloc] init];
+        _scanline = [[UIImageView alloc] initWithImageSeries:@"scanline_%d.png"];
+        [_shrinkingMask setOpaque: YES];
+        [_shrinkingMask setBackgroundColor: [[UIColor redColor] CGColor]];
+        [_shrinking.layer setMask: _shrinkingMask];
+        [_shrinkingMask setFrame: self.view.bounds];
+        [_shrinking setFrame: self.view.bounds];
+        [self.view addSubview: _shrinking];
+        [self.view addSubview: _scanline];
+
         [self showCameraPicker];
         _firstLoad = NO;
     }
@@ -56,21 +84,6 @@
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-}
-
-- (void)setupLoadingLayer
-{
-    // We use a text layer so we can get awesome implicit animations...
-    _loadingLayer.foregroundColor = [UIColor whiteColor].CGColor;
-    _loadingLayer = [CATextLayer layer];
-    _loadingLayer.opacity = 0.0;
-    _loadingLayer.string = @"Augmenting";
-    _loadingLayer.fontSize = 16.0;
-    _loadingLayer.rasterizationScale = [UIScreen mainScreen].scale;
-    _loadingLayer.contentsScale = [UIScreen mainScreen].scale;
-    _loadingLayer.frame = CGRectMake(self.view.frame.size.width/2 - 40, self.view.frame.size.height/2, self.view.frame.size.width/2, _loadingLayer.fontSize+4);
-    _loadingLayer.needsDisplayOnBoundsChange = NO;
-    [self.view.layer addSublayer:_loadingLayer];
 }
 
 
@@ -105,58 +118,56 @@
 
 - (void)showAugmentingViewWithImage:(UIImage *)image
 {
-    _layers = [NSMutableArray array];
-    
-    int count = [EPUtil smallImagesWithWidth:WIDTH height:HEIGHT fromImage:_image withImageReadyCallback: ^(int i, UIImage* img) {
-        [(CALayer*)[_layers objectAtIndex: i] performSelectorOnMainThread:@selector(setContents:) withObject:(id)[img CGImage] waitUntilDone:NO];
-        NSLog(@"Set layer image %d", i);
-    }];
+    [_layers makeObjectsPerformSelector:@selector(removeFromSuperlayer)];
+    [_layers removeAllObjects];
+
+    if (!_layers)
+        _layers = [NSMutableArray array];
+
+    int xSteps = image.size.width / WIDTH;
+    int ySteps = image.size.height / HEIGHT;
+    int count = xSteps * ySteps;
+
     for (int i = 0; i < count; i++) {
         CALayer *layer = [CALayer layer];
         [_layers addObject:layer];
         [self.view.layer insertSublayer:layer below:_shrinking.layer];
     }
+
+    [EPUtil smallImagesWithWidth:WIDTH height:HEIGHT fromImage:_image withImageReadyCallback: ^(int i, UIImage* img) {
+        [(CALayer*)[_layers objectAtIndex: i] performSelectorOnMainThread:@selector(setContents:) withObject:(id)[img CGImage] waitUntilDone:NO];
+        NSLog(@"Set layer image %d", i);
+    }];
+    
     NSLog(@"Created layers");
     [self layoutLayersInGrid];
 }
 
 - (void)startAnimation
 {
-    _shrinkingMask = [[CALayer alloc] init];
+    [CATransaction begin];
+    [CATransaction setDisableActions: YES];
+    [_shrinking setImage: _image];
     [_shrinkingMask setFrame: self.view.bounds];
-    [_shrinkingMask setOpaque: YES];
-    [_shrinkingMask setBackgroundColor: [[UIColor redColor] CGColor]];
-    _shrinking = [[UIImageView alloc] initWithImage: _image];
     [_shrinking setFrame: self.view.bounds];
-    [_shrinking.layer setMask: _shrinkingMask];
-    [self.view addSubview: _shrinking];
+    [_scanline setAlpha: 0.0];
+    [_scanline setAnimationRepeatCount: 1000];
+    _scanline.frame = CGRectMake(0, -_scanline.frame.size.height, _scanline.frame.size.width, _scanline.frame.size.height);
+    [CATransaction commit];
     
     [_loadingLayer startLoadingAnimation];
     
-    // Set up and animate our scanline.
-    _scanline = [[UIImageView alloc] initWithImageSeries:@"scanline_%d.png"];
-    [_scanline setAnimationRepeatCount: 1000];
-    [_scanline setAlpha: 0.0];
-    _scanline.frame = CGRectMake(0, -_scanline.frame.size.height, _scanline.frame.size.width, _scanline.frame.size.height);
-    [self.view addSubview: _scanline];
-
     CALayer *firstLayer = [_layers objectAtIndex:0];
 
     [UIView beginAnimations:nil context:nil];
     [UIView setAnimationDuration: 0.3];
     [UIView setAnimationCurve: UIViewAnimationCurveEaseOut];
-    [UIView setAnimationDelegate: self];
-    [UIView setAnimationDidStopSelector: @selector(showAugmentingViewWithImageDelayed)];
+    [UIView setAnimationDelegate:self];
+    [UIView setAnimationDidStopSelector:@selector(showAugmentingViewWithImageDelayed)];
     _scanline.frame = CGRectMake(0, CGRectGetMinY(firstLayer.frame)-_scanline.frame.size.height/2, _scanline.frame.size.width, _scanline.frame.size.height);
     [_scanline setAlpha: 1];
     [UIView commitAnimations];
     NSLog(@"Started animation");
-}
-
-- (void)stopAnimation
-{
-    [_loadingLayer stopLoadingAnimation];
-    [self showAugmentingViewWithImageDelayed];
 }
 
 - (void)showAugmentingViewWithImageDelayed
@@ -202,6 +213,12 @@
     [_picker takePicture];
 }
 
+- (IBAction)selectSite:(id)sender
+{
+    EnvironmentSelectorViewController * e = [[EnvironmentSelectorViewController alloc] init];
+    [_picker presentViewController:e animated:YES completion:NULL];
+}
+
 - (IBAction)translateLayersOffscreen
 {
     srand(time(0));
@@ -220,7 +237,6 @@
         [UIView animateWithDuration:1 animations:^{
             _scanline.alpha = 0.0;
         } completion:^(BOOL finished) {
-            [_scanline removeFromSuperview];
         }];
     }];
     [CATransaction begin];
@@ -286,23 +302,32 @@
     
     [picker dismissViewControllerAnimated:NO completion:nil];
     
+    
     _image = resizedImage;
     [self startAnimation];
     [self performSelectorOnMainThread:@selector(showAugmentingViewWithImage:) withObject:resizedImage waitUntilDone:NO];
     
     // Upload the original image to the AR API for processing. We'll animate the
     // resized image back on screen once it's finished.
-    [[ARManager shared] augmentPhotoUsingNearbySites: originalImage completion:^(ARAugmentedPhoto *augmentedPhoto) {
-        [self stopAnimation];
-        if (augmentedPhoto.response == BackendResponseFinished) {
-            [self showAugmentingViewWithImageDelayed];
-            
-        } else {
-            // TODO: show an error? Right now the API already shows errors for API
-            // failures.
-            [self showCameraPicker];
-        }
-    }];
+    NSString * siteIdentifier = [(EPAppDelegate*)[[UIApplication sharedApplication] delegate] APIServer];
+    ARSite * site = [[ARSite alloc] initWithIdentifier: siteIdentifier];
+    
+    _augmentedPhoto = [site augmentImage: originalImage];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(imageAugmented:) name:NOTIF_AUGMENTED_PHOTO_UPDATED object:_augmentedPhoto];
+}
+
+- (void)imageAugmented:(NSNotification*)notif
+{
+    [_loadingLayer stopLoadingAnimation];
+    if (_augmentedPhoto.response == BackendResponseFinished) {
+        [self showAugmentingViewWithImageDelayed];
+        
+    } else {
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Uh oh!" message:@"We weren't able to find any overlays in that image. Please try again." delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [av show];
+
+        [self showCameraPicker];
+    }
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
@@ -314,6 +339,6 @@
 #pragma mark - UIAlertViewDelegate
 - (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://parworks.com"]];
+    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:@"http://parworks.com/"]];
 }
 @end

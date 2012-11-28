@@ -148,7 +148,7 @@ static ARManager * sharedManager;
 - (ASIHTTPRequest*)createRequest:(NSString*)basePath withMethod:(NSString*)method withArguments:(NSDictionary*)args
 {
     if (_apiKey == nil)
-        @throw @"You need to set the API key before making API requests.";
+        @throw [NSException exceptionWithName:@"PAR Works API Error" reason:@"You need to set the API key before making API requests." userInfo:nil];
         
     // add the username argument, which is sent with every request
     NSMutableDictionary * expandedArgs = args ? [NSMutableDictionary dictionaryWithDictionary: args] : [NSMutableDictionary dictionary];
@@ -262,8 +262,8 @@ static ARManager * sharedManager;
 - (void)findNearbySites:(int)resolution withCompletionBlock:(void (^)(NSArray *))completionBlock
 {
     if (!_locationEnabled)
-        @throw @"You need to enable location by calling setLocationEnabled: before finding nearby sites.";
-        
+        @throw [NSException exceptionWithName:@"PAR Works API Error" reason:@"You need to enable location by calling setLocationEnabled: before finding nearby sites." userInfo:nil];
+    
     // create the full request path
     NSMutableDictionary * args = [NSMutableDictionary dictionaryWithCapacity:3];
     [args setObject:[NSString stringWithFormat: @"%f", [self deviceLocation].coordinate.latitude] forKey:@"lat"];

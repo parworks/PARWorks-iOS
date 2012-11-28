@@ -18,25 +18,29 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "GRCameraOverlayView.h"
 
 @interface EPViewController : UIViewController <UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 {
-    IBOutlet UILabel *_loadingLabel;
-    CATextLayer *_loadingLayer;
+    GRCameraOverlayView         * _cameraOverlayView;
+
+    CATextLayer                 *_loadingLayer;
     
-    UIImage *_image;
-    UIImageView * _shrinking;
-    CALayer * _shrinkingMask;
-    UIImageView * _scanline;
+    UIImage                     * _image;
+    UIImageView                 * _shrinking;
+    CALayer                     * _shrinkingMask;
+    UIImageView                 * _scanline;
     
-    NSMutableArray *_layers;
-    UIImagePickerController *_picker;
-    IBOutlet UIView *_cameraOverlayView;
-    BOOL _firstLoad;
+    NSMutableArray              * _layers;
+    UIImagePickerController     * _picker;
+    BOOL                        _firstLoad;
+    
+    ARAugmentedPhoto            * _augmentedPhoto;
 }
 
 - (IBAction)translateLayersOffscreen;
 - (IBAction)resetLayerTransforms;
 - (IBAction)takePicture:(id)sender;
+- (IBAction)selectSite:(id)sender;
 
 @end

@@ -18,13 +18,17 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "EnvironmentSelectorViewController.h"
 
 @class EPViewController;
 
-@interface EPAppDelegate : UIResponder <UIApplicationDelegate>
+@interface EPAppDelegate : UIResponder <UIApplicationDelegate, ServerSettingContainer>
 
 @property (strong, nonatomic) UIWindow *window;
 
 @property (strong, nonatomic) EPViewController *viewController;
+
+- (void)setAPIServer:(NSString*)server;
+- (NSString*)APIServer;
 
 @end

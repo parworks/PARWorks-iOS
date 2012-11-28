@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		43F33D641665A10D00F09ECA /* BROverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 43F33D631665A10D00F09ECA /* BROverlayView.m */; };
+		43F33D721665A2AA00F09ECA /* EnvironmentSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 43F33D701665A2A900F09ECA /* EnvironmentSelectorViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		43F33D731665A2AA00F09ECA /* EnvironmentSelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43F33D711665A2AA00F09ECA /* EnvironmentSelectorViewController.xib */; };
+		43F33D7F1665AA4300F09ECA /* GRCameraOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 43F33D7E1665AA4300F09ECA /* GRCameraOverlayView.m */; };
+		43F33D831665AB0F00F09ECA /* camera-graphic.png in Resources */ = {isa = PBXBuildFile; fileRef = 43F33D801665AB0D00F09ECA /* camera-graphic.png */; };
+		43F33D841665AB0F00F09ECA /* camera-icon-down.png in Resources */ = {isa = PBXBuildFile; fileRef = 43F33D811665AB0E00F09ECA /* camera-icon-down.png */; };
+		43F33D851665AB0F00F09ECA /* camera-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 43F33D821665AB0F00F09ECA /* camera-icon.png */; };
 		A021498B16191E9400B74C39 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A021498A16191E9400B74C39 /* UIKit.framework */; };
 		A021498D16191E9400B74C39 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A021498C16191E9400B74C39 /* Foundation.framework */; };
 		A021498F16191E9400B74C39 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A021498E16191E9400B74C39 /* CoreGraphics.framework */; };
@@ -74,6 +81,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		43F33D621665A10D00F09ECA /* BROverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BROverlayView.h; sourceTree = "<group>"; };
+		43F33D631665A10D00F09ECA /* BROverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BROverlayView.m; sourceTree = "<group>"; };
+		43F33D6F1665A2A900F09ECA /* EnvironmentSelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnvironmentSelectorViewController.h; sourceTree = "<group>"; };
+		43F33D701665A2A900F09ECA /* EnvironmentSelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnvironmentSelectorViewController.m; sourceTree = "<group>"; };
+		43F33D711665A2AA00F09ECA /* EnvironmentSelectorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EnvironmentSelectorViewController.xib; sourceTree = "<group>"; };
+		43F33D7D1665AA4300F09ECA /* GRCameraOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRCameraOverlayView.h; sourceTree = "<group>"; };
+		43F33D7E1665AA4300F09ECA /* GRCameraOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRCameraOverlayView.m; sourceTree = "<group>"; };
+		43F33D801665AB0D00F09ECA /* camera-graphic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera-graphic.png"; sourceTree = "<group>"; };
+		43F33D811665AB0E00F09ECA /* camera-icon-down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera-icon-down.png"; sourceTree = "<group>"; };
+		43F33D821665AB0F00F09ECA /* camera-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera-icon.png"; sourceTree = "<group>"; };
 		A021498616191E9400B74C39 /* EasyPAR.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EasyPAR.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A021498A16191E9400B74C39 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		A021498C16191E9400B74C39 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -425,8 +442,12 @@
 		A0DDF574164374C100BB9C82 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				43F33D7D1665AA4300F09ECA /* GRCameraOverlayView.h */,
+				43F33D7E1665AA4300F09ECA /* GRCameraOverlayView.m */,
 				A0DDF575164374C100BB9C82 /* ARAugmentedView.h */,
 				A0DDF576164374C100BB9C82 /* ARAugmentedView.m */,
+				43F33D621665A10D00F09ECA /* BROverlayView.h */,
+				43F33D631665A10D00F09ECA /* BROverlayView.m */,
 				A0DDF577164374C100BB9C82 /* AROverlayView.h */,
 				A0DDF578164374C100BB9C82 /* AROverlayView.m */,
 				A0DDF579164374C100BB9C82 /* CachedImageView.h */,
@@ -442,6 +463,9 @@
 		A0DDF5DC164378FA00BB9C82 /* EasyPAR */ = {
 			isa = PBXGroup;
 			children = (
+				43F33D801665AB0D00F09ECA /* camera-graphic.png */,
+				43F33D811665AB0E00F09ECA /* camera-icon-down.png */,
+				43F33D821665AB0F00F09ECA /* camera-icon.png */,
 				A0DDF5E2164378FA00BB9C82 /* Default-568h@2x.png */,
 				A0DDF5E3164378FA00BB9C82 /* Default.png */,
 				A0DDF5E4164378FA00BB9C82 /* Default@2x.png */,
@@ -451,6 +475,9 @@
 				A0DDF5F7164378FA00BB9C82 /* EPViewController.h */,
 				A0DDF5F8164378FA00BB9C82 /* EPViewController.m */,
 				A0DDF5E9164378FA00BB9C82 /* EPViewController.xib */,
+				43F33D6F1665A2A900F09ECA /* EnvironmentSelectorViewController.h */,
+				43F33D701665A2A900F09ECA /* EnvironmentSelectorViewController.m */,
+				43F33D711665A2AA00F09ECA /* EnvironmentSelectorViewController.xib */,
 				A0DDF5F5164378FA00BB9C82 /* EPUtil.h */,
 				A0DDF5F6164378FA00BB9C82 /* EPUtil.m */,
 			);
@@ -559,6 +586,10 @@
 				A0DDF605164378FA00BB9C82 /* scanline_4.png in Resources */,
 				A0DDF606164378FA00BB9C82 /* scanline_5.png in Resources */,
 				A0DDF607164378FA00BB9C82 /* test_si_img.jpg in Resources */,
+				43F33D731665A2AA00F09ECA /* EnvironmentSelectorViewController.xib in Resources */,
+				43F33D831665AB0F00F09ECA /* camera-graphic.png in Resources */,
+				43F33D841665AB0F00F09ECA /* camera-icon-down.png in Resources */,
+				43F33D851665AB0F00F09ECA /* camera-icon.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -610,6 +641,9 @@
 				A0DDF608164378FA00BB9C82 /* EPAppDelegate.m in Sources */,
 				A0DDF609164378FA00BB9C82 /* EPUtil.m in Sources */,
 				A0DDF60A164378FA00BB9C82 /* EPViewController.m in Sources */,
+				43F33D641665A10D00F09ECA /* BROverlayView.m in Sources */,
+				43F33D721665A2AA00F09ECA /* EnvironmentSelectorViewController.m in Sources */,
+				43F33D7F1665AA4300F09ECA /* GRCameraOverlayView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -687,10 +721,12 @@
 		A02149AB16191E9400B74C39 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ben Gotow (7EKP92J76Y)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EasyPAR/EasyPAR-Prefix.pch";
 				INFOPLIST_FILE = "EasyPAR/EasyPAR-Info.plist";
 				PRODUCT_NAME = EasyPAR;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "810FBEA9-0F12-43C2-A201-BDE6124903EE";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;

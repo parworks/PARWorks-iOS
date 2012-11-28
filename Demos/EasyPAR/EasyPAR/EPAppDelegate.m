@@ -26,6 +26,7 @@
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
     [[ARManager shared] setLocationEnabled: YES];
+    [[ARManager shared] setApiKey:@"1296e04a-224d-4840-8b31-3ad763fdc383" andSecret: @"28924d84-6b0d-43ce-8e35-20854548fd19"];
 
     [[UIApplication sharedApplication] setStatusBarHidden: YES];
     
@@ -65,4 +66,15 @@
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
 
+- (void)setAPIServer:(NSString*)server
+{
+    [[NSUserDefaults standardUserDefaults] setObject:server forKey:@"site"];
+}
+
+- (NSString*)APIServer
+{
+    NSString * saved = [[NSUserDefaults standardUserDefaults] objectForKey:@"site"];
+    return saved ? saved : @"TimesSquare";
+    
+}
 @end
