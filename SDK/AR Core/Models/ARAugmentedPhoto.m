@@ -121,7 +121,7 @@
         @throw [NSException exceptionWithName: @"ProcessException" reason: @"You cannot process an image without specifying a site or enabling location services in the ARManager." userInfo: nil];
 
     _image = [[ARManager shared] rotateImage:_image byOrientationFlag:_image.imageOrientation];
-    NSData * imgData = UIImageJPEGRepresentation(_image, 0.7);
+    NSData * imgData = UIImageJPEGRepresentation(_image, 0.45);
     NSMutableDictionary * args = [self processArguments];
     ASIFormDataRequest * req;
     

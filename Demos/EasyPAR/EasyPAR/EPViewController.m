@@ -403,10 +403,11 @@
 - (AROverlayView *)overlayViewForOverlay:(AROverlay *)overlay
 {
     if ([overlay.name isEqualToString: @"Ad"]) {
-        AdOverlayView * v = [[AdOverlayView alloc] initWithOverlay: overlay];
+        AdOverlayView * v = [[AdOverlayView alloc] initWithFrame:CGRectMake(0, 0, 560*0.6, 320*0.6) points:overlay.points andMedia:@"ad" ofType:@"png" withWebTarget:nil];
         return v;
     } else {
-        return nil;
+        AdOverlayView * v = [[AdOverlayView alloc] initWithFrame:CGRectMake(0, 0, _augmentedView.frame.size.width / CAMERA_TRANSFORM_SCALE - 40, _augmentedView.frame.size.height / CAMERA_TRANSFORM_SCALE - 40) points:overlay.points andMedia:overlay.name ofType:@"png" withWebTarget: [NSURL URLWithString: overlay.content]];
+        return v;
     }
 }
 

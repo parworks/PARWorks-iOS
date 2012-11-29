@@ -22,7 +22,15 @@
 #import <MediaPlayer/MediaPlayer.h>
 
 @interface AdOverlayView : AROverlayView <AROverlayViewAnimationDelegate>
+
+- (id)initWithFrame:(CGRect)frame points:(NSArray *)points andMedia:(NSString*)media ofType:(NSString*)mediaType withWebTarget:(NSURL*)webURL;
+
 @property(nonatomic, strong) MPMoviePlayerController * player;
+@property(nonatomic, strong) UIWebView * webView;
+
 @property(nonatomic, strong) UIImageView *thumbnail;
+@property(nonatomic, strong) NSURL * webURL;
+@property(nonatomic, strong) NSString * media;
+@property(nonatomic, strong) NSString * mediaType;
 
 @end

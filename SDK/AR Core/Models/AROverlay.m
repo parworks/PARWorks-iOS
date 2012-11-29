@@ -51,7 +51,7 @@
     self = [super init];
     if (self) {
         [self setSiteImageIdentifier: [dict objectForKey: @"imageId"]];
-        [self setContent: [dict objectForKey:@"content"]];
+        [self setContent: [dict objectForKey:@"description"]];
         [self setName: [dict objectForKey: @"name"]];
         [self setID: [dict objectForKey: @"id"]];
         [self setupPointsFromDictionary: dict];
@@ -137,7 +137,7 @@
     
     NSMutableDictionary * dict = [NSMutableDictionary dictionary];
     [dict setObject:_siteImageIdentifier forKey:@"imgId"];
-    [dict setObject:_content forKey:@"content"];
+    [dict setObject:_content forKey:@"content"]; // description?
     [dict setObject:_site forKey:@"site"];
     [dict setObject:_name forKey:@"name"];
     [dict setObject:vertices forKey:@"v"];

@@ -24,10 +24,13 @@
 
 @implementation AdOverlayView
 
-- (id)initWithFrame:(CGRect)frame points:(NSArray *)points
+- (id)initWithFrame:(CGRect)frame points:(NSArray *)points andMedia:(NSString*)media ofType:(NSString*)mediaType withWebTarget:(NSURL*)webURL
 {
-    self = [super initWithFrame:CGRectMake(0, 0, 560*0.6, 320*0.6) points:points];
+    self = [super initWithFrame:frame points:points];
     if (self) {
+        [self setMedia: media];
+        [self setMediaType: mediaType];
+        [self setWebURL: webURL];
         [self sharedInit];
     }
     return self;
@@ -45,14 +48,23 @@
     self.animDelegate = self;
     self.thumbnail = [[UIImageView alloc] initWithFrame:self.bounds];
     _thumbnail.userInteractionEnabled = NO;
-    _thumbnail.image = [UIImage imageNamed:@"ad.png"];
+    _thumbnail.image = [UIImage imageNamed: [NSString stringWithFormat:@"%@.png", _media]];
     [self addSubview:_thumbnail];
    
-    NSURL * b = [[NSBundle mainBundle] URLForResource:@"Broll_OhWhataNight" withExtension:@"mp4"];
-    _player = [[MPMoviePlayerController alloc] initWithContentURL: b];
-    _player.view.alpha = 0;
-    _player.view.frame = self.bounds;
-    [self addSubview: _player.view];
+    if (_webURL) {
+        _webView = [[UIWebView alloc] initWithFrame: self.bounds];
+        [_webView setScalesPageToFit: YES];
+        [_webView loadRequest: [NSURLRequest requestWithURL: _webURL]];
+        [_webView setAlpha: 0];
+        [self addSubview: _webView];
+
+    } else {
+        NSURL * b = [[NSBundle mainBundle] URLForResource:@"Broll_OhWhataNight" withExtension:@"mp4"];
+        _player = [[MPMoviePlayerController alloc] initWithContentURL: b];
+        _player.view.alpha = 0;
+        _player.view.frame = self.bounds;
+        [self addSubview: _player.view];
+    }
 }
 
 
@@ -70,6 +82,7 @@
     } completion:^(BOOL finished) {
         [UIView animateWithDuration:0.3 animations:^{
             _player.view.alpha = 1.0;
+            _webView.alpha = 1.0;
             self.layer.borderWidth = 1;
             overlayView.layer.transform = CATransform3DScale(CATransform3DIdentity, 1.2, 1.2, 1.2);
             overlayView.layer.position = [AROverlayUtil focusedCenterForOverlayView:overlayView withParent:parent.overlayImageView];
@@ -104,6 +117,7 @@
     } completion:^(BOOL finished) {
         [UIView animateWithDuration:0.3 animations:^{
             _player.view.alpha = 0.0;
+            _webView.alpha = 0.0;
             self.layer.borderWidth = 3;
             [_player stop];
             overlayView.layer.position = CGPointZero;

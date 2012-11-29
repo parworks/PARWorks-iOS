@@ -10,6 +10,8 @@
 		43109DEF16671E4500BC8E83 /* ad.png in Resources */ = {isa = PBXBuildFile; fileRef = 43109DEE16671E4500BC8E83 /* ad.png */; };
 		43109DF21667258600BC8E83 /* Broll_OhWhataNight.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 43109DF11667258600BC8E83 /* Broll_OhWhataNight.mp4 */; };
 		43109DF41667261200BC8E83 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43109DF31667261200BC8E83 /* MediaPlayer.framework */; };
+		43109E041667FD1100BC8E83 /* static1.png in Resources */ = {isa = PBXBuildFile; fileRef = 43109E021667FD1100BC8E83 /* static1.png */; };
+		43109E051667FD1100BC8E83 /* static2.png in Resources */ = {isa = PBXBuildFile; fileRef = 43109E031667FD1100BC8E83 /* static2.png */; };
 		43A452F21665C21400D594E9 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A452F11665C21400D594E9 /* icon.png */; };
 		43A452F41665C21600D594E9 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A452F31665C21600D594E9 /* icon@2x.png */; };
 		43A453061665C2D800D594E9 /* camera-graphic.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A452F61665C2D800D594E9 /* camera-graphic.png */; };
@@ -102,6 +104,8 @@
 		43109DEE16671E4500BC8E83 /* ad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ad.png; sourceTree = "<group>"; };
 		43109DF11667258600BC8E83 /* Broll_OhWhataNight.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = Broll_OhWhataNight.mp4; sourceTree = "<group>"; };
 		43109DF31667261200BC8E83 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		43109E021667FD1100BC8E83 /* static1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = static1.png; sourceTree = "<group>"; };
+		43109E031667FD1100BC8E83 /* static2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = static2.png; sourceTree = "<group>"; };
 		43A452F11665C21400D594E9 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		43A452F31665C21600D594E9 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
 		43A452F61665C2D800D594E9 /* camera-graphic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera-graphic.png"; sourceTree = "<group>"; };
@@ -280,6 +284,8 @@
 				43A452FD1665C2D800D594E9 /* environment_background@2x.png */,
 				43A452FE1665C2D800D594E9 /* mesh_background.png */,
 				43A452FF1665C2D800D594E9 /* mesh_background@2x.png */,
+				43109E021667FD1100BC8E83 /* static1.png */,
+				43109E031667FD1100BC8E83 /* static2.png */,
 				43A453001665C2D800D594E9 /* scanline_1.png */,
 				43A453011665C2D800D594E9 /* scanline_2.png */,
 				43A453021665C2D800D594E9 /* scanline_3.png */,
@@ -670,6 +676,8 @@
 				43A453151665C2D800D594E9 /* test_si_img.jpg in Resources */,
 				43109DEF16671E4500BC8E83 /* ad.png in Resources */,
 				43109DF21667258600BC8E83 /* Broll_OhWhataNight.mp4 in Resources */,
+				43109E041667FD1100BC8E83 /* static1.png in Resources */,
+				43109E051667FD1100BC8E83 /* static2.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -805,6 +813,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EasyPAR/EasyPAR-Prefix.pch";
 				INFOPLIST_FILE = "EasyPAR/EasyPAR-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = EasyPAR;
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "810FBEA9-0F12-43C2-A201-BDE6124903EE";
 				WRAPPER_EXTENSION = app;
@@ -814,10 +823,13 @@
 		A02149AC16191E9400B74C39 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Allied Minds, Inc.";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EasyPAR/EasyPAR-Prefix.pch";
 				INFOPLIST_FILE = "EasyPAR/EasyPAR-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = EasyPAR;
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A1D3BD55-3585-457A-9D49-6E0A0E0B416B";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Release;
