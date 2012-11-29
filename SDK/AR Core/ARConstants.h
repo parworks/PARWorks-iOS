@@ -35,6 +35,8 @@
 #define REQ_SITE_INFO                   @"/ar/site/info"
 #define REQ_SITE_INFO_SINGLE            @"/ar/site/info/summary"
 #define REQ_SITE_OVERLAYS               @"/ar/site/overlay"
+#define REQ_SITE_OVERLAY_ADD            @"/ar/site/overlay/add"
+#define REQ_SITE_PROCESS                @"/ar/site/process"
 
 #define REQ_SITE_IMAGE                  @"/ar/site/image"
 #define REQ_SITE_IMAGE_ADD              @"/ar/site/image/add"

@@ -41,6 +41,23 @@
     }
     return self;
 }
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super init];
+    if (self) {
+        _x = [[aDecoder decodeObjectForKey: @"x"] floatValue];
+        _y = [[aDecoder decodeObjectForKey: @"y"] floatValue];
+        _z = [[aDecoder decodeObjectForKey: @"z"] floatValue];
+    }
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeObject:[NSNumber numberWithFloat: _x] forKey:@"x"];
+    [aCoder encodeObject:[NSNumber numberWithFloat: _y] forKey:@"y"];
+    [aCoder encodeObject:[NSNumber numberWithFloat: _z] forKey:@"z"];
+}
 
 - (NSString *)description
 {

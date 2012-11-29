@@ -21,7 +21,7 @@
 #import <Foundation/Foundation.h>
 #import <QuartzCore/QuartzCore.h>
 
-@interface ARSiteOverlayPoint : NSObject
+@interface ARSiteOverlayPoint : NSObject <NSCoding>
 
 @property(nonatomic, assign) CGFloat x;
 @property(nonatomic, assign) CGFloat y;
@@ -29,4 +29,7 @@
 
 /** @name Lifecycle */
 + (ARSiteOverlayPoint *)pointWithX:(CGFloat)x y:(CGFloat)y z:(CGFloat)z;
+- (id)initWithCoder:(NSCoder *)aDecoder;
+- (void)encodeWithCoder:(NSCoder *)aCoder;
+
 @end

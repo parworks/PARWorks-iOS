@@ -228,7 +228,6 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *cell = [tableView cellForRowAtIndexPath: indexPath];
     ARSite *siteToDelete = [[ARSite alloc] initWithIdentifier:_currentUserSites[indexPath.row]];
     
     UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Are you sure?" message:@"Deleting this site will remove all information including processed images. This operation cannot be undone." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes, I'm sure", nil];

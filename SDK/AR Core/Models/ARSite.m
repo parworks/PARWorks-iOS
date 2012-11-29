@@ -237,4 +237,23 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_AUGMENTED_PHOTO_UPDATED object: self];
 }
 
+- (void)processBaseImages
+{
+    NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithObject:self.identifier forKey:@"site"];
+    __weak ASIHTTPRequest * weak = [[ARManager shared] createRequest: REQ_SITE_PROCESS withMethod:@"GET" withArguments: dict];
+    
+    [self setStatus: ARSiteStatusProcessing];
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: self];
+    
+    [weak setCompletionBlock: ^(void) {
+        if ([[ARManager shared] handleResponseErrors: weak]){
+            // grab all the image dictionaries from the JSON and pull out just the ID
+            // of each image—that's all we need.
+            [self setStatus: ARSiteStatusProcessed];
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: self];
+        }
+    }];
+    [weak startAsynchronous];
+}
+
 @end

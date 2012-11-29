@@ -19,15 +19,19 @@
 
 
 #import <Foundation/Foundation.h>
+#import "ARSiteImage.h"
 
 @class ARSite;
 
 @interface AROverlay : NSObject <NSCoding>
 {
-    NSDictionary * _dict;
 }
 
+@property (nonatomic, strong) NSString * ID;
 @property (nonatomic, strong) NSMutableArray * points;
+@property (nonatomic, strong) NSString * content;
+@property (nonatomic, strong) NSString * siteImageIdentifier;
+@property (nonatomic, strong) NSString * name;
 @property (nonatomic, weak) ARSite * site;
 
 // ========================
@@ -43,12 +47,16 @@
 
 /** Initializes the points array using the vertex data in the object's _dict.
 */
-- (void)setupVerticesFromDictionary;
+- (void)setupPointsFromDictionary:(NSDictionary*)dict;
 
 - (NSString*)name;
 
-- (NSDictionary*)dictionary;
-
 - (BOOL)isEqual:(id)object;
+
+#pragma mark Adding Points to the Overlay
+
+- (void)addPointWithX:(float)x andY:(float)y;
+
+- (void)removeLastPoint;
 
 @end
