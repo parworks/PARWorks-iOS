@@ -26,6 +26,7 @@
 #import "CATextLayer+Loading.h"
 #import "PARWorks.h"
 #import "EPUtil.h"
+#import "AdOverlayView.h"
 #import "EPAppDelegate.h"
 
 #define WIDTH 20
@@ -50,7 +51,6 @@
     _loadingLayer.opacity = 0.0;
     _loadingLayer.string = @"Augmenting";
     _loadingLayer.fontSize = 16.0;
-    _loadingLayer.frame = CGRectMake(self.view.frame.size.width/2 - 40, self.view.frame.size.height/2, self.view.frame.size.width/2, _loadingLayer.fontSize+4);
     _loadingLayer.rasterizationScale = [UIScreen mainScreen].scale;
     _loadingLayer.contentsScale = [UIScreen mainScreen].scale;
     _loadingLayer.needsDisplayOnBoundsChange = NO;
@@ -79,7 +79,7 @@
         [self.view addSubview: _shrinking];
         [self.view addSubview: _scanline];
 
-        [self showCameraPicker];
+        [self showCameraPicker:nil];
         _firstLoad = NO;
     }
 }
@@ -99,22 +99,21 @@
 
 
 #pragma mark - Presentation
-- (void)showCameraPicker
+
+- (IBAction)showCameraPicker:(id)sender
 {
-    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        if (!_picker) {
-            _picker = [[UIImagePickerController alloc] init];
-            _picker.delegate = self;
+    if (!_picker) {
+        _picker = [[UIImagePickerController alloc] init];
+        _picker.delegate = self;
+        if ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera]) {
             _picker.sourceType = UIImagePickerControllerSourceTypeCamera;
             _picker.mediaTypes = @[(NSString *) kUTTypeImage];
             _picker.cameraOverlayView = _cameraOverlayView;
             _picker.showsCameraControls = NO;
             _picker.cameraViewTransform = CGAffineTransformMakeScale(CAMERA_TRANSFORM_SCALE, CAMERA_TRANSFORM_SCALE);
+        } else {
+            _picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
         }
-    } else {
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Uh oh!" message:@"You need a device with camera capabilties to run this application. In the meantime, how about checking out our website?" delegate:self cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [av show];
-        return;
     }
     
     [self presentViewController:_picker animated:NO completion:nil];
@@ -147,14 +146,20 @@
     [self layoutLayersInGrid];
 }
 
-- (void)startAnimation
+- (void)startScanlineAnimation
 {
+    _scanlineAnimationRunning = YES;
+    
     [CATransaction begin];
     [CATransaction setDisableActions: YES];
     [_shrinking setImage: _image];
     [_shrinkingMask setFrame: self.view.bounds];
     [_shrinking setFrame: self.view.bounds];
     [_scanline setAlpha: 0.0];
+    [_showCameraButton setAlpha: 0];
+    [_augmentedView setAlpha: 0];
+    [_augmentedView setDelegate: self];
+    
     [_scanline setAnimationRepeatCount: 1000];
     _scanline.frame = CGRectMake(0, -_scanline.frame.size.height, _scanline.frame.size.width, _scanline.frame.size.height);
     [CATransaction commit];
@@ -165,19 +170,48 @@
     [UIView setAnimationDuration: 0.3];
     [UIView setAnimationCurve: UIViewAnimationCurveEaseOut];
     [UIView setAnimationDelegate:self];
-    [UIView setAnimationDidStopSelector:@selector(showAugmentingViewWithImageDelayed)];
+    [UIView setAnimationDidStopSelector:@selector(translateLayersOut)];
     _scanline.frame = CGRectMake(0, CGRectGetMinY(firstLayer.frame)-_scanline.frame.size.height/2, _scanline.frame.size.width, _scanline.frame.size.height);
     [_scanline setAlpha: 1];
     [UIView commitAnimations];
     NSLog(@"Started animation");
 }
 
-- (void)showAugmentingViewWithImageDelayed
+- (void)startAugmentCompleteAnimation
 {
-    [self translateLayersOffscreen];
+    if ([[_augmentedPhoto overlays] count] > 0) {
+        _augmentCompleteAnimationRunning = YES;
+        
+        [self.view bringSubviewToFront: _augmentedView];
+        [_augmentedView setTransform: CGAffineTransformIdentity];
+        [_augmentedView setAugmentedPhoto: _augmentedPhoto];
+        _augmentedView.center = CGPointMake(self.view.frame.size.height / 2, self.view.frame.size.width / 2 - 20);
+        _augmentedView.transform = CGAffineTransformMakeScale(CAMERA_TRANSFORM_SCALE, CAMERA_TRANSFORM_SCALE);
+
+        [self translateLayersWithStartDelay:0 rowDelay: 0.04];
+        [self performSelector:@selector(finalizeAugmentCompleteAnimation) withObject:nil afterDelay:1.1];
+    
+    } else {
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Uh oh!" message:@"We weren't able to find any overlays in that image. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [av show];
+        
+        [self showCameraPicker:nil];
+    }
+}
+
+- (void)finalizeAugmentCompleteAnimation
+{
+    _augmentCompleteAnimationRunning = NO;
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration: 0.5];
+    [_augmentedView setAlpha: 1];
+    [self.view bringSubviewToFront: _showCameraButton];
+    [_showCameraButton setAlpha: 1];
+    [UIView commitAnimations];
 }
 
 #pragma mark - Layout
+
 - (void)layoutLayersInGrid
 {
     int xSteps = _image.size.width / WIDTH;
@@ -202,6 +236,7 @@
 
 
 #pragma mark - Animations
+
 - (IBAction)resetLayerTransforms
 {
     for (CALayer *l in _layers) {
@@ -221,72 +256,94 @@
     [self presentViewController:e animated:YES completion:NULL];
 }
 
-- (IBAction)translateLayersOffscreen
+- (void)translateLayersOut
+{
+    [self translateLayersWithStartDelay:0.2 rowDelay: 0.15];
+}
+
+- (void)translateLayersWithStartDelay:(float)delay rowDelay:(float)rowDelay
 {
     srand(time(0));
-    float duration = 0.2;
-    float delay = 0.5;
     CGSize size = CGSizeMake(WIDTH, HEIGHT);
-    int rows = _image.size.width/size.width;
-    int cols = _image.size.height/size.height;
-    
+    int rows = _image.size.height/size.height;
+    int cols = _image.size.width/size.width;
+
     [_scanline startAnimating];
     
     CALayer *lastLayer = [_layers objectAtIndex:rows*(cols-1)];
-    [UIView animateWithDuration:(duration*rows)+delay animations:^{
+    [UIView animateWithDuration:(rowDelay * rows)+delay animations:^{
         _scanline.frame = CGRectMake(0, CGRectGetMinY(lastLayer.frame)-_scanline.frame.size.height/2, _scanline.frame.size.width, _scanline.frame.size.height);
     } completion:^(BOOL finished) {
-        [UIView animateWithDuration:1 animations:^{
+        [UIView animateWithDuration:rowDelay * 6 animations:^{
             _scanline.alpha = 0.0;
         } completion:^(BOOL finished) {
         }];
     }];
     [CATransaction begin];
-    [CATransaction setAnimationDuration: ((duration*rows)+delay) * 1.4];
+    [CATransaction setAnimationDuration: ((rowDelay * rows) + delay) * 1.4];
     [_shrinkingMask setFrame: CGRectMake(0, self.view.bounds.size.height, self.view.bounds.size.width, 200)];
     [CATransaction commit];
     
     // Iterate over each row animating all the bits offscreen in the -Y direction.
-    for (int i=0; i<rows; i++) {
-        for (int j=0; j<cols; j++) {
-            int index = [EPUtil arrayIndexForCols:cols rowIndex:i columnIndex:j];
-            [self performSelector:@selector(translateLayerOffscreenAtIndex:) withObject:[NSNumber numberWithInt:index] afterDelay:(duration*i)+delay];
-        }
-    }
-    [_loadingLayer performSelector:@selector(startLoadingAnimation) withObject:nil afterDelay:(duration*(rows + 4))+delay];
+    for (int i=0; i<rows; i++)
+        [self performSelector:@selector(translateRowOffscreen:) withObject:[NSNumber numberWithInt: i] afterDelay:delay + rowDelay * i];
+
+    [self performSelector:@selector(translateLayersComplete) withObject:nil afterDelay:(rowDelay * (rows + 3)) + delay];
 }
 
-- (void)translateLayerOffscreenAtIndex:(NSNumber *)index
+- (void)translateRowOffscreen:(NSNumber *)rowNumber
 {
-    CALayer *layer = [_layers objectAtIndex:index.intValue];
-    CGFloat yOffset = -(CGRectGetMinY(layer.frame) + 20);
-    CGFloat xOffset = CGRectGetMidX(layer.frame);
-    CGFloat randOffsetX = (rand()%40)-(20);
-    xOffset+=randOffsetX;
-    CGFloat duration = ((rand()*1.0)/INT_MAX) + 1.0;
-
+    int row = rowNumber.intValue;
+    int cols = _image.size.width/WIDTH;
+    
+    CGFloat duration = ((rand()*0.1)/INT_MAX) + 0.6;
+    
     static CAMediaTimingFunction *timing;
     timing = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];
-    
     [CATransaction begin];
     [CATransaction setAnimationDuration:duration];
     [CATransaction setAnimationTimingFunction:timing];
     
-    CATransform3D transform = CATransform3DIdentity;
+    for (int c = 0; c < cols; c ++) {
+        CALayer *layer = [_layers objectAtIndex: (cols * row) + c];
+        CGFloat yOffset = -(CGRectGetMinY(layer.frame) + 20 + (rand()%220));
+        CGFloat xOffset = CGRectGetMidX(layer.frame);
+        CGFloat randOffsetX = (rand()%40)-(20);
+        xOffset+=randOffsetX;
+
+        CATransform3D transform = CATransform3DIdentity;
     
-    if (CATransform3DIsIdentity(layer.transform)) {
-        transform = CATransform3DTranslate(transform, 0, yOffset, 0);
-        transform = CATransform3DScale(transform, 0.5, 0.5, 1);
-        CGFloat rotate = ((rand()*1.0)/INT_MAX) - 0.5;
-        transform = CATransform3DRotate(transform, M_PI*rotate, 0, 0, 1);
+        if (CATransform3DIsIdentity(layer.transform)) {
+            transform = CATransform3DTranslate(transform, 0, yOffset, 0);
+            transform = CATransform3DScale(transform, 0.5, 0.5, 1);
+            CGFloat rotate = ((rand()*1.0)/INT_MAX) - 0.5;
+            transform = CATransform3DRotate(transform, M_PI*rotate, 0, 0, 1);
+        }
+    
+        layer.transform = transform;
     }
+
     
-    layer.transform = transform;
     [CATransaction commit];
 }
 
+- (void)translateLayersComplete
+{
+    if (_scanlineAnimationRunning) {
+        _scanlineAnimationRunning = NO;
+        if ((_augmentedPhoto.response == BackendResponseFinished) && !_augmentCompleteAnimationRunning)
+            [self startAugmentCompleteAnimation];
+        else {
+            _loadingLayer.frame = CGRectMake(self.view.frame.size.height/2 - 40, self.view.frame.size.width/2, self.view.frame.size.height/2, _loadingLayer.fontSize+4);
+            [_loadingLayer startLoadingAnimation];
+        }
+    }
+}
+    
+
 
 #pragma mark - UIImagePickerControllerDelegate
+
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     UIImage * originalImage = [info objectForKey:UIImagePickerControllerOriginalImage];
@@ -300,42 +357,57 @@
     CGRect resizedFrame = CGRectMake((viewportSize.width - resizedSize.width) / 2, (viewportSize.height - resizedSize.height) / 2 - 20, resizedSize.width, resizedSize.height);
     [originalImage drawInRect:resizedFrame];
 
-    UIImage * resizedImage = UIGraphicsGetImageFromCurrentImageContext();
+    _image = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
     
     [picker dismissViewControllerAnimated:NO completion:nil];
     
-    
-    _image = resizedImage;
-    [self startAnimation];
-    [self performSelectorOnMainThread:@selector(showAugmentingViewWithImage:) withObject:resizedImage waitUntilDone:NO];
+    [self startScanlineAnimation];
+    [self performSelectorOnMainThread:@selector(showAugmentingViewWithImage:) withObject:_image waitUntilDone:NO];
     
     // Upload the original image to the AR API for processing. We'll animate the
     // resized image back on screen once it's finished.
-    NSString * siteIdentifier = [(EPAppDelegate*)[[UIApplication sharedApplication] delegate] APIServer];
-    ARSite * site = [[ARSite alloc] initWithIdentifier: siteIdentifier];
+    if (!_site) {
+        NSString * siteIdentifier = [(EPAppDelegate*)[[UIApplication sharedApplication] delegate] APIServer];
+        _site = [[ARSite alloc] initWithIdentifier: siteIdentifier];
+    }
     
-    _augmentedPhoto = [site augmentImage: originalImage];
+    _augmentedPhoto = [_site augmentImage: originalImage];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(imageAugmented:) name:NOTIF_AUGMENTED_PHOTO_UPDATED object:_augmentedPhoto];
 }
 
 - (void)imageAugmented:(NSNotification*)notif
 {
-    [_loadingLayer stopLoadingAnimation];
     if (_augmentedPhoto.response == BackendResponseFinished) {
-        [self showAugmentingViewWithImageDelayed];
-        
-    } else {
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Uh oh!" message:@"We weren't able to find any overlays in that image. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        if (!_scanlineAnimationRunning) {
+            [_loadingLayer stopLoadingAnimation];
+            [self startAugmentCompleteAnimation];
+        }
+    } else if (_augmentedPhoto.response == BackendResponseFailed){
+        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Uh oh!" message:@"The PAR Works API server did not successfully augment the photo." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
         [av show];
 
-        [self showCameraPicker];
+        [self showCameraPicker:nil];
+
+    } else {
+        // just wait...
     }
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
     // do nothing
+}
+
+
+- (AROverlayView *)overlayViewForOverlay:(AROverlay *)overlay
+{
+    if ([overlay.name isEqualToString: @"Ad"]) {
+        AdOverlayView * v = [[AdOverlayView alloc] initWithOverlay: overlay];
+        return v;
+    } else {
+        return nil;
+    }
 }
 
 

@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		43109DEF16671E4500BC8E83 /* ad.png in Resources */ = {isa = PBXBuildFile; fileRef = 43109DEE16671E4500BC8E83 /* ad.png */; };
+		43109DF21667258600BC8E83 /* Broll_OhWhataNight.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 43109DF11667258600BC8E83 /* Broll_OhWhataNight.mp4 */; };
+		43109DF41667261200BC8E83 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43109DF31667261200BC8E83 /* MediaPlayer.framework */; };
 		43A452F21665C21400D594E9 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A452F11665C21400D594E9 /* icon.png */; };
 		43A452F41665C21600D594E9 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A452F31665C21600D594E9 /* icon@2x.png */; };
 		43A453061665C2D800D594E9 /* camera-graphic.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A452F61665C2D800D594E9 /* camera-graphic.png */; };
@@ -25,7 +28,7 @@
 		43A453131665C2D800D594E9 /* scanline_4.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A453031665C2D800D594E9 /* scanline_4.png */; };
 		43A453141665C2D800D594E9 /* scanline_5.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A453041665C2D800D594E9 /* scanline_5.png */; };
 		43A453151665C2D800D594E9 /* test_si_img.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 43A453051665C2D800D594E9 /* test_si_img.jpg */; };
-		43F33D641665A10D00F09ECA /* BROverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 43F33D631665A10D00F09ECA /* BROverlayView.m */; };
+		43F33D641665A10D00F09ECA /* AdOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 43F33D631665A10D00F09ECA /* AdOverlayView.m */; };
 		43F33D721665A2AA00F09ECA /* EnvironmentSelectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 43F33D701665A2A900F09ECA /* EnvironmentSelectorViewController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		43F33D731665A2AA00F09ECA /* EnvironmentSelectorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43F33D711665A2AA00F09ECA /* EnvironmentSelectorViewController.xib */; };
 		43F33D7F1665AA4300F09ECA /* GRCameraOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 43F33D7E1665AA4300F09ECA /* GRCameraOverlayView.m */; };
@@ -96,6 +99,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		43109DEE16671E4500BC8E83 /* ad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ad.png; sourceTree = "<group>"; };
+		43109DF11667258600BC8E83 /* Broll_OhWhataNight.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = Broll_OhWhataNight.mp4; sourceTree = "<group>"; };
+		43109DF31667261200BC8E83 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		43A452F11665C21400D594E9 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		43A452F31665C21600D594E9 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
 		43A452F61665C2D800D594E9 /* camera-graphic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera-graphic.png"; sourceTree = "<group>"; };
@@ -114,8 +120,8 @@
 		43A453031665C2D800D594E9 /* scanline_4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = scanline_4.png; sourceTree = "<group>"; };
 		43A453041665C2D800D594E9 /* scanline_5.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = scanline_5.png; sourceTree = "<group>"; };
 		43A453051665C2D800D594E9 /* test_si_img.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = test_si_img.jpg; sourceTree = "<group>"; };
-		43F33D621665A10D00F09ECA /* BROverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BROverlayView.h; sourceTree = "<group>"; };
-		43F33D631665A10D00F09ECA /* BROverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BROverlayView.m; sourceTree = "<group>"; };
+		43F33D621665A10D00F09ECA /* AdOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdOverlayView.h; sourceTree = "<group>"; };
+		43F33D631665A10D00F09ECA /* AdOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdOverlayView.m; sourceTree = "<group>"; };
 		43F33D6F1665A2A900F09ECA /* EnvironmentSelectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EnvironmentSelectorViewController.h; sourceTree = "<group>"; };
 		43F33D701665A2A900F09ECA /* EnvironmentSelectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EnvironmentSelectorViewController.m; sourceTree = "<group>"; };
 		43F33D711665A2AA00F09ECA /* EnvironmentSelectorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = EnvironmentSelectorViewController.xib; sourceTree = "<group>"; };
@@ -242,6 +248,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				43109DF41667261200BC8E83 /* MediaPlayer.framework in Frameworks */,
 				A0FBF8791619325F0052EAC6 /* CFNetwork.framework in Frameworks */,
 				A0FBF877161932590052EAC6 /* SystemConfiguration.framework in Frameworks */,
 				A0FBF875161932520052EAC6 /* libz.dylib in Frameworks */,
@@ -261,6 +268,8 @@
 		43A452F51665C2D800D594E9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				43109DF11667258600BC8E83 /* Broll_OhWhataNight.mp4 */,
+				43109DEE16671E4500BC8E83 /* ad.png */,
 				43A452F61665C2D800D594E9 /* camera-graphic.png */,
 				43A452F71665C2D800D594E9 /* camera-graphic@2x.png */,
 				43A452F81665C2D800D594E9 /* camera-icon-down.png */,
@@ -284,6 +293,7 @@
 		A021497B16191E9400B74C39 = {
 			isa = PBXGroup;
 			children = (
+				43109DF31667261200BC8E83 /* MediaPlayer.framework */,
 				43A452F31665C21600D594E9 /* icon@2x.png */,
 				43A452F11665C21400D594E9 /* icon.png */,
 				A0DDF51E164374C100BB9C82 /* AR Core */,
@@ -501,8 +511,8 @@
 				43F33D7E1665AA4300F09ECA /* GRCameraOverlayView.m */,
 				A0DDF575164374C100BB9C82 /* ARAugmentedView.h */,
 				A0DDF576164374C100BB9C82 /* ARAugmentedView.m */,
-				43F33D621665A10D00F09ECA /* BROverlayView.h */,
-				43F33D631665A10D00F09ECA /* BROverlayView.m */,
+				43F33D621665A10D00F09ECA /* AdOverlayView.h */,
+				43F33D631665A10D00F09ECA /* AdOverlayView.m */,
 				A0DDF577164374C100BB9C82 /* AROverlayView.h */,
 				A0DDF578164374C100BB9C82 /* AROverlayView.m */,
 				A0DDF579164374C100BB9C82 /* CachedImageView.h */,
@@ -658,6 +668,8 @@
 				43A453131665C2D800D594E9 /* scanline_4.png in Resources */,
 				43A453141665C2D800D594E9 /* scanline_5.png in Resources */,
 				43A453151665C2D800D594E9 /* test_si_img.jpg in Resources */,
+				43109DEF16671E4500BC8E83 /* ad.png in Resources */,
+				43109DF21667258600BC8E83 /* Broll_OhWhataNight.mp4 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -709,7 +721,7 @@
 				A0DDF608164378FA00BB9C82 /* EPAppDelegate.m in Sources */,
 				A0DDF609164378FA00BB9C82 /* EPUtil.m in Sources */,
 				A0DDF60A164378FA00BB9C82 /* EPViewController.m in Sources */,
-				43F33D641665A10D00F09ECA /* BROverlayView.m in Sources */,
+				43F33D641665A10D00F09ECA /* AdOverlayView.m in Sources */,
 				43F33D721665A2AA00F09ECA /* EnvironmentSelectorViewController.m in Sources */,
 				43F33D7F1665AA4300F09ECA /* GRCameraOverlayView.m in Sources */,
 			);

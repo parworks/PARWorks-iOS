@@ -52,6 +52,8 @@
     if (self) {
         [self setSiteImageIdentifier: [dict objectForKey: @"imageId"]];
         [self setContent: [dict objectForKey:@"content"]];
+        [self setName: [dict objectForKey: @"name"]];
+        [self setID: [dict objectForKey: @"id"]];
         [self setupPointsFromDictionary: dict];
     }
     return self;

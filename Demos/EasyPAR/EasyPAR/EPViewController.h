@@ -19,17 +19,19 @@
 
 #import <UIKit/UIKit.h>
 #import "GRCameraOverlayView.h"
+#import "ARAugmentedView.h"
 
-@interface EPViewController : UIViewController <UIAlertViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface EPViewController : UIViewController <UIAlertViewDelegate,ARAugmentedViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 {
     GRCameraOverlayView         * _cameraOverlayView;
-
-    CATextLayer                 *_loadingLayer;
+    CATextLayer                 * _loadingLayer;
     
     UIImage                     * _image;
     UIImageView                 * _shrinking;
     CALayer                     * _shrinkingMask;
     UIImageView                 * _scanline;
+    BOOL                          _scanlineAnimationRunning;
+    BOOL                          _augmentCompleteAnimationRunning;
     
     NSMutableArray              * _layers;
     UIImagePickerController     * _picker;
@@ -37,11 +39,16 @@
     BOOL                        _firstLoad;
     BOOL                        _selectedSite;
     
+    ARSite                      * _site;
     ARAugmentedPhoto            * _augmentedPhoto;
+    __weak IBOutlet ARAugmentedView *_augmentedView;
+    __weak IBOutlet UIButton *_showCameraButton;
 }
 
-- (IBAction)translateLayersOffscreen;
+- (void)translateLayers:(float)baseSpeed;
+
 - (IBAction)resetLayerTransforms;
+- (IBAction)showCameraPicker:(id)sender;
 - (IBAction)takePicture:(id)sender;
 - (IBAction)selectSite:(id)sender;
 
