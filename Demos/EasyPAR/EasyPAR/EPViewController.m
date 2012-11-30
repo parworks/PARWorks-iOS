@@ -399,6 +399,11 @@
     // do nothing
 }
 
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    return UIInterfaceOrientationIsLandscape(toInterfaceOrientation);
+}
+
 
 - (AROverlayView *)overlayViewForOverlay:(AROverlay *)overlay
 {
