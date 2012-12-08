@@ -243,16 +243,36 @@ static ARManager * sharedManager;
     [req startAsynchronous];
 }
 
+- (void)processSite:(NSString *)identifier withCompletionBlock:(void (^)(void))completionBlock
+{
+    NSDictionary * args = [NSDictionary dictionaryWithObject:identifier forKey:@"site"];
+    ASIHTTPRequest * req = [self createRequest:REQ_SITE_PROCESS withMethod:@"POST" withArguments: args];
+    ASIHTTPRequest * __weak weak = req;
+    [req setCompletionBlock: ^(void) {
+        [self handleResponseErrors: weak];
+        if (completionBlock)
+            completionBlock();
+    }];
+    [req startAsynchronous];
+}
+                                                               
+
 - (void)sitesForCurrentAPIKey:(void (^)(NSArray *sites))completionBlock
 {
     if (completionBlock)
         [completionBlock copy];
     
-    ASIHTTPRequest *req = [self createRequest:REQ_SITE_LIST withMethod:@"GET" withArguments:nil];
+    ASIHTTPRequest *req = [self createRequest:REQ_SITE_LIST_ALL withMethod:@"GET" withArguments:nil];
     ASIHTTPRequest * __weak blockReq = req;
     [req setCompletionBlock: ^(void) {
         [self handleResponseErrors: blockReq];
-        NSArray *sites = [[blockReq responseJSON] objectForKey:@"sites"];
+        NSArray *rawSites = [blockReq responseJSON];
+        
+        NSMutableArray *sites = [NSMutableArray array];
+        for (NSDictionary *dict in rawSites) {
+            [sites addObject:[[ARSite alloc] initWithSummaryDictionary:dict]];
+        }
+        
         if (completionBlock)
             completionBlock(sites);
     }];
@@ -355,7 +375,8 @@ static ARManager * sharedManager;
 - (BOOL)handleResponseErrors:(ASIHTTPRequest*)req
 {
     id json = [req responseJSON];
-    if (([req responseStatusCode] != 200) || (![json isKindOfClass: [NSDictionary class]]) || ([json objectForKey: @"reason"])) {
+    if (([req responseStatusCode] != 200) ||
+        ([json isKindOfClass: [NSDictionary class]] && [json objectForKey: @"reason"])) {
         [self criticalRequestFailed: req];
         return NO;
     }

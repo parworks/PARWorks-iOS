@@ -30,11 +30,6 @@
 
 @implementation ARSite
 
-@synthesize identifier = _identifier;
-@synthesize images = _images;
-@synthesize overlays = _overlays;
-@synthesize invalid = _invalid;
-@synthesize status = _status;
 
 - (id)initWithIdentifier:(NSString*)ident
 {
@@ -42,6 +37,20 @@
     if (self) {
         self.identifier = ident;
         self.status = ARSiteStatusUnknown;
+        _summaryImageCount = 0;
+        _summaryOverlayCount = 0;
+    }
+    return self;
+}
+
+- (id)initWithSummaryDictionary:(NSDictionary *)dict
+{
+    self = [super init];
+    if (self) {
+        _summaryImageCount = [dict[@"numImages"] intValue];
+        _summaryOverlayCount = [dict[@"numOverlays"] intValue];
+        self.identifier = dict[@"id"];
+        self.status = [self siteStatusForString:dict[@"siteState"]];
     }
     return self;
 }
@@ -55,6 +64,8 @@
         [self setOverlays: [aDecoder decodeObjectForKey: @"overlays"]];
         [self setStatus: [aDecoder decodeIntForKey: @"status"]];
         [self setAugmentedPhotos: [aDecoder decodeObjectForKey: @"augmentedPhotos"]];
+        _summaryImageCount = [aDecoder decodeIntForKey: @"summaryImageCount"];
+        _summaryOverlayCount = [aDecoder decodeIntForKey: @"summaryOverlayCount"];
         
         if (_status != ARSiteStatusProcessed)
             [self checkStatus];
@@ -69,6 +80,8 @@
     [aCoder encodeObject: _overlays forKey: @"overlays"];
     [aCoder encodeObject: _augmentedPhotos forKey: @"augmentedPhotos"];
     [aCoder encodeInt: _status forKey: @"status"];
+    [aCoder encodeInt: _summaryImageCount forKey: @"summaryImageCount"];
+    [aCoder encodeInt: _summaryOverlayCount forKey: @"summaryOverlayCount"];
 }
 
 - (void)checkStatus
@@ -85,21 +98,30 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: site];
             return;
         }
-        if ([[json objectForKey:@"state"] isEqualToString: @"PROCESSING"])
-            _status = ARSiteStatusProcessing;
         
-        if ([[json objectForKey:@"state"] isEqualToString: @"NOT_PROCESSED"])
-            _status = ARSiteStatusNotProcessed;
+        _status = [self siteStatusForString:[json objectForKey:@"state"]];
         
-        if ([[json objectForKey:@"state"] isEqualToString: @"PROCESSING_FAILED"])
-            _status = ARSiteStatusProcessingFailed;
-        
-        if ([[json objectForKey:@"state"] isEqualToString: @"PROCESSED"])
-            _status = ARSiteStatusProcessed;
-
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: site];
     }];
     [req startAsynchronous];
+}
+
+- (ARSiteStatus)siteStatusForString:(NSString *)s
+{
+    ARSiteStatus status = ARSiteStatusUnknown;
+    if ([s isEqualToString:@"PROCESSED"]) {
+        status = ARSiteStatusProcessed;
+    } else if ([s isEqualToString:@"PROCESSING"]) {
+        status = ARSiteStatusProcessing;
+    } else if ([s isEqualToString:@"NOT_PROCESSED"]) {
+        status = ARSiteStatusNotProcessed;
+    } else if ([s isEqualToString:@"PROCESSING_FAILED"]) {
+        status = ARSiteStatusProcessingFailed;
+    } else if ([s isEqualToString:@"CREATING"]) {
+        status = ARSiteStatusCreating;
+    }
+    
+    return status;
 }
 
 - (NSString*)description
@@ -116,7 +138,7 @@
     if (_invalid)
         return @"Site Invalid";
     else if (_status != ARSiteStatusCreating)
-        return [NSString stringWithFormat: @"%d 🗻, %d 📌 - %@", [[self images] count], [[self availableOverlays] count], s];
+        return [NSString stringWithFormat: @"%d 🗻, %d 📌 - %@", [self imageCount], [self overlayCount], s];
     else
         return @"Creating site...";
 }
@@ -185,6 +207,24 @@
 {
     _images = nil;
     [self performSelector:@selector(fetchImages) withObject:nil afterDelay:1.5];
+}
+
+- (int)imageCount
+{
+    if (!_images || _images.count == 0) {
+        return _summaryImageCount;
+    } else {
+        return _images.count;
+    }
+}
+
+- (int)overlayCount
+{
+    if (!_overlays || _overlays.count == 0) {
+        return _summaryOverlayCount;
+    } else {
+        return _overlays.count;
+    }
 }
 
 - (NSArray*)availableOverlays

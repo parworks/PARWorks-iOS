@@ -41,6 +41,9 @@ typedef enum ARSiteStatus {
 @property (nonatomic, strong) NSMutableArray * overlays;
 @property (nonatomic, assign) ARSiteStatus status;
 @property (nonatomic, assign) BOOL invalid;
+@property (nonatomic, readonly) int summaryImageCount;
+@property (nonatomic, readonly) int summaryOverlayCount;
+
 
 // ========================
 // @name Lifecycle
@@ -53,6 +56,14 @@ typedef enum ARSiteStatus {
  @return A newly initialized ARSite instance
  */
 - (id)initWithIdentifier:(NSString*)ident;
+
+/** Creates a new site using a summary entry returned by the REQ_SITE_LIST_ALL endpoint
+ 
+ @param dict - The summary entry used to create the site object
+ 
+ @return A newly initialized ARSite instance
+ */
+- (id)initWithSummaryDictionary:(NSDictionary *)dict;
 
 // ========================
 // @name Site Information
@@ -103,6 +114,7 @@ to the server and added to the base images collection.
   @return NSArray of AROverlay objects, or nil if overlays have not been loaded.
 */
 - (NSArray*)availableOverlays;
+
 
 
 // ========================

@@ -49,6 +49,8 @@
     // create the upper right add button
     UIBarButtonItem * add = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemAdd target:self action:@selector(addPhoto:)];
     [self.navigationItem setRightBarButtonItem:add animated:YES];
+    
+    [self updateGridActionButtonForCurrentSiteStatus];
 }
 
 - (void)viewDidUnload
@@ -79,6 +81,40 @@
 - (void)object:(id)obj selectedInGridView:(GridView*)gv
 {
     
+}
+
+- (void)updateGridActionButtonForCurrentSiteStatus
+{
+    NSString *title;
+    switch (_site.status) {
+        case ARSiteStatusNotProcessed:
+            title = @"Process Base Images";
+            break;
+        case ARSiteStatusProcessed:
+            // TODO: Show the overlay creation view controller
+            title = @"Create Overlay";
+            break;
+        default:
+            NSLog(@"site has status we don't handle yet");
+            break;
+    }
+    
+    [_gridActionButton setTitle:title forState:UIControlStateNormal];
+}
+
+- (IBAction)gridActionButtonTapped:(id)sender
+{
+    switch (_site.status) {
+        case ARSiteStatusNotProcessed:
+            [[ARManager shared] processSite:_site.identifier withCompletionBlock:nil];
+            break;
+        case ARSiteStatusProcessed:
+            // TODO: Show the overlay creation view controller
+            break;
+        default:
+            NSLog(@"site has status we don't handle yet");
+            break;
+    }
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation

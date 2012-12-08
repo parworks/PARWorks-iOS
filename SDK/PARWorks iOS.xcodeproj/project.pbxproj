@@ -154,6 +154,11 @@
 		43AB725B165978550092CD9B /* environment_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 43AB7259165978550092CD9B /* environment_background.png */; };
 		43AB725C165978550092CD9B /* environment_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 43AB725A165978550092CD9B /* environment_background@2x.png */; };
 		43D330DE16097E4C0043B64C /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43D330DD16097E4C0043B64C /* CoreLocation.framework */; };
+		A02713CB166C6DDA005E91EE /* AdOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = A02713C9166C6DDA005E91EE /* AdOverlayView.m */; };
+		A02713CC166C6DDA005E91EE /* AdOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = A02713C9166C6DDA005E91EE /* AdOverlayView.m */; };
+		A02713CD166C6DDA005E91EE /* AdOverlayView.h in Headers */ = {isa = PBXBuildFile; fileRef = A02713CA166C6DDA005E91EE /* AdOverlayView.h */; };
+		A02713D0166C6DFA005E91EE /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A02713CF166C6DFA005E91EE /* MediaPlayer.framework */; };
+		A04415B0166019CC0083795B /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = A04415AF166019CC0083795B /* MBProgressHUD.m */; };
 		A0E91FD116475D3500D7AC07 /* BROverlayView.h in Headers */ = {isa = PBXBuildFile; fileRef = A0E91FCF16475D3500D7AC07 /* BROverlayView.h */; };
 		A0E91FD216475D3500D7AC07 /* BROverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E91FD016475D3500D7AC07 /* BROverlayView.m */; };
 		A0E91FD316475D3500D7AC07 /* BROverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E91FD016475D3500D7AC07 /* BROverlayView.m */; };
@@ -287,6 +292,11 @@
 		43AB7259165978550092CD9B /* environment_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = environment_background.png; path = Resources/Images/environment_background.png; sourceTree = "<group>"; };
 		43AB725A165978550092CD9B /* environment_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "environment_background@2x.png"; path = "Resources/Images/environment_background@2x.png"; sourceTree = "<group>"; };
 		43D330DD16097E4C0043B64C /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		A02713C9166C6DDA005E91EE /* AdOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdOverlayView.m; sourceTree = "<group>"; };
+		A02713CA166C6DDA005E91EE /* AdOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdOverlayView.h; sourceTree = "<group>"; };
+		A02713CF166C6DFA005E91EE /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		A04415AE166019CC0083795B /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
+		A04415AF166019CC0083795B /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
 		A0E91FCF16475D3500D7AC07 /* BROverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BROverlayView.h; sourceTree = "<group>"; };
 		A0E91FD016475D3500D7AC07 /* BROverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BROverlayView.m; sourceTree = "<group>"; };
 		A0F662D315FEFBD100FA709B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
@@ -304,6 +314,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A02713D0166C6DFA005E91EE /* MediaPlayer.framework in Frameworks */,
 				43D330DE16097E4C0043B64C /* CoreLocation.framework in Frameworks */,
 				A0F662D415FEFBD100FA709B /* QuartzCore.framework in Frameworks */,
 				43889B2615E98DC2001B0C4D /* MobileCoreServices.framework in Frameworks */,
@@ -334,6 +345,7 @@
 				436C489216432AAF0031DBCA /* Controllers */,
 				436C489E16432AAF0031DBCA /* Resources */,
 				436C48A316432AAF0031DBCA /* Views */,
+				A04415AC166019CC0083795B /* Libraries */,
 			);
 			path = "AR Administration App";
 			sourceTree = "<group>";
@@ -570,12 +582,12 @@
 		436C491816432AB10031DBCA /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A02713C9166C6DDA005E91EE /* AdOverlayView.m */,
+				A02713CA166C6DDA005E91EE /* AdOverlayView.h */,
 				436C491916432AB10031DBCA /* ARAugmentedView.h */,
 				436C491A16432AB10031DBCA /* ARAugmentedView.m */,
 				436C491B16432AB10031DBCA /* AROverlayView.h */,
 				436C491C16432AB10031DBCA /* AROverlayView.m */,
-				A0E91FCF16475D3500D7AC07 /* BROverlayView.h */,
-				A0E91FD016475D3500D7AC07 /* BROverlayView.m */,
 				436C491D16432AB10031DBCA /* CachedImageView.h */,
 				436C491E16432AB10031DBCA /* CachedImageView.m */,
 				436C491F16432AB10031DBCA /* GridCellView.h */,
@@ -610,6 +622,7 @@
 			children = (
 				43D330DD16097E4C0043B64C /* CoreLocation.framework */,
 				A0F662D315FEFBD100FA709B /* QuartzCore.framework */,
+				A02713CF166C6DFA005E91EE /* MediaPlayer.framework */,
 				43889B2515E98DC2001B0C4D /* MobileCoreServices.framework */,
 				43889B2315E98DAA001B0C4D /* CoreFoundation.framework */,
 				43889B2115E98DA1001B0C4D /* libz.dylib */,
@@ -620,6 +633,23 @@
 				4371F0CD15E34E7300D754A8 /* CoreGraphics.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		A04415AC166019CC0083795B /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				A04415AD166019CC0083795B /* MBProgressHUD */,
+			);
+			path = Libraries;
+			sourceTree = "<group>";
+		};
+		A04415AD166019CC0083795B /* MBProgressHUD */ = {
+			isa = PBXGroup;
+			children = (
+				A04415AE166019CC0083795B /* MBProgressHUD.h */,
+				A04415AF166019CC0083795B /* MBProgressHUD.m */,
+			);
+			path = MBProgressHUD;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -672,7 +702,7 @@
 				436C497216432AB20031DBCA /* SBJsonParser.h in Headers */,
 				436C497516432AB20031DBCA /* SBJsonWriter.h in Headers */,
 				436C498E16432AB20031DBCA /* PARWorks SDK-Prefix.pch in Headers */,
-				A0E91FD116475D3500D7AC07 /* BROverlayView.h in Headers */,
+				A02713CD166C6DDA005E91EE /* AdOverlayView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -832,7 +862,7 @@
 				436C499716432AB20031DBCA /* CachedImageView.m in Sources */,
 				436C499A16432AB20031DBCA /* GridCellView.m in Sources */,
 				436C499D16432AB20031DBCA /* GridView.m in Sources */,
-				A0E91FD316475D3500D7AC07 /* BROverlayView.m in Sources */,
+				A02713CC166C6DDA005E91EE /* AdOverlayView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -884,8 +914,9 @@
 				436C499616432AB20031DBCA /* CachedImageView.m in Sources */,
 				436C499916432AB20031DBCA /* GridCellView.m in Sources */,
 				436C499C16432AB20031DBCA /* GridView.m in Sources */,
-				A0E91FD216475D3500D7AC07 /* BROverlayView.m in Sources */,
 				43AB7256165977A70092CD9B /* ARAuthViewController.m in Sources */,
+				A02713CB166C6DDA005E91EE /* AdOverlayView.m in Sources */,
+				A04415B0166019CC0083795B /* MBProgressHUD.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
