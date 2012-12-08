@@ -29,7 +29,7 @@
     UIBezierPath *lightStrokePath = [UIBezierPath bezierPathWithRoundedRect:CGRectMake(0, 1, rect.size.width, rect.size.height-1) cornerRadius:4];
 
     if (self.highlighted) {
-        CGContextSetFillColorWithColor(context, [[UIColor blackColor] colorWithAlphaComponent:0.15].CGColor);
+        CGContextSetFillColorWithColor(context, [[UIColor whiteColor] colorWithAlphaComponent:0.15].CGColor);
         CGContextAddPath(context, darkStrokePath.CGPath);
         CGContextFillPath(context);
     } else {
@@ -39,13 +39,10 @@
     }
     
     CGContextSetLineWidth(context, 1);
-    CGContextSetStrokeColorWithColor(context, [[UIColor whiteColor] colorWithAlphaComponent:0.5].CGColor);
+    CGContextSetStrokeColorWithColor(context, [[UIColor blackColor] colorWithAlphaComponent:0.5].CGColor);
     CGContextAddPath(context, lightStrokePath.CGPath);
     CGContextStrokePath(context);
     
-    CGContextSetStrokeColorWithColor(context, [UIColor colorWithRed:180.0/255.0 green:180.0/255.0 blue:180.0/255.0 alpha:1.0].CGColor);
-    CGContextAddPath(context, darkStrokePath.CGPath);
-    CGContextStrokePath(context);
 }
 
 - (void)setHighlighted:(BOOL)highlighted
