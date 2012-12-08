@@ -63,7 +63,13 @@
         [_registerButton setTitle:@"Working..." forState:UIControlStateNormal];
         [_registerButton setEnabled: NO];
         
-        NSURL * url =  [NSURL URLWithString: [NSString stringWithFormat: @"https://portal.parworksapi.com/ar/mars/user/account/create?email=%@&password=%@", [_registerEmailField text], [_registerPasswordField text]]];
+        // create the full request path
+        NSString * scheme = @"https";
+        #ifdef DEBUG
+        scheme = @"http";
+        #endif
+
+        NSURL * url =  [NSURL URLWithString: [NSString stringWithFormat: @"%@://portal.parworksapi.com/ar/mars/user/account/create?email=%@&password=%@", scheme, [_registerEmailField text], [_registerPasswordField text]]];
         ASIHTTPRequest * req = [[ASIHTTPRequest alloc] initWithURL: url];
         ASIHTTPRequest * __weak weak = req;
         
@@ -114,7 +120,13 @@
     [_loginButton setTitle:@"Working..." forState:UIControlStateNormal];
     [_loginButton setEnabled: NO];
 
-    NSURL * url =  [NSURL URLWithString: [NSString stringWithFormat: @"https://portal.parworksapi.com/ar/mars/user/account/getkey?email=%@&password=%@", [_loginEmailField text], [_loginPasswordField text]]];
+    // create the full request path
+    NSString * scheme = @"https";
+    #ifdef DEBUG
+        scheme = @"http";
+    #endif
+
+    NSURL * url =  [NSURL URLWithString: [NSString stringWithFormat: @"%@://portal.parworksapi.com/ar/mars/user/account/getkey?email=%@&password=%@", scheme, [_loginEmailField text], [_loginPasswordField text]]];
     ASIHTTPRequest * req = [[ASIHTTPRequest alloc] initWithURL: url];
     ASIHTTPRequest * __weak weak = req;
 
