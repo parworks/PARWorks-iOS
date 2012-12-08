@@ -1,6 +1,6 @@
 //
-//  ARSitesViewController.h
-//  PAR Works iOS SDK
+//  DrawView.h
+//  EasyPAR
 //
 //  Copyright 2012 PAR Works, Inc.
 //
@@ -17,21 +17,16 @@
 //  limitations under the License.
 //
 
+#import <Foundation/Foundation.h>
 
-#import <UIKit/UIKit.h>
-#import "UIAlertInputView.h"
+typedef void(^DrawView_DrawBlock)(UIView* v,CGContextRef context);
 
-@class MBProgressHUD;
+@interface DrawView : UIView
+@property (nonatomic,copy) DrawView_DrawBlock drawBlock;
+@end
 
-@interface ARSitesViewController : UIViewController <UIActionSheetDelegate, UIAlertInputViewDelegate, UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate>
-{
-    NSMutableArray  *_currentUserSites;
-    NSIndexPath     *_deleteIndexPath;
-    MBProgressHUD   *_progressHUD;
-    NSTimer         *_refreshTimer;
-}
+@interface UIView (DrawView)
 
-@property (nonatomic, weak) IBOutlet UITableView * tableView;
-@property (weak, nonatomic) IBOutlet UILabel *apiKeyLabel;
+- (void)addDrawBlock:(DrawView_DrawBlock)drawBlock;
 
 @end

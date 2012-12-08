@@ -42,14 +42,16 @@
     ARSite                      * _site;
     ARAugmentedPhoto            * _augmentedPhoto;
     __weak IBOutlet ARAugmentedView *_augmentedView;
-    __weak IBOutlet UIButton *_showCameraButton;
+    __weak IBOutlet UIView          *_toolbarContainer;
+    __weak IBOutlet UIButton        *_cameraButton;
+    __weak IBOutlet UIButton        *_libraryButton;
+    __weak IBOutlet UIButton        *_settingButton;
 }
 
 - (void)translateLayers:(float)baseSpeed;
 
-- (IBAction)resetLayerTransforms;
 - (IBAction)showCameraPicker:(id)sender;
-- (IBAction)takePicture:(id)sender;
+- (IBAction)showLibraryPicker:(id)sender;
 - (IBAction)selectSite:(id)sender;
 
 @end

@@ -25,6 +25,7 @@
 #import "EnvironmentSelectorViewController.h"
 #import "CATextLayer+Loading.h"
 #import "PARWorks.h"
+#import "EPToolbarButton.h"
 #import "EPUtil.h"
 #import "AdOverlayView.h"
 #import "EPAppDelegate.h"
@@ -45,6 +46,12 @@
     [super viewDidLoad];
     _firstLoad = YES;
     
+    _toolbarContainer.alpha = 0.0;
+    _toolbarContainer.layer.shadowColor = [UIColor blackColor].CGColor;
+    _toolbarContainer.layer.shadowOffset = CGSizeZero;
+    _toolbarContainer.layer.shadowOpacity = 0.5;
+    _toolbarContainer.layer.shadowRadius = 2.0;
+    
     // We use a text layer so we can get awesome implicit animations...
     _loadingLayer.foregroundColor = [UIColor whiteColor].CGColor;
     _loadingLayer = [CATextLayer layer];
@@ -57,9 +64,21 @@
     [self.view.layer addSublayer:_loadingLayer];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    
+    if (![UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera]) {
+        _cameraButton.enabled = NO;
+    }
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
+    
+    _toolbarContainer.layer.shadowPath = [UIBezierPath bezierPathWithRect:_toolbarContainer.bounds].CGPath;
+    
     if (!_selectedSite) {
         [self selectSite: nil];
         _selectedSite = YES;
@@ -71,6 +90,8 @@
         _shrinkingMask = [[CALayer alloc] init];
         _shrinking = [[UIImageView alloc] init];
         _scanline = [[UIImageView alloc] initWithImageSeries:@"scanline_%d.png"];
+        _scanline.alpha = 0.0;
+        
         [_shrinkingMask setOpaque: YES];
         [_shrinkingMask setBackgroundColor: [[UIColor redColor] CGColor]];
         [_shrinking.layer setMask: _shrinkingMask];
@@ -91,6 +112,10 @@
 
 
 #pragma mark - Rotation
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    return UIInterfaceOrientationIsLandscape(toInterfaceOrientation);
+}
 
 - (NSUInteger)supportedInterfaceOrientations
 {
@@ -99,24 +124,40 @@
 
 
 #pragma mark - Presentation
-
 - (IBAction)showCameraPicker:(id)sender
 {
-    if (!_picker) {
-        _picker = [[UIImagePickerController alloc] init];
-        _picker.delegate = self;
-        if ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera]) {
-            _picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-            _picker.mediaTypes = @[(NSString *) kUTTypeImage];
-            _picker.cameraOverlayView = _cameraOverlayView;
-            _picker.showsCameraControls = NO;
-            _picker.cameraViewTransform = CGAffineTransformMakeScale(CAMERA_TRANSFORM_SCALE, CAMERA_TRANSFORM_SCALE);
-        } else {
-            _picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-        }
-    }
+    [self showPickerWithSourceType:UIImagePickerControllerSourceTypeCamera animated:YES];
+}
+
+- (IBAction)showLibraryPicker:(id)sender
+{
+    [self showPickerWithSourceType:UIImagePickerControllerSourceTypePhotoLibrary animated:YES];
+}
+
+- (void)showPickerWithSourceType:(UIImagePickerControllerSourceType)source animated:(BOOL)animated
+{
+    _picker = [[UIImagePickerController alloc] init];
+    _picker.delegate = self;
     
-    [self presentViewController:_picker animated:NO completion:nil];
+    if (source == UIImagePickerControllerSourceTypeCamera &&
+        [UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera]) {
+        _picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        _picker.mediaTypes = @[(NSString *) kUTTypeImage];
+        _picker.cameraOverlayView = _cameraOverlayView;
+        _picker.showsCameraControls = NO;
+        _picker.cameraViewTransform = CGAffineTransformMakeScale(CAMERA_TRANSFORM_SCALE, CAMERA_TRANSFORM_SCALE);
+        _picker.cameraFlashMode = UIImagePickerControllerCameraFlashModeOff;
+    } else if (source == UIImagePickerControllerSourceTypePhotoLibrary) {
+        _picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    }
+
+    [self presentViewController:_picker animated:animated completion:nil];
+}
+
+- (IBAction)selectSite:(id)sender
+{
+    EnvironmentSelectorViewController * e = [[EnvironmentSelectorViewController alloc] init];
+    [self presentViewController:e animated:YES completion:NULL];
 }
 
 - (void)showAugmentingViewWithImage:(UIImage *)image
@@ -156,7 +197,7 @@
     [_shrinkingMask setFrame: self.view.bounds];
     [_shrinking setFrame: self.view.bounds];
     [_scanline setAlpha: 0.0];
-    [_showCameraButton setAlpha: 0];
+    [_toolbarContainer setAlpha: 0.0];
     [_augmentedView setAlpha: 0];
     [_augmentedView setDelegate: self];
     
@@ -185,8 +226,8 @@
         [self.view bringSubviewToFront: _augmentedView];
         [_augmentedView setTransform: CGAffineTransformIdentity];
         [_augmentedView setAugmentedPhoto: _augmentedPhoto];
-        _augmentedView.center = CGPointMake(self.view.frame.size.height / 2, self.view.frame.size.width / 2 - 20);
-        _augmentedView.transform = CGAffineTransformMakeScale(CAMERA_TRANSFORM_SCALE, CAMERA_TRANSFORM_SCALE);
+        _augmentedView.center = CGPointMake(self.view.frame.size.width / 2, self.view.frame.size.height / 2);
+//        _augmentedView.transform = CGAffineTransformMakeScale(CAMERA_TRANSFORM_SCALE, CAMERA_TRANSFORM_SCALE);
 
         [self translateLayersWithStartDelay:0 rowDelay: 0.04];
         [self performSelector:@selector(finalizeAugmentCompleteAnimation) withObject:nil afterDelay:1.1];
@@ -202,12 +243,11 @@
 - (void)finalizeAugmentCompleteAnimation
 {
     _augmentCompleteAnimationRunning = NO;
-    [UIView beginAnimations:nil context:nil];
-    [UIView setAnimationDuration: 0.5];
-    [_augmentedView setAlpha: 1];
-    [self.view bringSubviewToFront: _showCameraButton];
-    [_showCameraButton setAlpha: 1];
-    [UIView commitAnimations];
+    [UIView animateWithDuration:0.5 animations:^{
+        [_augmentedView setAlpha: 1];
+        _toolbarContainer.alpha = 1.0;
+        [self.view bringSubviewToFront: _toolbarContainer];
+    }];
 }
 
 #pragma mark - Layout
@@ -237,7 +277,7 @@
 
 #pragma mark - Animations
 
-- (IBAction)resetLayerTransforms
+- (void)resetLayerTransforms
 {
     for (CALayer *l in _layers) {
         l.transform = CATransform3DIdentity;
@@ -245,16 +285,11 @@
     }
 }
 
-- (IBAction)takePicture:(id)sender
+- (void)takePicture:(id)sender
 {
     [_picker takePicture];
 }
 
-- (IBAction)selectSite:(id)sender
-{
-    EnvironmentSelectorViewController * e = [[EnvironmentSelectorViewController alloc] init];
-    [self presentViewController:e animated:YES completion:NULL];
-}
 
 - (void)translateLayersOut
 {
@@ -334,7 +369,7 @@
         if ((_augmentedPhoto.response == BackendResponseFinished) && !_augmentCompleteAnimationRunning)
             [self startAugmentCompleteAnimation];
         else {
-            _loadingLayer.frame = CGRectMake(self.view.frame.size.height/2 - 40, self.view.frame.size.width/2, self.view.frame.size.height/2, _loadingLayer.fontSize+4);
+            _loadingLayer.frame = CGRectMake(self.view.frame.size.width/2 - 40, self.view.frame.size.height/2, self.view.frame.size.width/2, _loadingLayer.fontSize+4);
             [_loadingLayer startLoadingAnimation];
         }
     }
@@ -376,6 +411,11 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(imageAugmented:) name:NOTIF_AUGMENTED_PHOTO_UPDATED object:_augmentedPhoto];
 }
 
+- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 - (void)imageAugmented:(NSNotification*)notif
 {
     if (_augmentedPhoto.response == BackendResponseFinished) {
@@ -394,15 +434,6 @@
     }
 }
 
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
-{
-    // do nothing
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
-{
-    return UIInterfaceOrientationIsLandscape(toInterfaceOrientation);
-}
 
 
 - (AROverlayView *)overlayViewForOverlay:(AROverlay *)overlay

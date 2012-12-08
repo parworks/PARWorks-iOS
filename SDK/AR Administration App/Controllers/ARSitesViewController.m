@@ -22,6 +22,7 @@
 #import "ARAppDelegate.h"
 #import "ARSiteImagesViewController.h"
 #import "ASIHTTPRequest+JSONAdditions.h"
+#import "MBProgressHUD.h"
 #import "PARWorks.h"
 
 #define ADD_EXISTING    0
@@ -30,6 +31,7 @@
 @implementation ARSitesViewController
 {
     BOOL _isFirstLoad;
+    BOOL _isRefreshing;
 }
 
 #pragma mark - Lifecycle
@@ -54,6 +56,8 @@
 - (void)sharedInit
 {
     _isFirstLoad = YES;
+    _isRefreshing = NO;
+    
     [self setTitle: @"Sites"];
     [self setTabBarItem: [[UITabBarItem alloc] initWithTabBarSystemItem: UITabBarSystemItemBookmarks tag:0]];
     
@@ -68,10 +72,7 @@
     // create the upper right add button
     UIBarButtonItem * add = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemAdd target:self action:@selector(addNewSite)];
     add.enabled = NO;
-    [self.navigationItem setRightBarButtonItem:add animated:YES];
-    
-    // Show the loading label while we load the user's sites.
-    _tableView.alpha = _loadingIndicator.alpha = _loadingLabel.alpha = 0.0;
+    [self.navigationItem setRightBarButtonItem:add animated:YES];    
 }
 
 - (void)viewWillAppear:(BOOL)animated
@@ -79,6 +80,12 @@
     [super viewWillAppear:animated];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(siteUpdated:) name:NOTIF_SITE_UPDATED object:nil];
 
+    if (_isFirstLoad) {
+        _isFirstLoad = NO;
+        _progressHUD = [[MBProgressHUD alloc] initWithView:self.navigationController.view];
+        [self.navigationController.view addSubview:_progressHUD];
+    }
+    
     if (![ARManager shared].apiKey) {
         return;
     }
@@ -86,18 +93,19 @@
     if (_currentUserSites.count == 0) {
         [self transitionContentLoading];
     } else {
-        [self refreshCurrentUserSites];
+        self.navigationItem.rightBarButtonItem.enabled = YES;
+        [_tableView reloadData];
     }
     
-    if (_currentUserSites.count > 0) {
-        self.navigationItem.rightBarButtonItem.enabled = YES;
-    }
+    _refreshTimer = [NSTimer scheduledTimerWithTimeInterval:60 target:self selector:@selector(refreshCurrentUserSites) userInfo:nil repeats:YES];
+    [_refreshTimer fire];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [super viewWillDisappear:animated];
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [_refreshTimer invalidate];
 }
 
 
@@ -105,33 +113,35 @@
 - (void)transitionContentLoading
 {
     self.navigationItem.rightBarButtonItem.enabled = NO;
-    [UIView animateWithDuration:0.2 animations:^{
-        _loadingIndicator.alpha = 1.0;
-        _loadingLabel.alpha = 1.0;
-    }];
-    [_loadingIndicator startAnimating];
+    _progressHUD.labelText = @"Loading Sites";
+    [_progressHUD show:YES];
+    
 }
 
 - (void)transitionContentFinishedLoading
 {
      self.navigationItem.rightBarButtonItem.enabled = YES;
-    _loadingIndicator.alpha = 0.0;
-    _loadingLabel.alpha = 0.0;
+    [_progressHUD hide:YES afterDelay:0.5];
 
     [UIView animateWithDuration:0.2 animations:^{
         _tableView.alpha = 1.0;
     }];
 }
 
+
 #pragma mark - Loading User Sites
 - (void)refreshCurrentUserSites
 {
+    // Ignore all but on refresh call at a time.
+    if (_isRefreshing) {
+        return;
+    }
+    
+    _isRefreshing = YES;
     __weak ARSitesViewController *blockSelf = self;
     __weak NSMutableArray *weakSites = _currentUserSites;
     [[ARManager shared] sitesForCurrentAPIKey:^(NSArray *sites) {
         [weakSites removeAllObjects];
-        
-        // TODO: Create site objects for each site returned.
         
         [weakSites addObjectsFromArray:sites];
         [blockSelf.tableView performSelectorOnMainThread:@selector(reloadData) withObject:nil waitUntilDone:YES];
@@ -139,6 +149,7 @@
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, 0.25 * NSEC_PER_SEC);
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             [blockSelf transitionContentFinishedLoading];
+            _isRefreshing = NO;
         });
     }];
 }
@@ -170,19 +181,33 @@
 {
     if ((index == [view cancelButtonIndex]) || ([[view textValue] length] == 0))
         return;
-        
-    ARAppDelegate * delegate = (ARAppDelegate *)[[UIApplication sharedApplication] delegate];
-    ARSite *s = [[ARSite alloc] init];
-    [s setIdentifier: [view textValue]];
-
+    
+    // Create a new site with summary info. The site should be added to the table in alphabetical order.
+    NSDictionary *summaryInfo = @{@"id" : [view textValue], @"numImages" : @0, @"numOverlays" : @0, @"siteState" : @"NOT_PROCESSED"};
+    ARSite *s = [[ARSite alloc] initWithSummaryDictionary:summaryInfo];
+    
     if ([view tag] == ADD_NEW) {
         [s setStatus: ARSiteStatusCreating];
         [[ARManager shared] addSite: [s identifier] withCompletionBlock: ^(void) {
             [s setStatus: ARSiteStatusNotProcessed];
+            
+            [_progressHUD hide:YES afterDelay:2.0];
+            
+            int row = [_currentUserSites indexOfObject:s];
+            [self tableView:_tableView didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:row inSection:0]];
+
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object:s];
         }];
     }
-    [delegate addSite: s];
+
+    // Show the creation indicator.
+    _progressHUD.labelText = @"Creating Site";
+    [_progressHUD show:YES];
+    
+    [_currentUserSites addObject:s];
+    NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"identifier" ascending:YES];
+    _currentUserSites = [[_currentUserSites sortedArrayUsingDescriptors:@[sort]] mutableCopy];
+
     [_tableView reloadData];
 }
 
@@ -228,7 +253,7 @@
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    ARSite *siteToDelete = [[ARSite alloc] initWithIdentifier:_currentUserSites[indexPath.row]];
+    ARSite *siteToDelete = _currentUserSites[indexPath.row];
     
     UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Are you sure?" message:@"Deleting this site will remove all information including processed images. This operation cannot be undone." delegate:self cancelButtonTitle:@"Cancel" otherButtonTitles:@"Yes, I'm sure", nil];
     objc_setAssociatedObject(av, @"site", siteToDelete, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
@@ -246,20 +271,18 @@
     UITableViewCell * c = [tableView dequeueReusableCellWithIdentifier: @"row"];
     if (!c) c = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleValue1 reuseIdentifier:@"row"];
     
-    ARSite * site = [[ARSite alloc] initWithIdentifier:_currentUserSites[indexPath.row]];
-    site.status = ARSiteStatusUnknown;
-    objc_setAssociatedObject(c, @"site", site, OBJC_ASSOCIATION_RETAIN_NONATOMIC);
-    c.textLabel.text = _currentUserSites[indexPath.row];
+    ARSite * site = _currentUserSites[indexPath.row];
+    c.textLabel.text = site.identifier;
+    c.detailTextLabel.text = [site description];
     
     return c;
 }
 
 - (void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
-    UITableViewCell *c = [tableView cellForRowAtIndexPath:indexPath];
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
 
-    ARSite *site = objc_getAssociatedObject(c, @"site");
+    ARSite *site = _currentUserSites[indexPath.row];
 
     ARSiteImagesViewController * vc = [[ARSiteImagesViewController alloc] initWithSite: site];
     if ([site status] != ARSiteStatusCreating)

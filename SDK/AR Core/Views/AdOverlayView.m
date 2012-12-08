@@ -38,12 +38,11 @@
 
 - (void)sharedInit
 {
-    [self.layer setShadowPath: CGPathCreateWithRect(self.layer.bounds, NULL)];
-    [self.layer setBorderColor: [[UIColor whiteColor] CGColor]];
-    [self.layer setBorderWidth: 3];
-    [self.layer setShadowOpacity: 0.8];
-    [self.layer setShadowRadius:20];
-    [self.layer setShadowColor: [[UIColor whiteColor] CGColor]];
+    self.backgroundColor = [UIColor clearColor];
+    [self.layer setShadowPath: [UIBezierPath bezierPathWithRect:self.bounds].CGPath];
+    [self.layer setShadowOpacity: 0.0];
+    [self.layer setShadowRadius:10];
+    [self.layer setShadowColor: [[UIColor cyanColor] CGColor]];
     
     self.animDelegate = self;
     self.thumbnail = [[UIImageView alloc] initWithFrame:self.bounds];
@@ -68,6 +67,25 @@
 }
 
 
+#pragma mark - Drawing
+- (void)drawRect:(CGRect)rect
+{
+    if (self.thumbnail.image == nil) {
+        CGContextRef context = UIGraphicsGetCurrentContext();
+        CGContextSetShadowWithColor(context, CGSizeZero, 20.0, [UIColor cyanColor].CGColor);
+        CGContextSetStrokeColorWithColor(context, [UIColor whiteColor].CGColor);
+        CGContextSetLineWidth(context, 10);
+        UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:CGRectInset(rect, 20, 20) cornerRadius:5];
+        CGContextAddPath(context, path.CGPath);
+        CGContextStrokePath(context);        
+    } else {
+        self.layer.borderWidth = 5.0;
+        self.layer.borderColor = [UIColor whiteColor].CGColor;
+        self.layer.shadowOpacity = 1.0;
+    }
+}
+
+
 #pragma mark - AROverlayViewAnimationDelegate
 - (void)focusOverlayView:(AROverlayView *)overlayView inParent:(ARAugmentedView *)parent
 {
@@ -83,13 +101,20 @@
         [UIView animateWithDuration:0.3 animations:^{
             _player.view.alpha = 1.0;
             _webView.alpha = 1.0;
-            self.layer.borderWidth = 1;
+            
+            if (_thumbnail.image == nil) {
+                self.layer.borderWidth = 5.0;
+                self.layer.borderColor = [UIColor whiteColor].CGColor;
+                self.layer.shadowOpacity = 1.0;
+            }
+            
             overlayView.layer.transform = CATransform3DScale(CATransform3DIdentity, 1.2, 1.2, 1.2);
             overlayView.layer.position = [AROverlayUtil focusedCenterForOverlayView:overlayView withParent:parent.overlayImageView];
         } completion:^(BOOL finished) {
             [UIView animateWithDuration:0.2 animations:^{
                 overlayView.layer.transform = CATransform3DScale(CATransform3DIdentity, 0.9, 0.9, 0.9);
                 overlayView.layer.position = [AROverlayUtil focusedCenterForOverlayView:overlayView withParent:parent.overlayImageView];
+                
             } completion:^(BOOL finished) {
                 [UIView animateWithDuration:0.2 animations:^{
                     overlayView.layer.transform = CATransform3DScale(CATransform3DIdentity, 1.1, 1.1, 1.1);
@@ -118,7 +143,13 @@
         [UIView animateWithDuration:0.3 animations:^{
             _player.view.alpha = 0.0;
             _webView.alpha = 0.0;
-            self.layer.borderWidth = 3;
+
+            if (_thumbnail.image == nil) {
+                self.layer.borderWidth = 0.0;
+                self.layer.borderColor = [UIColor whiteColor].CGColor;
+                self.layer.shadowOpacity = 0.0;
+            }
+
             [_player stop];
             overlayView.layer.position = CGPointZero;
             [overlayView applyAttachmentStyleWithParent:parent];

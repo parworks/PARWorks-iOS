@@ -34,7 +34,10 @@
 
     // Override point for customization after application launch.
     self.viewController = [[EPViewController alloc] initWithNibName:@"EPViewController" bundle:nil];
-    self.window.rootViewController = self.viewController;
+    
+    UINavigationController *nav = [[UINavigationController alloc] initWithRootViewController:_viewController];
+    nav.navigationBarHidden = YES;
+    self.window.rootViewController = nav;
     [self.window makeKeyAndVisible];
     return YES;
 }
@@ -64,6 +67,11 @@
 - (void)applicationWillTerminate:(UIApplication *)application
 {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
+}
+
+- (NSUInteger)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
+{
+    return UIInterfaceOrientationMaskAll;
 }
 
 - (void)setAPIServer:(NSString*)server

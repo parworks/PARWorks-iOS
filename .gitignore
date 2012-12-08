@@ -1,5 +1,7 @@
 *.DS_Store
+*.xcuserstate
 /.DS_Store
+*.xcuserstate
 /Demos/SIDemo/build
 /Demos/SIDemo/DerivedData
 /Demos/HackNash/build
