@@ -232,9 +232,4 @@
         [_site processBaseImages];
 }
 
-- (IBAction)addOverlayButtonTapped:(id)sender
-{
-    
-}
-
 @end
