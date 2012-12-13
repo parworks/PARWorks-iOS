@@ -49,6 +49,7 @@
 #define REQ_USER_GETKEY                 @"/ar/mars/user/account/getkey"
 
 #define NOTIF_SITE_UPDATED              @"nbu"
+#define NOTIF_SITES_UPDATED             @"nbua"
 #define NOTIF_AUGMENTED_PHOTO_UPDATED   @"napu"
 
 typedef enum BackendResponse {

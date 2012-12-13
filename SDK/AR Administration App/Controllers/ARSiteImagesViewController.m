@@ -43,18 +43,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
+
+    NSString * path = [[NSBundle mainBundle] pathForResource:@"cow" ofType:@"ply"];
+    _pointCloudView = [[PointCloudView alloc] initWithFrame: self.gridView.frame andPLYPath: path];
+    [_pointCloudView setAlpha: 0];
+    [self.view addSubview: _pointCloudView];
+
+    [self update];
+
     // subscribe to updates
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData) name:NOTIF_SITE_UPDATED object: _site];
-    
-    [_gridView reloadData];
-    
-    // create the upper right add button
-    UIBarButtonItem * add = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemAdd target:self action:@selector(addPhoto:)];
-    [self.navigationItem setRightBarButtonItem:add animated:YES];
-    
-    _infoView.siteStatus = _site.status;
-    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(update) name:NOTIF_SITE_UPDATED object: _site];
 }
 
 - (void)viewDidUnload
@@ -64,11 +62,45 @@
     [self setCameraCaptureButton:nil];
     [self setCameraDoneButton:nil];
     [self setCameraOverlayView:nil];
+    [self setPointCloudLabel:nil];
     [super viewDidUnload];
+}
+
+- (void)update
+{
+    [_gridView reloadData];
+    [_infoView setSiteStatus: _site.status];
+
+    [UIView beginAnimations:nil context:nil];
+    [UIView setAnimationDuration: 0.3];
+
+    if (_site.status == ARSiteStatusProcessing) {
+        if ([_pointCloudView alpha] < 1)
+            [_pointCloudView startAnimating];
+        [_pointCloudView setAlpha: 1];
+        [_pointCloudLabel setAlpha: 1];
+        [_gridView setAlpha: 0];
+        [_pointCloudLabel setText: @"Processing images into a 3D model. This may take 3-5 min."];
+    } else if (_site.status == ARSiteStatusProcessingFailed) {
+        if ([_pointCloudView alpha] < 1)
+            [_pointCloudView startAnimating];
+        [_pointCloudView setAlpha: 1];
+        [_pointCloudLabel setAlpha: 1];
+        [_gridView setAlpha: 0];
+        [_pointCloudLabel setText: @"Image processing failed. Please visit the PARWorks website and try again."];
+    } else {
+        [_pointCloudView setAlpha: 0];
+        [_pointCloudView stopAnimating];
+        [_pointCloudLabel setAlpha: 0];
+        [_gridView setAlpha: 1];
+    }
+
+    [UIView commitAnimations];
 }
 
 
 #pragma mark - Rotation
+
 - (NSInteger)supportedInterfaceOrientations
 {
     return UIInterfaceOrientationMaskPortrait;
@@ -76,18 +108,12 @@
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {
-    return YES;
+    return UIInterfaceOrientationIsPortrait(interfaceOrientation);
 }
 
 
+#pragma mark - Grid of Images
 
-- (void)reloadData
-{
-    [_gridView reloadData];
-}
-
-
-#pragma mark - GridViewDelegate
 - (BOOL)isLoadingForGridView:(GridView*)gv
 {
     return [_site isFetchingImages];
@@ -112,32 +138,44 @@
 }
 
 
-#pragma mark - Photo Handling
-- (void)addPhoto:(id)sender
-{
-    UIActionSheet * s = [[UIActionSheet alloc] initWithTitle:@"Image Type" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Add Site Image", @"Augment an Image", @"Augment a Saved Image", nil];
-    [s showFromTabBar: self.tabBarController.tabBar];
-}
+#pragma mark - InfoView Button Actions
 
-- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+
+- (IBAction)addBasePhotos:(id)sender
 {
-    if (buttonIndex == [actionSheet cancelButtonIndex])
-        return;
-        
-    _imageIsSiteImage = (buttonIndex == 0);
+    _imageIsSiteImage = YES;
     
     _picker = [[UIImagePickerController alloc] init];
     [_picker setDelegate: self];
-    
-    if ((buttonIndex != 2) && ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera])) {
+    if ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera]) {
         _picker.sourceType = UIImagePickerControllerSourceTypeCamera;
         [_picker setCameraOverlayView: _cameraOverlayView];
         [_picker setShowsCameraControls: NO];
     } else
         _picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-
+    
     [self presentModalViewController: _picker animated:YES];
 }
+
+- (IBAction)augmentPhoto:(id)sender
+{
+    UIActionSheet * s = [[UIActionSheet alloc] initWithTitle:@"Image Type" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles: @"Augment an Image", @"Augment a Saved Image", nil];
+    [s showFromTabBar: self.tabBarController.tabBar];
+}
+
+- (IBAction)processImagesButtonTapped:(id)sender
+{
+    // Show an alert view to affirm the user actually wants to process.
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:nil message:@"Are you sure you want to process these base images? Once you begin processing, you cannot add more images to this site." delegate:self cancelButtonTitle:@"NO" otherButtonTitles:@"YES", nil];
+    [av show];
+}
+
+- (IBAction)addOverlayButtonTapped:(id)sender
+{
+    // TODO: Load the overlay creation view controller
+}
+
+#pragma mark - Managing the Camera
 
 - (void)takePicture:(id)sender
 {
@@ -149,10 +187,29 @@
     [self dismissModalViewControllerAnimated: YES];
 }
 
+- (void)actionSheet:(UIActionSheet *)actionSheet didDismissWithButtonIndex:(NSInteger)buttonIndex
+{
+    if (buttonIndex == [actionSheet cancelButtonIndex])
+        return;
+    
+    _imageIsSiteImage = NO;
+    _picker = [[UIImagePickerController alloc] init];
+    [_picker setDelegate: self];
+    
+    if ((buttonIndex != 2) && ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera])) {
+        _picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        [_picker setCameraOverlayView: _cameraOverlayView];
+        [_picker setShowsCameraControls: NO];
+    } else
+        _picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    
+    [self presentModalViewController: _picker animated:YES];
+}
+
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
 {
     UIImage * img = [info objectForKey: UIImagePickerControllerOriginalImage];
-
+    
     if (_picker.sourceType != UIImagePickerControllerSourceTypeCamera)
         [_picker dismissModalViewControllerAnimated: YES];
     
@@ -164,39 +221,20 @@
 }
 
 
-#pragma mark - InfoView Button Actions
-- (IBAction)processImagesButtonTapped:(id)sender
+#pragma mark - UIAlertViewDelegate
+
+- (void)alertView:(UIAlertView *)alertView didDismissWithButtonIndex:(NSInteger)buttonIndex
 {
-    // Show an alert view to affirm the user actually wants to process.
-    UIAlertView *av = [[UIAlertView alloc] initWithTitle:nil message:@"Are you sure you want to process your base images?" delegate:self cancelButtonTitle:@"NO" otherButtonTitles:@"YES", nil];
-    [av show];
+    if (buttonIndex == [alertView cancelButtonIndex])
+        return;
     
-    // TODO: Show the processing screen;
+    if (buttonIndex == 1)
+        [_site processBaseImages];
 }
 
 - (IBAction)addOverlayButtonTapped:(id)sender
 {
     
 }
-
-
-#pragma mark - UIAlertViewDelegate
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    switch (buttonIndex) {
-        case 0:
-            [alertView dismissWithClickedButtonIndex:buttonIndex animated:YES];            
-            break;
-        case 1:
-            [[ARManager shared] processSite:_site.identifier withCompletionBlock:^{
-                NSLog(@"Site processing completed");
-            }];
-
-            break;
-        default:
-            break;
-    }
-}
-
 
 @end

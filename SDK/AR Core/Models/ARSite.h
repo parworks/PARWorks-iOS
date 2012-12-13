@@ -99,6 +99,14 @@ to the server and added to the base images collection.
 */
 - (void)addImage:(UIImage*)img;
 
+/** Begins the process of processing base images added to the site. Listen for 
+NOTIF_SITE_UPDATED to receive notifications when the site is ready. 
+*/
+- (void)processBaseImages;
+
+/** Destroys the local copy of the site's base images and fetches them from the 
+server again.
+*/
 - (void)invalidateImages;
 
 /**
@@ -136,5 +144,7 @@ to the server and added to the base images collection.
 /** Removes all the augmented photos stored with this site.
 */
 - (void)removeAllAugmentedPhotos;
+
+
 
 @end

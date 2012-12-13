@@ -32,7 +32,10 @@
     self = [super init];
     if (self) {
         [self setTitle: @"Photos"];
-        [self setTabBarItem: [[UITabBarItem alloc] initWithTabBarSystemItem: UITabBarSystemItemHistory tag:1]];
+        
+        UIImage * img = [UIImage imageNamed: @"tab-photos.png"];
+        [self setTabBarItem: [[UITabBarItem alloc] initWithTitle:@"Photos" image:img tag:1]];
+
     
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(reloadData) name:NOTIF_AUGMENTED_PHOTO_UPDATED object:nil];
     }
