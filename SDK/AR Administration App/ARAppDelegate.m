@@ -28,13 +28,6 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    // load data
-    _savesState = YES;
-    _sites = [NSKeyedUnarchiver unarchiveObjectWithFile: SITES_PATH];
-    if (!_sites)
-        _sites = [NSMutableArray array];
-
-    
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
     // Add checks to save state
@@ -67,6 +60,8 @@
     
     if (!key || !secret) {
         [self authenticate];
+    } else {
+        [self loadSavedSites];
     }
     
     return YES;
@@ -79,6 +74,8 @@
     [[NSUserDefaults standardUserDefaults] synchronize];
     [[ARManager shared] setApiKey:key andSecret: secret];
     [[ARManager shared] setLocationEnabled: YES];
+    
+    [self loadSavedSites];
 }
 
 - (void)authenticate
@@ -90,17 +87,38 @@
 #pragma mark -
 #pragma mark Local Data Storage
 
-- (BOOL)savesState
+- (void)loadSavedSites
 {
-    return _savesState;
+    _sites = [NSKeyedUnarchiver unarchiveObjectWithFile: SITES_PATH];
+    if (!_sites)
+        _sites = [NSMutableArray array];
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITES_UPDATED object:nil];
+    [self refreshSites];
 }
 
-- (void)setSavesState:(BOOL)s
+- (void)refreshSites
 {
-    _savesState = s;
-    if (!_savesState) {
-        [[NSFileManager defaultManager] removeItemAtPath: SITES_PATH error: nil];
+    // Ignore all but on refresh call at a time.
+    if (_isRefreshing) {
+        return;
     }
+    
+    _isRefreshing = YES;
+    __weak NSMutableArray * weakSites = _sites;
+    
+    [[ARManager shared] sitesForCurrentAPIKey: ^(NSArray *sites) {
+        [weakSites removeAllObjects];
+        [weakSites addObjectsFromArray:sites];
+        [self save];
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITES_UPDATED object:nil];
+        _isRefreshing = NO;
+    }];
+}
+
+- (BOOL)refreshingSites
+{
+    return _isRefreshing;
 }
 
 - (NSArray*)sites
@@ -111,6 +129,10 @@
 - (void)addSite:(ARSite*)site
 {
     [_sites addObject: site];
+
+    NSSortDescriptor *sort = [NSSortDescriptor sortDescriptorWithKey:@"identifier" ascending:YES];
+    _sites = [[_sites sortedArrayUsingDescriptors:@[sort]] mutableCopy];
+
     [self save];
 }
 
@@ -122,8 +144,10 @@
 
 - (void)save
 {
-    if (_savesState && !_saveTriggered)
+    if (!_saveTriggered) {
         [self performSelectorOnMainThread:@selector(saveDeferred) withObject:nil waitUntilDone:NO];
+        _saveTriggered = YES;
+    }
 }
 
 - (void)saveDeferred

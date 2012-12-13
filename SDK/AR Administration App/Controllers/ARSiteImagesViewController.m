@@ -86,7 +86,7 @@
         [_pointCloudView setAlpha: 1];
         [_pointCloudLabel setAlpha: 1];
         [_gridView setAlpha: 0];
-        [_pointCloudLabel setText: @"Image processing failed. Please visit the PARWorks website and try again there."];
+        [_pointCloudLabel setText: @"Image processing failed. Please visit the PARWorks website and try again."];
     } else {
         [_pointCloudView setAlpha: 0];
         [_pointCloudView stopAnimating];

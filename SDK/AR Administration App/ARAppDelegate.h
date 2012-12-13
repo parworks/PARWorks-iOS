@@ -33,8 +33,9 @@
 @interface ARAppDelegate : UIResponder <UIApplicationDelegate>
 {
     NSMutableArray * _sites;
-    BOOL _savesState;
+    NSTimer * _refreshTimer;
     BOOL _saveTriggered;
+    BOOL _isRefreshing;
 }
 
 @property (strong, nonatomic) UIWindow * window;
@@ -49,18 +50,13 @@
 // ========================
 
 /**
- @return YES if the app is currently saving state between launches.
- */
-- (BOOL)savesState;
-
-/**  Pass YES if you want to save sites and augmented photos between launches of the app.
- */
-- (void)setSavesState:(BOOL)s;
-
-/**
  @return A list of sites that have been added via the addSite: method.
  */
 - (NSArray*)sites;
+
+- (void)loadSavedSites;
+- (void)refreshSites;
+- (BOOL)refreshingSites;
 
 /** Adds a site to the known list. Sites are preserved when the application quits,
  so your application may connect to a third party server, fetch available site names,

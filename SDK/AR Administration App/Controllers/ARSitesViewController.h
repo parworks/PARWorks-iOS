@@ -25,7 +25,6 @@
 
 @interface ARSitesViewController : UIViewController <UIActionSheetDelegate, UIAlertInputViewDelegate, UIAlertViewDelegate, UITableViewDataSource, UITableViewDelegate>
 {
-    NSMutableArray  *_currentUserSites;
     NSIndexPath     *_deleteIndexPath;
     MBProgressHUD   *_progressHUD;
     NSTimer         *_refreshTimer;

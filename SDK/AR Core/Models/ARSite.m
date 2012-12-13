@@ -67,9 +67,6 @@
         [self setAugmentedPhotos: [aDecoder decodeObjectForKey: @"augmentedPhotos"]];
         _summaryImageCount = [aDecoder decodeIntForKey: @"summaryImageCount"];
         _summaryOverlayCount = [aDecoder decodeIntForKey: @"summaryOverlayCount"];
-        
-        if (_status != ARSiteStatusProcessed)
-            [self checkStatus];
     }
     return self;    
 }
