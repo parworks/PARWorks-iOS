@@ -133,14 +133,20 @@
 
 - (void)save
 {
-    NSString * vertices = @"";
+    if ([_points count] < 3)
+        @throw [NSException exceptionWithName:@"PARWorks API Error" reason:@"Please add at least three AROverlayPoints to your overlay before saving it." userInfo:nil];
+
+    NSMutableString * vertices = [[NSMutableString alloc] init];
+    for (AROverlayPoint * point in _points)
+        [vertices appendFormat: @"&v=%d,%d", (int)floorf([point x]), (int)floorf([point y])];
+
     
     NSMutableDictionary * dict = [NSMutableDictionary dictionary];
     [dict setObject:_siteImageIdentifier forKey:@"imgId"];
     [dict setObject:_content forKey:@"content"]; // description?
     [dict setObject:_site forKey:@"site"];
     [dict setObject:_name forKey:@"name"];
-    [dict setObject:vertices forKey:@"v"];
+    [dict setObject:[vertices substringFromIndex: 3] forKey:@"v"];
     if (_ID) [dict setObject:_ID forKey:@"id"];
     
     __weak ASIHTTPRequest * weak = [[ARManager shared] createRequest: REQ_SITE_OVERLAY_ADD withMethod:@"GET" withArguments: dict];
