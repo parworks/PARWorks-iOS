@@ -21,6 +21,7 @@
 #import <UIKit/UIKit.h>
 #import "ARSite.h"
 #import "GridView.h"
+#import "PointCloudView.h"
 
 @class ARSiteImagesInfoView;
 
@@ -28,9 +29,11 @@
 {
     UIImagePickerController * _picker;
     BOOL    _imageIsSiteImage;
+    PointCloudView * _pointCloudView;
 }
 
 @property (strong, nonatomic) ARSite * site;
+@property (weak, nonatomic) IBOutlet UILabel *pointCloudLabel;
 @property (weak, nonatomic) IBOutlet ARSiteImagesInfoView *infoView;
 @property (weak, nonatomic) IBOutlet GridView *gridView;
 @property (weak, nonatomic) IBOutlet UIButton *cameraCaptureButton;
@@ -43,6 +46,8 @@
 - (NSArray*)objectCollectionForGridView:(GridView*)gv;
 - (void)object:(id)obj selectedInGridView:(GridView*)gv;
 
+- (IBAction)addBasePhotos:(id)sender;
+- (IBAction)augmentPhoto:(id)sender;
 - (IBAction)takePicture:(id)sender;
 - (IBAction)doneTakingPictures:(id)sender;
 

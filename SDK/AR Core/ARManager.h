@@ -143,16 +143,6 @@
  */
 - (void)removeSite:(NSString*)identifier withCompletionBlock:(void (^)(void))completionBlock;
 
-/** Processes the existing base images for a site. Note sites must be processed
- before overlays can be added.
- 
- @param identifier The identifier of the site you'd like to process.
- 
- @param completionBlock A block to call when the server response has been received.
-
- */
-- (void)processSite:(NSString *)identifier withCompletionBlock:(void (^)(void))completionBlock;
-
 /** Retrieves a json list of all of the current user's sites based on the API key provided to
  the ARManager.
  

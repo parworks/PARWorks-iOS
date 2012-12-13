@@ -35,8 +35,8 @@
     
     self.layer.shadowColor = shadowColor.CGColor;
     self.layer.shadowOffset = offset;
-    self.layer.opacity = opacity;
     self.layer.shadowRadius = radius;
+    self.layer.opacity = opacity;
     
     _addBaseImageButton.layer.shadowColor = shadowColor.CGColor;
     _addBaseImageButton.layer.shadowOffset = offset;
@@ -64,10 +64,9 @@
     NSString *directionsText = @"";
     switch (siteStatus) {
         case ARSiteStatusCreating:
-        case ARSiteStatusProcessingFailed:
         case ARSiteStatusNotProcessed:
             step = 1;
-            directionsText = @"Collect base images";
+            directionsText = @"Take 15-20 images of your subject";
             _processBaseImageButton.hidden = NO;
             _addBaseImageButton.hidden = NO;
             _addOverlayButton.hidden = YES;
@@ -79,9 +78,16 @@
             _addBaseImageButton.hidden = YES;
             _addOverlayButton.hidden = YES;
             break;
+        case ARSiteStatusProcessingFailed:
+            step = 2;
+            directionsText = @"Processing Failed.";
+            _processBaseImageButton.hidden = YES;
+            _addBaseImageButton.hidden = YES;
+            _addOverlayButton.hidden = YES;
+            break;
         case ARSiteStatusProcessed:
             step = 3;
-            directionsText = @"Tap an image to add overlays";
+            directionsText = @"Tap images to add overlays, then test!";
             _processBaseImageButton.hidden = YES;
             _addBaseImageButton.hidden = YES;
             _addOverlayButton.hidden = NO;
@@ -90,7 +96,7 @@
             break;
     }
     
-    _stepLabel.text = [NSString stringWithFormat:@"%d/3:", step];
+    _stepLabel.text = [NSString stringWithFormat:@"%d/3", step];
     _directionsLabel.text = directionsText;
 }
 
@@ -103,7 +109,7 @@
 - (void)setHighlighted:(BOOL)highlighted
 {
     [super setHighlighted:highlighted];
-    self.backgroundColor = highlighted ? [UIColor greenColor] : [UIColor whiteColor];
+    self.backgroundColor = highlighted ? [UIColor colorWithRed:0.15 green:0.4 blue:0.15 alpha:1] : [UIColor whiteColor];
 }
 
 @end

@@ -241,21 +241,7 @@ static ARManager * sharedManager;
             completionBlock();
     }];
     [req startAsynchronous];
-}
-
-- (void)processSite:(NSString *)identifier withCompletionBlock:(void (^)(void))completionBlock
-{
-    NSDictionary * args = [NSDictionary dictionaryWithObject:identifier forKey:@"site"];
-    ASIHTTPRequest * req = [self createRequest:REQ_SITE_PROCESS withMethod:@"POST" withArguments: args];
-    ASIHTTPRequest * __weak weak = req;
-    [req setCompletionBlock: ^(void) {
-        [self handleResponseErrors: weak];
-        if (completionBlock)
-            completionBlock();
-    }];
-    [req startAsynchronous];
-}
-                                                               
+}                                                               
 
 - (void)sitesForCurrentAPIKey:(void (^)(NSArray *sites))completionBlock
 {

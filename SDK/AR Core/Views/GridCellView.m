@@ -33,6 +33,7 @@
     if (self) {
         CGRect imageViewFrame = self.bounds;
         _imageView = [[CachedImageView alloc] initWithFrame: imageViewFrame];
+        [_imageView setContentMode: UIViewContentModeScaleAspectFit];
         [self addSubview: _imageView];
         
         UIButton * _button = [[UIButton alloc] initWithFrame: self.bounds];

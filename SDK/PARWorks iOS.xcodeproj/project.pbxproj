@@ -7,6 +7,15 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		432B7EF91679706E00453149 /* infobar_shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 432B7EF81679706E00453149 /* infobar_shadow.png */; };
+		432B7F01167976C000453149 /* PointCloudView.m in Sources */ = {isa = PBXBuildFile; fileRef = 432B7F00167976C000453149 /* PointCloudView.m */; };
+		432B7F05167976D500453149 /* cow.ply in Resources */ = {isa = PBXBuildFile; fileRef = 432B7F04167976D500453149 /* cow.ply */; };
+		432B7F08167978C900453149 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 432B7F06167978C900453149 /* GLKit.framework */; };
+		432B7F09167978C900453149 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 432B7F07167978C900453149 /* OpenGLES.framework */; };
+		432B7F0C16797BD900453149 /* camera-graphic.png in Resources */ = {isa = PBXBuildFile; fileRef = 432B7F0A16797BD900453149 /* camera-graphic.png */; };
+		432B7F0D16797BD900453149 /* camera-graphic@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 432B7F0B16797BD900453149 /* camera-graphic@2x.png */; };
+		432B7F1016797F8E00453149 /* toolbar_hide.png in Resources */ = {isa = PBXBuildFile; fileRef = 432B7F0E16797F8D00453149 /* toolbar_hide.png */; };
+		432B7F1116797F8E00453149 /* toolbar_show.png in Resources */ = {isa = PBXBuildFile; fileRef = 432B7F0F16797F8D00453149 /* toolbar_show.png */; };
 		436C48B116432AAF0031DBCA /* ARAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C489116432AAF0031DBCA /* ARAppDelegate.m */; };
 		436C48B216432AAF0031DBCA /* ARAugmentedPhotosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C489416432AAF0031DBCA /* ARAugmentedPhotosViewController.m */; };
 		436C48B316432AAF0031DBCA /* ARAugmentedPhotosViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 436C489516432AAF0031DBCA /* ARAugmentedPhotosViewController.xib */; };
@@ -182,6 +191,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		432B7EF81679706E00453149 /* infobar_shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = infobar_shadow.png; path = Resources/Images/infobar_shadow.png; sourceTree = "<group>"; };
+		432B7EFF167976C000453149 /* PointCloudView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PointCloudView.h; sourceTree = "<group>"; };
+		432B7F00167976C000453149 /* PointCloudView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PointCloudView.m; sourceTree = "<group>"; };
+		432B7F04167976D500453149 /* cow.ply */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = cow.ply; path = Resources/cow.ply; sourceTree = "<group>"; };
+		432B7F06167978C900453149 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
+		432B7F07167978C900453149 /* OpenGLES.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGLES.framework; path = System/Library/Frameworks/OpenGLES.framework; sourceTree = SDKROOT; };
+		432B7F0A16797BD900453149 /* camera-graphic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "camera-graphic.png"; path = "Resources/Images/camera-graphic.png"; sourceTree = "<group>"; };
+		432B7F0B16797BD900453149 /* camera-graphic@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "camera-graphic@2x.png"; path = "Resources/Images/camera-graphic@2x.png"; sourceTree = "<group>"; };
+		432B7F0E16797F8D00453149 /* toolbar_hide.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = toolbar_hide.png; path = Resources/Images/toolbar_hide.png; sourceTree = "<group>"; };
+		432B7F0F16797F8D00453149 /* toolbar_show.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = toolbar_show.png; path = Resources/Images/toolbar_show.png; sourceTree = "<group>"; };
 		435833F415EC852100E90CBD /* PARWorks.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PARWorks.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		436C488E16432AAF0031DBCA /* Administration-App-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Administration-App-Info.plist"; sourceTree = "<group>"; };
 		436C488F16432AAF0031DBCA /* Administration-App-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Administration-App-Prefix.pch"; sourceTree = "<group>"; };
@@ -341,6 +360,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				432B7F08167978C900453149 /* GLKit.framework in Frameworks */,
+				432B7F09167978C900453149 /* OpenGLES.framework in Frameworks */,
 				A02713D0166C6DFA005E91EE /* MediaPlayer.framework in Frameworks */,
 				43D330DE16097E4C0043B64C /* CoreLocation.framework in Frameworks */,
 				A0F662D415FEFBD100FA709B /* QuartzCore.framework in Frameworks */,
@@ -360,10 +381,16 @@
 		436C488D16432AAF0031DBCA /* AR Administration App */ = {
 			isa = PBXGroup;
 			children = (
+				432B7F04167976D500453149 /* cow.ply */,
 				4386D71316470519001F96E8 /* icon.png */,
 				4386D7141647051A001F96E8 /* icon@2x.png */,
+				432B7EF81679706E00453149 /* infobar_shadow.png */,
+				432B7F0A16797BD900453149 /* camera-graphic.png */,
+				432B7F0B16797BD900453149 /* camera-graphic@2x.png */,
 				43AB7259165978550092CD9B /* environment_background.png */,
 				43AB725A165978550092CD9B /* environment_background@2x.png */,
+				432B7F0E16797F8D00453149 /* toolbar_hide.png */,
+				432B7F0F16797F8D00453149 /* toolbar_show.png */,
 				436C489C16432AAF0031DBCA /* InfoPlist.strings */,
 				436C488E16432AAF0031DBCA /* Administration-App-Info.plist */,
 				436C488F16432AAF0031DBCA /* Administration-App-Prefix.pch */,
@@ -620,6 +647,8 @@
 			children = (
 				A05F044F16796E3B007A51CA /* ARMagView.h */,
 				A05F045016796E3B007A51CA /* ARMagView.m */,
+				432B7EFF167976C000453149 /* PointCloudView.h */,
+				432B7F00167976C000453149 /* PointCloudView.m */,
 				A05F045116796E3B007A51CA /* ARPointOverlayView.h */,
 				A05F045216796E3B007A51CA /* ARPointOverlayView.m */,
 				A02713C9166C6DDA005E91EE /* AdOverlayView.m */,
@@ -641,6 +670,8 @@
 		4371F0BA15E34E7300D754A8 = {
 			isa = PBXGroup;
 			children = (
+				432B7F06167978C900453149 /* GLKit.framework */,
+				432B7F07167978C900453149 /* OpenGLES.framework */,
 				436C48C216432AB10031DBCA /* AR Core */,
 				436C488D16432AAF0031DBCA /* AR Administration App */,
 				4371F0C815E34E7300D754A8 /* Frameworks */,
@@ -850,6 +881,12 @@
 				A05F043D16796E0C007A51CA /* bubble.png in Resources */,
 				A05F044016796E12007A51CA /* stock_lock_open.png in Resources */,
 				A05F044A16796E29007A51CA /* AROverlayCreatorViewController.xib in Resources */,
+				432B7EF91679706E00453149 /* infobar_shadow.png in Resources */,
+				432B7F05167976D500453149 /* cow.ply in Resources */,
+				432B7F0C16797BD900453149 /* camera-graphic.png in Resources */,
+				432B7F0D16797BD900453149 /* camera-graphic@2x.png in Resources */,
+				432B7F1016797F8E00453149 /* toolbar_hide.png in Resources */,
+				432B7F1116797F8E00453149 /* toolbar_show.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -976,6 +1013,7 @@
 				A05F044D16796E29007A51CA /* AROverlayCreatorViewController.m in Sources */,
 				A05F045416796E3B007A51CA /* ARMagView.m in Sources */,
 				A05F045716796E3B007A51CA /* ARPointOverlayView.m in Sources */,
+				432B7F01167976C000453149 /* PointCloudView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

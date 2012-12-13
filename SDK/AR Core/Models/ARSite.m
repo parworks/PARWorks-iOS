@@ -51,6 +51,7 @@
         _summaryOverlayCount = [dict[@"numOverlays"] intValue];
         self.identifier = dict[@"id"];
         self.status = [self siteStatusForString:dict[@"siteState"]];
+        [self checkStatusIn20Seconds];
     }
     return self;
 }
@@ -100,10 +101,17 @@
         }
         
         _status = [self siteStatusForString:[json objectForKey:@"state"]];
+        if (_status == ARSiteStatusProcessing)
+            [self checkStatusIn20Seconds];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: site];
     }];
     [req startAsynchronous];
+}
+
+- (void)checkStatusIn20Seconds
+{
+    [self performSelector:@selector(checkStatus) withObject:nil afterDelay:20];
 }
 
 - (ARSiteStatus)siteStatusForString:(NSString *)s
@@ -287,10 +295,8 @@
     
     [weak setCompletionBlock: ^(void) {
         if ([[ARManager shared] handleResponseErrors: weak]){
-            // grab all the image dictionaries from the JSON and pull out just the ID
-            // of each image—that's all we need.
-            [self setStatus: ARSiteStatusProcessed];
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: self];
+            // processing has begun—we need to poll and wait for it to complete
+            [self checkStatusIn20Seconds];
         }
     }];
     [weak startAsynchronous];
