@@ -17,6 +17,7 @@
 //  limitations under the License.
 //
 
+#import "AROverlayCreatorViewController.h"
 #import "ARSiteImagesInfoView.h"
 #import "ARSiteImagesViewController.h"
 #import "ARPhotoViewController.h"
@@ -85,6 +86,8 @@
     [_gridView reloadData];
 }
 
+
+#pragma mark - GridViewDelegate
 - (BOOL)isLoadingForGridView:(GridView*)gv
 {
     return [_site isFetchingImages];
@@ -97,9 +100,19 @@
 
 - (void)object:(id)obj selectedInGridView:(GridView*)gv
 {
-    
+    // Load the overlay creator if we're in the correct state.
+    if (_site.status == ARSiteStatusProcessed) {
+        ARSiteImage *img = (ARSiteImage *)obj;
+        
+        // Cheat and use the height since we always work in portrait ;)
+        NSURL *url  = [img urlForSize:self.view.frame.size.height];
+        AROverlayCreatorViewController *vc = [[AROverlayCreatorViewController alloc] initWithImagePath:[url absoluteString]];
+        [self presentViewController:vc animated:YES completion:nil];
+    }
 }
 
+
+#pragma mark - Photo Handling
 - (void)addPhoto:(id)sender
 {
     UIActionSheet * s = [[UIActionSheet alloc] initWithTitle:@"Image Type" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles:@"Add Site Image", @"Augment an Image", @"Augment a Saved Image", nil];
@@ -163,7 +176,7 @@
 
 - (IBAction)addOverlayButtonTapped:(id)sender
 {
-    // TODO: Load the overlay creation view controller
+    
 }
 
 

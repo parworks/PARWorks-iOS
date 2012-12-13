@@ -50,10 +50,6 @@
 						<int key="IBUIContentMode">1</int>
 						<bool key="IBUIUserInteractionEnabled">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
-						<object class="NSCustomResource" key="IBUIImage">
-							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">picture.JPG</string>
-						</object>
 					</object>
 					<object class="IBUINavigationBar" id="491140751">
 						<reference key="NSNextResponder" ref="774585933"/>
@@ -68,11 +64,17 @@
 							<object class="IBUINavigationItem" id="491699535">
 								<reference key="IBUINavigationBar" ref="491140751"/>
 								<string key="IBUITitle">Overlay Creator</string>
-								<object class="IBUIBarButtonItem" key="IBUIRightBarButtonItem" id="812149562">
+								<object class="IBUIBarButtonItem" key="IBUILeftBarButtonItem" id="812149562">
 									<string key="IBUITitle">Show</string>
 									<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 									<int key="IBUIStyle">1</int>
 									<reference key="IBUINavigationItem" ref="491699535"/>
+								</object>
+								<object class="IBUIBarButtonItem" key="IBUIRightBarButtonItem" id="967240004">
+									<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+									<int key="IBUIStyle">1</int>
+									<reference key="IBUINavigationItem" ref="491699535"/>
+									<int key="IBUISystemItemIdentifier">0</int>
 								</object>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 							</object>
@@ -81,7 +83,7 @@
 					<object class="IBUIToolbar" id="235581287">
 						<reference key="NSNextResponder" ref="774585933"/>
 						<int key="NSvFlags">266</int>
-						<string key="NSFrame">{{0, 416}, {320, 44}}</string>
+						<string key="NSFrame">{{1, 417}, {320, 44}}</string>
 						<reference key="NSSuperview" ref="774585933"/>
 						<reference key="NSWindow"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
@@ -106,11 +108,11 @@
 								<reference key="IBUIToolbar" ref="235581287"/>
 								<int key="IBUISystemItemIdentifier">5</int>
 							</object>
-							<object class="IBUIBarButtonItem" id="967240004">
+							<object class="IBUIBarButtonItem" id="1035707032">
+								<string key="IBUITitle">Save</string>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIStyle">1</int>
 								<reference key="IBUIToolbar" ref="235581287"/>
-								<int key="IBUISystemItemIdentifier">0</int>
 							</object>
 						</array>
 					</object>
@@ -118,7 +120,7 @@
 				<string key="NSFrame">{{0, 20}, {320, 460}}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
-				<reference key="NSNextKeyView" ref="264677033"/>
+				<reference key="NSNextKeyView"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">3</int>
 					<bytes key="NSWhite">MC43NQA</bytes>
@@ -183,6 +185,14 @@
 					<int key="connectionID">45</int>
 				</object>
 				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchOutletConnection" key="connection">
+						<string key="label">saveButton</string>
+						<reference key="source" ref="372490531"/>
+						<reference key="destination" ref="1035707032"/>
+					</object>
+					<int key="connectionID">47</int>
+				</object>
+				<object class="IBConnectionRecord">
 					<object class="IBCocoaTouchEventConnection" key="connection">
 						<string key="label">toggleToolbarTapped:</string>
 						<reference key="source" ref="812149562"/>
@@ -213,6 +223,14 @@
 						<reference key="destination" ref="372490531"/>
 					</object>
 					<int key="connectionID">43</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBCocoaTouchEventConnection" key="connection">
+						<string key="label">saveTapped:</string>
+						<reference key="source" ref="1035707032"/>
+						<reference key="destination" ref="372490531"/>
+					</object>
+					<int key="connectionID">66</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -262,6 +280,7 @@
 						<reference key="object" ref="491699535"/>
 						<array class="NSMutableArray" key="children">
 							<reference ref="812149562"/>
+							<reference ref="967240004"/>
 						</array>
 						<reference key="parent" ref="491140751"/>
 					</object>
@@ -277,7 +296,7 @@
 							<reference ref="62318173"/>
 							<reference ref="1061671288"/>
 							<reference ref="472728846"/>
-							<reference ref="967240004"/>
+							<reference ref="1035707032"/>
 						</array>
 						<reference key="parent" ref="774585933"/>
 					</object>
@@ -299,12 +318,17 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">39</int>
 						<reference key="object" ref="967240004"/>
+						<reference key="parent" ref="491699535"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">46</int>
+						<reference key="object" ref="1035707032"/>
 						<reference key="parent" ref="235581287"/>
 					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
-				<string key="-1.CustomClassName">ViewController</string>
+				<string key="-1.CustomClassName">AROverlayCreatorViewController</string>
 				<string key="-1.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="-2.CustomClassName">UIResponder</string>
 				<string key="-2.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
@@ -318,13 +342,14 @@
 				<string key="37.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="38.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="39.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="46.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">45</int>
+			<int key="maxID">66</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -336,16 +361,78 @@
 						<string key="minorKey">./Classes/ARMagView.h</string>
 					</object>
 				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">AROverlayCreatorViewController</string>
+					<string key="superclassName">UIViewController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="dataEditorDoneTapped:">id</string>
+						<string key="deleteOverlaysTapped:">id</string>
+						<string key="doneTapped:">id</string>
+						<string key="saveTapped:">id</string>
+						<string key="toggleToolbarTapped:">id</string>
+						<string key="undoTapped:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="actionInfosByName">
+						<object class="IBActionInfo" key="dataEditorDoneTapped:">
+							<string key="name">dataEditorDoneTapped:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="deleteOverlaysTapped:">
+							<string key="name">deleteOverlaysTapped:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="doneTapped:">
+							<string key="name">doneTapped:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="saveTapped:">
+							<string key="name">saveTapped:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="toggleToolbarTapped:">
+							<string key="name">toggleToolbarTapped:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+						<object class="IBActionInfo" key="undoTapped:">
+							<string key="name">undoTapped:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="magView">ARMagView</string>
+						<string key="saveButton">UIBarButtonItem</string>
+						<string key="toggleToolbarButton">UIBarButtonItem</string>
+						<string key="toolbar">UIToolbar</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<object class="IBToOneOutletInfo" key="magView">
+							<string key="name">magView</string>
+							<string key="candidateClassName">ARMagView</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="saveButton">
+							<string key="name">saveButton</string>
+							<string key="candidateClassName">UIBarButtonItem</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="toggleToolbarButton">
+							<string key="name">toggleToolbarButton</string>
+							<string key="candidateClassName">UIBarButtonItem</string>
+						</object>
+						<object class="IBToOneOutletInfo" key="toolbar">
+							<string key="name">toolbar</string>
+							<string key="candidateClassName">UIToolbar</string>
+						</object>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">./Classes/AROverlayCreatorViewController.h</string>
+					</object>
+				</object>
 			</array>
 		</object>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
-		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="NS.key.0">picture.JPG</string>
-			<string key="NS.object.0">{2048, 1536}</string>
-		</object>
 		<string key="IBCocoaTouchPluginVersion">1926</string>
 	</data>
 </archive>

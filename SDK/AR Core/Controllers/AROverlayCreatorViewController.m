@@ -6,42 +6,90 @@
 //  Copyright (c) 2012 Demetri Miller. All rights reserved.
 //
 
-#import "ARMagView.h"
 #import "AROverlayCreatorViewController.h"
+#import "AROverlayDataEditorViewController.h"
 
 @interface AROverlayCreatorViewController ()
 
 @end
 
 @implementation AROverlayCreatorViewController
+{
+    BOOL _isFirstLoad;
+}
+
+#pragma mark - Lifecycle
+- (id)initWithImage:(UIImage *)image
+{
+    self = [super initWithNibName:@"AROverlayCreatorViewController" bundle:nil];
+    if (self) {
+        _image = image;
+    }
+    return self;
+}
+
+- (id)initWithImagePath:(NSString *)path
+{
+    self = [super initWithNibName:@"AROverlayCreatorViewController" bundle:nil];
+    if (self) {
+        _imagePath = [path copy];
+    }
+    return self;
+}
 
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    _isToolbarAnimating = NO;
+    _isAnimating = NO;
+    _isFirstLoad = YES;    
 }
 
 
 - (void)viewWillAppear:(BOOL)animated
 {
-    [_magView setImage:[UIImage imageNamed:@"picture.JPG"]];
+    [super viewWillAppear:animated];
+    
+    if (_isFirstLoad) {
+        if (_imagePath != nil) {
+            [_magView.imageView setImagePath:_imagePath];
+        } else if (_image != nil) {
+            [_magView setImage:_image];
+        }
+        
+        _magView.delegate = self;
+        _isFirstLoad = NO;
+    }
 }
 
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
+
+#pragma mark - Convenience
+- (void)showOverlayDataEditorAnimated:(BOOL)animated
+{
+    AROverlayDataEditorViewController *vc = [[AROverlayDataEditorViewController alloc] initWithOverlay:[_magView currentOverlay]];
+    vc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
+    [self presentViewController:vc animated:YES completion:nil];
+}
+
+
+#pragma mark - ARMagViewDelegate
+- (void)didUpdatePointWithOverlay:(AROverlay *)overlay
+{
+    _saveButton.enabled = (overlay.points.count >= 3);
+}
 
 #pragma mark - User Interaction
 - (IBAction)toggleToolbarTapped:(id)sender
 {
-    if (_isToolbarAnimating) {
+    if (_isAnimating) {
         return;
     } else {
-        _isToolbarAnimating = YES;
+        _isAnimating = YES;
     }
     
     CGRect frame = _toolbar.frame;
@@ -56,7 +104,7 @@
     [UIView animateWithDuration:0.2 animations:^{
         _toolbar.frame = frame;
     } completion:^(BOOL finished) {
-        _isToolbarAnimating = NO;
+        _isAnimating = NO;
     }];
 }
 
@@ -74,7 +122,12 @@
 
 - (IBAction)doneTapped:(id)sender
 {
-//    [self dismissViewControllerAnimated:YES completion:nil];
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (IBAction)saveTapped:(id)sender
+{
+    [self showOverlayDataEditorAnimated:YES];
 }
 
 @end

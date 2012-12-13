@@ -14,6 +14,11 @@
 - (CGRect)aspectFitFrameForCurrentImage
 {
     UIImage *image = [self imageFromView];
+    
+    if (image == nil) {
+        return CGRectZero;
+    }
+    
     float imageRatio = image.size.width / image.size.height;
     float viewRatio = self.frame.size.width / self.frame.size.height;
     float scale = [self aspectFitScaleForCurrentImage];
@@ -35,6 +40,11 @@
 - (float)aspectFitScaleForCurrentImage
 {
     UIImage *image = [self imageFromView];
+    
+    if (image == nil) {
+        return 0;
+    }
+    
     float imageRatio = image.size.width / image.size.height;
     float viewRatio = self.frame.size.width / self.frame.size.height;
     
