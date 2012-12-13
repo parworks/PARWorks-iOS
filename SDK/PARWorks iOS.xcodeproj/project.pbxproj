@@ -16,6 +16,10 @@
 		432B7F0D16797BD900453149 /* camera-graphic@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 432B7F0B16797BD900453149 /* camera-graphic@2x.png */; };
 		432B7F1016797F8E00453149 /* toolbar_hide.png in Resources */ = {isa = PBXBuildFile; fileRef = 432B7F0E16797F8D00453149 /* toolbar_hide.png */; };
 		432B7F1116797F8E00453149 /* toolbar_show.png in Resources */ = {isa = PBXBuildFile; fileRef = 432B7F0F16797F8D00453149 /* toolbar_show.png */; };
+		432B7F1416798E8E00453149 /* tab-photos.png in Resources */ = {isa = PBXBuildFile; fileRef = 432B7F1216798E8E00453149 /* tab-photos.png */; };
+		432B7F1516798E8E00453149 /* tab-sites.png in Resources */ = {isa = PBXBuildFile; fileRef = 432B7F1316798E8E00453149 /* tab-sites.png */; };
+		432B7F1816798EC100453149 /* tab-photos@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 432B7F1616798EC000453149 /* tab-photos@2x.png */; };
+		432B7F1916798EC100453149 /* tab-sites@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 432B7F1716798EC100453149 /* tab-sites@2x.png */; };
 		436C48B116432AAF0031DBCA /* ARAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C489116432AAF0031DBCA /* ARAppDelegate.m */; };
 		436C48B216432AAF0031DBCA /* ARAugmentedPhotosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C489416432AAF0031DBCA /* ARAugmentedPhotosViewController.m */; };
 		436C48B316432AAF0031DBCA /* ARAugmentedPhotosViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 436C489516432AAF0031DBCA /* ARAugmentedPhotosViewController.xib */; };
@@ -201,6 +205,10 @@
 		432B7F0B16797BD900453149 /* camera-graphic@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "camera-graphic@2x.png"; path = "Resources/Images/camera-graphic@2x.png"; sourceTree = "<group>"; };
 		432B7F0E16797F8D00453149 /* toolbar_hide.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = toolbar_hide.png; path = Resources/Images/toolbar_hide.png; sourceTree = "<group>"; };
 		432B7F0F16797F8D00453149 /* toolbar_show.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = toolbar_show.png; path = Resources/Images/toolbar_show.png; sourceTree = "<group>"; };
+		432B7F1216798E8E00453149 /* tab-photos.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tab-photos.png"; path = "Resources/Images/tab-photos.png"; sourceTree = "<group>"; };
+		432B7F1316798E8E00453149 /* tab-sites.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tab-sites.png"; path = "Resources/Images/tab-sites.png"; sourceTree = "<group>"; };
+		432B7F1616798EC000453149 /* tab-photos@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tab-photos@2x.png"; path = "Resources/Images/tab-photos@2x.png"; sourceTree = "<group>"; };
+		432B7F1716798EC100453149 /* tab-sites@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tab-sites@2x.png"; path = "Resources/Images/tab-sites@2x.png"; sourceTree = "<group>"; };
 		435833F415EC852100E90CBD /* PARWorks.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = PARWorks.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		436C488E16432AAF0031DBCA /* Administration-App-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Administration-App-Info.plist"; sourceTree = "<group>"; };
 		436C488F16432AAF0031DBCA /* Administration-App-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Administration-App-Prefix.pch"; sourceTree = "<group>"; };
@@ -391,6 +399,10 @@
 				43AB725A165978550092CD9B /* environment_background@2x.png */,
 				432B7F0E16797F8D00453149 /* toolbar_hide.png */,
 				432B7F0F16797F8D00453149 /* toolbar_show.png */,
+				432B7F1216798E8E00453149 /* tab-photos.png */,
+				432B7F1616798EC000453149 /* tab-photos@2x.png */,
+				432B7F1716798EC100453149 /* tab-sites@2x.png */,
+				432B7F1316798E8E00453149 /* tab-sites.png */,
 				436C489C16432AAF0031DBCA /* InfoPlist.strings */,
 				436C488E16432AAF0031DBCA /* Administration-App-Info.plist */,
 				436C488F16432AAF0031DBCA /* Administration-App-Prefix.pch */,
@@ -887,6 +899,10 @@
 				432B7F0D16797BD900453149 /* camera-graphic@2x.png in Resources */,
 				432B7F1016797F8E00453149 /* toolbar_hide.png in Resources */,
 				432B7F1116797F8E00453149 /* toolbar_show.png in Resources */,
+				432B7F1416798E8E00453149 /* tab-photos.png in Resources */,
+				432B7F1516798E8E00453149 /* tab-sites.png in Resources */,
+				432B7F1816798EC100453149 /* tab-photos@2x.png in Resources */,
+				432B7F1916798EC100453149 /* tab-sites@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

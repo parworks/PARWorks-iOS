@@ -61,7 +61,8 @@
     _isFirstLoad = ([delegate sites] == nil);
     
     [self setTitle: @"Sites"];
-    [self setTabBarItem: [[UITabBarItem alloc] initWithTabBarSystemItem: UITabBarSystemItemBookmarks tag:0]];
+    UIImage * img = [UIImage imageNamed: @"tab-sites.png"];
+    [self setTabBarItem: [[UITabBarItem alloc] initWithTitle:@"Sites" image:img tag:0]];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sitesUpdated:) name:NOTIF_SITES_UPDATED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(sitesUpdated:) name:NOTIF_SITE_UPDATED object:nil];
