@@ -17,6 +17,7 @@
 //  limitations under the License.
 //
 
+#import "AROverlayCreatorViewController.h"
 #import "ARSiteImagesInfoView.h"
 #import "ARSiteImagesViewController.h"
 #import "ARPhotoViewController.h"
@@ -125,7 +126,15 @@
 
 - (void)object:(id)obj selectedInGridView:(GridView*)gv
 {
-    
+    // Load the overlay creator if we're in the correct state.
+    if (_site.status == ARSiteStatusProcessed) {
+        ARSiteImage *img = (ARSiteImage *)obj;
+        
+        // Cheat and use the height since we always work in portrait ;)
+        NSURL *url  = [img urlForSize:self.view.frame.size.height];
+        AROverlayCreatorViewController *vc = [[AROverlayCreatorViewController alloc] initWithImagePath:[url absoluteString]];
+        [self presentViewController:vc animated:YES completion:nil];
+    }
 }
 
 
@@ -222,6 +231,5 @@
     if (buttonIndex == 1)
         [_site processBaseImages];
 }
-
 
 @end

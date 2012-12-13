@@ -101,6 +101,10 @@
     [_pointViews removeAllObjects];
     [_points removeAllObjects];
     [self setNeedsDisplay];
+    
+    if (_delegate && [_delegate respondsToSelector:@selector(didClearPoints)]) {
+        [_delegate didClearPoints];
+    }
 }
 
 - (void)removeLastPoint
@@ -115,6 +119,11 @@
         [_pointViews removeLastObject];
         [self setNeedsLayout];
     }
+    
+    if (_delegate && [_delegate respondsToSelector:@selector(didRemoveLastPoint)]) {
+        [_delegate didRemoveLastPoint];
+    }
+
 }
 
 - (NSArray *)scaledPointsForOverlay:(AROverlay *)overlay
@@ -129,6 +138,8 @@
 
 - (UIImageView *)lockImageViewForOverlay:(AROverlay *)overlay
 {
+    return nil;
+    
     if (overlay == nil) {
         return nil;
     }
@@ -166,7 +177,7 @@
     pointView.center = p;
     [self addSubview:pointView];
     [_pointViews addObject:pointView];
-    [self setNeedsDisplay];
+    [self setNeedsDisplay];    
 }
 
 - (void)addScaledTouchPointToPointArray:(CGPoint)p
@@ -181,6 +192,10 @@
     
     CGPoint fullPoint = CGPointMake(p.x/_imageScale, p.y/_imageScale);
     [overlay addPointWithX:fullPoint.x andY:fullPoint.y];
+
+    if (_delegate && [_delegate respondsToSelector:@selector(didAddScaledTouchPoint:)]) {
+        [_delegate didAddScaledTouchPoint:p];
+    }
 }
 
 - (void)closeCurrentOverlay

@@ -122,7 +122,11 @@ static NSCache * _imageCache = nil;
                 [[NSOperationQueue mainQueue] addOperationWithBlock: ^(void){
                     [UIView transitionWithView:self duration:0.3f options:UIViewAnimationOptionTransitionCrossDissolve animations:^{
                         self.image = i;
-                    } completion: NULL];
+                    } completion:^(BOOL finished) {
+                        if (_loadCompletionBlock) {
+                            _loadCompletionBlock(i);
+                        }
+                    }];
                 }];
             }
             

@@ -32,6 +32,16 @@ float pin(float min, float value, float max)
     return self;
 }
 
+- (id)initWithFrame:(CGRect)frame imagePath:(NSString *)imagePath
+{
+    self = [super initWithFrame:frame];
+    if (self) {
+        _imagePath = [imagePath copy];
+        [self sharedInit];
+    }
+    return self;
+}
+
 - (void)awakeFromNib
 {
     [self sharedInit];
@@ -45,17 +55,30 @@ float pin(float min, float value, float max)
     self.multipleTouchEnabled = NO;
     self.backgroundColor = [UIColor clearColor];
     
-    _imageView = [[UIImageView alloc] initWithFrame:self.bounds];
+    _imageView = [[CachedImageView alloc] initWithFrame:self.bounds];
     _imageView.userInteractionEnabled = NO;
-    _imageView.image = _image;
     _imageView.backgroundColor = [UIColor clearColor];
     _imageView.contentMode = UIViewContentModeScaleAspectFit;
     _imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+    
+    __weak ARMagView *blockSelf = self;
+    _imageView.loadCompletionBlock = ^(UIImage *image) {
+        [blockSelf setNeedsLayout];
+    };
+    
+    // Set our image if it exists.
+    if (_image != nil) {
+        _imageView.image = _image;
+    } else if (_imagePath != nil) {
+        [_imageView setImagePath:_imagePath];
+    }
+    
     [self addSubview:_imageView];
     
     _pointOverlay = [[ARPointOverlayView alloc] initWithFrame:self.bounds backingImageView:_imageView];
     _pointOverlay.userInteractionEnabled = NO;
     _pointOverlay.backgroundColor = [UIColor clearColor];
+    _pointOverlay.delegate = self;
     [self addSubview:_pointOverlay];
     
     self.zoomView = [[ARZoomView alloc] initWithFrame:CGRectMake(0, 0, 100, 100) zoomableImageView:_imageView];
@@ -73,8 +96,10 @@ float pin(float min, float value, float max)
 {
     [super layoutSubviews];
     CGRect scaledImageRect = [_imageView aspectFitFrameForCurrentImage];
-    _pointOverlay.bounds = CGRectMake(0, 0, scaledImageRect.size.width, scaledImageRect.size.height);
-    _pointOverlay.center = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
+    if (!CGRectEqualToRect(scaledImageRect, CGRectZero)) {
+        _pointOverlay.bounds = CGRectMake(0, 0, scaledImageRect.size.width, scaledImageRect.size.height);
+        _pointOverlay.center = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);        
+    }
 }
 
 
@@ -109,6 +134,35 @@ float pin(float min, float value, float max)
     _image = image;
     _imageView.image = image;
     [_pointOverlay clearPoints];
+}
+
+- (AROverlay *)currentOverlay
+{
+    return [_pointOverlay.points lastObject];
+}
+
+
+#pragma mark - ARPointOverlayViewDelegate
+- (void)didAddScaledTouchPoint:(CGPoint)p
+{
+    [self notifyDelegateOverlayUpdated];
+}
+
+- (void)didClearPoints
+{
+    [self notifyDelegateOverlayUpdated];
+}
+
+- (void)didRemoveLastPoint
+{
+    [self notifyDelegateOverlayUpdated];
+}
+
+- (void)notifyDelegateOverlayUpdated
+{
+    if (_delegate && [_delegate respondsToSelector:@selector(didUpdatePointWithOverlay:)]) {
+        [_delegate didUpdatePointWithOverlay:[_pointOverlay.points lastObject]];
+    }
 }
 
 

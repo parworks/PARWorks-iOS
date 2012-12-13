@@ -8,6 +8,15 @@
 
 #import <UIKit/UIKit.h>
 
+
+@protocol ARPointOverlayViewDelegate <NSObject>
+
+- (void)didAddScaledTouchPoint:(CGPoint)p;
+- (void)didClearPoints;
+- (void)didRemoveLastPoint;
+
+@end
+
 @interface ARPointOverlayView : UIView
 {
     __weak UIImageView *_backingImageView;
@@ -17,8 +26,11 @@
 @property(nonatomic, strong) NSMutableArray *points;
 @property(nonatomic, assign) float imageScale;
 @property(nonatomic, readonly, getter = isEditing) BOOL editing;
+@property(nonatomic, weak) id<ARPointOverlayViewDelegate> delegate;
 
 - (id)initWithFrame:(CGRect)frame backingImageView:(UIImageView *)imageView;
+
+- (void)closeCurrentOverlay;
 
 - (void)addScaledTouchPoint:(CGPoint)p;
 - (void)clearPoints;

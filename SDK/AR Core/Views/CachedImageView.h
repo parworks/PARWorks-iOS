@@ -21,6 +21,8 @@
 #import <UIKit/UIKit.h>
 #import "ASIHTTPRequest.h"
 
+typedef void(^CachedImageViewImageLoadComplete)(UIImage *image);
+
 @interface CachedImageView : UIImageView
 {
     NSOperation * _downloadOperation;
@@ -30,6 +32,7 @@
     NSString * _placeholderImageName;
 }
 
+@property(nonatomic, copy) CachedImageViewImageLoadComplete loadCompletionBlock;
 
 - (id)initWithFrame:(CGRect)frame;
 - (void)setImagePath:(NSString*)path;

@@ -7,21 +7,37 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "AROverlay.h"
 #import "ARPointOverlayView.h"
+#import "CachedImageView.h"
 
 @class ARZoomView;
 
-@interface ARMagView : UIControl
+
+
+@protocol ARMagViewDelegate <NSObject>
+@optional
+- (void)didUpdatePointWithOverlay:(AROverlay *)overlay;
+@end
+
+
+
+@interface ARMagView : UIControl <ARPointOverlayViewDelegate>
 {
     UIImage *_image;
+    NSString *_imagePath;
 }
 
-@property(nonatomic, strong) UIImageView *imageView;
+@property(nonatomic, strong) CachedImageView *imageView;
 @property(nonatomic, strong) ARPointOverlayView *pointOverlay;
 @property(nonatomic, strong) ARZoomView *zoomView;
+@property(nonatomic, weak) id<ARMagViewDelegate> delegate;
 
 - (id)initWithFrame:(CGRect)frame image:(UIImage *)image;
+- (id)initWithFrame:(CGRect)frame imagePath:(NSString *)imagePath;
 - (void)setImage:(UIImage *)image;
+
+- (AROverlay *)currentOverlay;
 
 @end
 
