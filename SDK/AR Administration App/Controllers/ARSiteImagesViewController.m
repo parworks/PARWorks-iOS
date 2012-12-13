@@ -17,7 +17,7 @@
 //  limitations under the License.
 //
 
-
+#import "ARSiteImagesInfoView.h"
 #import "ARSiteImagesViewController.h"
 #import "ARPhotoViewController.h"
 #import "PARWorks.h"
@@ -27,6 +27,8 @@
 @synthesize site = _site;
 @synthesize gridView = _gridView;
 
+
+#pragma mark - Lifecycle
 - (id)initWithSite:(ARSite*)s
 {
     self = [super init];
@@ -50,7 +52,8 @@
     UIBarButtonItem * add = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemAdd target:self action:@selector(addPhoto:)];
     [self.navigationItem setRightBarButtonItem:add animated:YES];
     
-    [self updateGridActionButtonForCurrentSiteStatus];
+    _infoView.siteStatus = _site.status;
+    
 }
 
 - (void)viewDidUnload
@@ -62,6 +65,20 @@
     [self setCameraOverlayView:nil];
     [super viewDidUnload];
 }
+
+
+#pragma mark - Rotation
+- (NSInteger)supportedInterfaceOrientations
+{
+    return UIInterfaceOrientationMaskPortrait;
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    return YES;
+}
+
+
 
 - (void)reloadData
 {
@@ -81,45 +98,6 @@
 - (void)object:(id)obj selectedInGridView:(GridView*)gv
 {
     
-}
-
-- (void)updateGridActionButtonForCurrentSiteStatus
-{
-    NSString *title;
-    switch (_site.status) {
-        case ARSiteStatusNotProcessed:
-            title = @"Process Base Images";
-            break;
-        case ARSiteStatusProcessed:
-            // TODO: Show the overlay creation view controller
-            title = @"Create Overlay";
-            break;
-        default:
-            NSLog(@"site has status we don't handle yet");
-            break;
-    }
-    
-    [_gridActionButton setTitle:title forState:UIControlStateNormal];
-}
-
-- (IBAction)gridActionButtonTapped:(id)sender
-{
-    switch (_site.status) {
-        case ARSiteStatusNotProcessed:
-            [[ARManager shared] processSite:_site.identifier withCompletionBlock:nil];
-            break;
-        case ARSiteStatusProcessed:
-            // TODO: Show the overlay creation view controller
-            break;
-        default:
-            NSLog(@"site has status we don't handle yet");
-            break;
-    }
-}
-
-- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
-{
-    return YES;
 }
 
 - (void)addPhoto:(id)sender
@@ -171,5 +149,41 @@
         [_site augmentImage: img];
     }
 }
+
+
+#pragma mark - InfoView Button Actions
+- (IBAction)processImagesButtonTapped:(id)sender
+{
+    // Show an alert view to affirm the user actually wants to process.
+    UIAlertView *av = [[UIAlertView alloc] initWithTitle:nil message:@"Are you sure you want to process your base images?" delegate:self cancelButtonTitle:@"NO" otherButtonTitles:@"YES", nil];
+    [av show];
+    
+    // TODO: Show the processing screen;
+}
+
+- (IBAction)addOverlayButtonTapped:(id)sender
+{
+    // TODO: Load the overlay creation view controller
+}
+
+
+#pragma mark - UIAlertViewDelegate
+- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    switch (buttonIndex) {
+        case 0:
+            [alertView dismissWithClickedButtonIndex:buttonIndex animated:YES];            
+            break;
+        case 1:
+            [[ARManager shared] processSite:_site.identifier withCompletionBlock:^{
+                NSLog(@"Site processing completed");
+            }];
+
+            break;
+        default:
+            break;
+    }
+}
+
 
 @end

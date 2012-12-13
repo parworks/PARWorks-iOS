@@ -22,15 +22,17 @@
 #import "ARSite.h"
 #import "GridView.h"
 
-@interface ARSiteImagesViewController : UIViewController <GridViewDelegate, UIActionSheetDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+@class ARSiteImagesInfoView;
+
+@interface ARSiteImagesViewController : UIViewController <GridViewDelegate, UIActionSheetDelegate, UIAlertViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 {
     UIImagePickerController * _picker;
     BOOL    _imageIsSiteImage;
 }
 
 @property (strong, nonatomic) ARSite * site;
+@property (weak, nonatomic) IBOutlet ARSiteImagesInfoView *infoView;
 @property (weak, nonatomic) IBOutlet GridView *gridView;
-@property (weak, nonatomic) IBOutlet UIButton *gridActionButton;
 @property (weak, nonatomic) IBOutlet UIButton *cameraCaptureButton;
 @property (weak, nonatomic) IBOutlet UIButton *cameraDoneButton;
 @property (strong, nonatomic) IBOutlet UIView *cameraOverlayView;
@@ -43,5 +45,9 @@
 
 - (IBAction)takePicture:(id)sender;
 - (IBAction)doneTakingPictures:(id)sender;
+
+/// InfoView Button Actions
+- (IBAction)processImagesButtonTapped:(id)sender;
+- (IBAction)addOverlayButtonTapped:(id)sender;
 
 @end

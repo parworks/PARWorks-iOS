@@ -159,9 +159,25 @@
 		A02713CD166C6DDA005E91EE /* AdOverlayView.h in Headers */ = {isa = PBXBuildFile; fileRef = A02713CA166C6DDA005E91EE /* AdOverlayView.h */; };
 		A02713D0166C6DFA005E91EE /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A02713CF166C6DFA005E91EE /* MediaPlayer.framework */; };
 		A04415B0166019CC0083795B /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = A04415AF166019CC0083795B /* MBProgressHUD.m */; };
-		A0E91FD116475D3500D7AC07 /* BROverlayView.h in Headers */ = {isa = PBXBuildFile; fileRef = A0E91FCF16475D3500D7AC07 /* BROverlayView.h */; };
-		A0E91FD216475D3500D7AC07 /* BROverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E91FD016475D3500D7AC07 /* BROverlayView.m */; };
-		A0E91FD316475D3500D7AC07 /* BROverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E91FD016475D3500D7AC07 /* BROverlayView.m */; };
+		A05F04331673E747007A51CA /* ARSiteImagesInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = A05F04321673E747007A51CA /* ARSiteImagesInfoView.m */; };
+		A05F043D16796E0C007A51CA /* bubble.png in Resources */ = {isa = PBXBuildFile; fileRef = A05F043C16796E0B007A51CA /* bubble.png */; };
+		A05F043E16796E0C007A51CA /* bubble.png in Resources */ = {isa = PBXBuildFile; fileRef = A05F043C16796E0B007A51CA /* bubble.png */; };
+		A05F044016796E12007A51CA /* stock_lock_open.png in Resources */ = {isa = PBXBuildFile; fileRef = A05F043F16796E12007A51CA /* stock_lock_open.png */; };
+		A05F044116796E12007A51CA /* stock_lock_open.png in Resources */ = {isa = PBXBuildFile; fileRef = A05F043F16796E12007A51CA /* stock_lock_open.png */; };
+		A05F044416796E1D007A51CA /* UIView+ContentScaling.h in Headers */ = {isa = PBXBuildFile; fileRef = A05F044216796E1D007A51CA /* UIView+ContentScaling.h */; };
+		A05F044516796E1D007A51CA /* UIView+ContentScaling.m in Sources */ = {isa = PBXBuildFile; fileRef = A05F044316796E1D007A51CA /* UIView+ContentScaling.m */; };
+		A05F044616796E1D007A51CA /* UIView+ContentScaling.m in Sources */ = {isa = PBXBuildFile; fileRef = A05F044316796E1D007A51CA /* UIView+ContentScaling.m */; };
+		A05F044A16796E29007A51CA /* AROverlayCreatorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A05F044716796E29007A51CA /* AROverlayCreatorViewController.xib */; };
+		A05F044B16796E29007A51CA /* AROverlayCreatorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A05F044716796E29007A51CA /* AROverlayCreatorViewController.xib */; };
+		A05F044C16796E29007A51CA /* AROverlayCreatorViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = A05F044816796E29007A51CA /* AROverlayCreatorViewController.h */; };
+		A05F044D16796E29007A51CA /* AROverlayCreatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A05F044916796E29007A51CA /* AROverlayCreatorViewController.m */; };
+		A05F044E16796E29007A51CA /* AROverlayCreatorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = A05F044916796E29007A51CA /* AROverlayCreatorViewController.m */; };
+		A05F045316796E3B007A51CA /* ARMagView.h in Headers */ = {isa = PBXBuildFile; fileRef = A05F044F16796E3B007A51CA /* ARMagView.h */; };
+		A05F045416796E3B007A51CA /* ARMagView.m in Sources */ = {isa = PBXBuildFile; fileRef = A05F045016796E3B007A51CA /* ARMagView.m */; };
+		A05F045516796E3B007A51CA /* ARMagView.m in Sources */ = {isa = PBXBuildFile; fileRef = A05F045016796E3B007A51CA /* ARMagView.m */; };
+		A05F045616796E3B007A51CA /* ARPointOverlayView.h in Headers */ = {isa = PBXBuildFile; fileRef = A05F045116796E3B007A51CA /* ARPointOverlayView.h */; };
+		A05F045716796E3B007A51CA /* ARPointOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = A05F045216796E3B007A51CA /* ARPointOverlayView.m */; };
+		A05F045816796E3B007A51CA /* ARPointOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = A05F045216796E3B007A51CA /* ARPointOverlayView.m */; };
 		A0F662D415FEFBD100FA709B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0F662D315FEFBD100FA709B /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
@@ -297,8 +313,19 @@
 		A02713CF166C6DFA005E91EE /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
 		A04415AE166019CC0083795B /* MBProgressHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MBProgressHUD.h; sourceTree = "<group>"; };
 		A04415AF166019CC0083795B /* MBProgressHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MBProgressHUD.m; sourceTree = "<group>"; };
-		A0E91FCF16475D3500D7AC07 /* BROverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BROverlayView.h; sourceTree = "<group>"; };
-		A0E91FD016475D3500D7AC07 /* BROverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BROverlayView.m; sourceTree = "<group>"; };
+		A05F04311673E747007A51CA /* ARSiteImagesInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARSiteImagesInfoView.h; sourceTree = "<group>"; };
+		A05F04321673E747007A51CA /* ARSiteImagesInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARSiteImagesInfoView.m; sourceTree = "<group>"; };
+		A05F043C16796E0B007A51CA /* bubble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bubble.png; sourceTree = "<group>"; };
+		A05F043F16796E12007A51CA /* stock_lock_open.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = stock_lock_open.png; sourceTree = "<group>"; };
+		A05F044216796E1D007A51CA /* UIView+ContentScaling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIView+ContentScaling.h"; sourceTree = "<group>"; };
+		A05F044316796E1D007A51CA /* UIView+ContentScaling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIView+ContentScaling.m"; sourceTree = "<group>"; };
+		A05F044716796E29007A51CA /* AROverlayCreatorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AROverlayCreatorViewController.xib; sourceTree = "<group>"; };
+		A05F044816796E29007A51CA /* AROverlayCreatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AROverlayCreatorViewController.h; sourceTree = "<group>"; };
+		A05F044916796E29007A51CA /* AROverlayCreatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AROverlayCreatorViewController.m; sourceTree = "<group>"; };
+		A05F044F16796E3B007A51CA /* ARMagView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARMagView.h; sourceTree = "<group>"; };
+		A05F045016796E3B007A51CA /* ARMagView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARMagView.m; sourceTree = "<group>"; };
+		A05F045116796E3B007A51CA /* ARPointOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARPointOverlayView.h; sourceTree = "<group>"; };
+		A05F045216796E3B007A51CA /* ARPointOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARPointOverlayView.m; sourceTree = "<group>"; };
 		A0F662D315FEFBD100FA709B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -398,6 +425,8 @@
 				436C48AB16432AAF0031DBCA /* BRPopupOverlayView.m */,
 				436C48AE16432AAF0031DBCA /* UIAlertInputView.h */,
 				436C48AF16432AAF0031DBCA /* UIAlertInputView.m */,
+				A05F04311673E747007A51CA /* ARSiteImagesInfoView.h */,
+				A05F04321673E747007A51CA /* ARSiteImagesInfoView.m */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -405,6 +434,8 @@
 		436C48C216432AB10031DBCA /* AR Core */ = {
 			isa = PBXGroup;
 			children = (
+				A05F043F16796E12007A51CA /* stock_lock_open.png */,
+				A05F043C16796E0B007A51CA /* bubble.png */,
 				436C490816432AB10031DBCA /* main.m */,
 				436C48D616432AB10031DBCA /* PARWorks.h */,
 				436C48D716432AB10031DBCA /* InfoPlist.strings */,
@@ -437,6 +468,8 @@
 		436C48CB16432AB10031DBCA /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				A05F044216796E1D007A51CA /* UIView+ContentScaling.h */,
+				A05F044316796E1D007A51CA /* UIView+ContentScaling.m */,
 				436C48CC16432AB10031DBCA /* ASIHTTPRequest+JSONAdditions.h */,
 				436C48CD16432AB10031DBCA /* ASIHTTPRequest+JSONAdditions.m */,
 				436C48CE16432AB10031DBCA /* NSData+Base64Encode.h */,
@@ -450,6 +483,9 @@
 		436C48D216432AB10031DBCA /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				A05F044716796E29007A51CA /* AROverlayCreatorViewController.xib */,
+				A05F044816796E29007A51CA /* AROverlayCreatorViewController.h */,
+				A05F044916796E29007A51CA /* AROverlayCreatorViewController.m */,
 				436C48D316432AB10031DBCA /* ARPhotoViewController.h */,
 				436C48D416432AB10031DBCA /* ARPhotoViewController.m */,
 				436C48D516432AB10031DBCA /* ARPhotoViewController.xib */,
@@ -582,6 +618,10 @@
 		436C491816432AB10031DBCA /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A05F044F16796E3B007A51CA /* ARMagView.h */,
+				A05F045016796E3B007A51CA /* ARMagView.m */,
+				A05F045116796E3B007A51CA /* ARPointOverlayView.h */,
+				A05F045216796E3B007A51CA /* ARPointOverlayView.m */,
 				A02713C9166C6DDA005E91EE /* AdOverlayView.m */,
 				A02713CA166C6DDA005E91EE /* AdOverlayView.h */,
 				436C491916432AB10031DBCA /* ARAugmentedView.h */,
@@ -703,6 +743,10 @@
 				436C497516432AB20031DBCA /* SBJsonWriter.h in Headers */,
 				436C498E16432AB20031DBCA /* PARWorks SDK-Prefix.pch in Headers */,
 				A02713CD166C6DDA005E91EE /* AdOverlayView.h in Headers */,
+				A05F044416796E1D007A51CA /* UIView+ContentScaling.h in Headers */,
+				A05F044C16796E29007A51CA /* AROverlayCreatorViewController.h in Headers */,
+				A05F045316796E3B007A51CA /* ARMagView.h in Headers */,
+				A05F045616796E3B007A51CA /* ARPointOverlayView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -780,6 +824,9 @@
 			files = (
 				436C493A16432AB20031DBCA /* ARPhotoViewController.xib in Resources */,
 				436C493D16432AB20031DBCA /* InfoPlist.strings in Resources */,
+				A05F043E16796E0C007A51CA /* bubble.png in Resources */,
+				A05F044116796E12007A51CA /* stock_lock_open.png in Resources */,
+				A05F044B16796E29007A51CA /* AROverlayCreatorViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -800,6 +847,9 @@
 				43AB7257165977A70092CD9B /* ARAuthViewController.xib in Resources */,
 				43AB725B165978550092CD9B /* environment_background.png in Resources */,
 				43AB725C165978550092CD9B /* environment_background@2x.png in Resources */,
+				A05F043D16796E0C007A51CA /* bubble.png in Resources */,
+				A05F044016796E12007A51CA /* stock_lock_open.png in Resources */,
+				A05F044A16796E29007A51CA /* AROverlayCreatorViewController.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -863,6 +913,10 @@
 				436C499A16432AB20031DBCA /* GridCellView.m in Sources */,
 				436C499D16432AB20031DBCA /* GridView.m in Sources */,
 				A02713CC166C6DDA005E91EE /* AdOverlayView.m in Sources */,
+				A05F044616796E1D007A51CA /* UIView+ContentScaling.m in Sources */,
+				A05F044E16796E29007A51CA /* AROverlayCreatorViewController.m in Sources */,
+				A05F045516796E3B007A51CA /* ARMagView.m in Sources */,
+				A05F045816796E3B007A51CA /* ARPointOverlayView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -917,6 +971,11 @@
 				43AB7256165977A70092CD9B /* ARAuthViewController.m in Sources */,
 				A02713CB166C6DDA005E91EE /* AdOverlayView.m in Sources */,
 				A04415B0166019CC0083795B /* MBProgressHUD.m in Sources */,
+				A05F04331673E747007A51CA /* ARSiteImagesInfoView.m in Sources */,
+				A05F044516796E1D007A51CA /* UIView+ContentScaling.m in Sources */,
+				A05F044D16796E29007A51CA /* AROverlayCreatorViewController.m in Sources */,
+				A05F045416796E3B007A51CA /* ARMagView.m in Sources */,
+				A05F045716796E3B007A51CA /* ARPointOverlayView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
