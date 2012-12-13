@@ -65,7 +65,10 @@
 								<reference key="IBUINavigationBar" ref="491140751"/>
 								<string key="IBUITitle">Overlay Creator</string>
 								<object class="IBUIBarButtonItem" key="IBUILeftBarButtonItem" id="812149562">
-									<string key="IBUITitle">Show</string>
+									<object class="NSCustomResource" key="IBUIImage">
+										<string key="NSClassName">NSImage</string>
+										<string key="NSResourceName">toolbar_hide.png</string>
+									</object>
 									<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 									<int key="IBUIStyle">1</int>
 									<reference key="IBUINavigationItem" ref="491699535"/>
@@ -86,7 +89,6 @@
 						<string key="NSFrame">{{1, 417}, {320, 44}}</string>
 						<reference key="NSSuperview" ref="774585933"/>
 						<reference key="NSWindow"/>
-						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<bool key="IBUIClearsContextBeforeDrawing">NO</bool>
@@ -110,6 +112,7 @@
 								<int key="IBUISystemItemIdentifier">5</int>
 							</object>
 							<object class="IBUIBarButtonItem" id="1035707032">
+								<bool key="IBUIEnabled">NO</bool>
 								<string key="IBUITitle">Finish Overlay</string>
 								<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
 								<int key="IBUIStyle">1</int>
@@ -366,7 +369,6 @@
 					<string key="className">AROverlayCreatorViewController</string>
 					<string key="superclassName">UIViewController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="dataEditorDoneTapped:">id</string>
 						<string key="deleteOverlaysTapped:">id</string>
 						<string key="doneTapped:">id</string>
 						<string key="saveTapped:">id</string>
@@ -374,10 +376,6 @@
 						<string key="undoTapped:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="actionInfosByName">
-						<object class="IBActionInfo" key="dataEditorDoneTapped:">
-							<string key="name">dataEditorDoneTapped:</string>
-							<string key="candidateClassName">id</string>
-						</object>
 						<object class="IBActionInfo" key="deleteOverlaysTapped:">
 							<string key="name">deleteOverlaysTapped:</string>
 							<string key="candidateClassName">id</string>
@@ -434,6 +432,10 @@
 		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaTouchFramework</string>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
+		<object class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
+			<string key="NS.key.0">toolbar_hide.png</string>
+			<string key="NS.object.0">{40, 40}</string>
+		</object>
 		<string key="IBCocoaTouchPluginVersion">1926</string>
 	</data>
 </archive>

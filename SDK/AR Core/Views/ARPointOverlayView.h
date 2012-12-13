@@ -30,6 +30,8 @@
 
 - (id)initWithFrame:(CGRect)frame backingImageView:(UIImageView *)imageView;
 
+- (void)closeCurrentOverlay;
+
 - (void)addScaledTouchPoint:(CGPoint)p;
 - (void)clearPoints;
 - (void)removeLastPoint;

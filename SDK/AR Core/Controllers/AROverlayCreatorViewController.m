@@ -59,6 +59,13 @@
         _magView.delegate = self;
         _isFirstLoad = NO;
     }
+    
+    AROverlay *currentOverlay = [_magView.pointOverlay.points lastObject];
+    if (currentOverlay.ID.length > 0) {
+        [_magView.pointOverlay closeCurrentOverlay];
+        [_magView.pointOverlay setNeedsLayout];
+        _saveButton.enabled = NO;
+    }
 }
 
 
@@ -93,12 +100,12 @@
     }
     
     CGRect frame = _toolbar.frame;
-    if (frame.origin.y < self.view.frame.size.height) {
-        frame.origin.y = self.view.frame.size.height;
-        _toggleToolbarButton.title = @"Show";
+    if (frame.origin.y < _magView.frame.size.height) {
+        frame.origin.y = _magView.frame.size.height;
+        _toggleToolbarButton.image = [UIImage imageNamed:@"toolbar_show.png"];
     } else {
-        frame.origin.y = self.view.frame.size.height - frame.size.height;
-        _toggleToolbarButton.title = @"Hide";
+        frame.origin.y = _magView.frame.size.height - frame.size.height;
+        _toggleToolbarButton.image = [UIImage imageNamed:@"toolbar_hide.png"];
     }
     
     [UIView animateWithDuration:0.2 animations:^{

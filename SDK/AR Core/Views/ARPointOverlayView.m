@@ -138,6 +138,8 @@
 
 - (UIImageView *)lockImageViewForOverlay:(AROverlay *)overlay
 {
+    return nil;
+    
     if (overlay == nil) {
         return nil;
     }
