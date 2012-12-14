@@ -20,6 +20,7 @@
 
 #import <Foundation/Foundation.h>
 #import "ARAugmentedPhoto.h"
+#import "AROverlay.h"
 
 typedef enum ARSiteStatus {
     ARSiteStatusUnknown = -1,
@@ -33,6 +34,7 @@ typedef enum ARSiteStatus {
 @interface ARSite : NSObject <NSCoding>
 {
     ASIHTTPRequest * _imageReq;
+    ASIHTTPRequest * _overlaysReq;
 }
 
 @property (nonatomic, strong) NSString * identifier;
@@ -121,8 +123,23 @@ server again.
 
   @return NSArray of AROverlay objects, or nil if overlays have not been loaded.
 */
-- (NSArray*)availableOverlays;
+- (NSArray*)overlays;
 
+/**
+  Adds an overlay to the overlays array cached locally. Does not save the overlay
+  to the server. You must call [overlay save].
+
+  @param ar The overlay to add to the site.
+*/
+- (void)addOverlay:(AROverlay*)ar;
+
+/** 
+  Deletes an overlay from the overlays array and also triggers an API call to delete the 
+  overlay if it has been saved on the server.
+ 
+ @param ar The overlay to remove from the site.
+*/
+- (void)deleteOverlay:(AROverlay*)ar;
 
 
 // ========================

@@ -22,6 +22,7 @@
 #import "ARSiteImage.h"
 #import "ARManager.h"
 #import "ARSite.h"
+#import "AROverlay.h"
 
 @implementation ARSiteImage
 
@@ -99,6 +100,15 @@
     return [_dict objectForKey: @"id"];
 }
 
+- (NSArray*)overlays
+{
+    NSMutableArray * overlays = [NSMutableArray array];
+    for (AROverlay * o in self.site.overlays)
+        if ([[o siteImageIdentifier] isEqualToString: [self identifier]])
+            [overlays addObject: o];
+    return overlays;
+}
+
 - (NSString*)imagePathForCell:(GridCellView*)cell
 {
     if (_response == BackendResponseUploading)
@@ -107,6 +117,14 @@
         return [[[NSBundle mainBundle] URLForResource:@"state_failed" withExtension:@"png"] absoluteString];
     else
         return [[self urlForSize: 120] absoluteString];
+}
+
+- (void)applyExtraStylesToCell:(GridCellView*)cell
+{
+    [[cell layer] setShadowOpacity: ([[self overlays] count] > 0) ? 1 : 0];
+    [[cell layer] setShadowColor: [[UIColor blueColor] CGColor]];
+    [[cell layer] setShadowOffset: CGSizeMake(0, 1)];
+    [[cell layer] setShadowRadius: 3];
 }
 
 - (NSURL *)urlForSize:(int)size

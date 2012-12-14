@@ -98,6 +98,10 @@
     [UIView commitAnimations];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [[UIApplication sharedApplication] setStatusBarStyle: UIStatusBarStyleDefault];
+}
 
 #pragma mark - Rotation
 
@@ -131,8 +135,7 @@
         ARSiteImage *img = (ARSiteImage *)obj;
         
         // Cheat and use the height since we always work in portrait ;)
-        NSURL *url  = [img urlForSize:self.view.frame.size.height];
-        AROverlayCreatorViewController *vc = [[AROverlayCreatorViewController alloc] initWithImagePath:[url absoluteString]];
+        AROverlayCreatorViewController *vc = [[AROverlayCreatorViewController alloc] initWithSiteImage: img];
         [self presentViewController:vc animated:YES completion:nil];
     }
 }

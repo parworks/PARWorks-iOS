@@ -27,6 +27,7 @@
 @optional
 - (NSString*)imagePathForCell:(GridCellView*)cell;
 - (UIImage*)imageForCell:(GridCellView*)cell;
+- (void)applyExtraStylesToCell:(GridCellView*)cell;
 @end
 
 @interface GridCellView : UIView

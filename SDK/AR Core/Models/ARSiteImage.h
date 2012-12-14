@@ -57,6 +57,11 @@
 */
 - (NSString*)identifier;
 
+/** 
+  @return The list of all the overlays that have been made on this site. 
+*/
+- (NSArray*)overlays;
+
 /** ARSiteImages can be displayed at a variety of sizes. This method returns an URL
   that can be used to load the ARSiteImage at a particular size. Applications should
   cache site images themselves.

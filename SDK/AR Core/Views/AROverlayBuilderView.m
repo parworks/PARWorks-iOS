@@ -7,8 +7,8 @@
 //
 
 #import <QuartzCore/QuartzCore.h>
-#import "ARMagView.h"
-#import "ARPointOverlayView.h"
+#import "AROverlayBuilderView.h"
+#import "AROverlayBuilderAnnotationView.h"
 #import "UIView+ContentScaling.h"
 
 // Convenience method for pinning a value between a min and max.
@@ -20,23 +20,12 @@ float pin(float min, float value, float max)
     return v;
 }
 
-@implementation ARMagView
+@implementation AROverlayBuilderView
 
-- (id)initWithFrame:(CGRect)frame image:(UIImage *)image
+- (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
-        _image = image;
-        [self sharedInit];
-    }
-    return self;
-}
-
-- (id)initWithFrame:(CGRect)frame imagePath:(NSString *)imagePath
-{
-    self = [super initWithFrame:frame];
-    if (self) {
-        _imagePath = [imagePath copy];
         [self sharedInit];
     }
     return self;
@@ -55,35 +44,29 @@ float pin(float min, float value, float max)
     self.multipleTouchEnabled = NO;
     self.backgroundColor = [UIColor clearColor];
     
+    [[UIApplication sharedApplication] setStatusBarStyle: UIStatusBarStyleBlackOpaque];
+    
     _imageView = [[CachedImageView alloc] initWithFrame:self.bounds];
     _imageView.userInteractionEnabled = NO;
     _imageView.backgroundColor = [UIColor clearColor];
     _imageView.contentMode = UIViewContentModeScaleAspectFit;
     _imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     
-    __weak ARMagView *blockSelf = self;
+    __weak AROverlayBuilderView *blockSelf = self;
     _imageView.loadCompletionBlock = ^(UIImage *image) {
         [blockSelf setNeedsLayout];
     };
-    
-    // Set our image if it exists.
-    if (_image != nil) {
-        _imageView.image = _image;
-    } else if (_imagePath != nil) {
-        [_imageView setImagePath:_imagePath];
-    }
-    
     [self addSubview:_imageView];
     
-    _pointOverlay = [[ARPointOverlayView alloc] initWithFrame:self.bounds backingImageView:_imageView];
-    _pointOverlay.userInteractionEnabled = NO;
-    _pointOverlay.backgroundColor = [UIColor clearColor];
-    _pointOverlay.delegate = self;
-    [self addSubview:_pointOverlay];
+    _annotationView = [[AROverlayBuilderAnnotationView alloc] initWithFrame:self.bounds andSiteImage:_siteImage backingImageView:_imageView];
+    _annotationView.userInteractionEnabled = NO;
+    _annotationView.backgroundColor = [UIColor clearColor];
+    _annotationView.delegate = self;
+    [self addSubview:_annotationView];
     
-    self.zoomView = [[ARZoomView alloc] initWithFrame:CGRectMake(0, 0, 100, 100) zoomableImageView:_imageView];
-    [self addSubview:_zoomView];
-    [self hideZoomViewAnimated:NO];
+    self.lensView = [[ARMagnifiedLensView alloc] initWithFrame:CGRectMake(0, 0, 100, 100) zoomableImageView:_imageView];
+    [self addSubview:_lensView];
+    [self hideLensViewAnimated:NO];
     
     [self addTarget:self action:@selector(touchDown:withEvent:) forControlEvents:UIControlEventTouchDown];
     [self addTarget:self action:@selector(touchMoved:withEvent:) forControlEvents:UIControlEventTouchDragInside];
@@ -91,77 +74,73 @@ float pin(float min, float value, float max)
 }
 
 
-#pragma mark - Layout
+#pragma mark - Layout & Redraw
+
+- (void)setNeedsDisplay
+{
+    [_annotationView setNeedsDisplay];
+    [super setNeedsDisplay];
+}
+
 - (void)layoutSubviews
 {
+    [_annotationView setNeedsLayout];
     [super layoutSubviews];
+    
     CGRect scaledImageRect = [_imageView aspectFitFrameForCurrentImage];
     if (!CGRectEqualToRect(scaledImageRect, CGRectZero)) {
-        _pointOverlay.bounds = CGRectMake(0, 0, scaledImageRect.size.width, scaledImageRect.size.height);
-        _pointOverlay.center = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);        
+        _annotationView.bounds = CGRectMake(0, 0, scaledImageRect.size.width, scaledImageRect.size.height);
+        _annotationView.center = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);        
     }
 }
 
 
 #pragma mark - Convenience
-- (void)showZoomViewAnimated:(BOOL)animated
+- (void)showLensViewAnimated:(BOOL)animated
 {
     CGFloat duration = animated ? 0.1 : 0.0;
     CGAffineTransform t = CGAffineTransformMakeScale(0.5, 0.5);
-    _zoomView.transform = t;
+    _lensView.transform = t;
     [UIView animateWithDuration:duration animations:^{
-        _zoomView.alpha = 1.0;
-        _zoomView.transform = CGAffineTransformMakeScale(1.2, 1.2);
+        _lensView.alpha = 1.0;
+        _lensView.transform = CGAffineTransformMakeScale(1.2, 1.2);
     } completion:^(BOOL finished) {
         [UIView animateWithDuration:duration animations:^{
-            _zoomView.transform = CGAffineTransformIdentity;
+            _lensView.transform = CGAffineTransformIdentity;
         }];
     }];
 }
 
-- (void)hideZoomViewAnimated:(BOOL)animated
+- (void)hideLensViewAnimated:(BOOL)animated
 {
     CGFloat duration = animated ? 0.1 : 0.0;
     CGAffineTransform t = CGAffineTransformMakeScale(0.5, 0.5);
     [UIView animateWithDuration:duration animations:^{
-        _zoomView.alpha = 0.0;
-        _zoomView.transform = t;
+        _lensView.alpha = 0.0;
+        _lensView.transform = t;
     }];
 }
 
-- (void)setImage:(UIImage *)image
+- (void)setSiteImage:(ARSiteImage*)siteImage;
 {
-    _image = image;
-    _imageView.image = image;
-    [_pointOverlay clearPoints];
+    _siteImage = siteImage;
+
+    [_imageView setImagePath: [[_siteImage urlForSize: 2000] absoluteString]];
+    [_annotationView setSiteImage: _siteImage];
 }
 
 - (AROverlay *)currentOverlay
 {
-    return [_pointOverlay.points lastObject];
+    return [_annotationView currentOverlay];
 }
 
 
-#pragma mark - ARPointOverlayViewDelegate
+#pragma mark - AROverlayBuilderAnnotationViewDelegate
+
 - (void)didAddScaledTouchPoint:(CGPoint)p
 {
-    [self notifyDelegateOverlayUpdated];
-}
-
-- (void)didClearPoints
-{
-    [self notifyDelegateOverlayUpdated];
-}
-
-- (void)didRemoveLastPoint
-{
-    [self notifyDelegateOverlayUpdated];
-}
-
-- (void)notifyDelegateOverlayUpdated
-{
     if (_delegate && [_delegate respondsToSelector:@selector(didUpdatePointWithOverlay:)]) {
-        [_delegate didUpdatePointWithOverlay:[_pointOverlay.points lastObject]];
+        [_delegate didUpdatePointWithOverlay: [_annotationView currentOverlay]];
     }
 }
 
@@ -170,14 +149,14 @@ float pin(float min, float value, float max)
 #pragma mark - Zooming
 - (void)touchDown:(id)sender withEvent:(UIEvent *)event
 {
-    [self showZoomViewAnimated:YES];
-    [self refreshZoomViewForTouches:event.allTouches];
+    [self showLensViewAnimated:YES];
+    [self refreshLensViewForTouches:event.allTouches];
 }
 
 - (void)touchMoved:(id)sender withEvent:(UIEvent *)event
 {
     // Move the magnifying glass to be above the touch point.
-    [self refreshZoomViewForTouches:event.allTouches];
+    [self refreshLensViewForTouches:event.allTouches];
 }
 
 - (void)touchEnded:(id)sender withEvent:(UIEvent *)event
@@ -188,11 +167,11 @@ float pin(float min, float value, float max)
 
     CGPoint scaledPoint = [self scaledTouchPointForPointOverlayView:p withScaledImageFrame:[_imageView aspectFitFrameForCurrentImage]];
     float scale = [_imageView aspectFitScaleForCurrentImage];
-    _pointOverlay.imageScale = scale;
-    [_pointOverlay addScaledTouchPoint:scaledPoint];
+    _annotationView.imageScale = scale;
+    [_annotationView addScaledTouchPoint: scaledPoint];
 
-    [self hideZoomViewAnimated:YES];
-    [self refreshZoomViewForTouches:event.allTouches];
+    [self hideLensViewAnimated:YES];
+    [self refreshLensViewForTouches:event.allTouches];
 }
 
 - (CGPoint)cappedTouchPointForPoint:(CGPoint)p withScaledImageFrame:(CGRect)scaledFrame
@@ -210,7 +189,7 @@ float pin(float min, float value, float max)
 }
 
 // Frame the zoome view so it's centered above out touch point.
-- (void)refreshZoomViewForTouches:(NSSet *)touches
+- (void)refreshLensViewForTouches:(NSSet *)touches
 {
     CGRect scaledFrame = [_imageView aspectFitFrameForCurrentImage];
     UITouch *t = [touches anyObject];
@@ -218,21 +197,21 @@ float pin(float min, float value, float max)
 
     // Cap the touch points.
     CGPoint imageZoomPoint = [self cappedTouchPointForPoint:p withScaledImageFrame:scaledFrame];
-    _zoomView.currentZoomPoint = imageZoomPoint;
+    _lensView.currentZoomPoint = imageZoomPoint;
     
-    CGFloat zoomOffsetY = (_zoomView.bounds.size.height/2) + 10;
+    CGFloat zoomOffsetY = (_lensView.bounds.size.height/2) + 10;
     CGPoint zoomCenter = CGPointMake(p.x, p.y - zoomOffsetY);
-    zoomCenter.x = pin(scaledFrame.origin.x + _zoomView.bounds.size.width/2, zoomCenter.x, self.frame.size.width - scaledFrame.origin.x - _zoomView.bounds.size.width/2);
-    zoomCenter.y = pin(scaledFrame.origin.y + _zoomView.bounds.size.height/2, zoomCenter.y, self.frame.size.height - scaledFrame.origin.y - _zoomView.bounds.size.height/2);
-    _zoomView.center = zoomCenter;
-    [_zoomView setNeedsDisplay];
+    zoomCenter.x = pin(0 + _lensView.bounds.size.width/2, zoomCenter.x, self.frame.size.width - scaledFrame.origin.x - _lensView.bounds.size.width/2);
+    zoomCenter.y = pin(0 + _lensView.bounds.size.height/2, zoomCenter.y, self.frame.size.height - scaledFrame.origin.y - _lensView.bounds.size.height/2);
+    _lensView.center = zoomCenter;
+    [_lensView setNeedsDisplay];
 }
 
 @end
 
 
 
-@implementation ARZoomView
+@implementation ARMagnifiedLensView
 
 - (id)initWithFrame:(CGRect)frame zoomableImageView:(UIImageView *)image
 {

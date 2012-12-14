@@ -7,29 +7,29 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "ARMagView.h"
+#import "AROverlayBuilderView.h"
 
 @interface AROverlayCreatorViewController : UIViewController <ARMagViewDelegate>
 {
-    UIImage *_image;
-    NSString *_imagePath;
+    ARSiteImage * _siteImage;
     BOOL    _isAnimating;
 }
 
-@property(nonatomic, weak) IBOutlet ARMagView *magView;
+@property(nonatomic, weak) IBOutlet AROverlayBuilderView * overlayBuilderView;
 
 @property(nonatomic, weak) IBOutlet UIToolbar *toolbar;
 @property(nonatomic, weak) IBOutlet UIBarButtonItem *toggleToolbarButton;
 @property(nonatomic, weak) IBOutlet UIBarButtonItem *saveButton;
+@property(nonatomic, weak) IBOutlet UIBarButtonItem *undoButton;
+@property(nonatomic, weak) IBOutlet UIBarButtonItem *deleteButton;
 
 /// Lifecycle
-- (id)initWithImage:(UIImage *)image;
-- (id)initWithImagePath:(NSString *)path;
+- (id)initWithSiteImage:(ARSiteImage*)s;
 
 
 /// User Interaction
 - (IBAction)toggleToolbarTapped:(id)sender;
-- (IBAction)deleteOverlaysTapped:(id)sender;
+- (IBAction)deleteOverlayTapped:(id)sender;
 - (IBAction)undoTapped:(id)sender;
 - (IBAction)doneTapped:(id)sender;
 - (IBAction)saveTapped:(id)sender;

@@ -19,20 +19,12 @@
 }
 
 #pragma mark - Lifecycle
-- (id)initWithImage:(UIImage *)image
-{
-    self = [super initWithNibName:@"AROverlayCreatorViewController" bundle:nil];
-    if (self) {
-        _image = image;
-    }
-    return self;
-}
 
-- (id)initWithImagePath:(NSString *)path
+- (id)initWithSiteImage:(ARSiteImage*)s
 {
     self = [super initWithNibName:@"AROverlayCreatorViewController" bundle:nil];
     if (self) {
-        _imagePath = [path copy];
+        _siteImage = s;
     }
     return self;
 }
@@ -50,47 +42,56 @@
     [super viewWillAppear:animated];
     
     if (_isFirstLoad) {
-        if (_imagePath != nil) {
-            [_magView.imageView setImagePath:_imagePath];
-        } else if (_image != nil) {
-            [_magView setImage:_image];
-        }
-        
-        _magView.delegate = self;
+        [_overlayBuilderView setSiteImage: _siteImage];
+        _overlayBuilderView.delegate = self;
         _isFirstLoad = NO;
     }
     
-    AROverlay *currentOverlay = [_magView.pointOverlay.points lastObject];
-    if (currentOverlay.ID.length > 0) {
-        [_magView.pointOverlay closeCurrentOverlay];
-        [_magView.pointOverlay setNeedsLayout];
-        _saveButton.enabled = NO;
-    }
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(update) name:NOTIF_SITE_UPDATED object: _siteImage.site];
+    [self update];
 }
 
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [[NSNotificationCenter defaultCenter] removeObserver: self];
+}
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
 }
 
+- (void)update
+{
+    AROverlay * overlay = [[_siteImage overlays] lastObject];
+
+    [_overlayBuilderView setNeedsDisplay];
+    
+    _saveButton.enabled = (overlay.points.count >= 3);
+    _undoButton.enabled = (overlay.points.count >= 1) && ([overlay isSaved] == NO);
+    _deleteButton.enabled = (overlay.points.count >= 1) && ([overlay isSaved] == NO);
+}
+
 
 #pragma mark - Convenience
+
 - (void)showOverlayDataEditorAnimated:(BOOL)animated
 {
-    AROverlayDataEditorViewController *vc = [[AROverlayDataEditorViewController alloc] initWithOverlay:[_magView currentOverlay]];
+    AROverlayDataEditorViewController *vc = [[AROverlayDataEditorViewController alloc] initWithOverlay:[_overlayBuilderView currentOverlay]];
     vc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     [self presentViewController:vc animated:YES completion:nil];
 }
 
 
 #pragma mark - ARMagViewDelegate
+
 - (void)didUpdatePointWithOverlay:(AROverlay *)overlay
 {
-    _saveButton.enabled = (overlay.points.count >= 3);
+    [self update];
 }
 
 #pragma mark - User Interaction
+
 - (IBAction)toggleToolbarTapped:(id)sender
 {
     if (_isAnimating) {
@@ -100,11 +101,11 @@
     }
     
     CGRect frame = _toolbar.frame;
-    if (frame.origin.y < _magView.frame.size.height) {
-        frame.origin.y = _magView.frame.size.height;
+    if (frame.origin.y < _overlayBuilderView.frame.size.height) {
+        frame.origin.y = _overlayBuilderView.frame.size.height;
         _toggleToolbarButton.image = [UIImage imageNamed:@"toolbar_show.png"];
     } else {
-        frame.origin.y = _magView.frame.size.height - frame.size.height;
+        frame.origin.y = _overlayBuilderView.frame.size.height - frame.size.height;
         _toggleToolbarButton.image = [UIImage imageNamed:@"toolbar_hide.png"];
     }
     
@@ -115,16 +116,24 @@
     }];
 }
 
-- (IBAction)deleteOverlaysTapped:(id)sender
+- (IBAction)deleteOverlayTapped:(id)sender
 {
-    [_magView.pointOverlay clearPoints];
-    [_magView setNeedsDisplay];
+    AROverlay * overlay = [[_siteImage overlays] lastObject];
+    
+    if ((overlay.points.count > 0) && (![overlay isSaved])) {
+        [_siteImage.site deleteOverlay: overlay];
+        [self update];
+    }
 }
 
 - (IBAction)undoTapped:(id)sender
 {
-    [_magView.pointOverlay removeLastPoint];
-    [_magView setNeedsDisplay];
+    AROverlay * overlay = [[_siteImage overlays] lastObject];
+    
+    if ((overlay.points.count > 0) && (![overlay isSaved])) {
+        [overlay.points removeLastObject];
+        [self update];
+    }
 }
 
 - (IBAction)doneTapped:(id)sender
@@ -137,4 +146,9 @@
     [self showOverlayDataEditorAnimated:YES];
 }
 
+- (void)viewDidUnload {
+    [self setUndoButton:nil];
+    [self setDeleteButton:nil];
+    [super viewDidUnload];
+}
 @end

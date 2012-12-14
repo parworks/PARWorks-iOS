@@ -54,15 +54,14 @@
 
 - (void)setDataProvider:(NSObject<GridCellViewDataProvider> *)dp
 {
-    if (dp == _dataProvider)
-        return;
-
     _dataProvider = dp;
     
     if ([dp respondsToSelector: @selector(imagePathForCell:)])
         [_imageView setImagePath: [dp imagePathForCell: self]];
     else
         [_imageView setImage: [dp imageForCell: self]];
+    if ([dp respondsToSelector: @selector(applyExtraStylesToCell:)])
+        [dp applyExtraStylesToCell: self];
 }
 
 - (void)tapDown

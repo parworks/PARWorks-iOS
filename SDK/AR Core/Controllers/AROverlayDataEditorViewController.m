@@ -42,8 +42,11 @@
 
 - (IBAction)doneTapped:(id)sender
 {
-    _overlay.ID = _nameField.text;
+    _overlay.name = _nameField.text;
     _overlay.content = _metadataTextView.text;
+
+    [_overlay save];
+    
     [self dismissViewControllerAnimated:YES completion:nil];
 }
 

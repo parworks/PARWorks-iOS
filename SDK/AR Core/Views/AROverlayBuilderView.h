@@ -8,10 +8,10 @@
 
 #import <UIKit/UIKit.h>
 #import "AROverlay.h"
-#import "ARPointOverlayView.h"
+#import "AROverlayBuilderAnnotationView.h"
 #import "CachedImageView.h"
 
-@class ARZoomView;
+@class ARMagnifiedLensView;
 
 
 
@@ -22,20 +22,18 @@
 
 
 
-@interface ARMagView : UIControl <ARPointOverlayViewDelegate>
+@interface AROverlayBuilderView : UIControl <AROverlayBuilderAnnotationViewDelegate>
 {
-    UIImage *_image;
-    NSString *_imagePath;
+    ARSiteImage * _siteImage;
 }
 
 @property(nonatomic, strong) CachedImageView *imageView;
-@property(nonatomic, strong) ARPointOverlayView *pointOverlay;
-@property(nonatomic, strong) ARZoomView *zoomView;
+@property(nonatomic, strong) AROverlayBuilderAnnotationView * annotationView;
+@property(nonatomic, strong) ARMagnifiedLensView *lensView;
 @property(nonatomic, weak) id<ARMagViewDelegate> delegate;
 
-- (id)initWithFrame:(CGRect)frame image:(UIImage *)image;
-- (id)initWithFrame:(CGRect)frame imagePath:(NSString *)imagePath;
-- (void)setImage:(UIImage *)image;
+- (id)initWithFrame:(CGRect)frame;
+- (void)setSiteImage:(ARSiteImage*)siteImage;
 
 - (AROverlay *)currentOverlay;
 
@@ -43,7 +41,7 @@
 
 
 
-@interface ARZoomView : UIView
+@interface ARMagnifiedLensView : UIView
 
 @property(nonatomic, weak) UIImageView *fullImageView;
 @property(nonatomic, assign) CGPoint currentZoomPoint;

@@ -38,6 +38,8 @@
 // @name Lifecycle
 // ========================
 
+- (id)initWithSiteImage:(ARSiteImage *)s;
+
 /** Creates a new AROverlay object using JSON data provided by the server.
 
  @param dict - A dictionary of key-value pairs provided by the server.
@@ -51,6 +53,8 @@
 
 - (NSString*)name;
 
+- (BOOL)isSaved;
+
 - (BOOL)isEqual:(id)object;
 
 #pragma mark Adding Points to the Overlay
@@ -58,5 +62,7 @@
 - (void)addPointWithX:(float)x andY:(float)y;
 
 - (void)removeLastPoint;
+
+- (void)save;
 
 @end

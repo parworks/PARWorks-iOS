@@ -44,7 +44,6 @@ static NSCache * _imageCache = nil;
 - (void)setup
 {
     [self setClipsToBounds: YES];
-    [self setContentMode: UIViewContentModeScaleAspectFill];
     [self setPlaceholderImageName: @"placeholder.png"];
 }
 

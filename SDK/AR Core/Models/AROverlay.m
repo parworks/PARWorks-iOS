@@ -67,6 +67,7 @@
         _content = [aDecoder decodeObjectForKey: @"content"];
         _points = [aDecoder decodeObjectForKey: @"points"];
         _name = [aDecoder decodeObjectForKey: @"name"];
+        _ID = [aDecoder decodeObjectForKey: @"id"];
         _siteImageIdentifier = [aDecoder decodeObjectForKey: @"siteImageIdentifier"];
     }
     return self;
@@ -78,9 +79,14 @@
     [aCoder encodeObject: _points forKey: @"points"];
     [aCoder encodeObject: _siteImageIdentifier forKey: @"siteImageIdentifier"];
     [aCoder encodeObject: _content forKey: @"content"];
+    [aCoder encodeObject: _ID forKey: @"id"];
     [aCoder encodeObject: _name forKey: @"name"];
 }
 
+- (BOOL)isSaved
+{
+    return self.ID != nil;
+}
 
 // Some simplistic parse logic for getting the point values
 // out of the string. We'll want to add error handling to this at some point.
@@ -136,6 +142,13 @@
     if ([_points count] < 3)
         @throw [NSException exceptionWithName:@"PARWorks API Error" reason:@"Please add at least three AROverlayPoints to your overlay before saving it." userInfo:nil];
 
+    if (!_name)
+        @throw [NSException exceptionWithName:@"PARWorks API Error" reason:@"Please add a name before saving." userInfo:nil];
+
+    if (!_content)
+        @throw [NSException exceptionWithName:@"PARWorks API Error" reason:@"Please add content before saving." userInfo:nil];
+    
+    
     NSMutableString * vertices = [[NSMutableString alloc] init];
     for (AROverlayPoint * point in _points)
         [vertices appendFormat: @"&v=%d,%d", (int)floorf([point x]), (int)floorf([point y])];
@@ -143,9 +156,9 @@
     
     NSMutableDictionary * dict = [NSMutableDictionary dictionary];
     [dict setObject:_siteImageIdentifier forKey:@"imgId"];
-    [dict setObject:_content forKey:@"content"]; // description?
-    [dict setObject:_site forKey:@"site"];
-    [dict setObject:_name forKey:@"name"];
+    [dict setObject:[_content stringByAddingPercentEscapesUsingEncoding: NSASCIIStringEncoding] forKey:@"content"]; // description?
+    [dict setObject:_site.identifier forKey:@"site"];
+    [dict setObject:[_name stringByAddingPercentEscapesUsingEncoding: NSASCIIStringEncoding] forKey:@"name"];
     [dict setObject:[vertices substringFromIndex: 3] forKey:@"v"];
     if (_ID) [dict setObject:_ID forKey:@"id"];
     
@@ -158,7 +171,7 @@
             NSDictionary * json = [weak responseJSON];
             if ([self ID] == nil) {
                 [self setID: [json objectForKey: @"id"]];
-                [[[self site] overlays] addObject: self];
+                [[self site] addOverlay: self];
             }
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: self];
         }

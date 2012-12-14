@@ -232,34 +232,55 @@
     }
 }
 
-- (NSArray*)availableOverlays
+- (NSArray*)overlays
 {
     if (_overlays == nil)
         [self fetchAvailableOverlays];
     return _overlays;
 }
 
+- (void)addOverlay:(AROverlay*)ar
+{
+    if (![_overlays containsObject: ar])
+        [_overlays addObject: ar];
+}
+
+- (void)deleteOverlay:(AROverlay*)ar
+{
+    [_overlays removeObject: ar];
+    
+    if ([ar isSaved]) {
+        // remove it from the server
+    }
+}
+
 - (void)fetchAvailableOverlays
 {
-    NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithObject:self.identifier forKey:@"site"];
-    __weak ASIHTTPRequest * weak = [[ARManager shared] createRequest: REQ_SITE_OVERLAYS withMethod:@"GET" withArguments: dict];
+    if (_overlaysReq)
+        return;
     
-    [weak setCompletionBlock: ^(void) {
-        if ([[ARManager shared] handleResponseErrors: weak]){
+    NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithObject:self.identifier forKey:@"site"];
+    _overlaysReq = [[ARManager shared] createRequest: REQ_SITE_OVERLAYS withMethod:@"GET" withArguments: dict];
+    __weak ASIHTTPRequest * weakReq = _overlaysReq;
+    __weak ARSite * weakSelf = self; 
+    
+    [_overlaysReq setCompletionBlock: ^(void) {
+        if ([[ARManager shared] handleResponseErrors: weakReq]){
             // grab all the image dictionaries from the JSON and pull out just the ID
             // of each image—that's all we need.
-            NSDictionary * json = [weak responseJSON];
+            NSDictionary * json = [weakReq responseJSON];
             self.overlays = [NSMutableArray array];
             for (NSDictionary * overlayJSON in [json objectForKey: @"overlays"]) {
                 AROverlay * overlay = [[AROverlay alloc] initWithDictionary: overlayJSON];
-                [overlay setSite: self];
+                [overlay setSite: weakSelf];
                 [_overlays addObject: overlay];
             }
             
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: self];
+            _overlaysReq = nil;
         }
     }];
-    [weak startAsynchronous];
+    [_overlaysReq startAsynchronous];
 }
 
 - (ARAugmentedPhoto*)augmentImage:(UIImage*)image
