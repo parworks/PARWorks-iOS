@@ -92,8 +92,9 @@
     _sites = [NSKeyedUnarchiver unarchiveObjectWithFile: SITES_PATH];
     if (!_sites)
         _sites = [NSMutableArray array];
+    else
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITES_UPDATED object:nil];
 
-    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITES_UPDATED object:nil];
     [self refreshSites];
 }
 

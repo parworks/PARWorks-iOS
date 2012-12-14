@@ -124,7 +124,7 @@ float pin(float min, float value, float max)
 - (void)setSiteImage:(ARSiteImage*)siteImage;
 {
     _siteImage = siteImage;
-
+    
     [_imageView setImagePath: [[_siteImage urlForSize: 2000] absoluteString]];
     [_annotationView setSiteImage: _siteImage];
 }
@@ -232,6 +232,11 @@ float pin(float min, float value, float max)
     return self;
 }
 
+- (void)dealloc
+{
+    CGLayerRelease(_cacheLayer);
+    _cacheLayer = nil;
+}
 
 - (void)drawRect:(CGRect)rect
 {
@@ -249,14 +254,21 @@ float pin(float min, float value, float max)
     CGFloat scale = [_fullImageView aspectFitScaleForCurrentImage];
     CGRect scaledFrame = [_fullImageView aspectFitFrameForCurrentImage];
     CGSize imageSize = _fullImageView.image.size;
-
+    
     _currentZoomPoint.x -= scaledFrame.origin.x;
     _currentZoomPoint.y -= scaledFrame.origin.y;
     
     // Draw the image into the view.
     CGPoint p = CGPointMake(((_currentZoomPoint.x / scale) - (self.bounds.size.width/2)), ((_currentZoomPoint.y / scale) - (self.bounds.size.height/2)));
+
+    if (_cacheLayer == nil) {
+        _cacheLayer = CGLayerCreateWithContext(context, _fullImageView.image.size, NULL);
+        CGContextRef c = CGLayerGetContext(_cacheLayer);
+        CGContextDrawImage(c, CGRectMake(0, 0, _fullImageView.image.size.width, _fullImageView.image.size.height), _fullImageView.image.CGImage);
+    }
+    
     CGContextTranslateCTM(context, -p.x, -imageSize.height + p.y);
-    CGContextDrawImage(context, CGRectMake(0, 0, imageSize.width, imageSize.height), _fullImageView.image.CGImage);
+    CGContextDrawLayerAtPoint(context, CGPointZero, _cacheLayer);
     CGContextRestoreGState(context);
     
     // Draw the crosshairs

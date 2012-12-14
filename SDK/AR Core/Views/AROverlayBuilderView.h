@@ -42,6 +42,9 @@
 
 
 @interface ARMagnifiedLensView : UIView
+{
+    CGLayerRef _cacheLayer;
+}
 
 @property(nonatomic, weak) UIImageView *fullImageView;
 @property(nonatomic, assign) CGPoint currentZoomPoint;

@@ -98,8 +98,8 @@
 
 - (void)glkView:(GLKView *)view drawInRect:(CGRect)rect
 {
-    float backingWidth = self.bounds.size.width;
-    float backingHeight = self.bounds.size.height;
+    float backingWidth = self.bounds.size.width * [[UIScreen mainScreen] scale];
+    float backingHeight = self.bounds.size.height * [[UIScreen mainScreen] scale];
     float backingAspect =(rect.size.width / rect.size.height);
     
     glClearColor(0, 0, 0, 0);
@@ -124,7 +124,7 @@
     glTranslatef(0, 0, -objectRadius * 3);
     glRotatef(25, 1, 0, 0);
     glRotatef(rotation, 0, 1, 0);
-    glPointSize(1.2);
+    glPointSize(1.2 * [[UIScreen mainScreen] scale]);
     glColor4f(1, 0, 0, 1);
     glVertexPointer(3, GL_FLOAT, 0, vertexBuffer);
 	glEnableClientState(GL_VERTEX_ARRAY);
