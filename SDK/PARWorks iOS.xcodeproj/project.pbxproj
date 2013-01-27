@@ -327,7 +327,7 @@
 		436C492016432AB10031DBCA /* GridCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridCellView.m; sourceTree = "<group>"; };
 		436C492116432AB10031DBCA /* GridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridView.h; sourceTree = "<group>"; };
 		436C492216432AB10031DBCA /* GridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridView.m; sourceTree = "<group>"; };
-		4371F0C515E34E7300D754A8 /* PARWorks Admin.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "PARWorks Admin.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4371F0C515E34E7300D754A8 /* PARWorks.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PARWorks.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4371F0C915E34E7300D754A8 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		4371F0CB15E34E7300D754A8 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		4371F0CD15E34E7300D754A8 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
@@ -711,7 +711,7 @@
 		4371F0C615E34E7300D754A8 /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				4371F0C515E34E7300D754A8 /* PARWorks Admin.app */,
+				4371F0C515E34E7300D754A8 /* PARWorks.app */,
 				435833F415EC852100E90CBD /* PARWorks.framework */,
 			);
 			name = Products;
@@ -847,7 +847,7 @@
 			);
 			name = "Administration App";
 			productName = "HD4ARClient-iOS";
-			productReference = 4371F0C515E34E7300D754A8 /* PARWorks Admin.app */;
+			productReference = 4371F0C515E34E7300D754A8 /* PARWorks.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1181,7 +1181,7 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Ben Gotow (68UAH5YK64)";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AR Administration App/Administration-App-Prefix.pch";
@@ -1191,8 +1191,8 @@
 					"$(inherited)",
 					"\"$(SDKROOT)/usr/lib/system\"",
 				);
-				PRODUCT_NAME = "PARWorks Admin";
-				PROVISIONING_PROFILE = "";
+				PRODUCT_NAME = PARWorks;
+				PROVISIONING_PROFILE = "C676D49D-693D-448B-B23E-CEE71914414A";
 				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
 				WRAPPER_EXTENSION = app;
@@ -1204,7 +1204,7 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = NO;
-				CODE_SIGN_IDENTITY = "iPhone Developer: Demetri Miller (36WPJ8C3NF)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AR Administration App/Administration-App-Prefix.pch";
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = YES;
@@ -1213,8 +1213,8 @@
 					"$(inherited)",
 					"\"$(SDKROOT)/usr/lib/system\"",
 				);
-				PRODUCT_NAME = "PARWorks Admin";
-				PROVISIONING_PROFILE = "556EC745-2F92-4AA4-BE29-340ABA0F448A";
+				PRODUCT_NAME = PARWorks;
+				PROVISIONING_PROFILE = "";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
 				WRAPPER_EXTENSION = app;
 			};

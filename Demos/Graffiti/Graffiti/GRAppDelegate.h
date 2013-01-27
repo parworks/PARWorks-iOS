@@ -20,7 +20,7 @@
 
 #import <UIKit/UIKit.h>
 
-@class GRViewController;
+@class GRHomeViewController;
 
 typedef void(^GraffitiRetrievalBlock)(UIImage *image);
 
@@ -28,7 +28,7 @@ typedef void(^GraffitiRetrievalBlock)(UIImage *image);
 
 @property (strong, nonatomic) UIWindow *window;
 
-@property (strong, nonatomic) GRViewController *viewController;
+@property (strong, nonatomic) GRHomeViewController *viewController;
 
 - (void)saveGraffiti:(UIImage*)img forSite:(NSString*)sitename;
 - (void)getGraffitiForSite:(NSString*)sitename withCompletionBlock:(GraffitiRetrievalBlock)block;

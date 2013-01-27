@@ -7,6 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		432ABDF9169D11AA00579FE5 /* AdOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = 432ABDF8169D11AA00579FE5 /* AdOverlayView.m */; };
+		432ABDFB169D11BF00579FE5 /* MediaPlayer.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 432ABDFA169D11BF00579FE5 /* MediaPlayer.framework */; };
+		432ABDFF169D120E00579FE5 /* GRHomeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 432ABDFD169D120E00579FE5 /* GRHomeViewController.m */; };
+		432ABE00169D120E00579FE5 /* GRHomeViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 432ABDFE169D120E00579FE5 /* GRHomeViewController.xib */; };
+		432ABE02169D1A4F00579FE5 /* home_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 432ABE01169D1A4F00579FE5 /* home_background.png */; };
+		432ABE05169D1A8100579FE5 /* button_create_graffiti.png in Resources */ = {isa = PBXBuildFile; fileRef = 432ABE03169D1A8100579FE5 /* button_create_graffiti.png */; };
+		432ABE06169D1A8100579FE5 /* button_scan_for_graffiti.png in Resources */ = {isa = PBXBuildFile; fileRef = 432ABE04169D1A8100579FE5 /* button_scan_for_graffiti.png */; };
 		43A4531D1665C3F300D594E9 /* camera-graphic.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A453171665C3F300D594E9 /* camera-graphic.png */; };
 		43A4531E1665C3F300D594E9 /* camera-graphic@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A453181665C3F300D594E9 /* camera-graphic@2x.png */; };
 		43A4531F1665C3F300D594E9 /* camera-icon-down.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A453191665C3F300D594E9 /* camera-icon-down.png */; };
@@ -135,10 +142,18 @@
 		A0DDF5101643697D00BB9C82 /* GridCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0DDF4E71643697D00BB9C82 /* GridCellView.m */; };
 		A0DDF5111643697D00BB9C82 /* GridView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0DDF4E91643697D00BB9C82 /* GridView.m */; };
 		A0DDF5181643717600BB9C82 /* img_durham_1.pm in Resources */ = {isa = PBXBuildFile; fileRef = A0DDF4381643694B00BB9C82 /* img_durham_1.pm */; };
-		A0E91FCC16475A7000D7AC07 /* BROverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0E91FCB16475A7000D7AC07 /* BROverlayView.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		432ABDF7169D11AA00579FE5 /* AdOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdOverlayView.h; sourceTree = "<group>"; };
+		432ABDF8169D11AA00579FE5 /* AdOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdOverlayView.m; sourceTree = "<group>"; };
+		432ABDFA169D11BF00579FE5 /* MediaPlayer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MediaPlayer.framework; path = System/Library/Frameworks/MediaPlayer.framework; sourceTree = SDKROOT; };
+		432ABDFC169D120E00579FE5 /* GRHomeViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = GRHomeViewController.h; path = Graffiti/GRHomeViewController.h; sourceTree = SOURCE_ROOT; };
+		432ABDFD169D120E00579FE5 /* GRHomeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = GRHomeViewController.m; path = Graffiti/GRHomeViewController.m; sourceTree = SOURCE_ROOT; };
+		432ABDFE169D120E00579FE5 /* GRHomeViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = GRHomeViewController.xib; path = Graffiti/GRHomeViewController.xib; sourceTree = SOURCE_ROOT; };
+		432ABE01169D1A4F00579FE5 /* home_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = home_background.png; path = Graffiti/Resources/home_background.png; sourceTree = SOURCE_ROOT; };
+		432ABE03169D1A8100579FE5 /* button_create_graffiti.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = button_create_graffiti.png; path = Graffiti/Resources/button_create_graffiti.png; sourceTree = SOURCE_ROOT; };
+		432ABE04169D1A8100579FE5 /* button_scan_for_graffiti.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = button_scan_for_graffiti.png; path = Graffiti/Resources/button_scan_for_graffiti.png; sourceTree = SOURCE_ROOT; };
 		43A453171665C3F300D594E9 /* camera-graphic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera-graphic.png"; sourceTree = "<group>"; };
 		43A453181665C3F300D594E9 /* camera-graphic@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera-graphic@2x.png"; sourceTree = "<group>"; };
 		43A453191665C3F300D594E9 /* camera-icon-down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera-icon-down.png"; sourceTree = "<group>"; };
@@ -348,8 +363,6 @@
 		A0DDF4E71643697D00BB9C82 /* GridCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridCellView.m; sourceTree = "<group>"; };
 		A0DDF4E81643697D00BB9C82 /* GridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridView.h; sourceTree = "<group>"; };
 		A0DDF4E91643697D00BB9C82 /* GridView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridView.m; sourceTree = "<group>"; };
-		A0E91FCA16475A7000D7AC07 /* BROverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BROverlayView.h; sourceTree = "<group>"; };
-		A0E91FCB16475A7000D7AC07 /* BROverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BROverlayView.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -357,6 +370,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				432ABDFB169D11BF00579FE5 /* MediaPlayer.framework in Frameworks */,
 				A0035A83162B371400186D26 /* AVFoundation.framework in Frameworks */,
 				A00066631628FD06007FADB2 /* UIKit.framework in Frameworks */,
 				A00066651628FD06007FADB2 /* Foundation.framework in Frameworks */,
@@ -378,6 +392,7 @@
 		A00066531628FD06007FADB2 = {
 			isa = PBXGroup;
 			children = (
+				432ABDFA169D11BF00579FE5 /* MediaPlayer.framework */,
 				A0DDF4891643697D00BB9C82 /* AR Core */,
 				A0DDF3B91643694B00BB9C82 /* Graffiti */,
 				A00066611628FD06007FADB2 /* Frameworks */,
@@ -417,6 +432,9 @@
 			children = (
 				A0DDF40E1643694B00BB9C82 /* GRAppDelegate.h */,
 				A0DDF40F1643694B00BB9C82 /* GRAppDelegate.m */,
+				432ABDFC169D120E00579FE5 /* GRHomeViewController.h */,
+				432ABDFD169D120E00579FE5 /* GRHomeViewController.m */,
+				432ABDFE169D120E00579FE5 /* GRHomeViewController.xib */,
 				A0DDF4101643694B00BB9C82 /* GRViewController.h */,
 				A0DDF4111643694B00BB9C82 /* GRViewController.m */,
 				A0DDF3F71643694B00BB9C82 /* GRViewController.xib */,
@@ -582,6 +600,9 @@
 		A0DDF4141643694B00BB9C82 /* Images */ = {
 			isa = PBXGroup;
 			children = (
+				432ABE01169D1A4F00579FE5 /* home_background.png */,
+				432ABE03169D1A8100579FE5 /* button_create_graffiti.png */,
+				432ABE04169D1A8100579FE5 /* button_scan_for_graffiti.png */,
 				A0DDF4151643694B00BB9C82 /* brush_icon.png */,
 				A0DDF4161643694B00BB9C82 /* brush_icon@2x.png */,
 				A0DDF4171643694B00BB9C82 /* Brushes */,
@@ -831,8 +852,8 @@
 				A0DDF4E11643697D00BB9C82 /* ARAugmentedView.m */,
 				A0DDF4E21643697D00BB9C82 /* AROverlayView.h */,
 				A0DDF4E31643697D00BB9C82 /* AROverlayView.m */,
-				A0E91FCA16475A7000D7AC07 /* BROverlayView.h */,
-				A0E91FCB16475A7000D7AC07 /* BROverlayView.m */,
+				432ABDF7169D11AA00579FE5 /* AdOverlayView.h */,
+				432ABDF8169D11AA00579FE5 /* AdOverlayView.m */,
 				A0DDF4E41643697D00BB9C82 /* CachedImageView.h */,
 				A0DDF4E51643697D00BB9C82 /* CachedImageView.m */,
 				A0DDF4E61643697D00BB9C82 /* GridCellView.h */,
@@ -956,6 +977,10 @@
 				43A453201665C3F300D594E9 /* camera-icon-down@2x.png in Resources */,
 				43A453211665C3F300D594E9 /* camera-icon.png in Resources */,
 				43A453221665C3F300D594E9 /* camera-icon@2x.png in Resources */,
+				432ABE00169D120E00579FE5 /* GRHomeViewController.xib in Resources */,
+				432ABE02169D1A4F00579FE5 /* home_background.png in Resources */,
+				432ABE05169D1A8100579FE5 /* button_create_graffiti.png in Resources */,
+				432ABE06169D1A8100579FE5 /* button_scan_for_graffiti.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1035,7 +1060,8 @@
 				A0DDF5101643697D00BB9C82 /* GridCellView.m in Sources */,
 				A0DDF5111643697D00BB9C82 /* GridView.m in Sources */,
 				A00D3DF31646FC3D0070D248 /* GRCameraOverlayView.m in Sources */,
-				A0E91FCC16475A7000D7AC07 /* BROverlayView.m in Sources */,
+				432ABDF9169D11AA00579FE5 /* AdOverlayView.m in Sources */,
+				432ABDFF169D120E00579FE5 /* GRHomeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

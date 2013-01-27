@@ -250,6 +250,7 @@ static ARManager * sharedManager;
     
     ASIHTTPRequest *req = [self createRequest:REQ_SITE_LIST_ALL withMethod:@"GET" withArguments:nil];
     ASIHTTPRequest * __weak blockReq = req;
+    [req setTimeOutSeconds: 500];
     [req setCompletionBlock: ^(void) {
         [self handleResponseErrors: blockReq];
         NSArray *rawSites = [blockReq responseJSON];

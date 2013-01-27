@@ -19,6 +19,7 @@
 
 
 #import "GRAppDelegate.h"
+#import "GRHomeViewController.h"
 #import "ASIFormDataRequest.h"
 #import "ASIHTTPRequest.h"
 #import "GRViewController.h"
@@ -34,7 +35,7 @@
     [[ARManager shared] setLocationEnabled:YES];
     
     // Override point for customization after application launch.
-    self.viewController = [[GRViewController alloc] initWithNibName:@"GRViewController" bundle:nil];
+    self.viewController = [[GRHomeViewController alloc] initWithNibName:@"GRHomeViewController" bundle:nil];
     self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
     
