@@ -25,3 +25,11 @@
 /Demos/EasyPAR/.DS_Store
 /Demos/Graffiti/Graffiti/Resources/.DS_Store
 /Demos/EasyPAR/EasyPAR/.DS_Store
+
+/PARViewer/build/
+/PARViewer/DerivedData/
+/PARViewer/PARViewer.xcodeproj/project.xcworkspace/
+/PARViewer/PARViewer.xcodeproj/xcuserdata/
+/Demos/EasyPAR/build/
+/Demos/EasyPAR/DerivedData/
+/Demos/EasyPAR/EasyPAR.xcodeproj/project.xcworkspace/xcuserdata/bengotow.xcuserdatad/UserInterfaceState.xcuserstate
