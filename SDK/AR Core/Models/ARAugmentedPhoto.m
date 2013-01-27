@@ -50,7 +50,16 @@
         self.image = [UIImage imageWithContentsOfFile: iPath];
         self.imageIdentifier = [iPath lastPathComponent];
         
-        [self processPMData: [NSString stringWithContentsOfFile:pmPath encoding:NSUTF8StringEncoding error:nil]];
+        NSData *data = [NSData dataWithContentsOfFile:pmPath];
+        NSError *err = nil;
+        NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:0 error:&err];
+        
+        if (err || ![dict isKindOfClass:[NSDictionary class]]) {
+            NSLog(@"%@", err);
+            return nil;
+        }
+        
+        [self processJSONData:dict];
     }
     return self;
 }
