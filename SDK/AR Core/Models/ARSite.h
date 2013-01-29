@@ -19,6 +19,7 @@
 
 
 #import <Foundation/Foundation.h>
+#import <CoreLocation/CoreLocation.h>
 #import "ARAugmentedPhoto.h"
 #import "AROverlay.h"
 
@@ -38,6 +39,16 @@ typedef enum ARSiteStatus {
 }
 
 @property (nonatomic, strong) NSString * identifier;
+
+// Extra properties provided via /site/info or /site/list/*
+@property (nonatomic, strong) NSString * address;
+@property (nonatomic, strong) NSString * description;
+@property (nonatomic, assign) CLLocationCoordinate2D location;
+@property (nonatomic, strong) NSString * posterImageURL;
+@property (nonatomic, strong) NSDictionary * posterImageOverlayContent;
+@property (nonatomic, strong) NSArray * recentlyAugmentedImageURLs;
+@property (nonatomic, assign) long totalAugmentedImages;
+
 @property (nonatomic, strong) NSMutableArray * images;
 @property (nonatomic, strong) NSMutableArray * augmentedPhotos;
 @property (nonatomic, strong) NSMutableArray * overlays;
@@ -59,6 +70,14 @@ typedef enum ARSiteStatus {
  */
 - (id)initWithIdentifier:(NSString*)ident;
 
+/** Creates a new site using the given site identifier
+ 
+ @param dict - A dictionary of properties returned from a 'site/info' endpoint.
+ 
+ @return A newly initialized ARSite instance
+ */
+- (id)initWithInfo:(NSDictionary*)dict;
+
 /** Creates a new site using a summary entry returned by the REQ_SITE_LIST_ALL endpoint
  
  @param dict - The summary entry used to create the site object
@@ -70,6 +89,9 @@ typedef enum ARSiteStatus {
 // ========================
 // @name Site Information
 // ========================
+
+/** Queries for extra site attributes. */
+- (void)fetchInfo;
 
 /** Queries for the status of the site asynchronously. */
 - (void)checkStatus;

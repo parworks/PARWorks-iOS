@@ -52,9 +52,9 @@ float pin(float min, float value, float max)
     _imageView.contentMode = UIViewContentModeScaleAspectFit;
     _imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     
-    __weak AROverlayBuilderView *blockSelf = self;
+    __weak AROverlayBuilderView * _self = self;
     _imageView.loadCompletionBlock = ^(UIImage *image) {
-        [blockSelf setNeedsLayout];
+        [_self setNeedsLayout];
     };
     [self addSubview:_imageView];
     
