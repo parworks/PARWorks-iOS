@@ -53,16 +53,16 @@
         [args setObject:[NSString stringWithFormat:@"%@%p", [NSNumber numberWithLong:time(0)], self] forKey:@"filename"];
 
         ASIFormDataRequest * req = (ASIFormDataRequest*)[[ARManager shared] createRequest:REQ_SITE_IMAGE_ADD withMethod:@"POST" withArguments:args];
-        ASIFormDataRequest * __weak weak = req;
+        ASIFormDataRequest * __weak __req = req;
         
         [req setData:imgData forKey:@"image"];
         [req setFailedBlock: ^(void) {
             self.response = BackendResponseFailed;
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: _site];
-            [[ARManager shared] criticalRequestFailed: weak];
+            [[ARManager shared] criticalRequestFailed: __req];
         }];
         [req setCompletionBlock: ^(void) {
-            if ([[ARManager shared] handleResponseErrors: weak]){
+            if ([[ARManager shared] handleResponseErrors: __req]){
                 self.response = BackendResponseFinished;
                 [_site invalidateImages];
             } else {

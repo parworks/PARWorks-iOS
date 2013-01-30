@@ -27,6 +27,7 @@
 #import "ASIHTTPRequest.h"
 #import "ASIHTTPRequest+JSONAdditions.h"
 #import "ARAugmentedPhoto.h"
+#import "NSContainers+NullHandlers.h"
 
 @implementation ARSite
 
@@ -39,6 +40,17 @@
         self.status = ARSiteStatusUnknown;
         _summaryImageCount = 0;
         _summaryOverlayCount = 0;
+    }
+    return self;
+}
+
+- (id)initWithInfo:(NSDictionary*)dict
+{
+    self = [super init];
+    if (self) {
+        self.identifier = [dict objectForKey: @"id"];
+        self.status = ARSiteStatusUnknown;
+        [self parseInfo: dict];
     }
     return self;
 }
@@ -82,26 +94,51 @@
     [aCoder encodeInt: _summaryOverlayCount forKey: @"summaryOverlayCount"];
 }
 
+- (void)fetchInfo
+{
+    NSDictionary * d = [NSDictionary dictionaryWithObject:_identifier forKey:@"site"];
+    ASIHTTPRequest * req = [[ARManager shared] createRequest: @"/ar/site/info/overview" withMethod:@"GET" withArguments:d];
+    ASIHTTPRequest * __weak __req = req;
+    [req setCompletionBlock: ^(void) {
+        NSDictionary * dict = [__req responseJSON];
+        [self parseInfo: dict];
+    }];
+    [req startAsynchronous];
+}
+
+- (void)parseInfo:(NSDictionary*)dict
+{
+    self.address = [dict objectForKey: @"address" or: nil];
+    self.posterImageURL = [dict objectForKey: @"posterImageURL" or: nil];
+    self.posterImageOverlayContent = [dict objectForKey: @"posterImageOverlayContent" or: nil];
+    self.totalAugmentedImages = [[dict objectForKey: @"numAugmentedImages" or: nil] intValue];
+    self.description = [dict objectForKey: @"description" or: nil];
+    self.location = CLLocationCoordinate2DMake([[dict objectForKey: @"lat" or: nil] doubleValue], [[dict objectForKey:@"lon" or: nil] doubleValue]);
+    self.recentlyAugmentedImageURLs = [dict objectForKey:@"recentlyAugmentedImageURLs" or: nil];   
+}
+
+#pragma mark Site Status
+
 - (void)checkStatus
 {
     NSDictionary * d = [NSDictionary dictionaryWithObject:_identifier forKey:@"site"];
     ASIHTTPRequest * req = [[ARManager shared] createRequest: @"/ar/site/process/state" withMethod:@"GET" withArguments:d];
-    ASIHTTPRequest * __weak weak = req;
-    ARSite * __weak site = self;
+    ASIHTTPRequest * __weak __req = req;
+    ARSite * __weak __site = self;
     
     [req setCompletionBlock: ^(void) {
-        NSDictionary * json = [weak responseJSON];
+        NSDictionary * json = [__req responseJSON];
         if (![json isKindOfClass: [NSDictionary class]]) {
             _status = ARSiteStatusUnknown;
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: site];
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: __site];
             return;
         }
         
-        _status = [self siteStatusForString:[json objectForKey:@"state"]];
+        _status = [__site siteStatusForString:[json objectForKey:@"state"]];
         if (_status == ARSiteStatusProcessing)
-            [self checkStatusIn20Seconds];
+            [__site checkStatusIn20Seconds];
         
-        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: site];
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: __site];
     }];
     [req startAsynchronous];
 }
@@ -148,6 +185,8 @@
         return @"Creating site...";
 }
 
+#pragma mark Site Image Management
+
 - (NSMutableArray*)images
 {
     if ((_images == nil) && (!_invalid))
@@ -170,31 +209,31 @@
     NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithObject:self.identifier forKey:@"site"];
     _imageReq = [[ARManager shared] createRequest: REQ_SITE_IMAGE withMethod:@"GET" withArguments: dict];
 
-    ARSite * __weak site = self;
+    ARSite * __weak __site = self;
     ASIHTTPRequest * __weak req = _imageReq;
     
     [_imageReq setCompletionBlock: ^(void) {
         NSDictionary * json = [req responseJSON];
         if (![json isKindOfClass: [NSDictionary class]]) {
-            site.invalid = YES;
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: site];
+            __site.invalid = YES;
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: __site];
             return;
         }
         // grab all the image dictionaries from the JSON and pull out just the ID
         // of each image—that's all we need.
-        self.images = [NSMutableArray array];
+        __site.images = [NSMutableArray array];
         for (NSDictionary * imgJSON in [json objectForKey: @"images"]) {
             ARSiteImage * img = [[ARSiteImage alloc] initWithDictionary: imgJSON];
-            [img setSite: site];
-            [[site images] addObject: img];
+            [img setSite: __site];
+            [[__site images] addObject: img];
         }
-        [site finishedFetchingImages];
-        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: site];
+        [__site finishedFetchingImages];
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: __site];
     }];
     
     [_imageReq setFailedBlock: ^(void) {
-        [site finishedFetchingImages];
-        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: site];
+        [__site finishedFetchingImages];
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: __site];
     }];
 
     [_imageReq startAsynchronous];
@@ -222,6 +261,8 @@
         return _images.count;
     }
 }
+
+#pragma mark Site Overlay Management
 
 - (int)overlayCount
 {
@@ -261,27 +302,32 @@
     
     NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithObject:self.identifier forKey:@"site"];
     _overlaysReq = [[ARManager shared] createRequest: REQ_SITE_OVERLAYS withMethod:@"GET" withArguments: dict];
-    __weak ASIHTTPRequest * weakReq = _overlaysReq;
-    __weak ARSite * weakSelf = self; 
-    
+
+    __weak ASIHTTPRequest * __req = _overlaysReq;
+    __weak NSMutableArray * __overlays = _overlays;
+    __weak ARSite * __self = self;
+
     [_overlaysReq setCompletionBlock: ^(void) {
-        if ([[ARManager shared] handleResponseErrors: weakReq]){
+        if ([[ARManager shared] handleResponseErrors: __req]){
             // grab all the image dictionaries from the JSON and pull out just the ID
             // of each image—that's all we need.
-            NSDictionary * json = [weakReq responseJSON];
-            self.overlays = [NSMutableArray array];
+            NSDictionary * json = [__req responseJSON];
+            __self.overlays = [NSMutableArray array];
             for (NSDictionary * overlayJSON in [json objectForKey: @"overlays"]) {
                 AROverlay * overlay = [[AROverlay alloc] initWithDictionary: overlayJSON];
-                [overlay setSite: weakSelf];
-                [_overlays addObject: overlay];
+                [overlay setSite: __self];
+                [__overlays addObject: overlay];
             }
             
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: self];
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: __self];
             _overlaysReq = nil;
         }
     }];
     [_overlaysReq startAsynchronous];
 }
+
+
+#pragma mark Augmenting and Processing
 
 - (ARAugmentedPhoto*)augmentImage:(UIImage*)image
 {

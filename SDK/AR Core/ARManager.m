@@ -190,9 +190,9 @@ static ARManager * sharedManager;
     [h addRequestHeader:@"Salt" value:salt];
     [h addRequestHeader:@"Signature" value:sig];
     
-    ASIHTTPRequest * __weak hh = h;
+    ASIHTTPRequest * __weak _h = h;
     [h setFailedBlock: ^(void) {
-        [[ARManager shared] criticalRequestFailed: hh];
+        [[ARManager shared] criticalRequestFailed: _h];
     }];
     
 
@@ -221,9 +221,9 @@ static ARManager * sharedManager;
     }
 
     ASIHTTPRequest * req = [self createRequest:REQ_SITE_ADD withMethod:@"PUT" withArguments: args];
-    ASIHTTPRequest * __weak weak = req;
+    ASIHTTPRequest * __weak __req = req;
     [req setCompletionBlock: ^(void) {
-        [self handleResponseErrors: weak];
+        [self handleResponseErrors: __req];
         if (completionBlock)
             completionBlock();
     }];
@@ -234,9 +234,9 @@ static ARManager * sharedManager;
 {
     NSDictionary * args = [NSDictionary dictionaryWithObject:identifier forKey:@"site"];
     ASIHTTPRequest * req = [self createRequest:REQ_SITE_REMOVE withMethod:@"GET" withArguments: args];
-    ASIHTTPRequest * __weak weak = req;
+    ASIHTTPRequest * __weak __req = req;
     [req setCompletionBlock: ^(void) {
-        [self handleResponseErrors: weak];
+        [self handleResponseErrors: __req];
         if (completionBlock)
             completionBlock();
     }];
@@ -249,11 +249,11 @@ static ARManager * sharedManager;
         [completionBlock copy];
     
     ASIHTTPRequest *req = [self createRequest:REQ_SITE_LIST_ALL withMethod:@"GET" withArguments:nil];
-    ASIHTTPRequest * __weak blockReq = req;
+    ASIHTTPRequest * __weak __req = req;
     [req setTimeOutSeconds: 500];
     [req setCompletionBlock: ^(void) {
-        [self handleResponseErrors: blockReq];
-        NSArray *rawSites = [blockReq responseJSON];
+        [self handleResponseErrors: __req];
+        NSArray *rawSites = [__req responseJSON];
         
         NSMutableArray *sites = [NSMutableArray array];
         for (NSDictionary *dict in rawSites) {
@@ -277,11 +277,11 @@ static ARManager * sharedManager;
     [args setObject:[NSString stringWithFormat: @"%f", [self deviceLocation].coordinate.longitude] forKey:@"lon"];
     [args setObject:[NSString stringWithFormat: @"%d", resolution] forKey:@"resolution"];
     ASIHTTPRequest * req = [self createRequest:REQ_SITE_NEARBY withMethod:@"GET" withArguments: args];
-    ASIHTTPRequest * __weak weak = req;
+    ASIHTTPRequest * __weak __req = req;
 
     [req setCompletionBlock: ^(void) {
-        if ([self handleResponseErrors: weak]) {
-            NSDictionary * json = [weak responseJSON];
+        if ([self handleResponseErrors: __req]) {
+            NSDictionary * json = [__req responseJSON];
             NSArray * sites = [json objectForKey: @"sites"];
             if (completionBlock)
                 completionBlock(sites);

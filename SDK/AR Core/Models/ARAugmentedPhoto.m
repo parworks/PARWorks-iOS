@@ -139,19 +139,19 @@
     else
         req = (ASIFormDataRequest*)[[ARManager shared] createRequest:REQ_IMAGE_AUGMENT withMethod:@"POST" withArguments:args];
     
-    ASIFormDataRequest * __weak weak = req;
+    ASIFormDataRequest * __weak __req = req;
 
     [req setData:imgData forKey:@"image"];
     [req setFailedBlock: ^(void) {
         _response = BackendResponseFailed;
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_AUGMENTED_PHOTO_UPDATED object: self];
-        [[ARManager shared] criticalRequestFailed: weak];
+        [[ARManager shared] criticalRequestFailed: __req];
         if (_processingCompletionBlock) _processingCompletionBlock(self);
     }];
     [req setCompletionBlock: ^(void) {
-        if ([[ARManager shared] handleResponseErrors: weak]) {
+        if ([[ARManager shared] handleResponseErrors: __req]) {
             _response = BackendResponseProcessing;
-            _imageIdentifier = [[weak responseJSON] objectForKey: @"imgId"];
+            _imageIdentifier = [[__req responseJSON] objectForKey: @"imgId"];
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_AUGMENTED_PHOTO_UPDATED object: self];
             _pollTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(processPoll) userInfo:nil repeats:NO];
 
@@ -173,13 +173,13 @@
     _pollTimer = nil;
     
     ASIHTTPRequest * req = [[ARManager shared] createRequest:REQ_IMAGE_AUGMENT_RESULT withMethod:@"GET" withArguments:[self processArguments]];
-    ASIHTTPRequest * __weak weak = req;
+    ASIHTTPRequest * __weak __req = req;
     
     [req setCompletionBlock: ^(void) {
-        if ([weak responseStatusCode] != 200)
+        if ([__req responseStatusCode] != 200)
             _pollTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(processPoll) userInfo:nil repeats:NO];
         else {
-            [self processJSONData: [weak responseJSON]];
+            [self processJSONData: [__req responseJSON]];
             self.response = BackendResponseFinished;
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_AUGMENTED_PHOTO_UPDATED object: self];
             if (_processingCompletionBlock) _processingCompletionBlock(self);

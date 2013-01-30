@@ -268,13 +268,13 @@
     [dict setObject:[vertices substringFromIndex: 3] forKey:@"v"];
     if (_ID) [dict setObject:_ID forKey:@"id"];
     
-    __weak ASIHTTPRequest * weak = [[ARManager shared] createRequest: REQ_SITE_OVERLAY_ADD withMethod:@"GET" withArguments: dict];
+    __weak ASIHTTPRequest * __req = [[ARManager shared] createRequest: REQ_SITE_OVERLAY_ADD withMethod:@"GET" withArguments: dict];
     
-    [weak setCompletionBlock: ^(void) {
-        if ([[ARManager shared] handleResponseErrors: weak]){
+    [__req setCompletionBlock: ^(void) {
+        if ([[ARManager shared] handleResponseErrors: __req]){
             // grab all the image dictionaries from the JSON and pull out just the ID
             // of each image—that's all we need.
-            NSDictionary * json = [weak responseJSON];
+            NSDictionary * json = [__req responseJSON];
             if ([self ID] == nil) {
                 [self setID: [json objectForKey: @"id"]];
                 [[self site] addOverlay: self];
@@ -282,7 +282,7 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: self];
         }
     }];
-    [weak startAsynchronous];
+    [__req startAsynchronous];
 }
 
 
