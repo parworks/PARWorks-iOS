@@ -23,15 +23,59 @@
 
 @class ARSite;
 
+typedef enum {
+    AROverlayBoundaryType_Hidden = 0,
+    AROverlayBoundaryType_Dashed,
+    AROverlayBoundaryType_Solid
+} AROverlayBoundaryType;
+
+typedef enum {
+    AROverlayContentType_URL = 0,
+    AROverlayContentType_Video,
+    AROverlayContentType_Image,
+    AROverlayContentType_Audio,
+    AROverlayContentType_Text
+} AROverlayContentType;
+
+typedef enum {
+    AROverlayContentSize_Small = 0,
+    AROverlayContentSize_Medium,
+    AROverlayContentSize_Large,
+    AROverlayContentSize_Fullscreen
+} AROverlayContentSize;
+
+typedef enum {
+    AROverlayCoverType_Hidden = 0,
+    AROverlayCoverType_Image,
+    AROverlayCoverType_Regular
+} AROverlayCoverType;
+
 @interface AROverlay : NSObject <NSCoding>
 {
 }
 
 @property (nonatomic, strong) NSString * ID;
-@property (nonatomic, strong) NSMutableArray * points;
 @property (nonatomic, strong) NSString * content;
 @property (nonatomic, strong) NSString * siteImageIdentifier;
 @property (nonatomic, strong) NSString * name;
+@property (nonatomic, strong) NSMutableArray * points;
+
+@property (nonatomic, strong) NSString * accuracy;
+@property (nonatomic, strong) NSString * title;
+@property (nonatomic, assign) BOOL success;
+
+@property (nonatomic, assign) AROverlayBoundaryType boundaryType;
+@property (nonatomic, strong) UIColor               * boundaryColor;
+
+@property (nonatomic, assign) AROverlayContentType  contentType;
+@property (nonatomic, assign) AROverlayContentSize  contentSize;
+@property (nonatomic, strong) NSString              * contentProvider;
+
+@property (nonatomic, assign) AROverlayCoverType coverType;
+@property (nonatomic, assign) NSInteger          coverTransparency;
+@property (nonatomic, strong) UIColor            * coverColor;
+@property (nonatomic, strong) NSString           * coverProvider;
+
 @property (nonatomic, weak) ARSite * site;
 
 // ========================

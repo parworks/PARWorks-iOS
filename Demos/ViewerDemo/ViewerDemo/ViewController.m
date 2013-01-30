@@ -38,14 +38,25 @@
 - (AROverlayView *)overlayViewForOverlay:(AROverlay *)overlay
 {
     AROverlayView *view = [[AROverlayView alloc] initWithOverlay:overlay];
-    view.backgroundColor = [UIColor redColor];
+    view.animDelegate = self;
+    view.backgroundColor = overlay.coverColor;
     return view;
 }
 
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
+
+- (void)focusOverlayView:(AROverlayView *)overlayView inParent:(ARAugmentedView *)parent
+{
+    
+}
+
+- (void)unfocusOverlayView:(AROverlayView *)overlayView inParent:(ARAugmentedView *)parent
+{
+    
+}
+
 
 @end

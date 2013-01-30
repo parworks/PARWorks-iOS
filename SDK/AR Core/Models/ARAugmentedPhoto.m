@@ -55,7 +55,7 @@
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:0 error:&err];
         
         if (err || ![dict isKindOfClass:[NSDictionary class]]) {
-            NSLog(@"%@", err);
+            NSLog(@"Error parsing JSON -- %@", err);
             return nil;
         }
         

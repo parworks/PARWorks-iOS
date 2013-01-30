@@ -42,5 +42,5 @@
         }
     }
     ],
-    "success": true
+    "success": 1
 }
