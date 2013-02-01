@@ -109,12 +109,15 @@
 - (void)parseInfo:(NSDictionary*)dict
 {
     self.address = [dict objectForKey: @"address" or: nil];
-    self.posterImageURL = [dict objectForKey: @"posterImageURL" or: nil];
+    self.posterImageURL = [NSURL URLWithString: [dict objectForKey: @"posterImageURL" or: nil]];
     self.posterImageOverlayContent = [dict objectForKey: @"posterImageOverlayContent" or: nil];
     self.totalAugmentedImages = [[dict objectForKey: @"numAugmentedImages" or: nil] intValue];
     self.description = [dict objectForKey: @"description" or: nil];
     self.location = CLLocationCoordinate2DMake([[dict objectForKey: @"lat" or: nil] doubleValue], [[dict objectForKey:@"lon" or: nil] doubleValue]);
-    self.recentlyAugmentedImageURLs = [dict objectForKey:@"recentlyAugmentedImageURLs" or: nil];   
+    self.recentlyAugmentedImageURLs = [dict objectForKey:@"recentlyAugmentedImageURLs" or: nil];
+    
+    if (self.posterImageURL == nil)
+        self.posterImageURL = [NSURL URLWithString: [_recentlyAugmentedImageURLs lastObject]];
 }
 
 #pragma mark Site Status
