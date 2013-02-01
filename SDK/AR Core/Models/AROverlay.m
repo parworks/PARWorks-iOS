@@ -22,16 +22,11 @@
 #import "AROverlay.h"
 #import "ARSite.h"
 #import "ASIHTTPRequest+JSONAdditions.h"
+#import "UIColor+Utils.h"
 
 @implementation AROverlay
 
-@synthesize site = _site;
-@synthesize points = _points;
-@synthesize ID = _ID;
-@synthesize siteImageIdentifier = _siteImageIdentifier;
-@synthesize name = _name;
-@synthesize content = _content;
-
+#pragma mark - Lifecycle
 - (id)initWithSiteImage:(ARSiteImage *)s
 {
     self = [super init];
@@ -50,10 +45,18 @@
 {
     self = [super init];
     if (self) {
-        [self setSiteImageIdentifier: [dict objectForKey: @"imageId"]];
-        [self setContent: [dict objectForKey:@"description"]];
-        [self setName: [dict objectForKey: @"name"]];
-        [self setID: [dict objectForKey: @"id"]];
+        self.ID = dict[@"id"];
+        self.content = dict[@"description"];
+        self.siteImageIdentifier = dict[@"imageId"];
+        self.name = dict[@"name"];
+
+        self.accuracy = dict[@"accuracy"];
+        self.title = dict[@"title"];
+        self.success = [dict[@"success"] intValue];
+        
+        [self setBoundaryPropertiesWithDictionary:dict[@"boundary"]];
+        [self setContentPropertiesWithDictionary:dict[@"content"]];
+        [self setCoverPropertiesWithDictionary:dict[@"cover"]];
         [self setupPointsFromDictionary: dict];
     }
     return self;
@@ -63,25 +66,126 @@
 {
     self = [super init];
     if (self) {
+        _ID = [aDecoder decodeObjectForKey:@"id"];
+        _content = [aDecoder decodeObjectForKey:@"content"];
+        _siteImageIdentifier = [aDecoder decodeObjectForKey:@"siteImageIdentifier"];
+        _name = [aDecoder decodeObjectForKey:@"name"];
+        _points = [aDecoder decodeObjectForKey:@"points"];
+        
+        _accuracy = [aDecoder decodeObjectForKey:@"accuracy"];
+        _title = [aDecoder decodeObjectForKey:@"title"];
+        _success = [aDecoder decodeBoolForKey:@"success"];
+        
+        _boundaryType = [aDecoder decodeIntegerForKey:@"boundaryType"];
+        _boundaryColor = [aDecoder decodeObjectForKey:@"boundaryColor"];
+        
+        _contentType = [aDecoder decodeIntegerForKey:@"contentType"];
+        _contentSize = [aDecoder decodeIntegerForKey:@"contentSize"];
+        _contentProvider = [aDecoder decodeObjectForKey:@"contentProvider"];
+        
+        _coverType = [aDecoder decodeIntegerForKey:@"coverType"];
+        _coverTransparency = [aDecoder decodeIntegerForKey:@"coverTransparency"];
+        _coverColor = [aDecoder decodeObjectForKey:@"coverColor"];
+        _coverProvider = [aDecoder decodeObjectForKey:@"coverProvider"];
         _site = [aDecoder decodeObjectForKey: @"site"];
-        _content = [aDecoder decodeObjectForKey: @"content"];
-        _points = [aDecoder decodeObjectForKey: @"points"];
-        _name = [aDecoder decodeObjectForKey: @"name"];
-        _ID = [aDecoder decodeObjectForKey: @"id"];
-        _siteImageIdentifier = [aDecoder decodeObjectForKey: @"siteImageIdentifier"];
     }
     return self;
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
-    [aCoder encodeObject: _site forKey: @"site"];
-    [aCoder encodeObject: _points forKey: @"points"];
-    [aCoder encodeObject: _siteImageIdentifier forKey: @"siteImageIdentifier"];
-    [aCoder encodeObject: _content forKey: @"content"];
     [aCoder encodeObject: _ID forKey: @"id"];
+    [aCoder encodeObject: _content forKey: @"content"];
+    [aCoder encodeObject: _siteImageIdentifier forKey: @"siteImageIdentifier"];
     [aCoder encodeObject: _name forKey: @"name"];
+    [aCoder encodeObject: _points forKey: @"points"];
+
+    [aCoder encodeObject: _accuracy forKey: @"accuracy"];
+    [aCoder encodeObject: _title forKey: @"title"];
+    [aCoder encodeBool: _success forKey:@"success"];
+    
+    [aCoder encodeInteger: _boundaryType forKey: @"boundaryType"];
+    [aCoder encodeObject: _boundaryColor forKey: @"boundaryColor"];
+
+    [aCoder encodeInteger: _contentType forKey: @"contentType"];
+    [aCoder encodeInteger: _contentSize forKey: @"contentSize"];
+    [aCoder encodeObject: _contentProvider forKey: @"contentProvider"];
+    
+    [aCoder encodeInteger: _coverType forKey: @"coverType"];
+    [aCoder encodeInteger: _coverTransparency forKey: @"coverTransparency"];
+    [aCoder encodeObject: _coverColor forKey: @"coverColor"];
+    [aCoder encodeObject: _coverProvider forKey: @"coverProvider"];
+    [aCoder encodeObject: _site forKey: @"site"];
 }
+
+
+#pragma mark - Parsing Convenience
+- (void)setBoundaryPropertiesWithDictionary:(NSDictionary *)dict
+{
+    if (!dict) return;
+
+    _boundaryColor = [UIColor colorWithString:dict[@"color"]];
+
+    NSString *type = dict[@"type"];
+    if ([type.lowercaseString isEqualToString:@"hide"]) {
+        _boundaryType = AROverlayBoundaryType_Hidden;
+    } if ([type.lowercaseString isEqualToString:@"dashed"]) {
+        _boundaryType = AROverlayBoundaryType_Dashed;
+    } else {
+        _boundaryType = AROverlayBoundaryType_Solid;
+    }
+}
+
+- (void)setContentPropertiesWithDictionary:(NSDictionary *)dict
+{
+    if (!dict) return;
+    
+    _contentProvider = dict[@"provider"];
+
+    NSString *size = dict[@"size"];
+    if ([size.lowercaseString isEqualToString:@"small"]) {
+        _contentSize = AROverlayContentSize_Small;
+    } else if ([size.lowercaseString isEqualToString:@"large"]) {
+        _contentSize = AROverlayContentSize_Large;
+    } else if ([size.lowercaseString isEqualToString:@"fullscreen"]) {
+        _contentSize = AROverlayContentSize_Fullscreen;
+    } else {
+        _contentSize = AROverlayContentSize_Medium;
+    }
+    
+    NSString *type = dict[@"type"];
+    if ([type.lowercaseString isEqualToString:@"url"]) {
+        _contentType = AROverlayContentType_URL;
+    } else if ([type.lowercaseString isEqualToString:@"video"]) {
+        _contentType = AROverlayContentType_Video;
+    } else if ([type.lowercaseString isEqualToString:@"image"]) {
+        _contentType = AROverlayContentType_Image;
+    } else if ([type.lowercaseString isEqualToString:@"audio"]) {
+        _contentType = AROverlayContentType_Audio;
+    } else {
+        _contentType = AROverlayContentType_Text;
+    }
+}
+
+- (void)setCoverPropertiesWithDictionary:(NSDictionary *)dict
+{
+    if (!dict) return;
+    
+    _coverColor = [UIColor colorWithString:dict[@"color"]];
+    _coverTransparency = dict[@"transparency"] ? [dict[@"transparency"] intValue] : 100;
+    _coverProvider = dict[@"provider"];
+    
+    NSString *type = dict[@"type"];
+    if ([type.lowercaseString isEqualToString:@"hide"]) {
+        _coverType = AROverlayCoverType_Hidden;
+    } else if ([type.lowercaseString isEqualToString:@"image"]) {
+        _coverType = AROverlayCoverType_Image;
+    } else {
+        _coverType = AROverlayCoverType_Regular;
+    }
+}
+
+
 
 - (BOOL)isSaved
 {
@@ -123,6 +227,8 @@
     
     return ([[self points] isEqual: [object points]] && [[self description] isEqualToString: [object description]]);
 }
+
+
 
 #pragma mark Adding Points to the Overlay
 

@@ -66,15 +66,18 @@ typedef enum {
 @end
 
 
-
 @interface AROverlayView : UIControl
 
+// Overlay specification properties
+@property(nonatomic, copy) NSString *title;
+
+// TODO: Move into overlay object
+@property(nonatomic, strong) AROverlay *overlay;
 @property(nonatomic, strong) NSArray * points;
 @property(nonatomic, strong) NSArray * scaledPoints;
 @property(nonatomic, weak) id<AROverlayViewAnimationDelegate> animDelegate;
-
 @property(nonatomic, assign) AROverlayAttachmentStyle attachmentStyle;
-
+ 
 // ========================
 // @name Lifecycle
 // ========================

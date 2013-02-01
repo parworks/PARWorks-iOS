@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A094B67716B8E2C6004779A7 /* UIColor+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = A094B67616B8E2C6004779A7 /* UIColor+Utils.m */; };
+		A094B67B16B8EDBD004779A7 /* AROvelayViewFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = A094B67A16B8EDBD004779A7 /* AROvelayViewFactory.m */; };
 		A0A8166816B4C8C4003554D2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0A8166716B4C8C4003554D2 /* UIKit.framework */; };
 		A0A8166A16B4C8C4003554D2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0A8166916B4C8C4003554D2 /* Foundation.framework */; };
 		A0A8166C16B4C8C5003554D2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0A8166B16B4C8C4003554D2 /* CoreGraphics.framework */; };
@@ -107,6 +109,10 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A094B67516B8E2C6004779A7 /* UIColor+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Utils.h"; sourceTree = "<group>"; };
+		A094B67616B8E2C6004779A7 /* UIColor+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Utils.m"; sourceTree = "<group>"; };
+		A094B67916B8EDBD004779A7 /* AROvelayViewFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AROvelayViewFactory.h; sourceTree = "<group>"; };
+		A094B67A16B8EDBD004779A7 /* AROvelayViewFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AROvelayViewFactory.m; sourceTree = "<group>"; };
 		A0A8166316B4C8C4003554D2 /* ViewerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ViewerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0A8166716B4C8C4003554D2 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		A0A8166916B4C8C4003554D2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -288,6 +294,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		A094B67816B8ECB6004779A7 /* OverlayViewFactory */ = {
+			isa = PBXGroup;
+			children = (
+				A094B67916B8EDBD004779A7 /* AROvelayViewFactory.h */,
+				A094B67A16B8EDBD004779A7 /* AROvelayViewFactory.m */,
+			);
+			name = OverlayViewFactory;
+			sourceTree = "<group>";
+		};
 		A0A8165816B4C8C4003554D2 = {
 			isa = PBXGroup;
 			children = (
@@ -328,6 +343,7 @@
 		A0A8166D16B4C8C5003554D2 /* ViewerDemo */ = {
 			isa = PBXGroup;
 			children = (
+				A094B67816B8ECB6004779A7 /* OverlayViewFactory */,
 				A0A8175D16B4C97B003554D2 /* AR Core */,
 				A0A8167616B4C8C5003554D2 /* AppDelegate.h */,
 				A0A8167716B4C8C5003554D2 /* AppDelegate.m */,
@@ -391,6 +407,8 @@
 			children = (
 				A0A8176816B4C97B003554D2 /* ASIHTTPRequest+JSONAdditions.h */,
 				A0A8176916B4C97B003554D2 /* ASIHTTPRequest+JSONAdditions.m */,
+				A094B67516B8E2C6004779A7 /* UIColor+Utils.h */,
+				A094B67616B8E2C6004779A7 /* UIColor+Utils.m */,
 				A0A8176A16B4C97B003554D2 /* NSData+Base64Encode.h */,
 				A0A8176B16B4C97B003554D2 /* NSData+Base64Encode.m */,
 				A0A8176C16B4C97B003554D2 /* UIView+ContentScaling.h */,
@@ -764,6 +782,8 @@
 				A0A8182916B4C97B003554D2 /* GridCellView.m in Sources */,
 				A0A8182A16B4C97B003554D2 /* GridView.m in Sources */,
 				A0A8182B16B4C97B003554D2 /* PointCloudView.m in Sources */,
+				A094B67716B8E2C6004779A7 /* UIColor+Utils.m in Sources */,
+				A094B67B16B8EDBD004779A7 /* AROvelayViewFactory.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -844,6 +864,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ViewerDemo/ViewerDemo-Prefix.pch";
 				INFOPLIST_FILE = "ViewerDemo/ViewerDemo-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -855,6 +876,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ViewerDemo/ViewerDemo-Prefix.pch";
 				INFOPLIST_FILE = "ViewerDemo/ViewerDemo-Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -879,6 +901,7 @@
 				A0A8168916B4C8C5003554D2 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
