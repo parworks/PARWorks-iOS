@@ -20,10 +20,9 @@
 
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
-
+#import "AROverlay.h"
 
 @class ARAugmentedView;
-@class AROverlay;
 @class AROverlayView;
 
 
@@ -68,15 +67,13 @@ typedef enum {
 
 @interface AROverlayView : UIControl
 
-// Overlay specification properties
-@property(nonatomic, copy) NSString *title;
+@property(nonatomic, weak) UIView *outlineView;
+@property(nonatomic, strong) UIView *coverView;
 
-// TODO: Move into overlay object
+
 @property(nonatomic, strong) AROverlay *overlay;
-@property(nonatomic, strong) NSArray * points;
-@property(nonatomic, strong) NSArray * scaledPoints;
-@property(nonatomic, weak) id<AROverlayViewAnimationDelegate> animDelegate;
 @property(nonatomic, assign) AROverlayAttachmentStyle attachmentStyle;
+@property(nonatomic, weak) id<AROverlayViewAnimationDelegate> animDelegate;
  
 // ========================
 // @name Lifecycle
@@ -100,9 +97,26 @@ typedef enum {
 
 /** Creates a new overlay view using the AROverlay provided. 
 
-  @param model The overlay that this AROverlayView will display.
+  @param overlay The overlay that this AROverlayView will display.
 */
-- (id)initWithOverlay:(AROverlay*)model;
+- (id)initWithOverlay:(AROverlay*)overlay;
+
+
+/** Creates a new overlay view using the frame and AROverlay provided.
+ @param frame The frame for the view when it has no transform applied.
+ @param overlay The overlay that this AROverlayView will display.
+ */
+- (id)initWithFrame:(CGRect)frame overlay:(AROverlay *)overlay;
+
+
+// ========================
+// @name Styling
+// ========================
+/** Styles the view according to the AROverlay properties.
+ @param overlay The overlay which will be used to style the view.
+ */
+- (void)styleWithOverlay:(AROverlay *)overlay;
+
 
 // ========================
 // @name Presentation

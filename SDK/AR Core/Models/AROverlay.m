@@ -122,7 +122,11 @@
 #pragma mark - Parsing Convenience
 - (void)setBoundaryPropertiesWithDictionary:(NSDictionary *)dict
 {
-    if (!dict) return;
+    if (!dict) {
+        _boundaryColor = [UIColor magentaColor];
+        _boundaryType = AROverlayBoundaryType_Solid;
+        return;
+    }
 
     _boundaryColor = [UIColor colorWithString:dict[@"color"]];
 
@@ -138,7 +142,12 @@
 
 - (void)setContentPropertiesWithDictionary:(NSDictionary *)dict
 {
-    if (!dict) return;
+    if (!dict) {
+        _contentProvider = @"";
+        _contentSize = AROverlayContentSize_Medium;
+        _contentType = AROverlayContentType_Text;
+        return;
+    }
     
     _contentProvider = dict[@"provider"];
 
@@ -169,7 +178,13 @@
 
 - (void)setCoverPropertiesWithDictionary:(NSDictionary *)dict
 {
-    if (!dict) return;
+    if (!dict) {
+        _coverColor = [UIColor yellowColor];
+        _coverTransparency = 100;
+        _coverProvider = @"";
+        _coverType = AROverlayCoverType_Regular;
+        return;
+    }
     
     _coverColor = [UIColor colorWithString:dict[@"color"]];
     _coverTransparency = dict[@"transparency"] ? [dict[@"transparency"] intValue] : 100;

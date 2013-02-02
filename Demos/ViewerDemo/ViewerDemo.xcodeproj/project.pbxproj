@@ -7,8 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A034393E16BB7842000CC937 /* AROverlayOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = A034393D16BB7842000CC937 /* AROverlayOutlineView.m */; };
 		A094B67716B8E2C6004779A7 /* UIColor+Utils.m in Sources */ = {isa = PBXBuildFile; fileRef = A094B67616B8E2C6004779A7 /* UIColor+Utils.m */; };
-		A094B67B16B8EDBD004779A7 /* AROvelayViewFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = A094B67A16B8EDBD004779A7 /* AROvelayViewFactory.m */; };
+		A094B67B16B8EDBD004779A7 /* AROverlayViewFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = A094B67A16B8EDBD004779A7 /* AROverlayViewFactory.m */; };
+		A0A44D3416BCEFED003809D3 /* AROverlayVideoView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0A44D3316BCEFED003809D3 /* AROverlayVideoView.m */; };
+		A0A44D3716BCF005003809D3 /* AROverlayAudioView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0A44D3616BCF005003809D3 /* AROverlayAudioView.m */; };
+		A0A44D3A16BCF016003809D3 /* AROverlayTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0A44D3916BCF015003809D3 /* AROverlayTextView.m */; };
+		A0A44D3D16BCF03A003809D3 /* AROverlayImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0A44D3C16BCF03A003809D3 /* AROverlayImageView.m */; };
 		A0A8166816B4C8C4003554D2 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0A8166716B4C8C4003554D2 /* UIKit.framework */; };
 		A0A8166A16B4C8C4003554D2 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0A8166916B4C8C4003554D2 /* Foundation.framework */; };
 		A0A8166C16B4C8C5003554D2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0A8166B16B4C8C4003554D2 /* CoreGraphics.framework */; };
@@ -79,7 +84,6 @@
 		A0A8182216B4C97B003554D2 /* ARAugmentedView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0A817D416B4C97B003554D2 /* ARAugmentedView.m */; };
 		A0A8182316B4C97B003554D2 /* AROverlayBuilderAnnotationView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0A817D616B4C97B003554D2 /* AROverlayBuilderAnnotationView.m */; };
 		A0A8182416B4C97B003554D2 /* AROverlayBuilderView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0A817D816B4C97B003554D2 /* AROverlayBuilderView.m */; };
-		A0A8182516B4C97B003554D2 /* AROverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0A817DA16B4C97B003554D2 /* AROverlayView.m */; };
 		A0A8182616B4C97B003554D2 /* ARSiteImagesInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0A817DC16B4C97B003554D2 /* ARSiteImagesInfoView.m */; };
 		A0A8182716B4C97B003554D2 /* CachedImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0A817DE16B4C97B003554D2 /* CachedImageView.m */; };
 		A0A8182816B4C97B003554D2 /* GRCameraOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0A817E016B4C97B003554D2 /* GRCameraOverlayView.m */; };
@@ -96,23 +100,29 @@
 		A0A8183B16B4CADF003554D2 /* OpenGLES.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0A8183A16B4CADF003554D2 /* OpenGLES.framework */; };
 		A0A8183D16B4CAE4003554D2 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0A8183C16B4CAE4003554D2 /* GLKit.framework */; };
 		A0A8184016B4CBF3003554D2 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A0A8183F16B4CBF3003554D2 /* libz.dylib */; };
-		A0A8186816B4CDD4003554D2 /* tab_nearby.png in Resources */ = {isa = PBXBuildFile; fileRef = A0A8185D16B4CDD4003554D2 /* tab_nearby.png */; };
-		A0A8186916B4CDD4003554D2 /* tab_nearby@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A0A8185E16B4CDD4003554D2 /* tab_nearby@2x.png */; };
-		A0A8186A16B4CDD4003554D2 /* tab_search.png in Resources */ = {isa = PBXBuildFile; fileRef = A0A8185F16B4CDD4003554D2 /* tab_search.png */; };
-		A0A8186B16B4CDD4003554D2 /* tab_search@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A0A8186016B4CDD4003554D2 /* tab_search@2x.png */; };
-		A0A8186C16B4CDD4003554D2 /* tab_tech.png in Resources */ = {isa = PBXBuildFile; fileRef = A0A8186116B4CDD4003554D2 /* tab_tech.png */; };
-		A0A8186D16B4CDD4003554D2 /* tab_tech@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A0A8186216B4CDD4003554D2 /* tab_tech@2x.png */; };
-		A0A8186E16B4CDD4003554D2 /* tab_trending.png in Resources */ = {isa = PBXBuildFile; fileRef = A0A8186316B4CDD4003554D2 /* tab_trending.png */; };
-		A0A8186F16B4CDD4003554D2 /* tab_trending@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A0A8186416B4CDD4003554D2 /* tab_trending@2x.png */; };
-		A0A8187216B4CDF9003554D2 /* overlay_spec_example_1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A0A8187016B4CDF9003554D2 /* overlay_spec_example_1.jpg */; };
-		A0A8187316B4CDF9003554D2 /* overlay_spec_example_1.pm in Resources */ = {isa = PBXBuildFile; fileRef = A0A8187116B4CDF9003554D2 /* overlay_spec_example_1.pm */; };
+		A0E2005E16BA4DAB003108FD /* overlay_spec_example_1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A0E2005C16BA4DAB003108FD /* overlay_spec_example_1.jpg */; };
+		A0E2005F16BA4DAB003108FD /* overlay_spec_example_1.pm in Resources */ = {isa = PBXBuildFile; fileRef = A0E2005D16BA4DAB003108FD /* overlay_spec_example_1.pm */; };
+		A0FB759516BA2E90008E8707 /* NSContainers+NullHandlers.m in Sources */ = {isa = PBXBuildFile; fileRef = A0FB759416BA2E90008E8707 /* NSContainers+NullHandlers.m */; };
+		A0FB75A316BA3186008E8707 /* AROverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0FB75A216BA3186008E8707 /* AROverlayView.m */; };
+		A0FB75A616BA31B7008E8707 /* AROverlayWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0FB75A516BA31B7008E8707 /* AROverlayWebView.m */; };
+		A0FB75B116BA48E2008E8707 /* AROverlayView+Animations.m in Sources */ = {isa = PBXBuildFile; fileRef = A0FB75B016BA48E2008E8707 /* AROverlayView+Animations.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		A034393C16BB7842000CC937 /* AROverlayOutlineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AROverlayOutlineView.h; sourceTree = "<group>"; };
+		A034393D16BB7842000CC937 /* AROverlayOutlineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AROverlayOutlineView.m; sourceTree = "<group>"; };
 		A094B67516B8E2C6004779A7 /* UIColor+Utils.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIColor+Utils.h"; sourceTree = "<group>"; };
 		A094B67616B8E2C6004779A7 /* UIColor+Utils.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIColor+Utils.m"; sourceTree = "<group>"; };
-		A094B67916B8EDBD004779A7 /* AROvelayViewFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AROvelayViewFactory.h; sourceTree = "<group>"; };
-		A094B67A16B8EDBD004779A7 /* AROvelayViewFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AROvelayViewFactory.m; sourceTree = "<group>"; };
+		A094B67916B8EDBD004779A7 /* AROverlayViewFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AROverlayViewFactory.h; sourceTree = "<group>"; };
+		A094B67A16B8EDBD004779A7 /* AROverlayViewFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AROverlayViewFactory.m; sourceTree = "<group>"; };
+		A0A44D3216BCEFEC003809D3 /* AROverlayVideoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AROverlayVideoView.h; sourceTree = "<group>"; };
+		A0A44D3316BCEFED003809D3 /* AROverlayVideoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AROverlayVideoView.m; sourceTree = "<group>"; };
+		A0A44D3516BCF004003809D3 /* AROverlayAudioView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AROverlayAudioView.h; sourceTree = "<group>"; };
+		A0A44D3616BCF005003809D3 /* AROverlayAudioView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AROverlayAudioView.m; sourceTree = "<group>"; };
+		A0A44D3816BCF015003809D3 /* AROverlayTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AROverlayTextView.h; sourceTree = "<group>"; };
+		A0A44D3916BCF015003809D3 /* AROverlayTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AROverlayTextView.m; sourceTree = "<group>"; };
+		A0A44D3B16BCF03A003809D3 /* AROverlayImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AROverlayImageView.h; sourceTree = "<group>"; };
+		A0A44D3C16BCF03A003809D3 /* AROverlayImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AROverlayImageView.m; sourceTree = "<group>"; };
 		A0A8166316B4C8C4003554D2 /* ViewerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ViewerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A0A8166716B4C8C4003554D2 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
 		A0A8166916B4C8C4003554D2 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
@@ -233,8 +243,6 @@
 		A0A817D616B4C97B003554D2 /* AROverlayBuilderAnnotationView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AROverlayBuilderAnnotationView.m; sourceTree = "<group>"; };
 		A0A817D716B4C97B003554D2 /* AROverlayBuilderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AROverlayBuilderView.h; sourceTree = "<group>"; };
 		A0A817D816B4C97B003554D2 /* AROverlayBuilderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AROverlayBuilderView.m; sourceTree = "<group>"; };
-		A0A817D916B4C97B003554D2 /* AROverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AROverlayView.h; sourceTree = "<group>"; };
-		A0A817DA16B4C97B003554D2 /* AROverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AROverlayView.m; sourceTree = "<group>"; };
 		A0A817DB16B4C97B003554D2 /* ARSiteImagesInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARSiteImagesInfoView.h; sourceTree = "<group>"; };
 		A0A817DC16B4C97B003554D2 /* ARSiteImagesInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARSiteImagesInfoView.m; sourceTree = "<group>"; };
 		A0A817DD16B4C97B003554D2 /* CachedImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CachedImageView.h; sourceTree = "<group>"; };
@@ -258,16 +266,16 @@
 		A0A8183C16B4CAE4003554D2 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		A0A8183E16B4CB4B003554D2 /* PARWorks SDK-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "PARWorks SDK-Prefix.pch"; sourceTree = "<group>"; };
 		A0A8183F16B4CBF3003554D2 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
-		A0A8185D16B4CDD4003554D2 /* tab_nearby.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab_nearby.png; sourceTree = "<group>"; };
-		A0A8185E16B4CDD4003554D2 /* tab_nearby@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_nearby@2x.png"; sourceTree = "<group>"; };
-		A0A8185F16B4CDD4003554D2 /* tab_search.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab_search.png; sourceTree = "<group>"; };
-		A0A8186016B4CDD4003554D2 /* tab_search@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_search@2x.png"; sourceTree = "<group>"; };
-		A0A8186116B4CDD4003554D2 /* tab_tech.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab_tech.png; sourceTree = "<group>"; };
-		A0A8186216B4CDD4003554D2 /* tab_tech@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_tech@2x.png"; sourceTree = "<group>"; };
-		A0A8186316B4CDD4003554D2 /* tab_trending.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tab_trending.png; sourceTree = "<group>"; };
-		A0A8186416B4CDD4003554D2 /* tab_trending@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab_trending@2x.png"; sourceTree = "<group>"; };
-		A0A8187016B4CDF9003554D2 /* overlay_spec_example_1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; name = overlay_spec_example_1.jpg; path = "../../Example Overlays/overlay_spec_example_1.jpg"; sourceTree = "<group>"; };
-		A0A8187116B4CDF9003554D2 /* overlay_spec_example_1.pm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; name = overlay_spec_example_1.pm; path = "../../Example Overlays/overlay_spec_example_1.pm"; sourceTree = "<group>"; };
+		A0E2005C16BA4DAB003108FD /* overlay_spec_example_1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = overlay_spec_example_1.jpg; sourceTree = "<group>"; };
+		A0E2005D16BA4DAB003108FD /* overlay_spec_example_1.pm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = overlay_spec_example_1.pm; sourceTree = "<group>"; };
+		A0FB759316BA2E90008E8707 /* NSContainers+NullHandlers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSContainers+NullHandlers.h"; sourceTree = "<group>"; };
+		A0FB759416BA2E90008E8707 /* NSContainers+NullHandlers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSContainers+NullHandlers.m"; sourceTree = "<group>"; };
+		A0FB75A116BA3186008E8707 /* AROverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AROverlayView.h; sourceTree = "<group>"; };
+		A0FB75A216BA3186008E8707 /* AROverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AROverlayView.m; sourceTree = "<group>"; };
+		A0FB75A416BA31B7008E8707 /* AROverlayWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AROverlayWebView.h; sourceTree = "<group>"; };
+		A0FB75A516BA31B7008E8707 /* AROverlayWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AROverlayWebView.m; sourceTree = "<group>"; };
+		A0FB75AF16BA48E2008E8707 /* AROverlayView+Animations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AROverlayView+Animations.h"; sourceTree = "<group>"; };
+		A0FB75B016BA48E2008E8707 /* AROverlayView+Animations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AROverlayView+Animations.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -297,8 +305,8 @@
 		A094B67816B8ECB6004779A7 /* OverlayViewFactory */ = {
 			isa = PBXGroup;
 			children = (
-				A094B67916B8EDBD004779A7 /* AROvelayViewFactory.h */,
-				A094B67A16B8EDBD004779A7 /* AROvelayViewFactory.m */,
+				A094B67916B8EDBD004779A7 /* AROverlayViewFactory.h */,
+				A094B67A16B8EDBD004779A7 /* AROverlayViewFactory.m */,
 			);
 			name = OverlayViewFactory;
 			sourceTree = "<group>";
@@ -350,7 +358,7 @@
 				A0A8167F16B4C8C5003554D2 /* ViewController.h */,
 				A0A8168016B4C8C5003554D2 /* ViewController.m */,
 				A0A8168216B4C8C5003554D2 /* ViewController.xib */,
-				A0A8185916B4CDD1003554D2 /* Resources */,
+				A0E2005B16BA4DAB003108FD /* Resources */,
 				A0A8166E16B4C8C5003554D2 /* Supporting Files */,
 			);
 			path = ViewerDemo;
@@ -409,12 +417,16 @@
 				A0A8176916B4C97B003554D2 /* ASIHTTPRequest+JSONAdditions.m */,
 				A094B67516B8E2C6004779A7 /* UIColor+Utils.h */,
 				A094B67616B8E2C6004779A7 /* UIColor+Utils.m */,
+				A0FB759316BA2E90008E8707 /* NSContainers+NullHandlers.h */,
+				A0FB759416BA2E90008E8707 /* NSContainers+NullHandlers.m */,
 				A0A8176A16B4C97B003554D2 /* NSData+Base64Encode.h */,
 				A0A8176B16B4C97B003554D2 /* NSData+Base64Encode.m */,
 				A0A8176C16B4C97B003554D2 /* UIView+ContentScaling.h */,
 				A0A8176D16B4C97B003554D2 /* UIView+ContentScaling.m */,
 				A0A8176E16B4C97B003554D2 /* UIViewAdditions.h */,
 				A0A8176F16B4C97B003554D2 /* UIViewAdditions.m */,
+				A0FB75AF16BA48E2008E8707 /* AROverlayView+Animations.h */,
+				A0FB75B016BA48E2008E8707 /* AROverlayView+Animations.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -593,6 +605,7 @@
 		A0A817D016B4C97B003554D2 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A0FB75A016BA3186008E8707 /* Overlay */,
 				A0A817D116B4C97B003554D2 /* AdOverlayView.h */,
 				A0A817D216B4C97B003554D2 /* AdOverlayView.m */,
 				A0A817D316B4C97B003554D2 /* ARAugmentedView.h */,
@@ -601,8 +614,6 @@
 				A0A817D616B4C97B003554D2 /* AROverlayBuilderAnnotationView.m */,
 				A0A817D716B4C97B003554D2 /* AROverlayBuilderView.h */,
 				A0A817D816B4C97B003554D2 /* AROverlayBuilderView.m */,
-				A0A817D916B4C97B003554D2 /* AROverlayView.h */,
-				A0A817DA16B4C97B003554D2 /* AROverlayView.m */,
 				A0A817DB16B4C97B003554D2 /* ARSiteImagesInfoView.h */,
 				A0A817DC16B4C97B003554D2 /* ARSiteImagesInfoView.m */,
 				A0A817DD16B4C97B003554D2 /* CachedImageView.h */,
@@ -619,22 +630,34 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		A0A8185916B4CDD1003554D2 /* Resources */ = {
+		A0E2005B16BA4DAB003108FD /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				A0A8187016B4CDF9003554D2 /* overlay_spec_example_1.jpg */,
-				A0A8187116B4CDF9003554D2 /* overlay_spec_example_1.pm */,
-				A0A8185D16B4CDD4003554D2 /* tab_nearby.png */,
-				A0A8185E16B4CDD4003554D2 /* tab_nearby@2x.png */,
-				A0A8185F16B4CDD4003554D2 /* tab_search.png */,
-				A0A8186016B4CDD4003554D2 /* tab_search@2x.png */,
-				A0A8186116B4CDD4003554D2 /* tab_tech.png */,
-				A0A8186216B4CDD4003554D2 /* tab_tech@2x.png */,
-				A0A8186316B4CDD4003554D2 /* tab_trending.png */,
-				A0A8186416B4CDD4003554D2 /* tab_trending@2x.png */,
+				A0E2005C16BA4DAB003108FD /* overlay_spec_example_1.jpg */,
+				A0E2005D16BA4DAB003108FD /* overlay_spec_example_1.pm */,
 			);
-			name = Resources;
-			path = ../../../PARViewer/Resources;
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		A0FB75A016BA3186008E8707 /* Overlay */ = {
+			isa = PBXGroup;
+			children = (
+				A0FB75A116BA3186008E8707 /* AROverlayView.h */,
+				A0FB75A216BA3186008E8707 /* AROverlayView.m */,
+				A0FB75A416BA31B7008E8707 /* AROverlayWebView.h */,
+				A0FB75A516BA31B7008E8707 /* AROverlayWebView.m */,
+				A0A44D3B16BCF03A003809D3 /* AROverlayImageView.h */,
+				A0A44D3C16BCF03A003809D3 /* AROverlayImageView.m */,
+				A0A44D3216BCEFEC003809D3 /* AROverlayVideoView.h */,
+				A0A44D3316BCEFED003809D3 /* AROverlayVideoView.m */,
+				A0A44D3516BCF004003809D3 /* AROverlayAudioView.h */,
+				A0A44D3616BCF005003809D3 /* AROverlayAudioView.m */,
+				A0A44D3816BCF015003809D3 /* AROverlayTextView.h */,
+				A0A44D3916BCF015003809D3 /* AROverlayTextView.m */,
+				A034393C16BB7842000CC937 /* AROverlayOutlineView.h */,
+				A034393D16BB7842000CC937 /* AROverlayOutlineView.m */,
+			);
+			path = Overlay;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -714,16 +737,8 @@
 				A0A8181E16B4C97B003554D2 /* toolbar_hide@2x.png in Resources */,
 				A0A8181F16B4C97B003554D2 /* toolbar_show.png in Resources */,
 				A0A8182016B4C97B003554D2 /* toolbar_show@2x.png in Resources */,
-				A0A8186816B4CDD4003554D2 /* tab_nearby.png in Resources */,
-				A0A8186916B4CDD4003554D2 /* tab_nearby@2x.png in Resources */,
-				A0A8186A16B4CDD4003554D2 /* tab_search.png in Resources */,
-				A0A8186B16B4CDD4003554D2 /* tab_search@2x.png in Resources */,
-				A0A8186C16B4CDD4003554D2 /* tab_tech.png in Resources */,
-				A0A8186D16B4CDD4003554D2 /* tab_tech@2x.png in Resources */,
-				A0A8186E16B4CDD4003554D2 /* tab_trending.png in Resources */,
-				A0A8186F16B4CDD4003554D2 /* tab_trending@2x.png in Resources */,
-				A0A8187216B4CDF9003554D2 /* overlay_spec_example_1.jpg in Resources */,
-				A0A8187316B4CDF9003554D2 /* overlay_spec_example_1.pm in Resources */,
+				A0E2005E16BA4DAB003108FD /* overlay_spec_example_1.jpg in Resources */,
+				A0E2005F16BA4DAB003108FD /* overlay_spec_example_1.pm in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -775,7 +790,6 @@
 				A0A8182216B4C97B003554D2 /* ARAugmentedView.m in Sources */,
 				A0A8182316B4C97B003554D2 /* AROverlayBuilderAnnotationView.m in Sources */,
 				A0A8182416B4C97B003554D2 /* AROverlayBuilderView.m in Sources */,
-				A0A8182516B4C97B003554D2 /* AROverlayView.m in Sources */,
 				A0A8182616B4C97B003554D2 /* ARSiteImagesInfoView.m in Sources */,
 				A0A8182716B4C97B003554D2 /* CachedImageView.m in Sources */,
 				A0A8182816B4C97B003554D2 /* GRCameraOverlayView.m in Sources */,
@@ -783,7 +797,16 @@
 				A0A8182A16B4C97B003554D2 /* GridView.m in Sources */,
 				A0A8182B16B4C97B003554D2 /* PointCloudView.m in Sources */,
 				A094B67716B8E2C6004779A7 /* UIColor+Utils.m in Sources */,
-				A094B67B16B8EDBD004779A7 /* AROvelayViewFactory.m in Sources */,
+				A094B67B16B8EDBD004779A7 /* AROverlayViewFactory.m in Sources */,
+				A0FB759516BA2E90008E8707 /* NSContainers+NullHandlers.m in Sources */,
+				A0FB75A316BA3186008E8707 /* AROverlayView.m in Sources */,
+				A0FB75A616BA31B7008E8707 /* AROverlayWebView.m in Sources */,
+				A0FB75B116BA48E2008E8707 /* AROverlayView+Animations.m in Sources */,
+				A034393E16BB7842000CC937 /* AROverlayOutlineView.m in Sources */,
+				A0A44D3416BCEFED003809D3 /* AROverlayVideoView.m in Sources */,
+				A0A44D3716BCF005003809D3 /* AROverlayAudioView.m in Sources */,
+				A0A44D3A16BCF016003809D3 /* AROverlayTextView.m in Sources */,
+				A0A44D3D16BCF03A003809D3 /* AROverlayImageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

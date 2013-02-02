@@ -8,6 +8,7 @@
 
 
 #import "ViewController.h"
+#import "AROverlayViewFactory.h"
 
 @interface ViewController ()
 
@@ -35,27 +36,9 @@
     [self.view addSubview:augView];    
 }
 
-- (AROverlayView *)overlayViewForOverlay:(AROverlay *)overlay
-{
-    AROverlayView *view = [[AROverlayView alloc] initWithOverlay:overlay];
-    view.animDelegate = self;
-    view.backgroundColor = overlay.coverColor;
-    return view;
-}
-
 - (void)didReceiveMemoryWarning
 {
     [super didReceiveMemoryWarning];
-}
-
-- (void)focusOverlayView:(AROverlayView *)overlayView inParent:(ARAugmentedView *)parent
-{
-    
-}
-
-- (void)unfocusOverlayView:(AROverlayView *)overlayView inParent:(ARAugmentedView *)parent
-{
-    
 }
 
 

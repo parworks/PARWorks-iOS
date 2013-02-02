@@ -24,6 +24,7 @@
 #import "AROverlayView.h"
 
 @class AROverlay;
+@class AROverlayOutlineView;
 
 /** 
     This protocol provides a way for users to supply their own
@@ -33,12 +34,12 @@
 @optional
 
 /** Asks the delegate for an overlay view based on the overlay object passed.
- 
     @param overlay - The overlay model object that should back the overlay view.
-    
     @return A newly initialized AROverlayView for display. 
  */
 - (AROverlayView *)overlayViewForOverlay:(AROverlay *)overlay;
+
+- (AROverlayOutlineView *)outlineViewForOverlay:(AROverlay *)overlay;
 @end
 
 
@@ -62,6 +63,9 @@
 
 /// A container for all overlay views being displayed in the view.
 @property(nonatomic, strong, readonly) NSMutableArray *overlayViews;
+
+/// A container for all the outline views being displayed in the view.
+@property(nonatomic, strong, readonly) NSMutableArray *outlineViews;
 
 /// The image view that displays the image taken by the client.
 @property(nonatomic, strong) UIImageView * overlayImageView;

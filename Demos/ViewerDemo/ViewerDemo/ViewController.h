@@ -9,6 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "ARAugmentedView.h"
 
-@interface ViewController : UIViewController <ARAugmentedViewDelegate, AROverlayViewAnimationDelegate>
+@interface ViewController : UIViewController <ARAugmentedViewDelegate>
 
 @end

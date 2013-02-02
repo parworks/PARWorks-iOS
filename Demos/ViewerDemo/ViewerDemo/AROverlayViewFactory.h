@@ -11,8 +11,8 @@
 @class AROverlayView;
 
 
-@interface AROvelayViewFactory : NSObject
+@interface AROverlayViewFactory : NSObject
 
-+ (AROverlayView *)overlayViewWithOverlay:(AROverlay *)overlay;
++ (AROverlayView *)viewWithOverlay:(AROverlay *)overlay;
 
 @end
