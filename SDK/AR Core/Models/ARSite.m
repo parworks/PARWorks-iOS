@@ -99,9 +99,14 @@
     NSDictionary * d = [NSDictionary dictionaryWithObject:_identifier forKey:@"site"];
     ASIHTTPRequest * req = [[ARManager shared] createRequest: @"/ar/site/info/overview" withMethod:@"GET" withArguments:d];
     ASIHTTPRequest * __weak __req = req;
+    ARSite * __weak __site = self;
+
     [req setCompletionBlock: ^(void) {
         NSDictionary * dict = [__req responseJSON];
-        [self parseInfo: dict];
+        if ([dict isKindOfClass: [NSDictionary class]]) {
+            [self parseInfo: dict];
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: __site];
+        }
     }];
     [req startAsynchronous];
 }
@@ -109,10 +114,11 @@
 - (void)parseInfo:(NSDictionary*)dict
 {
     self.address = [dict objectForKey: @"address" or: nil];
+    self.name = [dict objectForKey: @"name" or: @"Unnamed Site"];
     self.posterImageURL = [NSURL URLWithString: [dict objectForKey: @"posterImageURL" or: nil]];
     self.posterImageOverlayContent = [dict objectForKey: @"posterImageOverlayContent" or: nil];
     self.totalAugmentedImages = [[dict objectForKey: @"numAugmentedImages" or: nil] intValue];
-    self.description = [dict objectForKey: @"description" or: nil];
+    self.description = [dict objectForKey: @"description" or: @"No Description Provided."];
     self.location = CLLocationCoordinate2DMake([[dict objectForKey: @"lat" or: nil] doubleValue], [[dict objectForKey:@"lon" or: nil] doubleValue]);
     self.recentlyAugmentedImageURLs = [dict objectForKey:@"recentlyAugmentedImageURLs" or: nil];
     
