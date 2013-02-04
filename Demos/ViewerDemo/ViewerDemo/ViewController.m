@@ -27,6 +27,9 @@
     [super viewWillAppear:animated];
     ARAugmentedView *augView = [[ARAugmentedView alloc] initWithFrame:CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height)];
     augView.delegate = self;
+    augView.showOutlineViewsOnly = YES;
+    augView.shouldAnimateOutlineViewDrawing = NO;
+    
     
     NSString *bundlePath = [[NSBundle mainBundle] bundlePath];
     NSString *imagePath = [NSBundle pathForResource:@"overlay_spec_example_1" ofType:@"jpg" inDirectory:bundlePath];

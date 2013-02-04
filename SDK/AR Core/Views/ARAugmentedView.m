@@ -60,7 +60,9 @@
 {
     self.userInteractionEnabled = YES;
     self.backgroundColor = [UIColor blackColor];
-
+    self.showOutlineViewsOnly = NO;
+    self.shouldAnimateOutlineViewDrawing = YES;
+    
     self.overlayAnimation = [[AROverlayAnimation alloc] init];
     _overlayViews = [[NSMutableArray alloc] init];
     _outlineViews = [[NSMutableArray alloc] init];
@@ -83,6 +85,8 @@
         
     [self updateOverlays];
     [self updateOutlines];
+    _overlayImageView.frame = [self centeredAspectFitFrameForImage: _augmentedPhoto.image];
+    _overlayImageView.image = _augmentedPhoto.image;
 }
 
 
@@ -95,8 +99,23 @@
     [self repositionOverlays];
 }
 
+- (void)setShowOutlineViewsOnly:(BOOL)showOutlineViewsOnly
+{
+    _showOutlineViewsOnly = showOutlineViewsOnly;
+    if (_showOutlineViewsOnly) {
+        [_overlayViews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+        [_overlayViews removeAllObjects];
+    } else {
+        [self updateOverlays];
+    }
+}
+
 - (void)updateOverlays
 {
+    if (_showOutlineViewsOnly) {
+        return;
+    }
+    
     [_overlayViews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     [_overlayViews removeAllObjects];
      
@@ -118,10 +137,7 @@
             [_overlayImageView addSubview: view];
             [_overlayViews addObject: view];
         }
-    }
-    
-    _overlayImageView.frame = [self centeredAspectFitFrameForImage: _augmentedPhoto.image];
-    _overlayImageView.image = _augmentedPhoto.image;
+    }    
 }
 
 - (void)updateOutlines
@@ -146,7 +162,7 @@
                 overlayView.outlineView = view;
             }
 
-            [view drawAnimated:YES];
+            [view drawAnimated:_shouldAnimateOutlineViewDrawing];
             [_overlayImageView addSubview:view];
             [_outlineViews addObject:view];
         }
@@ -208,6 +224,14 @@
     [overlay unfocusInParent:self];
 }
 
+- (void)setVisibile:(BOOL)visible forOverlayViewsWithName:(NSString *)name
+{
+    for (AROverlayView *v in _overlayViews) {
+        if ([v.overlay.name isEqualToString:name]) {
+            v.hidden = !visible;
+        }
+    }
+}
 
 #pragma mark - Convenience
 

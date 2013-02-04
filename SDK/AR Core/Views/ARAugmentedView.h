@@ -74,8 +74,16 @@
 /// scaled augmented view.
 @property(nonatomic, assign) CGFloat overlayScaleFactor;
 
+/// The view will only display outline views. AROverlayViews are not displayed. Defaults to NO.
+@property(nonatomic, assign) BOOL showOutlineViewsOnly;
+
+/// Tells the view whether or not it should animate the drawing of outline views. Defaults to YES.
+@property(nonatomic, assign) BOOL shouldAnimateOutlineViewDrawing;
+
 /// The delegate for the augmented view.
 @property(nonatomic, weak) IBOutlet id<ARAugmentedViewDelegate> delegate;
+
+- (void)setVisibile:(BOOL)visible forOverlayViewsWithName:(NSString *)name;
 
 @end
 

@@ -74,14 +74,14 @@
         [l addAnimation:anim forKey:@"anim"];
         l.path = path.CGPath;
         
-        [self addVertexBubbleWithPoint:_scaledOutlinePoints[_animationIndex]];
+        [self addVertexBubbleWithPoint:_scaledOutlinePoints[_animationIndex] animated:animated];
         
         CGFloat duration = [_animationDurations[0] floatValue] * kAROverlayOutlineViewAnimationDuration;
         [NSTimer scheduledTimerWithTimeInterval:duration target:self selector:@selector(animationSegmentFinished) userInfo:nil repeats:NO];
     } else {
         l.path = path.CGPath;
         for (int i=0; i<_scaledOutlinePoints.count; i++) {
-            [self addVertexBubbleWithPoint:_scaledOutlinePoints[i]];
+            [self addVertexBubbleWithPoint:_scaledOutlinePoints[i] animated:animated];
         }
     }
     
@@ -91,7 +91,7 @@
 {
     _animationIndex++;
     if (_animationIndex < _scaledOutlinePoints.count) {
-        [self addVertexBubbleWithPoint:_scaledOutlinePoints[_animationIndex]];
+        [self addVertexBubbleWithPoint:_scaledOutlinePoints[_animationIndex] animated:YES];
         CGFloat duration = [_animationDurations[_animationIndex] floatValue] * kAROverlayOutlineViewAnimationDuration;
         [NSTimer scheduledTimerWithTimeInterval:duration target:self selector:@selector(animationSegmentFinished) userInfo:nil repeats:NO];
     }
@@ -142,7 +142,7 @@
     return durations;
 }
 
-- (void)addVertexBubbleWithPoint:(AROverlayPoint *)p
+- (void)addVertexBubbleWithPoint:(AROverlayPoint *)p animated:(BOOL)animated
 {
     UIView *bubble = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
     bubble.backgroundColor = _overlay.boundaryColor;
@@ -152,10 +152,12 @@
     [self addSubview:bubble];
     
     bubble.transform = CGAffineTransformMakeScale(0.5, 0.5);
-    [UIView animateWithDuration:0.2 animations:^{
+
+    CGFloat duration = animated ? 0.2 : 0.0;
+    [UIView animateWithDuration:duration animations:^{
         bubble.transform = CGAffineTransformMakeScale(1.2, 1.2);
     } completion:^(BOOL finished) {
-        [UIView animateWithDuration:0.2 animations:^{
+        [UIView animateWithDuration:duration animations:^{
             bubble.transform = CGAffineTransformIdentity;
         }];
     }];
