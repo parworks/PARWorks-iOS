@@ -42,6 +42,7 @@ typedef enum ARSiteStatus {
 
 // Extra properties provided via /site/info or /site/list/*
 @property (nonatomic, strong) NSString * address;
+@property (nonatomic, strong) NSString * name;
 @property (nonatomic, strong) NSString * description;
 @property (nonatomic, assign) CLLocationCoordinate2D location;
 @property (nonatomic, strong) NSURL * posterImageURL;
