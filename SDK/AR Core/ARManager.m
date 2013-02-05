@@ -278,15 +278,24 @@ static ARManager * sharedManager;
     [args setObject:[NSString stringWithFormat: @"%d", resolution] forKey:@"resolution"];
     ASIHTTPRequest * req = [self createRequest:REQ_SITE_NEARBY withMethod:@"GET" withArguments: args];
     ASIHTTPRequest * __weak __req = req;
-
+    
     [req setCompletionBlock: ^(void) {
         if ([self handleResponseErrors: __req]) {
-            NSDictionary * json = [__req responseJSON];
-            NSArray * sites = [json objectForKey: @"sites"];
+            NSDictionary *dict = [__req responseJSON];
+            if ([dict isKindOfClass: [NSDictionary class]] == NO)
+                return;
+            
+            NSArray * rawSites = [dict objectForKey: @"sites"];
+            NSMutableArray *sites = [NSMutableArray array];
+            for (NSDictionary *dict in rawSites) {
+                [sites addObject:[[ARSite alloc] initWithInfo:dict]];
+            }
+            
             if (completionBlock)
                 completionBlock(sites);
         }
     }];
+    [req startAsynchronous];
 }
 
 #pragma mark Convenience Functions for Image Picking
