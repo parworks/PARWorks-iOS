@@ -26,6 +26,8 @@
 #import "AROverlayPoint.h"
 #import "AROverlayUtil.h"
 #import "AROverlayView.h"
+#import "ARTotalAugmentedImagesView.h"
+#import "UIViewAdditions.h"
 
 #define AROverlayZoomWidth 120.0
 #define AROverlayZoomHeight 120.0
@@ -41,7 +43,6 @@
 
 
 #pragma mark - Lifecycle
-// For now, we don't want to use this method ever...
 - (id)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
@@ -61,7 +62,8 @@
     self.userInteractionEnabled = YES;
     self.backgroundColor = [UIColor blackColor];
     self.showOutlineViewsOnly = NO;
-    self.shouldAnimateOutlineViewDrawing = YES;
+    self.animateOutlineViewDrawing = YES;
+    self.overlayImageViewContentMode = UIViewContentModeScaleAspectFit;
     
     self.overlayAnimation = [[AROverlayAnimation alloc] init];
     _overlayViews = [[NSMutableArray alloc] init];
@@ -76,6 +78,10 @@
     _dimView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.4];
     _dimView.alpha = 0.0;
     [_overlayImageView addSubview: _dimView];
+    
+    self.totalAugmentedImagesView = [[ARTotalAugmentedImagesView alloc] init];
+    _totalAugmentedImagesView.hidden = YES;
+    [self addSubview: _totalAugmentedImagesView];
 }
 
 - (void)setAugmentedPhoto:(ARAugmentedPhoto*)p
@@ -85,8 +91,12 @@
         
     [self updateOverlays];
     [self updateOutlines];
-    _overlayImageView.frame = [self centeredAspectFitFrameForImage: _augmentedPhoto.image];
+    _overlayImageView.frame = [self centeredAspectScaleFrameForImage: _augmentedPhoto.image];
     _overlayImageView.image = _augmentedPhoto.image;
+    
+    CGFloat x = (self.bounds.size.width - _totalAugmentedImagesView.frame.size.width - 10);
+    [_totalAugmentedImagesView setFrameX:x];
+    [_totalAugmentedImagesView setFrameY:10];
 }
 
 
@@ -162,7 +172,7 @@
                 overlayView.outlineView = view;
             }
 
-            [view drawAnimated:_shouldAnimateOutlineViewDrawing];
+            [view drawAnimated:_animateOutlineViewDrawing];
             [_overlayImageView addSubview:view];
             [_outlineViews addObject:view];
         }
@@ -173,7 +183,7 @@
 - (void)repositionOverlays
 {
     _overlayScaleFactor = [self scaleFactorForBounds:self.bounds withImage:_augmentedPhoto.image];
-    [_overlayImageView setFrame: [self centeredAspectFitFrameForImage: _augmentedPhoto.image]];
+    [_overlayImageView setFrame: [self centeredAspectScaleFrameForImage: _augmentedPhoto.image]];
     for (AROverlayView * view in _overlayViews)
         [view applyAttachmentStyleWithParent:self];
 }
@@ -246,11 +256,20 @@
     CGFloat widthRatio = bounds.size.width / image.size.width;
     CGFloat heightRatio = bounds.size.height / image.size.height;
     
-    scale = (widthRatio > heightRatio) ? heightRatio : widthRatio;
+    switch (_overlayImageViewContentMode) {
+        case UIViewContentModeScaleAspectFill:
+            scale = (widthRatio > heightRatio) ? widthRatio : heightRatio;
+            break;
+        case UIViewContentModeScaleAspectFit:
+        default:
+            scale = (widthRatio > heightRatio) ? heightRatio : widthRatio;
+            break;
+    }
+
     return scale;
 }
 
-- (CGRect)centeredAspectFitFrameForImage:(UIImage *)image
+- (CGRect)centeredAspectScaleFrameForImage:(UIImage *)image
 {
     if (_augmentedPhoto.image == nil)
         return [self bounds];

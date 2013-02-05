@@ -25,6 +25,7 @@
 
 @class AROverlay;
 @class AROverlayOutlineView;
+@class ARTotalAugmentedImagesView;
 
 /** 
     This protocol provides a way for users to supply their own
@@ -47,10 +48,6 @@
     This UIView subclass is the view used for displaying the final
     result of a client-submitted photo that has been augmented by our 
     servers.
- 
-    Developers using this class should use the custom init method which
-    takes as arguments the image submitted and also a 2D array of points for
-    the overlays that should be drawn.
  */
 @interface ARAugmentedView : UIView
 {
@@ -61,6 +58,8 @@
 /// The photo model read used by this class for displaying the augmented photo.
 @property(nonatomic, strong) ARAugmentedPhoto * augmentedPhoto;
 
+@property(nonatomic, strong) ARTotalAugmentedImagesView *totalAugmentedImagesView;
+
 /// A container for all overlay views being displayed in the view.
 @property(nonatomic, strong, readonly) NSMutableArray *overlayViews;
 
@@ -70,6 +69,9 @@
 /// The image view that displays the image taken by the client.
 @property(nonatomic, strong) UIImageView * overlayImageView;
 
+/// The content mode to use for the overlayImageView.
+@property(nonatomic, assign) UIViewContentMode overlayImageViewContentMode;
+
 /// The scale factor to apply to overlays to have them fit correctly in the
 /// scaled augmented view.
 @property(nonatomic, assign) CGFloat overlayScaleFactor;
@@ -78,7 +80,7 @@
 @property(nonatomic, assign) BOOL showOutlineViewsOnly;
 
 /// Tells the view whether or not it should animate the drawing of outline views. Defaults to YES.
-@property(nonatomic, assign) BOOL shouldAnimateOutlineViewDrawing;
+@property(nonatomic, assign) BOOL animateOutlineViewDrawing;
 
 /// The delegate for the augmented view.
 @property(nonatomic, weak) IBOutlet id<ARAugmentedViewDelegate> delegate;
