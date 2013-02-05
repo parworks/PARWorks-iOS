@@ -3,9 +3,9 @@
     {
         "site": "awswalls",
         "content": {
-            "type": "video",
+            "type": "url",
             "size": "medium",
-            "provider": "http: //www.youtube.com/yxnsjf7ghe"
+            "provider": "http://www.nyan.cat/"
         },
         "id": "096d68b3-b98c-44d7-9e8c-5d48111a9b73",
         "imageId": "25bcb284-306e-4395-8b05-22840da39a62",
@@ -35,10 +35,10 @@
             "type": "dashed"
         },
         "cover": {
-            "type": "image",
+            "type": "regular",
             "transparency": 80,
             "color": "gray",
-            "provider": "https: //s3.amazon.com/parworks-demo/front.jpeg"
+            "provider": "http://4.bp.blogspot.com/_OiUOPJufqYA/TPq2KKBbNtI/AAAAAAAABXc/qYidd7b_4oU/s1600/m%2540u_Chrono_Trigger_CRONO_all_3_1280x1024.jpg"
         }
     }
     ],
