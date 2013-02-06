@@ -45,9 +45,8 @@ typedef enum ARSiteStatus {
 @property (nonatomic, strong) NSString * name;
 @property (nonatomic, strong) NSString * description;
 @property (nonatomic, assign) CLLocationCoordinate2D location;
-@property (nonatomic, strong) NSURL * posterImageURL;
-@property (nonatomic, strong) NSDictionary * posterImageOverlayContent;
-@property (nonatomic, strong) NSArray * recentlyAugmentedImageURLs;
+@property (nonatomic, strong) NSDictionary * posterImage;
+@property (nonatomic, strong) NSArray * recentlyAugmentedImages;
 @property (nonatomic, assign) long totalAugmentedImages;
 
 @property (nonatomic, strong) NSMutableArray * images;
@@ -104,6 +103,8 @@ typedef enum ARSiteStatus {
  @return Human-readable information about this site.
  */
 - (NSString*)description;
+
+- (NSURL*)posterImageURL;
 
 /** Returns an array of the template images of this site. Generally there are 25
   to 30 images. If the images have not yet been fetched from the server, this method

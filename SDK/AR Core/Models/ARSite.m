@@ -115,15 +115,14 @@
 {
     self.address = [dict objectForKey: @"address" or: nil];
     self.name = [dict objectForKey: @"name" or: @"Unnamed Site"];
-    self.posterImageURL = [NSURL URLWithString: [dict objectForKey: @"posterImageURL" or: nil]];
-    self.posterImageOverlayContent = [dict objectForKey: @"posterImageOverlayContent" or: nil];
+    self.posterImage = [NSURL URLWithString: [dict objectForKey: @"posterImage" or: nil]];
     self.totalAugmentedImages = [[dict objectForKey: @"numAugmentedImages" or: nil] intValue];
     self.description = [dict objectForKey: @"description" or: @"No Description Provided."];
     self.location = CLLocationCoordinate2DMake([[dict objectForKey: @"lat" or: nil] doubleValue], [[dict objectForKey:@"lon" or: nil] doubleValue]);
-    self.recentlyAugmentedImageURLs = [dict objectForKey:@"recentlyAugmentedImageURLs" or: nil];
+    self.recentlyAugmentedImages = [dict objectForKey:@"recentlyAugmentedImages" or: nil];
     
-    if (self.posterImageURL == nil)
-        self.posterImageURL = [NSURL URLWithString: [_recentlyAugmentedImageURLs lastObject]];
+    if (self.posterImage == nil)
+        self.posterImage = [_recentlyAugmentedImages lastObject];
 }
 
 #pragma mark Site Status
@@ -195,6 +194,11 @@
 }
 
 #pragma mark Site Image Management
+
+- (NSURL*)posterImageURL
+{
+    return [NSURL URLWithString: [_posterImage objectForKey: @"imgContentPath" or: [_posterImage objectForKey: @"imgPath"]]];
+}
 
 - (NSMutableArray*)images
 {
