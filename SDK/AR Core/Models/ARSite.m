@@ -120,6 +120,7 @@
     self.description = [dict objectForKey: @"description" or: @"No Description Provided."];
     self.location = CLLocationCoordinate2DMake([[dict objectForKey: @"lat" or: nil] doubleValue], [[dict objectForKey:@"lon" or: nil] doubleValue]);
     self.recentlyAugmentedImages = [dict objectForKey:@"recentlyAugmentedImages" or: nil];
+    self.logoURL = [NSURL URLWithString: [dict objectForKey: @"logoURL" or: nil]];
     
     if (self.posterImage == nil)
         self.posterImage = [_recentlyAugmentedImages lastObject];

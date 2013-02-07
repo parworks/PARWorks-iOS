@@ -44,6 +44,7 @@ typedef enum ARSiteStatus {
 @property (nonatomic, strong) NSString * address;
 @property (nonatomic, strong) NSString * name;
 @property (nonatomic, strong) NSString * description;
+@property (nonatomic, strong) NSURL * logoURL;
 @property (nonatomic, assign) CLLocationCoordinate2D location;
 @property (nonatomic, strong) NSDictionary * posterImage;
 @property (nonatomic, strong) NSArray * recentlyAugmentedImages;

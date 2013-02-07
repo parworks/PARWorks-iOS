@@ -165,7 +165,21 @@
  The NSArray parameter contains the sites.
  
  */
-- (void)findNearbySites:(int)resolution withCompletionBlock:(void (^)(NSArray *))completionBlock;
+- (void)findNearbySites:(int)resolution withCompletionBlock:(void (^)(NSArray *, CLLocation *))completionBlock;
+
+
+/** Finds nearby sites using a given resolution. Similar to the call above, but
+ you can manually specify a location.
+ 
+ @param resolution See description above.
+ 
+ @param location The location to search around
+ 
+ @param completionBlock A block to call when the server response has been received.
+ The NSArray parameter contains the sites.
+ 
+ */
+- (void)findSites:(int)resolution nearLocation:(CLLocation*)location withCompletionBlock:(void (^)(NSArray *, CLLocation *))completionBlock;
 
 #pragma mark Convenience Functions for Image Picking
 

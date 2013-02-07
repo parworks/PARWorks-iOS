@@ -266,15 +266,20 @@ static ARManager * sharedManager;
     [req startAsynchronous];
 }
 
-- (void)findNearbySites:(int)resolution withCompletionBlock:(void (^)(NSArray *))completionBlock
+- (void)findNearbySites:(int)resolution withCompletionBlock:(void (^)(NSArray *, CLLocation *))completionBlock
+{
+    [self findSites:resolution nearLocation:[self deviceLocation] withCompletionBlock:completionBlock];
+}
+
+- (void)findSites:(int)resolution nearLocation:(CLLocation*)location withCompletionBlock:(void (^)(NSArray *, CLLocation *))completionBlock
 {
     if (!_locationEnabled)
         @throw [NSException exceptionWithName:@"PAR Works API Error" reason:@"You need to enable location by calling setLocationEnabled: before finding nearby sites." userInfo:nil];
     
     // create the full request path
     NSMutableDictionary * args = [NSMutableDictionary dictionaryWithCapacity:3];
-    [args setObject:[NSString stringWithFormat: @"%f", [self deviceLocation].coordinate.latitude] forKey:@"lat"];
-    [args setObject:[NSString stringWithFormat: @"%f", [self deviceLocation].coordinate.longitude] forKey:@"lon"];
+    [args setObject:[NSString stringWithFormat: @"%f", location.coordinate.latitude] forKey:@"lat"];
+    [args setObject:[NSString stringWithFormat: @"%f", location.coordinate.longitude] forKey:@"lon"];
     [args setObject:[NSString stringWithFormat: @"%d", resolution] forKey:@"resolution"];
     ASIHTTPRequest * req = [self createRequest:REQ_SITE_NEARBY withMethod:@"GET" withArguments: args];
     ASIHTTPRequest * __weak __req = req;
@@ -292,7 +297,7 @@ static ARManager * sharedManager;
             }
             
             if (completionBlock)
-                completionBlock(sites);
+                completionBlock(sites, location);
         }
     }];
     [req startAsynchronous];
