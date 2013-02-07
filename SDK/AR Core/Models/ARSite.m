@@ -119,9 +119,13 @@
     self.description = [dict objectForKey: @"description" or: @"No Description Provided."];
     self.location = CLLocationCoordinate2DMake([[dict objectForKey: @"lat" or: nil] doubleValue], [[dict objectForKey:@"lon" or: nil] doubleValue]);
     self.logoURL = [NSURL URLWithString: [dict objectForKey: @"logoURL" or: nil]];
+    self.originalImageWidth = [[dict objectForKey:@"fullSizeWidth" or: nil] floatValue];
     
     _posterImage = [NSURL URLWithString: [dict objectForKey: @"posterImage" or: nil]];
     _recentAugmentationOutput = [dict objectForKey:@"recentlyAugmentedImages" or: nil];
+    
+    if (_originalImageWidth == 0)
+        _originalImageWidth = 2592;
     
     if (_posterImage == nil)
         _posterImage = [_recentAugmentationOutput lastObject];

@@ -49,9 +49,9 @@
     result of a client-submitted photo that has been augmented by our 
     servers.
  */
-@interface ARAugmentedView : UIView
+@interface ARAugmentedView : UIControl
 {
-    AROverlayView *_focusedView;
+    AROverlayView *_focusedOverlayView;
     BOOL _overlayZoomed;
 }
 

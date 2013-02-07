@@ -20,6 +20,7 @@
 
 #import "ARConstants.h"
 #import "AROverlay.h"
+#import "AROverlayPoint.h"
 #import "ARAugmentedPhoto.h"
 #import "ARManager.h"
 #import "ARSite.h"
@@ -43,12 +44,13 @@
     return self;
 }
 
-- (id)initWithImage:(UIImage*)img andOverlayJSON:(NSDictionary*)json
+- (id)initWithScaledImage:(UIImage*)img atScale:(float)scale andOverlayJSON:(NSDictionary*)json
 {
     self = [super init];
     if (self) {
         self.image = img;
-        [self processJSONData:json];
+        self.response = BackendResponseFinished;
+        [self processJSONData:json forDisplayWithScale: scale];
     }
     return self;
 }
@@ -59,6 +61,7 @@
     if (self) {
         self.image = [UIImage imageWithContentsOfFile: iPath];
         self.imageIdentifier = [iPath lastPathComponent];
+        self.response = BackendResponseFinished;
         
         NSError *err = nil;
         NSData *data = [NSData dataWithContentsOfFile:jsonPath];
@@ -198,7 +201,12 @@
     [req startAsynchronous];
 }
 
-- (void)processJSONData:(NSDictionary*)data
+- (void)processJSONData:(NSDictionary*)data 
+{
+    [self processJSONData: data];
+}
+
+- (void)processJSONData:(NSDictionary*)data forDisplayWithScale:(float)scale
 {
     if ([data isKindOfClass: [NSDictionary class]] == NO)
         return;
@@ -207,8 +215,15 @@
         self.overlays = [NSMutableArray array];
 
     NSMutableDictionary * overlayDicts = [data objectForKey: @"overlays"];
-    for (NSDictionary * overlay in overlayDicts)
-        [self addOverlay: [[AROverlay alloc] initWithDictionary: overlay]];
+    for (NSDictionary * overlay in overlayDicts) {
+        AROverlay * result = [[AROverlay alloc] initWithDictionary: overlay];
+        for (AROverlayPoint * p in result.points) {
+            p.x = p.x *= scale;
+            p.y = p.y *= scale;
+            p.z = p.z *= scale;
+        }
+        [self addOverlay: result];
+    }
 }
 
 - (void)processPMData:(NSString*)data

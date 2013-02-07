@@ -59,14 +59,17 @@ typedef void(^ARProcessingCompletionBlock)(ARAugmentedPhoto *augmentedPhoto);
 /** Initializes a new ARAugmentedPhoto that has already been loaded as an image
  and overlay JSON.
  
- @param img The image 
+ @param img The image, potentially a scaled down version
  
- @param json Iinformation about overlays and camera perspective.
+ @param scale The scale of the provided image. 1 means the image was originally processed at this size, 
+   0.5 means the image is half the size of the original processed image. JSON points will be adjusted.
+ 
+ @param json Information about overlays and camera perspective.
  
  @return A newly initialized ARAugmentedPhoto instance
  */
 
-- (id)initWithImage:(UIImage*)img andOverlayJSON:(NSDictionary*)json;
+- (id)initWithScaledImage:(UIImage*)img atScale:(float)scale andOverlayJSON:(NSDictionary*)json;
 
 /** Initializes a new ARAugmentedPhoto that has already been processed and saved
  to disk elsewhere as two separate files.

@@ -64,7 +64,8 @@
     self.showOutlineViewsOnly = NO;
     self.animateOutlineViewDrawing = YES;
     self.overlayImageViewContentMode = UIViewContentModeScaleAspectFit;
-    
+    [self addTarget:self action:@selector(blackBackgroundTapped) forControlEvents:UIControlEventTouchUpInside];
+
     self.overlayAnimation = [[AROverlayAnimation alloc] init];
     _overlayViews = [[NSMutableArray alloc] init];
     _outlineViews = [[NSMutableArray alloc] init];
@@ -102,9 +103,9 @@
 
 #pragma mark - Layout
 
-- (void)setFrame:(CGRect)frame
+- (void)layoutSubviews
 {
-    [super setFrame:frame];
+    [super layoutSubviews];
     [_dimView setFrame: [self bounds]];
     [self repositionOverlays];
 }
@@ -184,27 +185,35 @@
 {
     _overlayScaleFactor = [self scaleFactorForBounds:self.bounds withImage:_augmentedPhoto.image];
     [_overlayImageView setFrame: [self centeredAspectScaleFrameForImage: _augmentedPhoto.image]];
+    
+    [self resetFocusedOverlay];
     for (AROverlayView * view in _overlayViews)
         [view applyAttachmentStyleWithParent:self];
+
+    [self updateOutlines];
 }
 
 #pragma mark - Dim View User Interaction
 - (void)dimViewTapped:(id)sender
 {
-    if (_focusedView) {
-        [self overlayTapped:_focusedView];
-    }
+    if (_focusedOverlayView)
+        [self overlayTapped:_focusedOverlayView];
 }
 
 
 #pragma mark - Overlay User Interaction
-- (void)overlayTapped:(id)sender
+
+- (void)blackBackgroundTapped
 {
-    if (_focusedView) {
-        [self resetFocusedOverlay:_focusedView];
-        _focusedView = nil;
+    [self resetFocusedOverlay];
+}
+
+- (void)overlayTapped:(AROverlayView *)sender
+{
+    if (_focusedOverlayView) {
+        [self resetFocusedOverlay];
     } else {
-        _focusedView = (AROverlayView *)sender;
+        _focusedOverlayView = sender;
         [self zoomSingleOverlay:sender];
     }
 }
@@ -222,8 +231,11 @@
     [overlay focusInParent:self];
 }
 
-- (void)resetFocusedOverlay:(AROverlayView *)overlay
+- (void)resetFocusedOverlay
 {
+    if (!_focusedOverlayView)
+        return;
+    
     [UIView animateWithDuration:0.3 animations:^{
         _dimView.alpha = 0.0;
     } completion:^(BOOL finished) {
@@ -231,7 +243,8 @@
     }];
     
     // TODO: Animation needs a completion block.
-    [overlay unfocusInParent:self];
+    [_focusedOverlayView unfocusInParent:self];
+    _focusedOverlayView = nil;
 }
 
 - (void)setVisibile:(BOOL)visible forOverlayViewsWithName:(NSString *)name
