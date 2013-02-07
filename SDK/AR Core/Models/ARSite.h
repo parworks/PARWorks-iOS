@@ -36,6 +36,8 @@ typedef enum ARSiteStatus {
 {
     ASIHTTPRequest * _imageReq;
     ASIHTTPRequest * _overlaysReq;
+    NSArray        * _recentAugmentationOutput;
+    NSDictionary   * _posterImage;
 }
 
 @property (nonatomic, strong) NSString * identifier;
@@ -46,8 +48,6 @@ typedef enum ARSiteStatus {
 @property (nonatomic, strong) NSString * description;
 @property (nonatomic, strong) NSURL * logoURL;
 @property (nonatomic, assign) CLLocationCoordinate2D location;
-@property (nonatomic, strong) NSDictionary * posterImage;
-@property (nonatomic, strong) NSArray * recentlyAugmentedImages;
 @property (nonatomic, assign) long totalAugmentedImages;
 
 @property (nonatomic, strong) NSMutableArray * images;
@@ -189,5 +189,12 @@ server again.
 - (void)removeAllAugmentedPhotos;
 
 
+// ==================================================
+// @name Accessing Public, Recently Augmented Photos
+// ==================================================
+
+- (int)recentlyAugmentedImageCount;
+- (NSURL*)URLForRecentlyAugmentedImageAtIndex:(int)index;
+- (NSDictionary*)overlayJSONForRecentlyAugmentedImageAtIndex:(int)index;
 
 @end
