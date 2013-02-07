@@ -122,9 +122,8 @@
 
 - (void)updateOverlays
 {
-    if (_showOutlineViewsOnly) {
+    if (_showOutlineViewsOnly)
         return;
-    }
     
     [_overlayViews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     [_overlayViews removeAllObjects];
@@ -160,6 +159,7 @@
     for (int i=0; i<_augmentedPhoto.overlays.count; i++) {
         AROverlay *overlay = _augmentedPhoto.overlays[i];
         AROverlayOutlineView *view;
+        
         if (_delegate && [_delegate respondsToSelector:@selector(outlineViewForOverlay:)]) {
             view = [_delegate outlineViewForOverlay:overlay];
         } else {

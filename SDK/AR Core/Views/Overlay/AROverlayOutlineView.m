@@ -41,12 +41,12 @@
 
         if (overlay.boundaryType == AROverlayBoundaryType_Dashed) {
             layer.strokeColor = _overlay.boundaryColor.CGColor;
-            layer.lineWidth = 3.0;
+            layer.lineWidth = 2.0;
             layer.lineDashPattern = @[@4];
 
         } else if (overlay.boundaryType == AROverlayBoundaryType_Solid) {
             layer.strokeColor = _overlay.boundaryColor.CGColor;
-            layer.lineWidth = 3.0;
+            layer.lineWidth = 2.0;
         }        
     }
     return self;
@@ -144,10 +144,14 @@
 
 - (void)addVertexBubbleWithPoint:(AROverlayPoint *)p animated:(BOOL)animated
 {
-    UIView *bubble = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 10, 10)];
+    UIView *bubble = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 8)];
     bubble.backgroundColor = _overlay.boundaryColor;
-    bubble.layer.borderColor = [UIColor colorWithWhite:0.2 alpha:0.8].CGColor;
-    bubble.layer.borderWidth = 1.0;
+    bubble.layer.borderColor = [UIColor colorWithWhite:1 alpha:0.4].CGColor;
+    bubble.layer.borderWidth = 0.5;
+    bubble.layer.cornerRadius = 4;
+    bubble.layer.shadowRadius = 1;
+    bubble.layer.shadowOffset = CGSizeMake(0, 1);
+    bubble.layer.shadowOpacity = 0.4;
     bubble.center = CGPointMake(p.x, p.y);
     [self addSubview:bubble];
     

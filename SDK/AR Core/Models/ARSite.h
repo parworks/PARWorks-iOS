@@ -105,6 +105,7 @@ typedef enum ARSiteStatus {
 - (NSString*)description;
 
 - (NSURL*)posterImageURL;
+- (NSDictionary*)posterImageOverlayJSON;
 
 /** Returns an array of the template images of this site. Generally there are 25
   to 30 images. If the images have not yet been fetched from the server, this method

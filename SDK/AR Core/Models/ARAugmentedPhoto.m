@@ -43,15 +43,25 @@
     return self;
 }
 
-- (id)initWithImageFile:(NSString*)iPath andPMFile:(NSString*)pmPath
+- (id)initWithImage:(UIImage*)img andOverlayJSON:(NSDictionary*)json
+{
+    self = [super init];
+    if (self) {
+        self.image = img;
+        [self processJSONData:json];
+    }
+    return self;
+}
+
+- (id)initWithImageFile:(NSString*)iPath andOverlayJSONFile:(NSString*)jsonPath
 {
     self = [super init];
     if (self) {
         self.image = [UIImage imageWithContentsOfFile: iPath];
         self.imageIdentifier = [iPath lastPathComponent];
         
-        NSData *data = [NSData dataWithContentsOfFile:pmPath];
         NSError *err = nil;
+        NSData *data = [NSData dataWithContentsOfFile:jsonPath];
         NSDictionary *dict = [NSJSONSerialization JSONObjectWithData:data options:0 error:&err];
         
         if (err || ![dict isKindOfClass:[NSDictionary class]]) {

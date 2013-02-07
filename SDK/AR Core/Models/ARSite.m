@@ -200,6 +200,15 @@
     return [NSURL URLWithString: [_posterImage objectForKey: @"imgContentPath" or: [_posterImage objectForKey: @"imgPath"]]];
 }
 
+- (NSDictionary*)posterImageOverlayJSON
+{
+    NSData *data = [[_posterImage objectForKey: @"output" or: nil] dataUsingEncoding: NSASCIIStringEncoding];
+    if (!data)
+        return nil;
+    
+    return [NSJSONSerialization JSONObjectWithData:data options:0 error: nil];
+}
+
 - (NSMutableArray*)images
 {
     if ((_images == nil) && (!_invalid))

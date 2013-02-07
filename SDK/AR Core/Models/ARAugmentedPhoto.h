@@ -56,18 +56,30 @@ typedef void(^ARProcessingCompletionBlock)(ARAugmentedPhoto *augmentedPhoto);
 
 - (id)initWithImage:(UIImage*)i;
 
+/** Initializes a new ARAugmentedPhoto that has already been loaded as an image
+ and overlay JSON.
+ 
+ @param img The image 
+ 
+ @param json Iinformation about overlays and camera perspective.
+ 
+ @return A newly initialized ARAugmentedPhoto instance
+ */
+
+- (id)initWithImage:(UIImage*)img andOverlayJSON:(NSDictionary*)json;
+
 /** Initializes a new ARAugmentedPhoto that has already been processed and saved
  to disk elsewhere as two separate files.
   
  @param iPath The path to the image file
   
- @param pmPath The path to the file containing information about overlays
- and camera perspective written in the .pm file format.
+ @param jsonPath The path to the file containing information about overlays
+ and camera perspective written in the json file format.
  
  @return A newly initialized ARAugmentedPhoto instance
  */
  
-- (id)initWithImageFile:(NSString*)iPath andPMFile:(NSString*)pmPath;
+- (id)initWithImageFile:(NSString*)iPath andOverlayJSONFile:(NSString*)jsonPath;
 
 
 // ========================
