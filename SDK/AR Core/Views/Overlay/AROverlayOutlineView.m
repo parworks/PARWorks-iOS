@@ -144,11 +144,11 @@
 
 - (void)addVertexBubbleWithPoint:(AROverlayPoint *)p animated:(BOOL)animated
 {
-    UIView *bubble = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 8, 8)];
+    UIView *bubble = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 6, 6)];
     bubble.backgroundColor = _overlay.boundaryColor;
     bubble.layer.borderColor = [UIColor colorWithWhite:1 alpha:0.4].CGColor;
     bubble.layer.borderWidth = 0.5;
-    bubble.layer.cornerRadius = 4;
+    bubble.layer.cornerRadius = 3;
     bubble.layer.shadowRadius = 1;
     bubble.layer.shadowOffset = CGSizeMake(0, 1);
     bubble.layer.shadowOpacity = 0.4;

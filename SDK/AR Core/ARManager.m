@@ -139,7 +139,7 @@ static ARManager * sharedManager;
 
     NSString * argSeparator = @"?";
     for (NSString * key in args) {
-        [path appendFormat:@"%@%@=%@", argSeparator, key, [args objectForKey: key]];
+        [path appendFormat:@"%@%@=%@", argSeparator, key, [[args objectForKey: key] stringByAddingPercentEscapesUsingEncoding: NSASCIIStringEncoding]];
         argSeparator = @"&";
     }
     return [NSURL URLWithString: path];
@@ -159,15 +159,10 @@ static ARManager * sharedManager;
     // create a signature by taking the salt and encrypting it with the api secret
     NSString * sig = [self shaHashFor:salt withKey: _apiSecret];
 
-    // attch to the request
-//    [expandedArgs setObject:sig forKey:@"signature"];
-//    [expandedArgs setObject:salt forKey:@"salt"];
-//    [expandedArgs setObject:_apiKey forKey:@"apikey"];
-    
     // create the full request path
     ASIHTTPRequest * h;
     NSURL *url;
-//    url = [self urlForRequest: basePath withPathArgs: expandedArgs];
+
     if ([method isEqualToString: @"GET"]) {
         url = [self urlForRequest: basePath withPathArgs: expandedArgs];
         h = [[ASIHTTPRequest alloc] initWithURL: url];

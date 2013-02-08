@@ -203,7 +203,7 @@
 
 - (void)processJSONData:(NSDictionary*)data 
 {
-    [self processJSONData: data];
+    [self processJSONData: data forDisplayWithScale: 1];
 }
 
 - (void)processJSONData:(NSDictionary*)data forDisplayWithScale:(float)scale

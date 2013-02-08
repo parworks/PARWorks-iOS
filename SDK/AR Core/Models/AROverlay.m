@@ -123,7 +123,7 @@
 - (void)setBoundaryPropertiesWithDictionary:(NSDictionary *)dict
 {
     if (!dict) {
-        _boundaryColor = [UIColor magentaColor];
+        _boundaryColor = [UIColor colorWithRed:1 green:1 blue:0 alpha:1]; //yellow
         _boundaryType = AROverlayBoundaryType_Solid;
         return;
     }
