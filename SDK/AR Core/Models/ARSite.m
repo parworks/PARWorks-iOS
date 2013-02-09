@@ -116,7 +116,7 @@
     self.address = [dict objectForKey: @"address" or: nil];
     self.name = [dict objectForKey: @"name" or: @"Unnamed Site"];
     self.totalAugmentedImages = [[dict objectForKey: @"numAugmentedImages" or: nil] intValue];
-    self.description = [dict objectForKey: @"description" or: @"No Description Provided."];
+    self.siteDescription = [dict objectForKey: @"description" or: @"No Description Provided."];
     self.location = CLLocationCoordinate2DMake([[dict objectForKey: @"lat" or: nil] doubleValue], [[dict objectForKey:@"lon" or: nil] doubleValue]);
     self.logoURL = [NSURL URLWithString: [dict objectForKey: @"logoURL" or: nil]];
     self.originalImageWidth = [[dict objectForKey:@"fullSizeWidth" or: nil] floatValue];
