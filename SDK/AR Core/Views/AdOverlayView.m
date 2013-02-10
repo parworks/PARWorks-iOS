@@ -43,6 +43,8 @@
     [self.layer setShadowOpacity: 0.0];
     [self.layer setShadowRadius:10];
     [self.layer setShadowColor: [[UIColor cyanColor] CGColor]];
+    [self.layer setRasterizationScale: [[UIScreen mainScreen] scale]];
+    [self.layer setShouldRasterize: YES];
     
     self.animDelegate = self;
     self.thumbnail = [[UIImageView alloc] initWithFrame:self.bounds];
@@ -72,7 +74,6 @@
 {
     if (self.thumbnail.image == nil) {
         CGContextRef context = UIGraphicsGetCurrentContext();
-        CGContextSetShadowWithColor(context, CGSizeZero, 20.0, [UIColor cyanColor].CGColor);
         CGContextSetStrokeColorWithColor(context, [UIColor whiteColor].CGColor);
         CGContextSetLineWidth(context, 10);
         UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:CGRectInset(rect, 20, 20) cornerRadius:5];

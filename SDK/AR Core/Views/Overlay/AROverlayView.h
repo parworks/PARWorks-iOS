@@ -113,9 +113,8 @@ typedef enum {
 // @name Styling
 // ========================
 /** Styles the view according to the AROverlay properties.
- @param overlay The overlay which will be used to style the view.
  */
-- (void)styleWithOverlay:(AROverlay *)overlay;
+- (void)applyOverlayStyles;
 
 
 // ========================
@@ -147,10 +146,6 @@ when an overlay view is clicked.
  @param parent The parent ARAugmentedView that transforms should be applied relative to.
 */
 
-- (void)applyAttachmentStyleWithParent:(ARAugmentedView *)parent;
-
-/** Adds a nyancat web view within the overlay. Useful for testing empty overlays. */
-
-- (void)addDemoSubviewToOverlay;
+- (void)layoutWithinParent:(ARAugmentedView *)parent;
 
 @end

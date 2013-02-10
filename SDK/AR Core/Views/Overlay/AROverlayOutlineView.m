@@ -10,8 +10,9 @@
 #import "AROverlay.h"
 #import "AROverlayPoint.h"
 #import "AROverlayUtil.h"
+#import "ARAugmentedView.h"
 
-#define kAROverlayOutlineViewAnimationDuration 3.0
+#define kAROverlayOutlineViewAnimationDuration 1.5
 
 @implementation AROverlayOutlineView
 
@@ -21,23 +22,18 @@
     return [CAShapeLayer class];
 }
 
-- (id)initWithOverlay:(AROverlay *)overlay scaleFactor:(CGFloat)scaleFactor
+- (id)initWithOverlay:(AROverlay *)overlay
 {
-    // Set the frame to be the bounding box for the scaled points.
-    NSArray *points = [AROverlayUtil scaledOverlayPointsForPoints:overlay.points withScaleFactor:scaleFactor];
-    CGRect frame = [AROverlayUtil boundingFrameForPoints:points];
-    
-    self = [super initWithFrame:frame];
+    self = [super initWithFrame: CGRectZero];
     if (self) {
         self.clipsToBounds = NO;
         self.userInteractionEnabled = NO;
-        _overlay = overlay;
-        _overlayScaleFactor = scaleFactor;
         self.backgroundColor = [UIColor clearColor];
+        _overlay = overlay;
         
         CAShapeLayer *layer = (CAShapeLayer *)self.layer;
-        layer.masksToBounds = NO;
         layer.fillColor = [UIColor clearColor].CGColor;
+        layer.masksToBounds = NO;
 
         if (overlay.boundaryType == AROverlayBoundaryType_Dashed) {
             layer.strokeColor = _overlay.boundaryColor.CGColor;
@@ -52,39 +48,45 @@
     return self;
 }
 
+- (void)layoutWithinParent:(ARAugmentedView *)parent
+{
+    _scaledOutlinePoints = [AROverlayUtil scaledOverlayPointsForPoints:_overlay.points withScaleFactor:parent.overlayScaleFactor];
+    self.frame = [AROverlayUtil boundingFrameForPoints: _scaledOutlinePoints];
+
+    _scaledPath = [self outlinePathWithUnnormalizedScaledPoints:_scaledOutlinePoints];
+    [self drawAnimated:parent.animateOutlineViewDrawing];
+}
+
 
 #pragma mark - Presentation
+
 - (void)drawAnimated:(BOOL)animated
 {
-    if (_overlay.points.count == 0) return;
-    
+    if (_scaledPath == nil) return;
 
-    // Adjust the points to this view's reference frame
-    _scaledOutlinePoints = [AROverlayUtil scaledOverlayPointsForPoints:_overlay.points withScaleFactor:_overlayScaleFactor];
-    UIBezierPath *path = [self outlinePathWithUnnormalizedScaledPoints:_scaledOutlinePoints];
-
-    _animationIndex = 0;
     CAShapeLayer *l = (CAShapeLayer *)self.layer;
+    self.layer.sublayers = nil;
 
     if (animated) {
+        _animationIndex = 0;
         _animationDurations = [self durationsForStrokeAnimation];
         CAKeyframeAnimation *anim = [CAKeyframeAnimation animationWithKeyPath:@"strokeEnd"];
         anim.duration  = kAROverlayOutlineViewAnimationDuration;
         anim.values = @[@0.0, @1.0];
         [l addAnimation:anim forKey:@"anim"];
-        l.path = path.CGPath;
+        l.path = _scaledPath.CGPath;
         
         [self addVertexBubbleWithPoint:_scaledOutlinePoints[_animationIndex] animated:animated];
         
         CGFloat duration = [_animationDurations[0] floatValue] * kAROverlayOutlineViewAnimationDuration;
         [NSTimer scheduledTimerWithTimeInterval:duration target:self selector:@selector(animationSegmentFinished) userInfo:nil repeats:NO];
+
     } else {
-        l.path = path.CGPath;
+        l.path = _scaledPath.CGPath;
         for (int i=0; i<_scaledOutlinePoints.count; i++) {
             [self addVertexBubbleWithPoint:_scaledOutlinePoints[i] animated:animated];
         }
     }
-    
 }
 
 - (void)animationSegmentFinished
@@ -99,6 +101,7 @@
 
 
 #pragma mark - Convenience
+
 - (UIBezierPath *)outlinePathWithUnnormalizedScaledPoints:(NSArray *)scaledPoints
 {
     CGFloat x = self.frame.origin.x;
@@ -144,27 +147,22 @@
 
 - (void)addVertexBubbleWithPoint:(AROverlayPoint *)p animated:(BOOL)animated
 {
-    UIView *bubble = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 6, 6)];
+    UIView * bubble = [[UIView alloc] initWithFrame: CGRectMake(p.x - 3, p.y - 3, 6, 6)];
     bubble.backgroundColor = _overlay.boundaryColor;
-    bubble.layer.borderColor = [UIColor colorWithWhite:1 alpha:0.4].CGColor;
-    bubble.layer.borderWidth = 0.5;
     bubble.layer.cornerRadius = 3;
-    bubble.layer.shadowRadius = 1;
-    bubble.layer.shadowOffset = CGSizeMake(0, 1);
-    bubble.layer.shadowOpacity = 0.4;
-    bubble.center = CGPointMake(p.x, p.y);
-    [self addSubview:bubble];
+    [self addSubview: bubble];
     
-    bubble.transform = CGAffineTransformMakeScale(0.5, 0.5);
-
     CGFloat duration = animated ? 0.2 : 0.0;
-    [UIView animateWithDuration:duration animations:^{
-        bubble.transform = CGAffineTransformMakeScale(1.2, 1.2);
-    } completion:^(BOOL finished) {
+    if (duration) {
+        bubble.transform = CGAffineTransformMakeScale(0.5, 0.5);
         [UIView animateWithDuration:duration animations:^{
-            bubble.transform = CGAffineTransformIdentity;
+            bubble.transform = CGAffineTransformMakeScale(1.2, 1.2);
+        } completion:^(BOOL finished) {
+            [UIView animateWithDuration:duration animations:^{
+                bubble.transform = CGAffineTransformIdentity;
+            }];
         }];
-    }];
+    }
 }
 
 

@@ -139,7 +139,11 @@ static ARManager * sharedManager;
 
     NSString * argSeparator = @"?";
     for (NSString * key in args) {
-        [path appendFormat:@"%@%@=%@", argSeparator, key, [[args objectForKey: key] stringByAddingPercentEscapesUsingEncoding: NSASCIIStringEncoding]];
+        id value = [args objectForKey: key];
+        if ([value isKindOfClass: [NSString class]])
+            value = [value stringByAddingPercentEscapesUsingEncoding: NSASCIIStringEncoding];
+        
+        [path appendFormat:@"%@%@=%@", argSeparator, key, value];
         argSeparator = @"&";
     }
     return [NSURL URLWithString: path];

@@ -60,6 +60,7 @@
         self.overlay = overlay;
         [self setupOverlay];
         [self setupCoverView];
+        [self applyOverlayStyles];
     }
     return self;
 }
@@ -78,7 +79,6 @@
     layer.frame = overlayBounds;
 
     [self updateLayerPath];
-    [self styleWithOverlay:_overlay];
 }
 
 - (void)setupCoverView
@@ -115,25 +115,8 @@
 
 
 #pragma mark - Styling 
-- (void)styleWithOverlay:(AROverlay *)overlay
+- (void)applyOverlayStyles
 {
-    /*
-    CAShapeLayer *layer = (CAShapeLayer *)self.layer;
-    layer.strokeColor = _overlay.boundaryColor.CGColor;
-    layer.lineWidth = 12.0;
-    
-    switch (_overlay.boundaryType) {
-        case AROverlayBoundaryType_Solid:
-            layer.lineDashPattern = nil;
-            break;
-        case AROverlayBoundaryType_Dashed:
-            layer.lineDashPattern = @[@12];
-            
-            break;
-        default:
-            break;
-    }
-     */
 }
 
 - (void)updateLayerPath
@@ -169,28 +152,17 @@
 
 
 #pragma mark - Transforms
-- (void)addDemoSubviewToOverlay
-{
-    UIWebView *wv = [[UIWebView alloc] initWithFrame:self.bounds];
-    wv.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-    wv.scalesPageToFit = YES;
-    wv.opaque = NO;
-    [wv loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:@"http://foundry376.com/hdar/index.html"]]];
-    wv.userInteractionEnabled = NO;
-    [self addSubview:wv];
-}
-
-- (void)applyAttachmentStyleWithParent:(ARAugmentedView *)parent
+- (void)layoutWithinParent:(ARAugmentedView *)parent
 {
     switch (_attachmentStyle) {
         case AROverlayAttachmentStyle_Skew:
-            [self applySkewStyleWithParent:parent];
+            [self layoutSkewedWithinParent:parent];
             break;
         case AROverlayAttachmentStyle_Bounded:
-            [self applyBoundedStyleWithParent:parent];
+            [self layoutBoundedWithinParent:parent];
             break;
         case AROverlayAttachmentStyle_Centered:
-            [self applyCenteredStyleWithParent:parent];
+            [self layoutCenteredWithinParent:parent];
             break;
             
         default:
@@ -198,7 +170,7 @@
     }
 }
 
-- (void)applySkewStyleWithParent:(ARAugmentedView *)parent
+- (void)layoutSkewedWithinParent:(ARAugmentedView *)parent
 {
     // Apply the transform
     NSArray *scaledPoints = [AROverlayUtil scaledOverlayPointsForPoints:_overlay.points withScaleFactor:parent.overlayScaleFactor];
@@ -216,14 +188,14 @@
     self.layer.transform = transform;
 }
 
-- (void)applyBoundedStyleWithParent:(ARAugmentedView *)parent
+- (void)layoutBoundedWithinParent:(ARAugmentedView *)parent
 {
     NSArray *scaledPoints = [AROverlayUtil scaledOverlayPointsForPoints:_overlay.points withScaleFactor:parent.overlayScaleFactor];
     CGRect frame = [AROverlayUtil boundingFrameForPoints:scaledPoints];
     self.frame = frame;
 }
 
-- (void)applyCenteredStyleWithParent:(ARAugmentedView *)parent
+- (void)layoutCenteredWithinParent:(ARAugmentedView *)parent
 {
     
 }

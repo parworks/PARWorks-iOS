@@ -89,15 +89,10 @@
 {
     _augmentedPhoto = p;
     _overlayZoomed = NO;
-        
-    [self updateOverlays];
-    [self updateOutlines];
-    _overlayImageView.frame = [self centeredAspectScaleFrameForImage: _augmentedPhoto.image];
     _overlayImageView.image = _augmentedPhoto.image;
     
-    CGFloat x = (self.bounds.size.width - _totalAugmentedImagesView.frame.size.width - 10);
-    [_totalAugmentedImagesView setFrameX:x];
-    [_totalAugmentedImagesView setFrameY:10];
+    if (_augmentedPhoto)
+        [self attachOverlayViews];
 }
 
 
@@ -107,90 +102,67 @@
 {
     [super layoutSubviews];
     [_dimView setFrame: [self bounds]];
-    [self repositionOverlays];
+
+    CGFloat x = (self.bounds.size.width - _totalAugmentedImagesView.frame.size.width - 10);
+    [_totalAugmentedImagesView setFrameX:x];
+    [_totalAugmentedImagesView setFrameY:10];
+
+    _overlayScaleFactor = [self scaleFactorForBounds:self.bounds withImage:_augmentedPhoto.image];
+    [_overlayImageView setFrame: [self centeredAspectScaleFrameForImage: _augmentedPhoto.image]];
+    
+    
+    // reattach the overlay views
+    [self resetFocusedOverlay];
+    [_overlayViews makeObjectsPerformSelector:@selector(layoutWithinParent:) withObject:self];
+    [_outlineViews makeObjectsPerformSelector:@selector(layoutWithinParent:) withObject:self];
 }
 
 - (void)setShowOutlineViewsOnly:(BOOL)showOutlineViewsOnly
 {
     _showOutlineViewsOnly = showOutlineViewsOnly;
-    if (_showOutlineViewsOnly) {
-        [_overlayViews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-        [_overlayViews removeAllObjects];
-    } else {
-        [self updateOverlays];
-    }
+    if (_augmentedPhoto)
+        [self attachOverlayViews];
 }
 
-- (void)updateOverlays
+- (void)attachOverlayViews
 {
-    if (_showOutlineViewsOnly)
-        return;
-    
     [_overlayViews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     [_overlayViews removeAllObjects];
-     
-    _overlayScaleFactor = [self scaleFactorForBounds:self.bounds withImage:_augmentedPhoto.image];
-    
-    for (AROverlay *overlay in [_augmentedPhoto overlays]) {
-        AROverlayView * view = nil;
+
+    [_outlineViews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [_outlineViews removeAllObjects];
+
+    for (int i=0; i < _augmentedPhoto.overlays.count; i++) {
+        AROverlay *overlay = _augmentedPhoto.overlays[i];
+        AROverlayView * overlayView = nil;
+        AROverlayOutlineView * outlineView = nil;
         
         if (_delegate && [_delegate respondsToSelector:@selector(overlayViewForOverlay:)]) {
-            view = [_delegate overlayViewForOverlay:overlay];
+            overlayView = [_delegate overlayViewForOverlay:overlay];
         } else {
-            view = [AROverlayViewFactory viewWithOverlay:overlay];
+            overlayView = [AROverlayViewFactory viewWithOverlay:overlay];
+        }
+        
+        if (_delegate && [_delegate respondsToSelector:@selector(outlineViewForOverlay:)]) {
+            outlineView = [_delegate outlineViewForOverlay:overlay];
+        } else {
+            outlineView = [[AROverlayOutlineView alloc] initWithOverlay:overlay];
         }
         
         // the delegate has the option of returning nil to hide the overlay
-        if (view) {
-            [view addTarget:self action:@selector(overlayTapped:) forControlEvents:UIControlEventTouchUpInside];
-            [view applyAttachmentStyleWithParent:self];
-            [_overlayImageView addSubview: view];
-            [_overlayViews addObject: view];
+        if (overlayView) {
+            [overlayView addTarget:self action:@selector(overlayTapped:) forControlEvents:UIControlEventTouchUpInside];
+            [_overlayViews addObject: overlayView];
+            [_overlayImageView addSubview: overlayView];
         }
-    }    
-}
 
-- (void)updateOutlines
-{
-    [_outlineViews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    [_outlineViews removeAllObjects];
-    
-    _overlayScaleFactor = [self scaleFactorForBounds:self.bounds withImage:_augmentedPhoto.image];
-    
-    for (int i=0; i<_augmentedPhoto.overlays.count; i++) {
-        AROverlay *overlay = _augmentedPhoto.overlays[i];
-        AROverlayOutlineView *view;
-        
-        if (_delegate && [_delegate respondsToSelector:@selector(outlineViewForOverlay:)]) {
-            view = [_delegate outlineViewForOverlay:overlay];
-        } else {
-            view = [[AROverlayOutlineView alloc] initWithOverlay:overlay scaleFactor:_overlayScaleFactor];
+        if (outlineView) {
+            overlayView.outlineView = outlineView;
+            [_outlineViews addObject: outlineView];
+            [_overlayImageView addSubview: outlineView];
         }
-        
-        if (view) {
-            if (i < _overlayViews.count) {
-                AROverlayView *overlayView = _overlayViews[i];
-                overlayView.outlineView = view;
-            }
-
-            [view drawAnimated:_animateOutlineViewDrawing];
-            [_overlayImageView addSubview:view];
-            [_outlineViews addObject:view];
-        }
-        
     }
-}
-
-- (void)repositionOverlays
-{
-    _overlayScaleFactor = [self scaleFactorForBounds:self.bounds withImage:_augmentedPhoto.image];
-    [_overlayImageView setFrame: [self centeredAspectScaleFrameForImage: _augmentedPhoto.image]];
-    
-    [self resetFocusedOverlay];
-    for (AROverlayView * view in _overlayViews)
-        [view applyAttachmentStyleWithParent:self];
-
-    [self updateOutlines];
+    [self setNeedsLayout];
 }
 
 #pragma mark - Dim View User Interaction

@@ -68,7 +68,7 @@
     } completion:^(BOOL finished) {
         [UIView animateWithDuration:0.3 animations:^{
             overlayView.layer.position = CGPointZero;
-            [overlayView applyAttachmentStyleWithParent:parent];
+            [overlayView layoutWithinParent:parent];
         } completion:^(BOOL finished) {
         }];
     }];

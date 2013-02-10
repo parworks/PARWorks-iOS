@@ -9,18 +9,20 @@
 #import <UIKit/UIKit.h>
 
 @class AROverlay;
+@class ARAugmentedView;
 
 @interface AROverlayOutlineView : UIControl
 {
     AROverlay *_overlay;
-    CGFloat _overlayScaleFactor;
 
-    NSArray *_scaledOutlinePoints;
-    NSArray *_animationDurations;
+    NSArray * _scaledOutlinePoints;
+    UIBezierPath * _scaledPath;
+    NSArray * _animationDurations;
     NSInteger _animationIndex;
 }
 
-- (id)initWithOverlay:(AROverlay *)overlay scaleFactor:(CGFloat)scaleFactor;
+- (id)initWithOverlay:(AROverlay *)overlay;
+- (void)layoutWithinParent:(ARAugmentedView *)parent;
 - (void)drawAnimated:(BOOL)animated;
 
 @end

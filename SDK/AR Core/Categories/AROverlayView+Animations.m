@@ -66,7 +66,7 @@
                 uncentered();
             }
             self.layer.position = CGPointZero;
-            [self applyAttachmentStyleWithParent:parent];
+            [self layoutWithinParent:parent];
         } completion:^(BOOL finished) {
             if (complete) {
                 complete();

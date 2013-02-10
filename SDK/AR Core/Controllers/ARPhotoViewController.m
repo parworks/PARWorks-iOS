@@ -24,7 +24,6 @@
 #import "ARAugmentedView.h"
 #import "AROverlay.h"
 #import "AROverlayView.h"
-#import "AdOverlayView.h"
 
 @implementation ARPhotoViewController
 
@@ -86,15 +85,6 @@
 }
 
 
-#pragma mark - ARAugmentedViewDelegate
-- (AROverlayView *)overlayViewForOverlay:(AROverlay *)overlay
-{
-    AdOverlayView *view;
-    view = [[AdOverlayView alloc] initWithOverlay:overlay];
-    view.attachmentStyle = AROverlayAttachmentStyle_Skew;
-    view.backgroundColor = [UIColor colorWithRed:0 green:0.2 blue:1 alpha:0.5];
-    return view;
-}
 
 
 @end

@@ -180,7 +180,7 @@
 {
     if (!dict) {
         _coverColor = [UIColor yellowColor];
-        _coverTransparency = 100;
+        _coverTransparency = 20;
         _coverProvider = @"";
         _coverType = AROverlayCoverType_Regular;
         return;
