@@ -32,7 +32,7 @@
     [_nameField becomeFirstResponder];
     
     _nameField.text = _overlay.ID;
-    _metadataTextView.text = _overlay.content;
+//    _metadataTextView.text = _overlay.content;
 }
 
 - (void)didReceiveMemoryWarning
@@ -43,7 +43,7 @@
 - (IBAction)doneTapped:(id)sender
 {
     _overlay.name = _nameField.text;
-    _overlay.content = _metadataTextView.text;
+//    _overlay.content = _metadataTextView.text;
 
     [_overlay save];
     

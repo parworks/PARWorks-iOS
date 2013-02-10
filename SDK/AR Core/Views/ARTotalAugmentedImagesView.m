@@ -28,7 +28,7 @@
         [self addSubview:_countLabel];
         
         _cameraIconView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 15, 15)];
-        _cameraIconView.backgroundColor = [UIColor greenColor];
+        [_cameraIconView setImage: [UIImage imageNamed: @"tiny_camera.png"]];
         [self addSubview:_cameraIconView];
     }
     return self;

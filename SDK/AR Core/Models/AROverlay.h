@@ -55,7 +55,6 @@ typedef enum {
 }
 
 @property (nonatomic, strong) NSString * ID;
-@property (nonatomic, strong) NSString * content;
 @property (nonatomic, strong) NSString * siteImageIdentifier;
 @property (nonatomic, strong) NSString * name;
 @property (nonatomic, strong) NSMutableArray * points;

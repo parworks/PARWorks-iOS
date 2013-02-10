@@ -46,17 +46,20 @@
     self = [super init];
     if (self) {
         self.ID = dict[@"id"];
-        self.content = dict[@"description"];
+        
+        NSData * descriptionData = [dict[@"description"] dataUsingEncoding: NSUTF8StringEncoding];
+        NSDictionary * description = [NSJSONSerialization JSONObjectWithData:descriptionData options:NSJSONReadingAllowFragments error:nil];
+        
         self.siteImageIdentifier = dict[@"imageId"];
         self.name = dict[@"name"];
 
         self.accuracy = dict[@"accuracy"];
-        self.title = dict[@"title"];
         self.success = [dict[@"success"] intValue];
         
-        [self setBoundaryPropertiesWithDictionary:dict[@"boundary"]];
-        [self setContentPropertiesWithDictionary:dict[@"content"]];
-        [self setCoverPropertiesWithDictionary:dict[@"cover"]];
+        self.title = description[@"title"];
+        [self setBoundaryPropertiesWithDictionary:description[@"boundary"]];
+        [self setContentPropertiesWithDictionary:description[@"content"]];
+        [self setCoverPropertiesWithDictionary:description[@"cover"]];
         [self setupPointsFromDictionary: dict];
     }
     return self;
@@ -67,7 +70,6 @@
     self = [super init];
     if (self) {
         _ID = [aDecoder decodeObjectForKey:@"id"];
-        _content = [aDecoder decodeObjectForKey:@"content"];
         _siteImageIdentifier = [aDecoder decodeObjectForKey:@"siteImageIdentifier"];
         _name = [aDecoder decodeObjectForKey:@"name"];
         _points = [aDecoder decodeObjectForKey:@"points"];
@@ -95,7 +97,6 @@
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
     [aCoder encodeObject: _ID forKey: @"id"];
-    [aCoder encodeObject: _content forKey: @"content"];
     [aCoder encodeObject: _siteImageIdentifier forKey: @"siteImageIdentifier"];
     [aCoder encodeObject: _name forKey: @"name"];
     [aCoder encodeObject: _points forKey: @"points"];
@@ -266,7 +267,9 @@
     if (!_name)
         @throw [NSException exceptionWithName:@"PARWorks API Error" reason:@"Please add a name before saving." userInfo:nil];
 
-    if (!_content)
+    NSString * content = nil;
+    
+    if (!content)
         @throw [NSException exceptionWithName:@"PARWorks API Error" reason:@"Please add content before saving." userInfo:nil];
     
     
@@ -277,7 +280,7 @@
     
     NSMutableDictionary * dict = [NSMutableDictionary dictionary];
     [dict setObject:_siteImageIdentifier forKey:@"imgId"];
-    [dict setObject:[_content stringByAddingPercentEscapesUsingEncoding: NSASCIIStringEncoding] forKey:@"content"]; // description?
+    [dict setObject:[content stringByAddingPercentEscapesUsingEncoding: NSASCIIStringEncoding] forKey:@"content"]; // description?
     [dict setObject:_site.identifier forKey:@"site"];
     [dict setObject:[_name stringByAddingPercentEscapesUsingEncoding: NSASCIIStringEncoding] forKey:@"name"];
     [dict setObject:[vertices substringFromIndex: 3] forKey:@"v"];

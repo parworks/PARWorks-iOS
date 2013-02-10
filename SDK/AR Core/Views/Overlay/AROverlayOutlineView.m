@@ -158,6 +158,8 @@
         [UIView animateWithDuration:duration animations:^{
             bubble.transform = CGAffineTransformMakeScale(1.2, 1.2);
         } completion:^(BOOL finished) {
+            if (!finished)
+                return; // view may have been removed from superview—bubble is now a bad ptr
             [UIView animateWithDuration:duration animations:^{
                 bubble.transform = CGAffineTransformIdentity;
             }];
