@@ -28,6 +28,7 @@
 #import "AROverlayView.h"
 #import "ARTotalAugmentedImagesView.h"
 #import "UIViewAdditions.h"
+#import "AROverlayTitleView.h"
 
 #define AROverlayZoomWidth 120.0
 #define AROverlayZoomHeight 120.0
@@ -69,6 +70,7 @@
     self.overlayAnimation = [[AROverlayAnimation alloc] init];
     _overlayViews = [[NSMutableArray alloc] init];
     _outlineViews = [[NSMutableArray alloc] init];
+    _overlayTitleViews = [[NSMutableArray alloc] init];
     
     self.overlayImageView = [[UIImageView alloc] initWithFrame: self.bounds];
     _overlayImageView.userInteractionEnabled = YES;
@@ -115,6 +117,7 @@
     [self resetFocusedOverlay];
     [_overlayViews makeObjectsPerformSelector:@selector(layoutWithinParent:) withObject:self];
     [_outlineViews makeObjectsPerformSelector:@selector(layoutWithinParent:) withObject:self];
+    [_overlayTitleViews makeObjectsPerformSelector:@selector(layoutWithinParent:) withObject: self];
 }
 
 - (void)setShowOutlineViewsOnly:(BOOL)showOutlineViewsOnly
@@ -131,13 +134,16 @@
 
     [_outlineViews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     [_outlineViews removeAllObjects];
+    
+    [_overlayTitleViews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [_overlayTitleViews removeAllObjects];
 
     for (int i=0; i < _augmentedPhoto.overlays.count; i++) {
         AROverlay *overlay = _augmentedPhoto.overlays[i];
         AROverlayView * overlayView = nil;
         AROverlayOutlineView * outlineView = nil;
         
-        if (_delegate && [_delegate respondsToSelector:@selector(overlayViewForOverlay:)]) {
+        if (!_showOutlineViewsOnly && _delegate && [_delegate respondsToSelector:@selector(overlayViewForOverlay:)]) {
             overlayView = [_delegate overlayViewForOverlay:overlay];
         } else {
             overlayView = [AROverlayViewFactory viewWithOverlay:overlay];
@@ -152,6 +158,7 @@
         // the delegate has the option of returning nil to hide the overlay
         if (overlayView) {
             [overlayView addTarget:self action:@selector(overlayTapped:) forControlEvents:UIControlEventTouchUpInside];
+            [overlayView setTag: i];
             [_overlayViews addObject: overlayView];
             [_overlayImageView addSubview: overlayView];
         }
@@ -160,6 +167,14 @@
             overlayView.outlineView = outlineView;
             [_outlineViews addObject: outlineView];
             [_overlayImageView addSubview: outlineView];
+        }
+        
+        if (!_showOutlineViewsOnly && overlay.title) {
+            AROverlayTitleView * tv = [[AROverlayTitleView alloc] initWithOverlay: overlay];
+            [tv addTarget:self action:@selector(overlayTapped:) forControlEvents:UIControlEventTouchUpInside];
+            [tv setTag: i];
+            [_overlayTitleViews addObject: tv];
+            [_overlayImageView addSubview: tv];
         }
     }
     [self setNeedsLayout];
@@ -180,13 +195,15 @@
     [self resetFocusedOverlay];
 }
 
-- (void)overlayTapped:(AROverlayView *)sender
+- (void)overlayTapped:(UIView *)sender
 {
+    int overlayIndex = [sender tag];
+    
     if (_focusedOverlayView) {
         [self resetFocusedOverlay];
     } else {
-        _focusedOverlayView = sender;
-        [self zoomSingleOverlay:sender];
+        _focusedOverlayView = [_overlayViews objectAtIndex: overlayIndex];
+        [self zoomSingleOverlay: _focusedOverlayView];
     }
 }
 
@@ -195,6 +212,7 @@
     [UIView animateWithDuration:0.3 animations:^{
         _dimView.alpha = 1.0;
         _overlayZoomed = YES;
+        [_overlayTitleViews makeObjectsPerformSelector:@selector(dismiss)];
     }];
  
     [_overlayImageView bringSubviewToFront:overlay];
@@ -212,6 +230,7 @@
         _dimView.alpha = 0.0;
     } completion:^(BOOL finished) {
         _overlayZoomed = NO;
+        [_overlayTitleViews makeObjectsPerformSelector:@selector(layoutWithinParent:) withObject: self];
     }];
     
     // TODO: Animation needs a completion block.

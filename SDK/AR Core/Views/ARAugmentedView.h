@@ -66,6 +66,9 @@
 /// A container for all the outline views being displayed in the view.
 @property(nonatomic, strong, readonly) NSMutableArray *outlineViews;
 
+/// A container for all the outline views being displayed in the view.
+@property(nonatomic, strong, readonly) NSMutableArray *overlayTitleViews;
+
 /// The image view that displays the image taken by the client.
 @property(nonatomic, strong) UIImageView * overlayImageView;
 

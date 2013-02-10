@@ -23,6 +23,7 @@
 #import "ARSite.h"
 #import "ASIHTTPRequest+JSONAdditions.h"
 #import "UIColor+Utils.h"
+#import "NSContainers+NullHandlers.h"
 
 @implementation AROverlay
 
@@ -56,7 +57,7 @@
         self.accuracy = dict[@"accuracy"];
         self.success = [dict[@"success"] intValue];
         
-        self.title = description[@"title"];
+        self.title = [description objectForKey:@"title" or: nil];
         [self setBoundaryPropertiesWithDictionary:description[@"boundary"]];
         [self setContentPropertiesWithDictionary:description[@"content"]];
         [self setCoverPropertiesWithDictionary:description[@"cover"]];
@@ -129,9 +130,9 @@
         return;
     }
 
-    _boundaryColor = [UIColor colorWithString:dict[@"color"]];
+    _boundaryColor = [UIColor colorWithString:[dict objectForKey:@"color" or: nil]];
 
-    NSString *type = dict[@"type"];
+    NSString *type = [dict objectForKey:@"type" or: nil];
     if ([type.lowercaseString isEqualToString:@"hide"]) {
         _boundaryType = AROverlayBoundaryType_Hidden;
         _boundaryColor = [UIColor clearColor];
@@ -151,9 +152,9 @@
         return;
     }
     
-    _contentProvider = dict[@"provider"];
+    _contentProvider = [dict objectForKey:@"provider" or: nil];
 
-    NSString *size = dict[@"size"];
+    NSString *size = [dict objectForKey:@"size" or: nil];
     if ([size.lowercaseString isEqualToString:@"small"]) {
         _contentSize = AROverlayContentSize_Small;
     } else if ([size.lowercaseString isEqualToString:@"large"]) {
@@ -164,7 +165,7 @@
         _contentSize = AROverlayContentSize_Medium;
     }
     
-    NSString *type = dict[@"type"];
+    NSString *type = [dict objectForKey:@"type" or: nil];
     if ([type.lowercaseString isEqualToString:@"url"]) {
         _contentType = AROverlayContentType_URL;
     } else if ([type.lowercaseString isEqualToString:@"video"]) {
