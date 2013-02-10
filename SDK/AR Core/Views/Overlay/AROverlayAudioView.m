@@ -10,22 +10,17 @@
 
 @implementation AROverlayAudioView
 
-- (id)initWithFrame:(CGRect)frame
+- (id)initWithOverlay:(AROverlay *)overlay
 {
-    self = [super initWithFrame:frame];
+    self = [super initWithOverlay:overlay];
     if (self) {
-        // Initialization code
+        [self setBackgroundColor:[UIColor clearColor]];
+        [_player.view setBackgroundColor:[UIColor clearColor]];
+        [_player.view setFrame:self.bounds];
+        
+        self.animDelegate = self;
     }
     return self;
 }
-
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
-{
-    // Drawing code
-}
-*/
 
 @end

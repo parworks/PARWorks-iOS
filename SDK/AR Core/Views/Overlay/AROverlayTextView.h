@@ -6,8 +6,8 @@
 //  Copyright (c) 2013 Demetri Miller. All rights reserved.
 //
 
-#import "AROverlayView.h"
+#import "AROverlayWebView.h"
 
-@interface AROverlayTextView : AROverlayView
+@interface AROverlayTextView : AROverlayWebView
 
 @end

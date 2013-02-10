@@ -8,7 +8,9 @@
 
 #import "AROverlayView.h"
 
-@interface AROverlayWebView : AROverlayView <AROverlayViewAnimationDelegate>
+@interface AROverlayWebView : AROverlayView <AROverlayViewAnimationDelegate>{
+    UIWebView *_webView;
+}
 
 @property(nonatomic, strong) UIWebView *webView;
 

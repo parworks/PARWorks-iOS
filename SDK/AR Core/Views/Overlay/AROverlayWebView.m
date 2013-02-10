@@ -33,8 +33,7 @@
     [self animateBounceFocusWithParent:parent centeredBlock:^{
         weakSelf.webView.alpha = 1.0;
     } complete:^{
-        NSURL *url = [NSURL URLWithString:weakSelf.overlay.contentProvider];
-        [weakSelf.webView loadRequest:[NSURLRequest requestWithURL:url]];
+        [self focusOverlayViewCompleted:weakSelf];
     }];
 }
 
@@ -44,6 +43,11 @@
     [self animateBounceUnfocusWithParent:parent uncenteredBlock:^{
         weakSelf.webView.alpha = 0.0;
     } complete:nil];
+}
+
+- (void)focusOverlayViewCompleted:(AROverlayWebView*)overlayWebView{
+    NSURL *url = [NSURL URLWithString:overlayWebView.overlay.contentProvider];
+    [overlayWebView.webView loadRequest:[NSURLRequest requestWithURL:url]];
 }
 
 @end
