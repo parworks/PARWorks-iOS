@@ -78,7 +78,7 @@
     
     self.dimView = [[UIControl alloc] initWithFrame:_overlayImageView.bounds];
     [_dimView addTarget:self action:@selector(dimViewTapped:) forControlEvents:UIControlEventTouchUpInside];
-    _dimView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.4];
+    _dimView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
     _dimView.alpha = 0.0;
     [_overlayImageView addSubview: _dimView];
     

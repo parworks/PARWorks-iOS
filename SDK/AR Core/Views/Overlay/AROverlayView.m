@@ -213,7 +213,7 @@
             frame = CGRectMake(0, 0, 200, 200);
             break;
         case AROverlayContentSize_Large:
-            frame = CGRectMake(0, 0, 250, 250);
+            frame = CGRectMake(0, 0, 300, 300);
             break;
         case AROverlayContentSize_Fullscreen:
             frame = self.bounds;
