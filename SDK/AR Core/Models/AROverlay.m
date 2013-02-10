@@ -134,6 +134,7 @@
     NSString *type = dict[@"type"];
     if ([type.lowercaseString isEqualToString:@"hide"]) {
         _boundaryType = AROverlayBoundaryType_Hidden;
+        _boundaryColor = [UIColor clearColor];
     } if ([type.lowercaseString isEqualToString:@"dashed"]) {
         _boundaryType = AROverlayBoundaryType_Dashed;
     } else {
@@ -194,6 +195,7 @@
     NSString *type = dict[@"type"];
     if ([type.lowercaseString isEqualToString:@"hide"]) {
         _coverType = AROverlayCoverType_Hidden;
+        _coverColor = [UIColor clearColor];
     } else if ([type.lowercaseString isEqualToString:@"image"]) {
         _coverType = AROverlayCoverType_Image;
     } else {
