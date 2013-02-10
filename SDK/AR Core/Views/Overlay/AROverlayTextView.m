@@ -10,14 +10,18 @@
 
 @implementation AROverlayTextView
 
-- (id)initWithFrame:(CGRect)frame
+- (id)initWithOverlay:(AROverlay *)overlay
 {
-    self = [super initWithFrame:frame];
+    self = [super initWithOverlay:overlay];
     if (self) {
-        // Initialization code
+       
     }
     return self;
 }
 
+- (void)focusOverlayViewCompleted:(AROverlayWebView*)overlayWebView{
+    NSString *html = [NSString stringWithFormat:@"<html><head><title>%@</title></head><body><p>%@</p></body></html>", overlayWebView.overlay.name, overlayWebView.overlay.contentProvider];
+    [overlayWebView.webView loadHTMLString:html baseURL:nil];
+}
 
 @end

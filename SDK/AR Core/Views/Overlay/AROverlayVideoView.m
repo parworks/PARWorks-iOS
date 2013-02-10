@@ -7,25 +7,47 @@
 //
 
 #import "AROverlayVideoView.h"
+#import "AROverlayView+Animations.h"
 
 @implementation AROverlayVideoView
 
-- (id)initWithFrame:(CGRect)frame
+- (id)initWithOverlay:(AROverlay *)overlay
 {
-    self = [super initWithFrame:frame];
+    self = [super initWithOverlay:overlay];
     if (self) {
-        // Initialization code
+        self.player = [[MPMoviePlayerController alloc] initWithContentURL:nil];
+        _player.view.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+        [_player.view setFrame:self.bounds];
+        [self addSubview:_player.view];
+        _player.view.alpha = 0.0;
+        
+        self.animDelegate = self;
     }
     return self;
 }
 
-/*
-// Only override drawRect: if you perform custom drawing.
-// An empty implementation adversely affects performance during animation.
-- (void)drawRect:(CGRect)rect
+
+#pragma mark - AROverlayViewAnimationDelegate
+- (void)focusOverlayView:(AROverlayView *)overlayView inParent:(ARAugmentedView *)parent
 {
-    // Drawing code
+    __weak AROverlayVideoView * weakSelf = self;
+    [self animateBounceFocusWithParent:parent centeredBlock:^{
+        weakSelf.player.view.alpha = 1.0;
+    } complete:^{
+        NSURL *url = [NSURL URLWithString:weakSelf.overlay.contentProvider];        
+        [weakSelf.player setContentURL:url];
+        [weakSelf.player prepareToPlay];
+        [weakSelf.player play];
+    }];
 }
-*/
+
+- (void)unfocusOverlayView:(AROverlayView *)overlayView inParent:(ARAugmentedView *)parent
+{
+    __weak AROverlayVideoView * weakSelf = self;
+    [self animateBounceUnfocusWithParent:parent uncenteredBlock:^{
+        [weakSelf.player stop];
+        weakSelf.player.view.alpha = 0.0;
+    } complete:nil];
+}
 
 @end
