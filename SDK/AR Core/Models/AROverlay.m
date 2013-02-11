@@ -159,10 +159,10 @@
         _contentSize = AROverlayContentSize_Small;
     } else if ([size.lowercaseString isEqualToString:@"large"]) {
         _contentSize = AROverlayContentSize_Large;
-    } else if ([size.lowercaseString isEqualToString:@"fullscreen"]) {
+    } else if ([size.lowercaseString isEqualToString:@"full_screen"]) {
         _contentSize = AROverlayContentSize_Fullscreen;
     } else {
-        _contentSize = AROverlayContentSize_Medium;
+        _contentSize = AROverlayContentSize_Large;
     }
     
     NSString *type = [dict objectForKey:@"type" or: nil];
