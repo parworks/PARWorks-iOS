@@ -216,7 +216,7 @@
             frame = CGRectMake(0, 0, 300, 300);
             break;
         case AROverlayContentSize_Fullscreen:
-            frame = self.bounds;
+            frame = CGRectMake(0, 0, 320, 480);
             break;
         default:
             break;

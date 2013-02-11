@@ -29,6 +29,7 @@
 #import "ARTotalAugmentedImagesView.h"
 #import "UIViewAdditions.h"
 #import "AROverlayTitleView.h"
+#import <MediaPlayer/MediaPlayer.h>
 
 #define AROverlayZoomWidth 120.0
 #define AROverlayZoomHeight 120.0
@@ -58,8 +59,15 @@
     [self setup];
 }
 
+- (void)dealloc{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
 - (void)setup
 {
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willExitFullscreen) name:MPMoviePlayerWillExitFullscreenNotification object:nil];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willExitFullscreen) name:NOTIF_DISMISS_NAVCONTROLLER_FULLSCREEN object:nil];
+    
     self.userInteractionEnabled = YES;
     self.backgroundColor = [UIColor blackColor];
     self.showOutlineViewsOnly = NO;
@@ -285,5 +293,15 @@
     frame.origin.y = center.y - (frame.size.height/2);
     return frame;
 }
+
+- (void)presentFullscreenNavigationController:(UINavigationController*)controller{
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_PRESENT_NAVCONTROLLER_FULLSCREEN object:controller];
+}
+
+- (void)willExitFullscreen {
+    NSLog(@"willExitFullscreen");
+    [self resetFocusedOverlay];
+}
+
 
 @end

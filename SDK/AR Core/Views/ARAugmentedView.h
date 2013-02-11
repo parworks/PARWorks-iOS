@@ -27,6 +27,9 @@
 @class AROverlayOutlineView;
 @class ARTotalAugmentedImagesView;
 
+#define NOTIF_PRESENT_NAVCONTROLLER_FULLSCREEN @"NOTIF_PRESENT_NAVCONTROLLER_FULLSCREEN"
+#define NOTIF_DISMISS_NAVCONTROLLER_FULLSCREEN @"NOTIF_DISMISS_NAVCONTROLLER_FULLSCREEN"
+
 /** 
     This protocol provides a way for users to supply their own
     custom overlay view subclasses for the augmented view to display.
@@ -89,6 +92,9 @@
 @property(nonatomic, weak) IBOutlet id<ARAugmentedViewDelegate> delegate;
 
 - (void)setVisibile:(BOOL)visible forOverlayViewsWithName:(NSString *)name;
+
+/// Posts notification to present a navigation controller fullscreen
+- (void)presentFullscreenNavigationController:(UINavigationController*)controller;
 
 @end
 

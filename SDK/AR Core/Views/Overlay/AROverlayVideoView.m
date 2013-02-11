@@ -15,13 +15,7 @@
 {
     self = [super initWithOverlay:overlay];
     if (self) {
-        self.player = [[MPMoviePlayerController alloc] initWithContentURL:nil];
-        _player.view.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-        [_player.view setFrame:self.bounds];
-        [self addSubview:_player.view];
-        _player.view.alpha = 0.0;
-        
-        self.animDelegate = self;
+        self.animDelegate = self;        
     }
     return self;
 }
@@ -30,6 +24,18 @@
 #pragma mark - AROverlayViewAnimationDelegate
 - (void)focusOverlayView:(AROverlayView *)overlayView inParent:(ARAugmentedView *)parent
 {
+    if(!_player){
+        self.player = [[MPMoviePlayerController alloc] initWithContentURL:nil];
+        _player.view.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+        [_player.view setFrame:self.bounds];
+        [self addSubview:_player.view];
+        _player.view.alpha = 0.0;
+    }
+    
+    if(self.overlay.contentSize == AROverlayContentSize_Fullscreen){        
+        [_player setFullscreen:YES animated:YES];
+    }
+    
     __weak AROverlayVideoView * weakSelf = self;
     [self animateBounceFocusWithParent:parent centeredBlock:^{
         weakSelf.player.view.alpha = 1.0;
