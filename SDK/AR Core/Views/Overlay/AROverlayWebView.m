@@ -35,7 +35,7 @@
     
     __weak AROverlayWebView * weakSelf = self;
     [self animateBounceFocusWithParent:parent centeredBlock:^{
-        if(self.overlay.contentSize == AROverlayContentSize_Fullscreen){
+        if(overlayView.overlay.contentSize == AROverlayContentSize_Fullscreen){
             ARWebViewController *webViewController = [[ARWebViewController alloc] initWithNibName:@"ARWebViewController" bundle:nil];
             webViewController.sUrl = overlayView.overlay.contentProvider;
             webViewController.sTitle = overlayView.overlay.name;
