@@ -104,56 +104,6 @@
     [self setFrame:f];
 }
 
-- (void)logViewStackFromTop
-{
-    // if we have a parent, move the log command up to him
-    if ([self superview])
-        [[self superview] logViewStackFromTop];
-    else 
-        [self logViewStack];
-}
-
-- (void)logViewStack
-{
-    NSDictionary * r = [self logViewStackToDictionary];
-    [r writeToFile:@"/data.ar" atomically:NO];
-}
-
-- (NSMutableDictionary*)logViewStackToDictionary
-{
-
-    UIGraphicsBeginImageContext([self bounds].size);
-    
-    if ([self backgroundColor] != nil){
-        CGContextRef c = UIGraphicsGetCurrentContext();
-        CGContextSetFillColorWithColor(c, [[self backgroundColor] CGColor]);
-        CGContextFillRect(c, [self bounds]);
-    }
-    
-    [self drawRect: [self bounds]];
-    
-    UIImage * i = UIGraphicsGetImageFromCurrentImageContext();
-    NSData * rep = UIImagePNGRepresentation(i);
-    UIGraphicsEndImageContext();
-    
-    NSMutableDictionary * dict = [NSMutableDictionary dictionary];
-    if (rep) [dict setObject: rep forKey: @"image"];
-    [dict setObject: @([self frame].origin.x) forKey: @"x"];
-    [dict setObject: @([self frame].origin.y) forKey: @"y"];
-    [dict setObject: @([self frame].size.width) forKey: @"w"];
-    [dict setObject: @([self frame].size.height) forKey: @"h"];
-    
-    if ([[self subviews] count] > 0){
-        NSMutableArray * subviewDicts = [NSMutableArray array];
-        for (UIView * v in [self subviews]){
-            [subviewDicts addObject: [v logViewStackToDictionary]];
-        }
-        [dict setObject: subviewDicts forKey: @"subviews"];
-    }
-    
-    return dict;
-}
-
 - (CGPoint)topRight
 {
     return CGPointMake([self frame].origin.x + [self frame].size.width, [self frame].origin.y);

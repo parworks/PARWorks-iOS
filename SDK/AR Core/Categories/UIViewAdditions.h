@@ -39,10 +39,6 @@
 - (void)setFrameSizeAndRemainCentered:(CGSize)desired;
 - (void)multiplyFrameBy:(float)t;
 
-- (void)logViewStackFromTop;
-- (void)logViewStack;
-- (NSMutableDictionary*)logViewStackToDictionary;
-
 - (CGPoint)topRight;
 - (CGPoint)bottomRight;
 - (CGPoint)bottomLeft;

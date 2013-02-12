@@ -33,9 +33,7 @@
     @param AROverlayAttachmentStyle_Centered - The overlay isn't transformed, but centered. (not finished)
  */
 typedef enum {
-    AROverlayAttachmentStyle_Skew,
-    AROverlayAttachmentStyle_Bounded,
-    AROverlayAttachmentStyle_Centered
+    AROverlayAttachmentStyle_Skew
 } AROverlayAttachmentStyle;
 
 

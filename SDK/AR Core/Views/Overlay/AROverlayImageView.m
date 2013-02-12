@@ -14,18 +14,7 @@
 - (id)initWithOverlay:(AROverlay *)overlay
 {
     self = [super initWithOverlay:overlay];
-    if (self) {
-        self.imageView = [[UIImageView alloc] initWithFrame:self.bounds];
-        _imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-        _imageView.alpha = 0.0;
-        [self addSubview:_imageView];
-
-        self.activity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-        _activity.center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
-        _activity.hidesWhenStopped = YES;
-        [_activity stopAnimating];
-        [self addSubview:_activity];
-        
+    if (self) {        
         self.animDelegate = self;
     }
     return self;
@@ -34,6 +23,19 @@
 #pragma mark - AROverlayViewAnimationDelegate
 - (void)focusOverlayView:(AROverlayView *)overlayView inParent:(ARAugmentedView *)parent
 {
+    if (!_imageView) {
+        self.imageView = [[UIImageView alloc] initWithFrame:self.bounds];
+        _imageView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+        _imageView.alpha = 0.0;
+        [self addSubview:_imageView];
+        
+        self.activity = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+        _activity.center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
+        _activity.hidesWhenStopped = YES;
+        [_activity stopAnimating];
+        [self addSubview:_activity];
+    }
+
     [_activity startAnimating];
     NSURLRequest *req = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:self.overlay.contentProvider]];
     [NSURLConnection sendAsynchronousRequest:req queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *err) {

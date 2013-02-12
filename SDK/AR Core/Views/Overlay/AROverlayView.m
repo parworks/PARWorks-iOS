@@ -58,37 +58,34 @@
     self = [super initWithFrame:frame];
     if (self) {
         self.overlay = overlay;
-        [self setupOverlay];
+        
+        CAShapeLayer *layer = (CAShapeLayer *)self.layer;
+        layer.shouldRasterize = YES;
+        layer.rasterizationScale = [UIScreen mainScreen].scale;
+        layer.backgroundColor = [UIColor clearColor].CGColor;
+        layer.fillColor = [UIColor clearColor].CGColor;
+        _attachmentStyle = AROverlayAttachmentStyle_Skew;
+        
+        CGRect overlayBounds = self.bounds;
+        layer.anchorPoint = CGPointMake(0, 0);
+        layer.frame = overlayBounds;
+        
+        [self updateLayerPath];
         [self setupCoverView];
         [self applyOverlayStyles];
     }
     return self;
 }
 
-- (void)setupOverlay
-{
-    CAShapeLayer *layer = (CAShapeLayer *)self.layer;
-    layer.shouldRasterize = YES;
-    layer.rasterizationScale = [UIScreen mainScreen].scale;
-    layer.backgroundColor = [UIColor clearColor].CGColor;
-    layer.fillColor = [UIColor clearColor].CGColor;
-    _attachmentStyle = AROverlayAttachmentStyle_Skew;
-    
-    CGRect overlayBounds = self.bounds;
-    layer.anchorPoint = CGPointMake(0, 0);
-    layer.frame = overlayBounds;
-
-    [self updateLayerPath];
-}
-
 - (void)setupCoverView
 {
+
     self.coverView = [[UIView alloc] initWithFrame:self.bounds];
     _coverView.userInteractionEnabled = NO;
     _coverView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     _coverView.alpha = _overlay.coverTransparency/100.0;
     _coverView.backgroundColor = _overlay.coverColor;
-    _coverView.hidden = (_overlay.contentType == AROverlayCoverType_Hidden);
+    _coverView.hidden = (_overlay.coverType == AROverlayCoverType_Hidden);
     
     // Load the image into the view.
     if (_overlay.coverType == AROverlayCoverType_Image && _overlay.coverProvider) {
@@ -154,24 +151,6 @@
 #pragma mark - Transforms
 - (void)layoutWithinParent:(ARAugmentedView *)parent
 {
-    switch (_attachmentStyle) {
-        case AROverlayAttachmentStyle_Skew:
-            [self layoutSkewedWithinParent:parent];
-            break;
-        case AROverlayAttachmentStyle_Bounded:
-            [self layoutBoundedWithinParent:parent];
-            break;
-        case AROverlayAttachmentStyle_Centered:
-            [self layoutCenteredWithinParent:parent];
-            break;
-            
-        default:
-            break;
-    }
-}
-
-- (void)layoutSkewedWithinParent:(ARAugmentedView *)parent
-{
     // Apply the transform
     NSArray *scaledPoints = [AROverlayUtil scaledOverlayPointsForPoints:_overlay.points withScaleFactor:parent.overlayScaleFactor];
 
@@ -187,19 +166,6 @@
                                                 quadBRX:br.x quadBRY:br.y];
     self.layer.transform = transform;
 }
-
-- (void)layoutBoundedWithinParent:(ARAugmentedView *)parent
-{
-    NSArray *scaledPoints = [AROverlayUtil scaledOverlayPointsForPoints:_overlay.points withScaleFactor:parent.overlayScaleFactor];
-    CGRect frame = [AROverlayUtil boundingFrameForPoints:scaledPoints];
-    self.frame = frame;
-}
-
-- (void)layoutCenteredWithinParent:(ARAugmentedView *)parent
-{
-    
-}
-
 
 #pragma mark - Convenience
 - (CGRect)frameWithOverlayContentSize:(AROverlayContentSize)size

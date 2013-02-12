@@ -151,10 +151,12 @@
         AROverlayView * overlayView = nil;
         AROverlayOutlineView * outlineView = nil;
         
-        if (!_showOutlineViewsOnly && _delegate && [_delegate respondsToSelector:@selector(overlayViewForOverlay:)]) {
-            overlayView = [_delegate overlayViewForOverlay:overlay];
-        } else {
-            overlayView = [AROverlayViewFactory viewWithOverlay:overlay];
+        if (!_showOutlineViewsOnly) {
+            if (_delegate && [_delegate respondsToSelector:@selector(overlayViewForOverlay:)]) {
+                overlayView = [_delegate overlayViewForOverlay:overlay];
+            } else {
+                overlayView = [AROverlayViewFactory viewWithOverlay:overlay];
+            }
         }
         
         if (_delegate && [_delegate respondsToSelector:@selector(outlineViewForOverlay:)]) {
