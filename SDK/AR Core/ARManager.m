@@ -302,6 +302,23 @@ static ARManager * sharedManager;
     [req startAsynchronous];
 }
 
+- (void)notifyUser:(NSString*)userId clickedOverlay:(AROverlay*)overlay site:(ARSite*)site withCompletionBlock:(void (^)(void))completionBlock
+{
+    NSMutableDictionary * args = [NSMutableDictionary dictionaryWithCapacity: 2];
+    [args setObject:userId forKey:@"userId"];
+    [args setObject:site.identifier forKey:@"site"];
+    [args setObject:overlay.name forKey:@"overlayName"];   
+    
+    ASIHTTPRequest * req = [self createRequest:REQ_SITE_OVERLAY_CLICK withMethod:@"GET" withArguments: args];
+    ASIHTTPRequest * __weak __req = req;
+    [req setCompletionBlock: ^(void) {
+        [self handleResponseErrors: __req];
+        if (completionBlock)
+            completionBlock();
+    }];
+    [req startAsynchronous];
+}
+
 #pragma mark Convenience Functions for Image Picking
 
 - (UIImage*)rotateImage:(UIImage*)img byOrientationFlag:(UIImageOrientation)orient

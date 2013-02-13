@@ -181,6 +181,20 @@
  */
 - (void)findSites:(int)resolution nearLocation:(CLLocation*)location withCompletionBlock:(void (^)(NSArray *, CLLocation *))completionBlock;
 
+/** Notifies server that a certain user clicked an indicated overlay belonging to the passed site.
+ 
+ @param userId The id of user who clicked overlay
+ 
+ @param siteId The site the overlay belongs to
+ 
+ @param overlayName The name of the overlay clicked
+  
+ @param completionBlock A block to call when the server response has been received.
+
+ 
+ */
+- (void)notifyUser:(NSString*)userId clickedOverlay:(AROverlay*)overlay site:(ARSite*)site withCompletionBlock:(void (^)(void))completionBlock;
+
 #pragma mark Convenience Functions for Image Picking
 
 - (UIImage*)rotateImage:(UIImage*)img byOrientationFlag:(UIImageOrientation)orient;
