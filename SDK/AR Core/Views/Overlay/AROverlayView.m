@@ -130,6 +130,7 @@
 {
     if (_animDelegate) {
         [_animDelegate focusOverlayView:self inParent:parent];
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_OVERLAY_VIEW_FOCUSED object: self];
     }
     [UIView animateWithDuration:0.1 animations:^{
         _outlineView.alpha = 0.0;
