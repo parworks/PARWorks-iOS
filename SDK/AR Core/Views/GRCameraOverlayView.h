@@ -8,9 +8,32 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GRCameraOverlayView : UIView
+@class ARAugmentedPhoto;
+@class ARSite;
+@class ARAugmentedView;
+@class GRCameraOverlayToolbar;
+@class MBProgressHUD;
 
-@property(nonatomic, strong) UIButton *augmentButton;
-@property(nonatomic, strong) UIImageView *buttonImageView;
+@interface GRCameraOverlayView : UIView <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+{
+    ARAugmentedPhoto *_augmentedPhoto;
+    ARAugmentedView  *_augmentedView;
+    
+    UITapGestureRecognizer  *_tap;
+    MBProgressHUD           *_progressHUD;
+    CALayer                 *_takenPhotoLayer;
+    NSTimeInterval          _pickerFinishedTimestamp;
+}
+
+@property(nonatomic, strong) GRCameraOverlayToolbar *toolbar;
+@property(nonatomic, weak) UIImagePickerController *imagePicker;
+@property(nonatomic, weak) ARSite *site;
+
+- (UIImagePickerControllerCameraFlashMode)flashModeFromDefaults;
 
 @end
+
+
+
+
+
