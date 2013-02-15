@@ -285,7 +285,10 @@
             scale = (widthRatio > heightRatio) ? heightRatio : widthRatio;
             break;
     }
- 
+    
+    if (scale < 0.2)
+        NSLog(@"WARNING Huge image in ARAugmentedView: %f", scale);
+
     return scale;
 }
 
