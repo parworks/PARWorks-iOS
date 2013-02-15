@@ -236,6 +236,17 @@
 	return [self initWithRed:red green:green blue:blue alpha:alpha];
 }
 
++ (UIColor *)colorWithHexRGBValue:(NSUInteger)colorValue
+{
+	CGFloat	redVal, greenVal, blueVal;
+    
+	redVal = (colorValue >> 16) & 0xff;
+	greenVal = (colorValue >> 8) & 0xff;
+	blueVal = colorValue & 0xff;
+    
+	return [UIColor colorWithRed: redVal / 255.0 green:	greenVal / 255.0 blue: blueVal / 255.0 alpha: 1.0];
+}
+
 - (NSInteger)RGBValue
 {
     CGFloat rgba[4];

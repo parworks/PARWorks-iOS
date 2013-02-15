@@ -46,6 +46,7 @@
 - (UIColor *)initWithString:(NSString *)string;
 - (UIColor *)initWithRGBValue:(int32_t)rgb;
 - (UIColor *)initWithRGBAValue:(uint32_t)rgba;
++ (UIColor *)colorWithHexRGBValue:(NSUInteger)colorValue;
 
 - (int32_t)RGBValue;
 - (uint32_t)RGBAValue;
