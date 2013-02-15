@@ -17,7 +17,7 @@
 //  limitations under the License.
 //
 
-
+#import "ARSite.h"
 #import "ARAugmentedView.h"
 #import "AROverlay.h"
 #import "AROverlayAnimation.h"
@@ -69,7 +69,7 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(willExitFullscreen) name:NOTIF_DISMISS_NAVCONTROLLER_FULLSCREEN object:nil];
     
     self.userInteractionEnabled = YES;
-    self.backgroundColor = [UIColor blackColor];
+    self.backgroundColor = [UIColor clearColor];
     self.showOutlineViewsOnly = NO;
     self.animateOutlineViewDrawing = YES;
     self.overlayImageViewContentMode = UIViewContentModeScaleAspectFit;
@@ -93,6 +93,10 @@
     self.totalAugmentedImagesView = [[ARTotalAugmentedImagesView alloc] init];
     _totalAugmentedImagesView.hidden = YES;
     [self addSubview: _totalAugmentedImagesView];
+    
+    _loadingView = [[PVLoadingView alloc] initWithFrame: CGRectMake(0, 0, 36, 36)];
+    [self addSubview: _loadingView];
+    [_loadingView startAnimating];
 }
 
 - (void)setAugmentedPhoto:(ARAugmentedPhoto*)p
@@ -100,9 +104,10 @@
     _augmentedPhoto = p;
     _overlayZoomed = NO;
     _overlayImageView.image = _augmentedPhoto.image;
-    
-    if (_augmentedPhoto)
+    if ((_augmentedPhoto) && (_augmentedPhoto.image)) {
+        [_loadingView stopAnimating];
         [self attachOverlayViews];
+    }
 }
 
 
@@ -112,7 +117,8 @@
 {
     [super layoutSubviews];
     [_dimView setFrame: [self bounds]];
-
+    [_loadingView setCenter: self.center];
+    
     CGFloat x = (self.bounds.size.width - _totalAugmentedImagesView.frame.size.width - 10);
     [_totalAugmentedImagesView setFrameX:x];
     [_totalAugmentedImagesView setFrameY:10];
@@ -279,7 +285,7 @@
             scale = (widthRatio > heightRatio) ? heightRatio : widthRatio;
             break;
     }
-
+ 
     return scale;
 }
 

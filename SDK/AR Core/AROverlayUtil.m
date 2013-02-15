@@ -69,12 +69,18 @@
 // frame of overlay view.
 + (CGRect)boundingFrameForPoints:(NSArray *)points
 {
+    if ([points count] == 0)
+        return CGRectZero;
+    
     AROverlayPoint * point = [points objectAtIndex:0];
     CGRect rect = CGRectMake(point.x, point.y, 1, 1);
     for (int i=1; i<points.count; i++) {
         AROverlayPoint * point = [points objectAtIndex: i];
         rect = CGRectUnion(rect, CGRectMake(point.x, point.y, 1, 1));
     }
+    
+    if (rect.size.width == NAN)
+        return CGRectZero;
     
     return rect;
 }

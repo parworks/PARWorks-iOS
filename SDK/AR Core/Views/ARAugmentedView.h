@@ -22,6 +22,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "ARAugmentedPhoto.h"
 #import "AROverlayView.h"
+#import "PVLoadingView.h"
 
 @class AROverlay;
 @class AROverlayOutlineView;
@@ -55,6 +56,7 @@
 @interface ARAugmentedView : UIControl
 {
     AROverlayView *_focusedOverlayView;
+    PVLoadingView *_loadingView;
     BOOL _overlayZoomed;
 }
 
