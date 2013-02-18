@@ -30,6 +30,7 @@
     NSString * _appVersion;
     NSString * _appUsername;
     
+    NSDate * _lastConnectionAlertDate;
     CLLocationManager * _locationManager;
     BOOL _locationEnabled;
 }

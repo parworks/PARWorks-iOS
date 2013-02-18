@@ -410,10 +410,16 @@ static ARManager * sharedManager;
     if ([json isKindOfClass: [NSDictionary class]] && [json objectForKey: @"reason"])
         msg = [json objectForKey: @"reason"];
     else
-        msg = @"The data could not be loaded. Please check the app's log for detailed information.";
+        msg = @"The PAR Works server could not be reached. Make sure you have an internet connection and try again.";
 
-    UIAlertView * v = [[UIAlertView alloc] initWithTitle:@"Unexpected Error" message:msg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-    [v show];
+    if ((!_lastConnectionAlertDate) || ([[NSDate new] timeIntervalSinceDate: _lastConnectionAlertDate] > 15)) {
+        UIAlertView * v = [[UIAlertView alloc] initWithTitle:@"Connection Error" message:msg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
+        [v show];
+        _lastConnectionAlertDate = [NSDate new];
+    } else {
+        // do nothing... we don't want to overwhelm the user with errors. One message
+        // every 15 seconds is enough for them to get the idea.
+    }
 }
 
 #pragma mark -
