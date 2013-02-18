@@ -49,7 +49,7 @@ typedef enum ARSiteStatus {
 @property (nonatomic, strong) NSURL * logoURL;
 @property (nonatomic, assign) CLLocationCoordinate2D location;
 @property (nonatomic, assign) long totalAugmentedImages;
-@property (nonatomic, assign) float originalImageWidth;
+@property (nonatomic, assign) float posterImageOriginalWidth;
 
 @property (nonatomic, strong) NSMutableArray * images;
 @property (nonatomic, strong) NSMutableArray * augmentedPhotos;
@@ -196,6 +196,7 @@ server again.
 
 - (int)recentlyAugmentedImageCount;
 - (NSURL*)URLForRecentlyAugmentedImageAtIndex:(int)index;
+- (float)originalWidthForRecentlyAugmentedImageAtIndex:(int)index;
 - (NSDictionary*)overlayJSONForRecentlyAugmentedImageAtIndex:(int)index;
 
 @end

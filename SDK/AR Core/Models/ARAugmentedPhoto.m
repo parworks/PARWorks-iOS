@@ -38,8 +38,8 @@
         self.image = i;
         self.imageIdentifier = [NSString stringWithFormat: @"%x.jpg", (unsigned int)_image];
     
-        if (([i size].width < 2000) || ([i size].height < 2000))
-            NSLog(@"HDAR: The image you are augmenting is smaller than 2000px, and will probably not be augmented successfully.");
+        if (([i size].width < 1000) && ([i size].height < 1000))
+            NSLog(@"HDAR: The image you are augmenting is smaller than 1000px, and will probably not be augmented successfully.");
     }
     return self;
 }
@@ -220,7 +220,6 @@
         for (AROverlayPoint * p in result.points) {
             p.x = p.x *= scale;
             p.y = p.y *= scale;
-            p.z = p.z *= scale;
         }
         [self addOverlay: result];
     }

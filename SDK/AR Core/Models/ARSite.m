@@ -119,13 +119,13 @@
     self.siteDescription = [dict objectForKey: @"description" or: @"No Description Provided."];
     self.location = CLLocationCoordinate2DMake([[dict objectForKey: @"lat" or: nil] doubleValue], [[dict objectForKey:@"lon" or: nil] doubleValue]);
     self.logoURL = [NSURL URLWithString: [dict objectForKey: @"logoURL" or: nil]];
-    self.originalImageWidth = [[dict objectForKey:@"fullSizeWidth" or: nil] floatValue];
 
-    _posterImage = [dict objectForKey: @"posterImage" or: nil];
+    _posterImage = [dict objectForKey: @"augmentedPosterImage" or: nil];
+    _posterImageOriginalWidth = [[_posterImage objectForKey:@"fullSizeWidth" or: nil] floatValue];
     _recentAugmentationOutput = [dict objectForKey:@"recentlyAugmentedImages" or: nil];
     
-    if (_originalImageWidth == 0)
-        _originalImageWidth = 2592;
+    if (_posterImageOriginalWidth == 0)
+        _posterImageOriginalWidth = 2592;
     
     if (_posterImage == nil)
         _posterImage = [_recentAugmentationOutput lastObject];
@@ -407,6 +407,13 @@
     NSDictionary * output = [_recentAugmentationOutput objectAtIndex: index];
     return [NSURL URLWithString: [output objectForKey: @"imgContentPath" or: [output objectForKey: @"imgPath"]]];
 }
+
+- (float)originalWidthForRecentlyAugmentedImageAtIndex:(int)index
+{
+    NSDictionary * output = [_recentAugmentationOutput objectAtIndex: index];
+    return [[output objectForKey:@"fullSizeWidth"] floatValue];
+}
+
 
 - (NSDictionary*)overlayJSONForRecentlyAugmentedImageAtIndex:(int)index
 {
