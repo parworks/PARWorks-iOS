@@ -411,7 +411,10 @@
 - (float)originalWidthForRecentlyAugmentedImageAtIndex:(int)index
 {
     NSDictionary * output = [_recentAugmentationOutput objectAtIndex: index];
-    return [[output objectForKey:@"fullSizeWidth"] floatValue];
+    float width = [[output objectForKey:@"fullSizeWidth"] floatValue];
+    if (width == 0)
+        width = 2592;
+    return width;
 }
 
 

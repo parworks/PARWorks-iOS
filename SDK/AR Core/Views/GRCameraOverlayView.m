@@ -20,6 +20,7 @@
 #import "UIViewController+Transitions.h"
 
 #define kDefaultsGRCameraFlashModeKey @"kDefaultsGRCameraFlashModeKey"
+#define IOS_CAMERA_ASPECT_RATIO 4.0/3.0
 
 @implementation GRCameraOverlayView
 
@@ -58,21 +59,21 @@
         
     // Image view we'll be using for showing the taken photo.
     _takenPhotoLayer = [CALayer layer];
-    _takenPhotoLayer.frame = CGRectMake(0, 0, self.frame.size.width, self.frame.size.height);
+    _takenPhotoLayer.frame = CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.width * IOS_CAMERA_ASPECT_RATIO);
     _takenPhotoLayer.backgroundColor = [UIColor blackColor].CGColor;
-    _takenPhotoLayer.contentsGravity = kCAGravityResizeAspectFill;
+    _takenPhotoLayer.contentsGravity = kCAGravityResizeAspect;
     _takenPhotoLayer.opacity = 0.0;
     [self.layer addSublayer:_takenPhotoLayer];
     
     // Augmented view that will show the augmented results in this view.
     _augmentedView = [[ARAugmentedView alloc] initWithFrame:self.bounds];
+    _augmentedView.frame = CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.width * IOS_CAMERA_ASPECT_RATIO);
     _augmentedView.alpha = 0.0;
+    _augmentedView.backgroundColor = [UIColor blackColor];
     [self addSubview:_augmentedView];
     
-       
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(handleOrientationChange:) name:UIDeviceOrientationDidChangeNotification object:nil];
-    [self handleOrientationChange:nil];
-//    [self layoutAugmentButtonForCurrentFrame];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(relayoutForCurrentOrientation:) name:UIDeviceOrientationDidChangeNotification object:nil];
+    [self relayoutForCurrentOrientation:nil];
 }
 
 - (void)dealloc
@@ -81,13 +82,13 @@
 }
 
 #pragma mark - Layout
-- (void)handleOrientationChange:(NSNotification *)note
+- (void)relayoutForCurrentOrientation:(NSNotification *)note
 {
     UIInterfaceOrientation orientation = [UIDevice currentDevice].orientation;
     // Default orientation for the camera overlay is portrait...
 
     CGFloat rotateAngle;
-    CGRect frame;
+
     switch (orientation) {
         case UIInterfaceOrientationPortraitUpsideDown:
             rotateAngle = M_PI;
@@ -110,7 +111,15 @@
         _toolbar.cancelButton.transform = t;
         _progressHUD.transform = t;
         _takenPhotoLayer.transform = CATransform3DMakeAffineTransform(t);
-        _takenPhotoLayer.bounds = UIInterfaceOrientationIsPortrait(orientation) ? CGRectMake(0, 0, 320, 480) : CGRectMake(0, 0, 480, 320);
+        _augmentedView.layer.transform = CATransform3DMakeAffineTransform(t);
+
+        float shortSide = self.bounds.size.width;
+        float longSide = shortSide * IOS_CAMERA_ASPECT_RATIO;
+        
+        // we check for landscape, not portrait because there is also face up, face down, etc... and we want
+        // to handle those as portrait and not as landscape.
+        _takenPhotoLayer.bounds = UIInterfaceOrientationIsLandscape(orientation) ? CGRectMake(0, 0, longSide, shortSide) : CGRectMake(0, 0, shortSide, longSide);
+        _augmentedView.bounds = UIInterfaceOrientationIsLandscape(orientation) ? CGRectMake(0, 0, longSide, shortSide) : CGRectMake(0, 0, shortSide, longSide);
     }];
 }
 
@@ -125,23 +134,27 @@
         [self addGestureRecognizer:_tap];
         
         [_progressHUD show:YES];
+        [self relayoutForCurrentOrientation: nil];
         [self addSubview:_progressHUD];
     });
 }
 
 - (void)resetToLiveCameraInterface
 {
+    [[NSNotificationCenter defaultCenter] removeObserver: self name:NOTIF_AUGMENTED_PHOTO_UPDATED object:nil];
     [self removeGestureRecognizer:_tap];
     [_progressHUD hide:YES];
 
+    [CATransaction begin];
+    [CATransaction setAnimationDuration:0.4];
     _takenPhotoLayer.opacity = 0.0;
     _augmentedView.alpha = 0.0;
-    _takenPhotoLayer.contents = nil;    
+    [CATransaction commit];
 }
 
 - (void)updateLayer:(CALayer *)layer withBlurredImageWhenReady:(UIImage *)image
 {
-    GPUImagePicture * picture = [[GPUImagePicture alloc] initWithImage:[image scaledImage:0.15] smoothlyScaleOutput: NO];
+    GPUImagePicture * picture = [[GPUImagePicture alloc] initWithImage:[image scaledImage:0.10] smoothlyScaleOutput: NO];
     GPUImageGaussianBlurFilter * blurFilter = [[GPUImageGaussianBlurFilter alloc] init];
     GPUImageBrightnessFilter * brightnessFilter = [[GPUImageBrightnessFilter alloc] init];
     
@@ -162,8 +175,12 @@
 #pragma mark - User Interaction
 - (void)cameraButtonTapped:(id)sender
 {
-    [self showAugmentingInterface];
-    [_imagePicker takePicture];
+    if (_augmentedView.alpha > 0)
+        [self resetToLiveCameraInterface];
+    else {
+        [self showAugmentingInterface];
+        [_imagePicker takePicture];
+    }
 }
 
 - (void)cancelAugmenting
@@ -224,21 +241,20 @@
 {
     _pickerFinishedTimestamp = [NSDate timeIntervalSinceReferenceDate];
     UIImage *originalImage = [info objectForKey:UIImagePickerControllerOriginalImage];
-    CGSize viewportSize = _imagePicker.view.bounds.size;
     CGSize originalSize = [originalImage size];
+    float scale;
     
-    // Downsize the image
-    UIGraphicsBeginImageContextWithOptions(viewportSize, YES, 1);
-    float scale = fminf(viewportSize.width / originalSize.width, viewportSize.height / originalSize.height);
-    CGSize resizedSize = CGSizeMake(originalSize.width * scale, originalSize.height * scale);
-    CGRect resizedFrame = CGRectMake((viewportSize.width - resizedSize.width) / 2, (viewportSize.height - resizedSize.height) / 2 - 20, resizedSize.width, resizedSize.height);
-    [originalImage drawInRect:resizedFrame];
-    UIImage *resizedImage = UIGraphicsGetImageFromCurrentImageContext();
+    // Downsize the image to 1000px in size
+    scale = fminf(1200.0 / originalSize.width, 1200.0 / originalSize.height);
+    CGSize sizeFor1000 = CGSizeMake(originalSize.width * scale, originalSize.height * scale);
+    UIGraphicsBeginImageContextWithOptions(sizeFor1000, YES, 1);
+    [originalImage drawInRect: CGRectMake(0, 0, sizeFor1000.width, sizeFor1000.height)];
+    UIImage *image1000 = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-    
+ 
     [CATransaction begin];
     [CATransaction setDisableActions:YES];
-    _takenPhotoLayer.contents = (id)resizedImage.CGImage;
+    _takenPhotoLayer.contents = (id)image1000.CGImage;
     _takenPhotoLayer.opacity = 1.0;
     [CATransaction commit];
 
@@ -249,12 +265,12 @@
     double delayInSeconds = 1.0;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        [self updateLayer:_takenPhotoLayer withBlurredImageWhenReady:resizedImage];
+        [self updateLayer:_takenPhotoLayer withBlurredImageWhenReady:image1000];
     });
 
     // Upload the original image to the AR API for processing. We'll animate the
     // resized image back on screen once it's finished.
-    [self setAugmentedPhoto:[_site augmentImage:resizedImage]];
+    [self setAugmentedPhoto:[_site augmentImage:image1000]];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
@@ -263,30 +279,29 @@
     [_imagePicker unpeelViewController];
 }
 
-- (void)imageAugmented:(NSNotification*)notif
+- (void)imageAugmentationStatusChanged:(NSNotification*)notif
 {
-    NSTimeInterval time = [NSDate timeIntervalSinceReferenceDate];
-    NSTimeInterval diff = time - _pickerFinishedTimestamp;
-    if (diff < 4) {
-        double delayInSeconds = 4 - diff;
-        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-            [self imageAugmented:notif];
-        });
-        return;
-    }
-    
-    _takenPhotoLayer.opacity = 0.0;
-    [_progressHUD hide:YES];
-    
     if (_augmentedPhoto.response == BackendResponseFinished) {
+        NSTimeInterval timeSinceStart = [NSDate timeIntervalSinceReferenceDate] - _pickerFinishedTimestamp;
+        if (timeSinceStart < 3.5) {
+            double delayInSeconds = 3.5 - timeSinceStart;
+            dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+            dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                [self imageAugmentationStatusChanged:notif];
+            });
+            return;
+        }
+        
+        _takenPhotoLayer.opacity = 0.0;
+        [_progressHUD hide:YES];
+
         if ([[_augmentedPhoto overlays] count] == 0) {
             [[[UIAlertView alloc] initWithTitle:@"Uh oh!" message:@"We weren't able to find any overlays in that image. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
             [self resetToLiveCameraInterface];
             return;
+        } else {
+            [self setAugmentedPhoto: _augmentedPhoto];
         }
-        
-        [self setAugmentedPhoto: _augmentedPhoto];
         
     } else if (_augmentedPhoto.response == BackendResponseFailed){
         [[[UIAlertView alloc] initWithTitle:@"Uh oh!" message:@"The PAR Works API server did not successfully augment the photo." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
@@ -299,17 +314,17 @@
 
 - (void)setAugmentedPhoto:(ARAugmentedPhoto *)augmentedPhoto
 {
-    [[NSNotificationCenter defaultCenter] removeObserver: self name:NOTIF_AUGMENTED_PHOTO_UPDATED object:nil];
     _augmentedPhoto = augmentedPhoto;
     
     if (_augmentedPhoto.response == BackendResponseFinished) {
         [_augmentedView setAugmentedPhoto: _augmentedPhoto];
-        _augmentedView.transform = CGAffineTransformIdentity;
-        _augmentedView.center = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
+        _augmentedView.alpha = 1;
+        [self removeGestureRecognizer: _tap];
         [self bringSubviewToFront: _augmentedView];
+        [self bringSubviewToFront: _toolbar];
     }
     
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(imageAugmented:) name:NOTIF_AUGMENTED_PHOTO_UPDATED object:_augmentedPhoto];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(imageAugmentationStatusChanged:) name:NOTIF_AUGMENTED_PHOTO_UPDATED object:_augmentedPhoto];
 }
 
 @end

@@ -132,6 +132,8 @@
     [_overlayViews makeObjectsPerformSelector:@selector(layoutWithinParent:) withObject:self];
     [_outlineViews makeObjectsPerformSelector:@selector(layoutWithinParent:) withObject:self];
     [_overlayTitleViews makeObjectsPerformSelector:@selector(layoutWithinParent:) withObject: self];
+    
+    NSLog(@"%f,%f,%f,%f inside %f,%f", _overlayImageView.frame.origin.x,_overlayImageView.frame.origin.y, _overlayImageView.frame.size.width, _overlayImageView.frame.size.height, self.frame.size.width, self.frame.size.height);
 }
 
 - (void)setShowOutlineViewsOnly:(BOOL)showOutlineViewsOnly
