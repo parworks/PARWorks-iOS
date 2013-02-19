@@ -8,6 +8,7 @@
 
 #import "ARAugmentedPhoto.h"
 #import "ARAugmentedView.h"
+#import "ARCameraOverlayTooltip.h"
 #import "ARSite.h"
 #import "GPUImageBrightnessFilter.h"
 #import "GPUImageGaussianBlurFilter.h"
@@ -71,6 +72,12 @@
     _takenPhotoLayer.opacity = 0.0;
     [self.layer addSublayer:_takenPhotoLayer];
     
+    // Tooltip that appears to animate from the toolbar
+    self.tooltip = [[ARCameraOverlayTooltip alloc] initWithFrame:CGRectMake(0, 0, 250, 60)];
+    _tooltip.center = CGPointMake(self.bounds.size.width/2, _toolbar.frame.origin.y - _tooltip.frame.size.height - 30);
+    _tooltip.label.text = @"This is some tooltip text";
+    [self addSubview:_tooltip];
+    
     // Augmented view that will show the augmented results in this view.
     _augmentedView = [[ARAugmentedView alloc] initWithFrame:self.bounds];
     _augmentedView.frame = cameraArea;
@@ -131,6 +138,10 @@
     }];
 }
 
+- (void)showTooltipWithString:(NSString *)string
+{
+    
+}
 
 #pragma mark - Convenience
 - (void)showAugmentingInterface

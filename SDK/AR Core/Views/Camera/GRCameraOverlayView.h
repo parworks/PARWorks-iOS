@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @class ARAugmentedPhoto;
+@class ARCameraOverlayTooltip;
 @class ARSite;
 @class ARAugmentedView;
 @class GRCameraOverlayToolbar;
@@ -27,9 +28,11 @@
 }
 
 @property(nonatomic, strong) GRCameraOverlayToolbar *toolbar;
+@property(nonatomic, strong) ARCameraOverlayTooltip *tooltip;
 @property(nonatomic, weak) UIImagePickerController *imagePicker;
 @property(nonatomic, weak) ARSite *site;
 
+- (void)showTooltipWithString:(NSString *)string;
 - (UIImagePickerControllerCameraFlashMode)flashModeFromDefaults;
 
 @end
