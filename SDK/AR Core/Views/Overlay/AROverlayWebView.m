@@ -17,7 +17,7 @@
 {
     self = [super initWithOverlay:overlay];
     if (self) {               
-        self.animDelegate = self;
+        self.animDelegate = self;                
     }
     return self;
 }
@@ -29,8 +29,17 @@
     if(!_webView){
         self.webView = [[UIWebView alloc] initWithFrame:self.bounds];
         _webView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+        _webView.delegate = self;
         [self addSubview:_webView];
         _webView.alpha = 0.0;
+    }
+    
+    if(!_loadingView){
+        self.loadingView = [[PVLoadingView alloc] initWithFrame: CGRectMake(0, 0, 36, 36)];
+        _loadingView.center = _webView.center;
+        [_loadingView setLoadingViewStyle:PVLoadingViewStyleBlack];
+        [self addSubview:_loadingView];
+        _loadingView.alpha = 0.0;
     }
     
     __weak AROverlayWebView * weakSelf = self;
@@ -42,8 +51,9 @@
             [parent presentFullscreenNavigationController:[[UINavigationController alloc] initWithRootViewController:webViewController]];
             weakSelf.webView.alpha = 0.0;
         }
-        else
+        else{
             weakSelf.webView.alpha = 1.0;
+        }
     } complete:^{
         [self focusOverlayViewCompleted:weakSelf];
     }];
@@ -54,12 +64,49 @@
     __weak AROverlayWebView * weakSelf = self;
     [self animateBounceUnfocusWithParent:parent uncenteredBlock:^{
         weakSelf.webView.alpha = 0.0;
+        weakSelf.loadingView.alpha = 0.0;
+        [weakSelf.loadingView stopAnimating];
     } complete:nil];
 }
 
 - (void)focusOverlayViewCompleted:(AROverlayWebView*)overlayWebView{
     NSURL *url = [NSURL URLWithString:overlayWebView.overlay.contentProvider];
     [overlayWebView.webView loadRequest:[NSURLRequest requestWithURL:url]];
+}
+
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+{
+    return YES;
+}
+
+- (void)webViewDidStartLoad:(UIWebView *)webView
+{
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
+
+    [_loadingView startAnimating];
+    [UIView transitionWithView:nil duration:0.3 options:UIViewAnimationOptionTransitionNone animations:^{
+        _loadingView.alpha = 1.0;
+    } completion:nil];
+}
+
+- (void)webViewDidFinishLoad:(UIWebView *)webView
+{
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    [UIView transitionWithView:nil duration:0.3 options:UIViewAnimationOptionTransitionNone animations:^{
+        _loadingView.alpha = 0.0;    
+    } completion:^(BOOL finished){
+        [_loadingView stopAnimating];
+    }];
+}
+
+- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+{
+    [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
+    [UIView transitionWithView:nil duration:0.3 options:UIViewAnimationOptionTransitionNone animations:^{
+        _loadingView.alpha = 0.0;
+    } completion:^(BOOL finished){
+        [_loadingView stopAnimating];
+    }];
 }
 
 @end
