@@ -190,7 +190,7 @@
     }
     
     _coverColor = [UIColor colorWithString:dict[@"color"]];
-    _coverTransparency = dict[@"transparency"] ? [dict[@"transparency"] intValue] : 100;
+    _coverTransparency = dict[@"transparency"] ? [dict[@"transparency"] intValue] : 25;
     _coverProvider = dict[@"provider"];
     
     NSString *type = dict[@"type"];
