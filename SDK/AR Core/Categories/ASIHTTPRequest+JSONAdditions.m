@@ -34,7 +34,6 @@
         return [NSError errorWithDomain:@"JSONParseError" code:200 userInfo: nil];
     }
     
-    NSLog(@"JSON parsed: %@ %@", [[self url] absoluteString], [obj description]);
     return obj;
 }
 @end
