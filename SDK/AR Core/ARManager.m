@@ -280,6 +280,7 @@ static ARManager * sharedManager;
     [args setObject:[NSString stringWithFormat: @"%f", location.coordinate.latitude] forKey:@"lat"];
     [args setObject:[NSString stringWithFormat: @"%f", location.coordinate.longitude] forKey:@"lon"];
     [args setObject:[NSString stringWithFormat: @"%d", resolution] forKey:@"resolution"];
+    [args setObject:@"20" forKey:@"max"];
     ASIHTTPRequest * req = [self createRequest:REQ_SITE_NEARBY withMethod:@"GET" withArguments: args];
     ASIHTTPRequest * __weak __req = req;
     
