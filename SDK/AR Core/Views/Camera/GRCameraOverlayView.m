@@ -74,9 +74,16 @@
     
     // Tooltip that appears to animate from the toolbar
     self.tooltip = [[ARCameraOverlayTooltip alloc] initWithFrame:CGRectMake(0, 0, 250, 60)];
-    _tooltip.center = CGPointMake(self.bounds.size.width/2, _toolbar.frame.origin.y - _tooltip.frame.size.height - 30);
+    _tooltip.center = CGPointMake(self.bounds.size.width/2, _toolbar.frame.origin.y - _tooltip.frame.size.height + 15);
     _tooltip.label.text = @"This is some tooltip text";
+    _tooltip.alpha = 0.0;
     [self addSubview:_tooltip];
+    
+    double delayInSeconds = 5.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [self showTooltipWithString:@"Give it to me baby allll night long"];
+    });
     
     // Augmented view that will show the augmented results in this view.
     _augmentedView = [[ARAugmentedView alloc] initWithFrame:self.bounds];
@@ -103,19 +110,23 @@
     // Default orientation for the camera overlay is portrait...
 
     CGFloat rotateAngle;
-
+    CGFloat tooltipTranslateOffset;
     switch (orientation) {
         case UIInterfaceOrientationPortraitUpsideDown:
             rotateAngle = M_PI;
+            tooltipTranslateOffset = 0;
             break;
         case UIInterfaceOrientationLandscapeLeft:
             rotateAngle = -M_PI/2.0f;
+            tooltipTranslateOffset = 80;
             break;
         case UIInterfaceOrientationLandscapeRight:
             rotateAngle = M_PI/2.0f;
+            tooltipTranslateOffset = -80;
             break;
         default: // as UIInterfaceOrientationPortrait
             rotateAngle = 0.0;
+            tooltipTranslateOffset = 0;
             break;
     }
     
@@ -128,6 +139,11 @@
         _takenPhotoLayer.transform = CATransform3DMakeAffineTransform(t);
         _augmentedView.layer.transform = CATransform3DMakeAffineTransform(t);
 
+        // In addition to the rotation, we also need to translate the tooltip so it doesn't
+        // overlay the toolbar.
+        _tooltip.transform = CGAffineTransformTranslate(t, tooltipTranslateOffset, 0);
+        [_tooltip updateArrowLocationForInterfaceOrientation:orientation];
+        
         float shortSide = self.bounds.size.width;
         float longSide = shortSide * IOS_CAMERA_ASPECT_RATIO;
         
@@ -140,7 +156,26 @@
 
 - (void)showTooltipWithString:(NSString *)string
 {
+    _tooltip.label.text = string;
     
+    CGAffineTransform origTransform = _tooltip.transform;
+    CGAffineTransform startTransform = CGAffineTransformScale(origTransform, 0.5, 0.5);
+    CGAffineTransform secondTransform = CGAffineTransformScale(origTransform, 1.2, 1.2);
+
+    CGPoint startCenter = [self convertPoint:_toolbar.center toView:_tooltip];
+    CGPoint endCenter = _tooltip.center;
+    _tooltip.center = startCenter;
+    _tooltip.transform = startTransform;
+    
+    [UIView animateWithDuration:2.3 animations:^{
+        _tooltip.center = endCenter;
+        _tooltip.transform = secondTransform;
+        _tooltip.alpha = 1.0;
+    } completion:^(BOOL finished) {
+        [UIView animateWithDuration:2.3 animations:^{
+            _tooltip.transform = origTransform;
+        } completion:nil];
+    }];
 }
 
 #pragma mark - Convenience

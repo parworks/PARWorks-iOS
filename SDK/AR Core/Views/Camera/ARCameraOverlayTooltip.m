@@ -7,6 +7,7 @@
 //
 
 #import "ARCameraOverlayTooltip.h"
+#import "UIColor+Utils.h"
 
 @implementation ARCameraOverlayTooltip
 
@@ -29,7 +30,6 @@
     self.clipsToBounds = NO;
     
     CAShapeLayer *layer = (CAShapeLayer *)self.layer;
-    layer.fillColor = [UIColor redColor].CGColor;
     layer.shadowColor = [UIColor blackColor].CGColor;
     layer.shadowOffset = CGSizeZero;
     layer.shadowOpacity = 1.0;
@@ -37,12 +37,19 @@
     layer.shouldRasterize = YES;
     layer.rasterizationScale = [UIScreen mainScreen].scale;
     
+    CAGradientLayer *gradient = [CAGradientLayer layer];
+    gradient.frame = layer.bounds;
+    gradient.cornerRadius = 4;
+    gradient.colors = @[(id)[UIColor colorWithHexRGBValue:0x1e1e1e].CGColor, (id)[UIColor colorWithHexRGBValue:0x141414].CGColor];
+    [layer addSublayer:gradient];
+    
     self.label = [[UILabel alloc] initWithFrame:CGRectInset(self.bounds, 4, 4)];
     _label.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     _label.backgroundColor = [UIColor clearColor];
     _label.textColor = [UIColor whiteColor];
     _label.textAlignment = NSTextAlignmentLeft;
     _label.numberOfLines = 0;
+    [self addSubview:_label];
     
     self.arrow = [[ARCameraOverlayTooltipArrow alloc] initWithFrame:CGRectMake(0, 0, 24, 12)];
     [self addSubview:_arrow];
@@ -53,8 +60,45 @@
     [super layoutSubviews];
     CAShapeLayer *layer = (CAShapeLayer *)self.layer;
     layer.path = [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:4].CGPath;
-    _arrow.center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height + _arrow.frame.size.height/2);
+    _label.frame = CGRectInset(self.bounds, 4, 4);
 }
+
+- (void)updateArrowLocationForInterfaceOrientation:(UIInterfaceOrientation)orientation
+{
+    CGFloat rotateAngle;
+    CGPoint center;
+    UIColor *fillColor;
+
+    switch (orientation) {
+        case UIInterfaceOrientationPortraitUpsideDown:
+            rotateAngle = M_PI;
+            center = CGPointMake(self.bounds.size.width/2, -_arrow.bounds.size.height/2);
+            fillColor = [UIColor colorWithHexRGBValue:0x1e1e1e];
+            break;
+        case UIInterfaceOrientationLandscapeLeft:
+            rotateAngle = -M_PI/2.0f;
+            center = CGPointMake(-_arrow.bounds.size.height/2, self.bounds.size.height/2);
+            fillColor = [UIColor colorWithHexRGBValue:0x191919];
+            break;
+        case UIInterfaceOrientationLandscapeRight:
+            rotateAngle = M_PI/2.0f;
+            center = CGPointMake(self.bounds.size.width + _arrow.bounds.size.height/2, self.bounds.size.height/2);
+            fillColor = [UIColor colorWithHexRGBValue:0x191919];
+            break;
+        default: // as UIInterfaceOrientationPortrait
+            rotateAngle = 0.0;
+            center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height + _arrow.bounds.size.height/2);
+            fillColor = [UIColor colorWithHexRGBValue:0x141414];
+            break;
+    }
+    
+    _arrow.transform = CGAffineTransformIdentity;
+    _arrow.center = center;
+    _arrow.transform = CGAffineTransformMakeRotation(-rotateAngle);
+    _arrow.fillColor = fillColor;
+    [_arrow setNeedsDisplay];
+}
+
 @end
 
 
@@ -65,7 +109,8 @@
 {
     self = [super initWithFrame:frame];
     if (self) {
-        
+        self.backgroundColor = [UIColor clearColor];
+        self.fillColor = [UIColor colorWithHexRGBValue:0x141414];
     }
     return self;
 }
@@ -73,12 +118,13 @@
 - (void)drawRect:(CGRect)rect
 {
     CGContextRef context = UIGraphicsGetCurrentContext();
+    CGContextClearRect(context, rect);
     CGContextMoveToPoint(context, 0, 0);
     CGContextAddLineToPoint(context, rect.size.width/2, rect.size.height);
     CGContextAddLineToPoint(context, rect.size.width, 0);
     CGContextClosePath(context);
     
-    [[UIColor greenColor] set];
+    [_fillColor set];
     CGContextFillPath(context);
 }
 

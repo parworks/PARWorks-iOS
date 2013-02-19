@@ -11,11 +11,15 @@
 @class ARCameraOverlayTooltipArrow;
 
 @interface ARCameraOverlayTooltip : UIView
+
 @property(nonatomic, strong) UILabel *label;
 @property(nonatomic, strong) ARCameraOverlayTooltipArrow *arrow;
+
+- (void)updateArrowLocationForInterfaceOrientation:(UIInterfaceOrientation)orientation;
+
 @end
 
 
 @interface ARCameraOverlayTooltipArrow : UIView
-
+@property(nonatomic, strong) UIColor *fillColor;
 @end
