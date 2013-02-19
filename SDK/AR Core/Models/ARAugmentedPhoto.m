@@ -190,7 +190,7 @@
     
     [req setCompletionBlock: ^(void) {
         if ([__req responseStatusCode] != 200)
-            _pollTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(processPoll) userInfo:nil repeats:NO];
+            _pollTimer = [NSTimer scheduledTimerWithTimeInterval:0.8 target:self selector:@selector(processPoll) userInfo:nil repeats:NO];
         else {
             [self processJSONData: [__req responseJSON]];
             self.response = BackendResponseFinished;
