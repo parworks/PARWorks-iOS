@@ -15,10 +15,12 @@
 + (id)toolbarFromXIBWithParent:(GRCameraOverlayView *)parent
 {
     NSString *nibName;
+    NSString *cameraIconName;
     if (parent.frame.size.height > 480) {
         nibName = @"GRCameraOverlayToolbar_4_0";
     } else {
         nibName = @"GRCameraOverlayToolbar_3_5";
+        cameraIconName = @"camera_icon_3.5.png";
     }
     
     GRCameraOverlayToolbar *toolbar = [[[NSBundle mainBundle] loadNibNamed:nibName owner:nil options:nil] objectAtIndex:0];
@@ -29,7 +31,8 @@
     //    [camera setImage:[UIImage imageNamed:@"camera_button_3.5_pressed"] forState:UIControlStateHighlighted];
     //    [camera setImage:[UIImage imageNamed:@"camera_button_3.5_pressed"] forState:UIControlStateSelected];
     
-    toolbar.cameraIcon = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"camera-graphic.png"]];
+    UIImage *image = [UIImage imageNamed:cameraIconName];
+    toolbar.cameraIcon = [[UIImageView alloc] initWithImage:image];
     toolbar.cameraIcon.center = CGPointMake(camera.bounds.size.width/2, camera.bounds.size.height/2);
     toolbar.cameraIcon.userInteractionEnabled = NO;
     [camera addSubview:toolbar.cameraIcon];

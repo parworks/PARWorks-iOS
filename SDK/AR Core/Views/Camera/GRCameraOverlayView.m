@@ -74,7 +74,7 @@
     
     // Tooltip that appears to animate from the toolbar
     self.tooltip = [[ARCameraOverlayTooltip alloc] initWithFrame:CGRectMake(0, 0, 250, 60)];
-    _tooltip.center = CGPointMake(self.bounds.size.width/2, _toolbar.frame.origin.y - _tooltip.frame.size.height + 15);
+    _tooltip.center = CGPointMake(self.bounds.size.width/2, _toolbar.frame.origin.y - _tooltip.frame.size.height + 10);
     _tooltip.label.text = @"This is some tooltip text";
     _tooltip.alpha = 0.0;
     [self addSubview:_tooltip];
@@ -118,11 +118,11 @@
             break;
         case UIInterfaceOrientationLandscapeLeft:
             rotateAngle = -M_PI/2.0f;
-            tooltipTranslateOffset = 80;
+            tooltipTranslateOffset = 95;
             break;
         case UIInterfaceOrientationLandscapeRight:
             rotateAngle = M_PI/2.0f;
-            tooltipTranslateOffset = -80;
+            tooltipTranslateOffset = -95;
             break;
         default: // as UIInterfaceOrientationPortrait
             rotateAngle = 0.0;
@@ -132,7 +132,14 @@
     
     [UIView animateWithDuration:0.2 animations:^{
         CGAffineTransform t = CGAffineTransformMakeRotation(rotateAngle);
-        _toolbar.cameraIcon.transform = t;
+        
+        UIWindow *mainWindow = [[UIApplication sharedApplication] windows][0];
+        if (mainWindow.bounds.size.height > 480) {
+            _toolbar.cameraButton.transform = t;
+        } else {
+            _toolbar.cameraIcon.transform = t;
+        }
+
         _toolbar.flashButton.transform = t;
         _toolbar.cancelButton.transform = t;
         _progressHUD.transform = t;
@@ -161,21 +168,50 @@
     CGAffineTransform origTransform = _tooltip.transform;
     CGAffineTransform startTransform = CGAffineTransformScale(origTransform, 0.5, 0.5);
     CGAffineTransform secondTransform = CGAffineTransformScale(origTransform, 1.2, 1.2);
-
-    CGPoint startCenter = [self convertPoint:_toolbar.center toView:_tooltip];
-    CGPoint endCenter = _tooltip.center;
-    _tooltip.center = startCenter;
-    _tooltip.transform = startTransform;
+    CGAffineTransform thirdTransform = CGAffineTransformScale(origTransform, 0.9, 0.9);
     
-    [UIView animateWithDuration:2.3 animations:^{
-        _tooltip.center = endCenter;
+//    UIInterfaceOrientation orientation = [UIDevice currentDevice].orientation;
+//    CGPoint startCenter;
+//    switch (orientation) {
+//        case UIInterfaceOrientationPortraitUpsideDown:
+//
+//            break;
+//        case UIInterfaceOrientationLandscapeLeft:
+//            startCenter = CGPointMake(_tooltip.center.x, _tooltip.center.y - 30);
+//            break;
+//        case UIInterfaceOrientationLandscapeRight:
+//            startCenter = CGPointMake(_tooltip.center.x, _tooltip.center.y - 30);
+//            break;
+//        default: // as UIInterfaceOrientationPortrait
+//            startCenter = CGPointMake(_tooltip.center.x, _tooltip.center.y - 30);
+//            break;
+//    }
+
+    _tooltip.transform = startTransform;
+    [UIView animateWithDuration:0.2 animations:^{
         _tooltip.transform = secondTransform;
         _tooltip.alpha = 1.0;
     } completion:^(BOOL finished) {
-        [UIView animateWithDuration:2.3 animations:^{
-            _tooltip.transform = origTransform;
-        } completion:nil];
+        [UIView animateWithDuration:0.2 animations:^{
+            _tooltip.transform = thirdTransform;
+        } completion:^(BOOL finished) {
+            [UIView animateWithDuration:0.1 animations:^{
+                _tooltip.transform = origTransform;
+            }];
+        }];
     }];
+    
+    double delayInSeconds = 4.0;
+    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        CGAffineTransform t = _tooltip.transform;
+        [UIView animateWithDuration:0.2 animations:^{
+            _tooltip.alpha = 0.0;
+            _tooltip.transform = CGAffineTransformScale(_tooltip.transform, 0.5, 0.5);
+        } completion:^(BOOL finished) {
+            _tooltip.transform = t;
+        }];
+    });
 }
 
 #pragma mark - Convenience

@@ -8,6 +8,7 @@
 
 #import "ARCameraOverlayTooltip.h"
 #import "UIColor+Utils.h"
+#import "UIFont+ThemeAdditions.h"
 
 @implementation ARCameraOverlayTooltip
 
@@ -48,6 +49,7 @@
     _label.backgroundColor = [UIColor clearColor];
     _label.textColor = [UIColor whiteColor];
     _label.textAlignment = NSTextAlignmentLeft;
+    _label.font = [UIFont parworksFontWithSize:13];
     _label.numberOfLines = 0;
     [self addSubview:_label];
     
@@ -60,7 +62,7 @@
     [super layoutSubviews];
     CAShapeLayer *layer = (CAShapeLayer *)self.layer;
     layer.path = [UIBezierPath bezierPathWithRoundedRect:self.bounds cornerRadius:4].CGPath;
-    _label.frame = CGRectInset(self.bounds, 4, 4);
+    _label.frame = CGRectInset(self.bounds, 10, 4);
 }
 
 - (void)updateArrowLocationForInterfaceOrientation:(UIInterfaceOrientation)orientation
