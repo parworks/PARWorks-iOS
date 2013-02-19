@@ -21,6 +21,7 @@
     
     UITapGestureRecognizer  *_tap;
     MBProgressHUD           *_progressHUD;
+    CALayer                 *_takenBlackLayer;
     CALayer                 *_takenPhotoLayer;
     NSTimeInterval          _pickerFinishedTimestamp;
 }

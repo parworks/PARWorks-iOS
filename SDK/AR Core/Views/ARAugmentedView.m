@@ -300,7 +300,7 @@
         return [self bounds];
     
     CGRect frame = CGRectMake(0, 0, image.size.width * _overlayScaleFactor, image.size.height * _overlayScaleFactor);
-    CGPoint center = CGPointMake(self.frame.size.width/2, self.frame.size.height/2);
+    CGPoint center = CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2);
     
     frame.origin.x = center.x - (frame.size.width/2);
     frame.origin.y = center.y - (frame.size.height/2);

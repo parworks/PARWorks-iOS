@@ -47,6 +47,13 @@
 	_progressHUD.detailsLabelText = @"Tap to cancel";
 	_progressHUD.square = YES;
     
+    // Image view we'll be using for showing the taken photo.
+    _takenBlackLayer = [CALayer layer];
+    _takenBlackLayer.backgroundColor = [UIColor blackColor].CGColor;
+    _takenBlackLayer.frame = CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.height);
+    _takenBlackLayer.opacity = 0.0;
+    [self.layer addSublayer: _takenBlackLayer];
+    
     
     // Camera controls
     self.toolbar = [GRCameraOverlayToolbar toolbarFromXIBWithParent:self];
@@ -56,18 +63,19 @@
     [_toolbar.cancelButton addTarget:self action:@selector(cancelButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [_toolbar.flashButton addTarget:self action:@selector(flashButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:_toolbar];
-        
-    // Image view we'll be using for showing the taken photo.
+    
+    CGRect cameraArea = CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.width * IOS_CAMERA_ASPECT_RATIO);
     _takenPhotoLayer = [CALayer layer];
-    _takenPhotoLayer.frame = CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.width * IOS_CAMERA_ASPECT_RATIO);
-    _takenPhotoLayer.backgroundColor = [UIColor blackColor].CGColor;
+    _takenPhotoLayer.frame = cameraArea;
     _takenPhotoLayer.contentsGravity = kCAGravityResizeAspect;
     _takenPhotoLayer.opacity = 0.0;
     [self.layer addSublayer:_takenPhotoLayer];
     
     // Augmented view that will show the augmented results in this view.
     _augmentedView = [[ARAugmentedView alloc] initWithFrame:self.bounds];
-    _augmentedView.frame = CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.width * IOS_CAMERA_ASPECT_RATIO);
+    _augmentedView.frame = cameraArea;
+    _augmentedView.layer.anchorPoint = CGPointMake(0.5, 0.5);
+    _augmentedView.frame = cameraArea;
     _augmentedView.alpha = 0.0;
     _augmentedView.backgroundColor = [UIColor blackColor];
     [self addSubview:_augmentedView];
@@ -148,6 +156,7 @@
     [CATransaction begin];
     [CATransaction setAnimationDuration:0.4];
     _takenPhotoLayer.opacity = 0.0;
+    _takenBlackLayer.opacity = 0.0;
     _augmentedView.alpha = 0.0;
     [CATransaction commit];
 }
@@ -191,6 +200,15 @@
 - (void)cancelButtonTapped:(id)sender
 {
     [self resetToLiveCameraInterface];
+
+    [_takenBlackLayer removeFromSuperlayer];
+    [self.layer insertSublayer:_takenBlackLayer above:_toolbar];
+
+    [CATransaction begin];
+    [CATransaction setAnimationDuration:0.35];
+    _takenBlackLayer.opacity = 0.85;
+    [CATransaction commit];
+
     [_imagePicker unpeelViewController];
 }
 
@@ -254,6 +272,7 @@
  
     [CATransaction begin];
     [CATransaction setDisableActions:YES];
+    _takenBlackLayer.opacity = 1.0;
     _takenPhotoLayer.contents = (id)image1000.CGImage;
     _takenPhotoLayer.opacity = 1.0;
     [CATransaction commit];
@@ -292,14 +311,14 @@
             return;
         }
         
-        _takenPhotoLayer.opacity = 0.0;
-        [_progressHUD hide:YES];
-
         if ([[_augmentedPhoto overlays] count] == 0) {
             [[[UIAlertView alloc] initWithTitle:@"Uh oh!" message:@"We weren't able to find any overlays in that image. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
             [self resetToLiveCameraInterface];
             return;
         } else {
+            _takenPhotoLayer.opacity = 0.0;
+            [_progressHUD hide:YES];
+
             [self setAugmentedPhoto: _augmentedPhoto];
         }
         
