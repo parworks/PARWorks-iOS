@@ -49,7 +49,7 @@
     _label.backgroundColor = [UIColor clearColor];
     _label.textColor = [UIColor whiteColor];
     _label.textAlignment = NSTextAlignmentLeft;
-    _label.font = [UIFont parworksFontWithSize:13];
+    _label.font = [UIFont heavyParworksFontWithSize:13];
     _label.numberOfLines = 0;
     [self addSubview:_label];
     

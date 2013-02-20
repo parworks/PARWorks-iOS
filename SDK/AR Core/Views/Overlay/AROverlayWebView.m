@@ -71,7 +71,8 @@
 
 - (void)focusOverlayViewCompleted:(AROverlayWebView*)overlayWebView{
     NSURL *url = [NSURL URLWithString:overlayWebView.overlay.contentProvider];
-    [overlayWebView.webView loadRequest:[NSURLRequest requestWithURL:url]];
+    if (![overlayWebView.webView request])
+        [overlayWebView.webView loadRequest:[NSURLRequest requestWithURL:url]];
 }
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
