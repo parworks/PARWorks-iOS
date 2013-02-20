@@ -31,7 +31,7 @@
     self.title = _sTitle;
     
     //    if(self.presentedViewController)
-    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backButtonPressed)];
+    self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Close" style:UIBarButtonItemStylePlain target:self action:@selector(backButtonPressed)];
 
     [_loadingView setLoadingViewStyle:ARLoadingViewStyleBlack];
     _loadingView.center = _webView.center;
