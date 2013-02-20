@@ -348,10 +348,15 @@
             }
             
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: __self];
-            _overlaysReq = nil;
+            [__self nilOverlayReqs];
         }
     }];
     [_overlaysReq startAsynchronous];
+}
+
+- (void)nilOverlayReqs
+{
+    _overlaysReq = nil;
 }
 
 
