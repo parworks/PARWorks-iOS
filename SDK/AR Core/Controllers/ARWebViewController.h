@@ -6,6 +6,8 @@
 //  Copyright (c) 2013 Foundry 376, LLC. All rights reserved.
 //
 
+#import "ARLoadingView.h"
+
 @interface ARWebViewController : UIViewController
 
 @property (nonatomic, strong) NSString *sTitle;
@@ -15,5 +17,6 @@
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *btnForward;
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *btnRefresh;
 @property (nonatomic, weak) IBOutlet UIBarButtonItem *btnStop;
+@property (nonatomic, weak) IBOutlet ARLoadingView *loadingView;
 
 @end

@@ -284,7 +284,7 @@
     [self resetToLiveCameraInterface];
 
     [_takenBlackLayer removeFromSuperlayer];
-    [self.layer insertSublayer:_takenBlackLayer above:_toolbar];
+    [self.layer insertSublayer:_takenBlackLayer above:_toolbar.layer];
 
     [CATransaction begin];
     [CATransaction setAnimationDuration:0.35];

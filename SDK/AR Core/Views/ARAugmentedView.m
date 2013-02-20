@@ -94,7 +94,7 @@
     _totalAugmentedImagesView.hidden = YES;
     [self addSubview: _totalAugmentedImagesView];
     
-    _loadingView = [[PVLoadingView alloc] initWithFrame: CGRectMake(0, 0, 36, 36)];
+    _loadingView = [[ARLoadingView alloc] initWithFrame: CGRectMake(0, 0, 36, 36)];
     [self addSubview: _loadingView];
     [_loadingView startAnimating];
 }

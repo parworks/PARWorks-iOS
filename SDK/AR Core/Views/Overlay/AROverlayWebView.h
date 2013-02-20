@@ -7,11 +7,14 @@
 //
 
 #import "AROverlayView.h"
+#import "ARLoadingView.h"
 
-@interface AROverlayWebView : AROverlayView <AROverlayViewAnimationDelegate>{
+@interface AROverlayWebView : AROverlayView <AROverlayViewAnimationDelegate, UIWebViewDelegate>{
     UIWebView *_webView;
+    ARLoadingView *_loadingView;
 }
 
 @property(nonatomic, strong) UIWebView *webView;
+@property(nonatomic, strong) ARLoadingView *loadingView;
 
 @end
