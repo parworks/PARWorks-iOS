@@ -95,7 +95,7 @@
     _totalAugmentedImagesView.hidden = YES;
     [self addSubview: _totalAugmentedImagesView];
     
-    _loadingView = [[ARLoadingView alloc] initWithFrame: CGRectMake(0, 0, 36, 36)];
+    self.loadingView = [[ARLoadingView alloc] initWithFrame: CGRectMake(0, 0, 36, 36)];
     [self addSubview: _loadingView];
     [_loadingView startAnimating];
 }
@@ -111,14 +111,16 @@
     }
 }
 
-
 #pragma mark - Layout
 
 - (void)layoutSubviews
 {
     [super layoutSubviews];
     [_dimView setFrame: [self bounds]];
-    [_loadingView setCenter: self.center];
+    if(CGPointEqualToPoint(_loadingViewPoint, CGPointMake(0, 0)))
+        [_loadingView setCenter:[self center]];
+    else
+        [_loadingView setCenter:_loadingViewPoint];
     
     CGFloat x = (self.bounds.size.width - _totalAugmentedImagesView.frame.size.width - 10);
     [_totalAugmentedImagesView setFrameX:x];
