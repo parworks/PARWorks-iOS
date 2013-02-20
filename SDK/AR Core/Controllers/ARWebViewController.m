@@ -19,9 +19,7 @@
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
     if (self) {
-        // Custom initialization
-        self.loadingView = [[PVLoadingView alloc] initWithFrame: CGRectMake(0, 0, 36, 36)];
-        [_loadingView setLoadingViewStyle:PVLoadingViewStyleBlack];               
+        // Custom initialization        
     }
     return self;
 }
@@ -35,10 +33,8 @@
     //    if(self.presentedViewController)
     self.navigationItem.leftBarButtonItem = [[UIBarButtonItem alloc] initWithTitle:@"Back" style:UIBarButtonItemStylePlain target:self action:@selector(backButtonPressed)];
 
-    _loadingView.alpha = 0.0;
+    [_loadingView setLoadingViewStyle:ARLoadingViewStyleBlack];
     _loadingView.center = _webView.center;
-    [_webView addSubview:_loadingView];
-
     
     [_webView setScalesPageToFit:YES];
     [_webView loadRequest:[NSURLRequest requestWithURL:[NSURL URLWithString:_sUrl]]];
@@ -48,6 +44,10 @@
 {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
+}
+
+- (void)viewWillAppear:(BOOL)animated{
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated{
@@ -62,7 +62,7 @@
 }
 
 - (void)webViewDidStartLoad:(UIWebView *)webView
-{
+{    
     [UIApplication sharedApplication].networkActivityIndicatorVisible = YES;
     [self updateButtons];
     [UIView transitionWithView:nil duration:0.3 options:UIViewAnimationOptionTransitionNone animations:^{

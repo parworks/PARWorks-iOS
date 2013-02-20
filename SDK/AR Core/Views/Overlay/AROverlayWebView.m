@@ -35,9 +35,9 @@
     }
     
     if(!_loadingView){
-        self.loadingView = [[PVLoadingView alloc] initWithFrame: CGRectMake(0, 0, 36, 36)];
+        self.loadingView = [[ARLoadingView alloc] initWithFrame: CGRectMake(0, 0, 36, 36)];
         _loadingView.center = _webView.center;
-        [_loadingView setLoadingViewStyle:PVLoadingViewStyleBlack];
+        [_loadingView setLoadingViewStyle:ARLoadingViewStyleBlack];
         [self addSubview:_loadingView];
         _loadingView.alpha = 0.0;
     }
