@@ -55,7 +55,6 @@
     _takenBlackLayer.opacity = 0.0;
     [self.layer addSublayer: _takenBlackLayer];
     
-    
     // Camera controls
     self.toolbar = [GRCameraOverlayToolbar toolbarFromXIBWithParent:self];
     [_toolbar setAutoresizingMask:UIViewAutoresizingFlexibleTopMargin];
@@ -76,18 +75,16 @@
     self.tooltip = [[ARCameraOverlayTooltip alloc] initWithFrame:CGRectMake(0, 0, 250, 60)];
     _tooltip.center = CGPointMake(self.bounds.size.width/2, _toolbar.frame.origin.y - _tooltip.frame.size.height + 10);
     _tooltip.label.text = @"This is some tooltip text";
+    _tooltip.label.adjustsFontSizeToFitWidth = YES;
+    _tooltip.label.textAlignment = NSTextAlignmentCenter;
     _tooltip.alpha = 0.0;
     [self addSubview:_tooltip];
     
-    double delayInSeconds = 5.0;
+    double delayInSeconds = 3.0;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-<<<<<<< Updated upstream
-        [self showTooltipWithString:@"Give it to me baby allll night long"];
-=======
         NSString *name = (_site.name && (_site.name.length > 0)) ? _site.name : @"the site";
         [self showTooltipWithString: [NSString stringWithFormat: @"Take a picture of %@ to see overlays!", name]];
->>>>>>> Stashed changes
     });
     
     // Augmented view that will show the augmented results in this view.
@@ -175,23 +172,6 @@
     CGAffineTransform secondTransform = CGAffineTransformScale(origTransform, 1.2, 1.2);
     CGAffineTransform thirdTransform = CGAffineTransformScale(origTransform, 0.9, 0.9);
     
-//    UIInterfaceOrientation orientation = [UIDevice currentDevice].orientation;
-//    CGPoint startCenter;
-//    switch (orientation) {
-//        case UIInterfaceOrientationPortraitUpsideDown:
-//
-//            break;
-//        case UIInterfaceOrientationLandscapeLeft:
-//            startCenter = CGPointMake(_tooltip.center.x, _tooltip.center.y - 30);
-//            break;
-//        case UIInterfaceOrientationLandscapeRight:
-//            startCenter = CGPointMake(_tooltip.center.x, _tooltip.center.y - 30);
-//            break;
-//        default: // as UIInterfaceOrientationPortrait
-//            startCenter = CGPointMake(_tooltip.center.x, _tooltip.center.y - 30);
-//            break;
-//    }
-
     _tooltip.transform = startTransform;
     [UIView animateWithDuration:0.2 animations:^{
         _tooltip.transform = secondTransform;
@@ -206,7 +186,8 @@
         }];
     }];
     
-    double delayInSeconds = 4.0;
+    // show for 1 second + 1 second per 4 words
+    double delayInSeconds = 0.8 + [[string componentsSeparatedByString:@" "] count] * 0.32;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         CGAffineTransform t = _tooltip.transform;
@@ -399,7 +380,7 @@
         }
         
         if ([[_augmentedPhoto overlays] count] == 0) {
-            [[[UIAlertView alloc] initWithTitle:@"Uh oh!" message:@"We weren't able to find any overlays in that image. Please try again." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+            [self showTooltipWithString: @"No overlays found. Make sure the object is focused and in the frame."];
             [self resetToLiveCameraInterface];
             return;
         } else {
@@ -410,8 +391,8 @@
         }
         
     } else if (_augmentedPhoto.response == BackendResponseFailed){
-        [[[UIAlertView alloc] initWithTitle:@"Uh oh!" message:@"The PAR Works API server did not successfully augment the photo." delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
         [self resetToLiveCameraInterface];
+        [self showTooltipWithString: @"Sorry, we couldn't augment your photo. Try again!"];
         
     } else {
         // just wait...

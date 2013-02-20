@@ -2,7 +2,7 @@
 <archive type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="8.00">
 	<data>
 		<int key="IBDocument.SystemTarget">1552</int>
-		<string key="IBDocument.SystemVersion">12C60</string>
+		<string key="IBDocument.SystemVersion">12C2034</string>
 		<string key="IBDocument.InterfaceBuilderVersion">3084</string>
 		<string key="IBDocument.AppKitVersion">1187.34</string>
 		<string key="IBDocument.HIToolboxVersion">625.00</string>
@@ -13,6 +13,7 @@
 		<array key="IBDocument.IntegratedClassDependencies">
 			<string>IBProxyObject</string>
 			<string>IBUIButton</string>
+			<string>IBUIImageView</string>
 			<string>IBUIView</string>
 		</array>
 		<array key="IBDocument.PluginDependencies">
@@ -35,12 +36,28 @@
 				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">292</int>
 				<array class="NSMutableArray" key="NSSubviews">
+					<object class="IBUIImageView" id="734051348">
+						<reference key="NSNextResponder" ref="4941239"/>
+						<int key="NSvFlags">274</int>
+						<string key="NSFrameSize">{320, 96}</string>
+						<reference key="NSSuperview" ref="4941239"/>
+						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView" ref="19676158"/>
+						<string key="NSReuseIdentifierKey">_NS:9</string>
+						<bool key="IBUIUserInteractionEnabled">NO</bool>
+						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
+						<object class="NSCustomResource" key="IBUIImage">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">camera_bottom_bar_4.png</string>
+						</object>
+					</object>
 					<object class="IBUIButton" id="696109271">
 						<reference key="NSNextResponder" ref="4941239"/>
 						<int key="NSvFlags">292</int>
 						<string key="NSFrame">{{249, 22}, {52, 52}}</string>
 						<reference key="NSSuperview" ref="4941239"/>
 						<reference key="NSWindow"/>
+						<reference key="NSNextKeyView"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<bool key="IBUIOpaque">NO</bool>
 						<string key="targetRuntimeIdentifier">IBCocoaTouchFramework</string>
@@ -60,7 +77,7 @@
 						</object>
 						<object class="NSCustomResource" key="IBUINormalImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">camera_flash_auto_3.5.png</string>
+							<string key="NSResourceName">camera_flash_auto_4.png</string>
 						</object>
 						<object class="IBUIFontDescription" key="IBUIFontDescription" id="208289033">
 							<int key="type">2</int>
@@ -92,11 +109,11 @@
 						<reference key="IBUINormalTitleShadowColor" ref="424222764"/>
 						<object class="NSCustomResource" key="IBUIHighlightedImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">camera_x_3.5_pressed.png</string>
+							<string key="NSResourceName">camera_x_4_pressed.png</string>
 						</object>
 						<object class="NSCustomResource" key="IBUINormalImage">
 							<string key="NSClassName">NSImage</string>
-							<string key="NSResourceName">camera_x_3.5.png</string>
+							<string key="NSResourceName">camera_x_4.png</string>
 						</object>
 						<reference key="IBUIFontDescription" ref="208289033"/>
 						<reference key="IBUIFont" ref="240625721"/>
@@ -119,6 +136,10 @@
 							<bytes key="NSRGB">MC4xOTYwNzg0MzQ2IDAuMzA5ODAzOTMyOSAwLjUyMTU2ODY1NgA</bytes>
 						</object>
 						<reference key="IBUINormalTitleShadowColor" ref="424222764"/>
+						<object class="NSCustomResource" key="IBUIHighlightedImage">
+							<string key="NSClassName">NSImage</string>
+							<string key="NSResourceName">camera_button_4_pressed.png</string>
+						</object>
 						<object class="NSCustomResource" key="IBUINormalImage">
 							<string key="NSClassName">NSImage</string>
 							<string key="NSResourceName">camera_button_4.png</string>
@@ -130,7 +151,7 @@
 				<string key="NSFrameSize">{320, 96}</string>
 				<reference key="NSSuperview"/>
 				<reference key="NSWindow"/>
-				<reference key="NSNextKeyView" ref="19676158"/>
+				<reference key="NSNextKeyView" ref="734051348"/>
 				<string key="NSReuseIdentifierKey">_NS:9</string>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">1</int>
@@ -196,6 +217,7 @@
 							<reference ref="696109271"/>
 							<reference ref="19676158"/>
 							<reference ref="134960247"/>
+							<reference ref="734051348"/>
 						</array>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -217,24 +239,32 @@
 						<reference key="parent" ref="4941239"/>
 						<string key="objectName">camera</string>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">10</int>
+						<reference key="object" ref="734051348"/>
+						<reference key="parent" ref="4941239"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
 				<string key="-1.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="-2.CustomClassName">UIResponder</string>
 				<string key="-2.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<string key="10.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="3.CustomClassName">GRCameraOverlayToolbar</string>
 				<string key="3.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="4.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<real value="0.0" key="4.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
-				<real value="0.0" key="5.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
+				<real value="1" key="5.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="6.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<real value="1" key="6.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 			</dictionary>
 			<dictionary class="NSMutableDictionary" key="unlocalizedProperties"/>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">9</int>
+			<int key="maxID">10</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -272,10 +302,12 @@
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
+			<string key="camera_bottom_bar_4.png">{2, 96}</string>
 			<string key="camera_button_4.png">{78, 78}</string>
-			<string key="camera_flash_auto_3.5.png">{52, 52}</string>
-			<string key="camera_x_3.5.png">{52, 52}</string>
-			<string key="camera_x_3.5_pressed.png">{52, 52}</string>
+			<string key="camera_button_4_pressed.png">{78, 78}</string>
+			<string key="camera_flash_auto_4.png">{52, 52}</string>
+			<string key="camera_x_4.png">{52, 52}</string>
+			<string key="camera_x_4_pressed.png">{52, 52}</string>
 		</dictionary>
 		<string key="IBCocoaTouchPluginVersion">2083</string>
 	</data>

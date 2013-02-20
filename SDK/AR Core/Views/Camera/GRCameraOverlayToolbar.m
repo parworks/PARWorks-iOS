@@ -27,10 +27,6 @@
     [toolbar updateFlashImageForFlashMode:[parent flashModeFromDefaults] withParent:parent];
     
     UIButton *camera = toolbar.cameraButton;
-    //    [camera setImage:[UIImage imageNamed:@"camera_button_3.5"] forState:UIControlStateNormal];
-    //    [camera setImage:[UIImage imageNamed:@"camera_button_3.5_pressed"] forState:UIControlStateHighlighted];
-    //    [camera setImage:[UIImage imageNamed:@"camera_button_3.5_pressed"] forState:UIControlStateSelected];
-    
     UIImage *image = [UIImage imageNamed:cameraIconName];
     toolbar.cameraIcon = [[UIImageView alloc] initWithImage:image];
     toolbar.cameraIcon.center = CGPointMake(camera.bounds.size.width/2, camera.bounds.size.height/2);
