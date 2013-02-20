@@ -39,6 +39,9 @@
 
 - (void)sharedInit
 {
+    UIWindow *w = [[UIApplication sharedApplication] windows][0];
+    _isiPhone5 = w.bounds.size.height > 480;
+
     self.backgroundColor = [UIColor clearColor];
     self.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     self.userInteractionEnabled = YES;
@@ -65,6 +68,11 @@
     [self addSubview:_toolbar];
     
     CGRect cameraArea = CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.width * IOS_CAMERA_ASPECT_RATIO);
+
+    // on the iphone 5, the best we can do is center the damn thing...
+    if (_isiPhone5)
+        cameraArea.origin.y += 23;
+    
     _takenPhotoLayer = [CALayer layer];
     _takenPhotoLayer.frame = cameraArea;
     _takenPhotoLayer.contentsGravity = kCAGravityResizeAspect;
@@ -155,11 +163,15 @@
         
         float shortSide = self.bounds.size.width;
         float longSide = shortSide * IOS_CAMERA_ASPECT_RATIO;
+        float longSidePadding = 0;
+        
+        if (_isiPhone5)
+            longSidePadding = 23;
         
         // we check for landscape, not portrait because there is also face up, face down, etc... and we want
         // to handle those as portrait and not as landscape.
-        _takenPhotoLayer.bounds = UIInterfaceOrientationIsLandscape(orientation) ? CGRectMake(0, 0, longSide, shortSide) : CGRectMake(0, 0, shortSide, longSide);
-        _augmentedView.bounds = UIInterfaceOrientationIsLandscape(orientation) ? CGRectMake(0, 0, longSide, shortSide) : CGRectMake(0, 0, shortSide, longSide);
+        _takenPhotoLayer.bounds = UIInterfaceOrientationIsLandscape(orientation) ? CGRectMake(longSidePadding, 0, longSide, shortSide) : CGRectMake(0, longSidePadding, shortSide, longSide);
+        _augmentedView.bounds = UIInterfaceOrientationIsLandscape(orientation) ? CGRectMake(longSidePadding, 0, longSide, shortSide) : CGRectMake(0, longSidePadding, shortSide, longSide);
     }];
 }
 
