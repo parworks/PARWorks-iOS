@@ -25,6 +25,8 @@
     CALayer                 *_takenBlackLayer;
     CALayer                 *_takenPhotoLayer;
     NSTimeInterval          _pickerFinishedTimestamp;
+    
+    BOOL                    _isiPhone5;
 }
 
 @property(nonatomic, strong) GRCameraOverlayToolbar *toolbar;

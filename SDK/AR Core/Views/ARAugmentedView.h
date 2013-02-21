@@ -55,9 +55,8 @@
  */
 @interface ARAugmentedView : UIControl
 {
-    AROverlayView *_focusedOverlayView;
-    ARLoadingView *_loadingView;
-    BOOL _overlayZoomed;
+    AROverlayView *_focusedOverlayView;    
+    BOOL _overlayZoomed;    
 }
 
 /// The photo model read used by this class for displaying the augmented photo.
@@ -84,6 +83,9 @@
 /// scaled augmented view.
 @property(nonatomic, assign) CGFloat overlayScaleFactor;
 
+/// The origin of the loading view. If none set then defaults to center of view
+@property(nonatomic, assign) CGPoint loadingViewPoint;
+
 /// The view will only display outline views. AROverlayViews are not displayed. Defaults to NO.
 @property(nonatomic, assign) BOOL showOutlineViewsOnly;
 
@@ -92,6 +94,9 @@
 
 /// The delegate for the augmented view.
 @property(nonatomic, weak) IBOutlet id<ARAugmentedViewDelegate> delegate;
+
+// The loading view that displays during loading
+@property(nonatomic, strong) ARLoadingView *loadingView;
 
 - (void)setVisibile:(BOOL)visible forOverlayViewsWithName:(NSString *)name;
 
