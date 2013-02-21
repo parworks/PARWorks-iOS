@@ -88,7 +88,7 @@
     _tooltip.alpha = 0.0;
     [self addSubview:_tooltip];
     
-    double delayInSeconds = 3.0;
+    double delayInSeconds = 4.0;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
         NSString *name = (_site.name && (_site.name.length > 0)) ? _site.name : @"the site";
@@ -149,6 +149,9 @@
         } else {
             _toolbar.cameraIcon.transform = t;
         }
+        
+        float shortSide = self.bounds.size.width;
+        float longSide = shortSide * IOS_CAMERA_ASPECT_RATIO;
 
         _toolbar.flashButton.transform = t;
         _toolbar.cancelButton.transform = t;
@@ -161,17 +164,10 @@
         _tooltip.transform = CGAffineTransformTranslate(t, tooltipTranslateOffset, 0);
         [_tooltip updateArrowLocationForInterfaceOrientation:orientation];
         
-        float shortSide = self.bounds.size.width;
-        float longSide = shortSide * IOS_CAMERA_ASPECT_RATIO;
-        float longSidePadding = 0;
-        
-        if (_isiPhone5)
-            longSidePadding = 23;
-        
         // we check for landscape, not portrait because there is also face up, face down, etc... and we want
         // to handle those as portrait and not as landscape.
-        _takenPhotoLayer.bounds = UIInterfaceOrientationIsLandscape(orientation) ? CGRectMake(longSidePadding, 0, longSide, shortSide) : CGRectMake(0, longSidePadding, shortSide, longSide);
-        _augmentedView.bounds = UIInterfaceOrientationIsLandscape(orientation) ? CGRectMake(longSidePadding, 0, longSide, shortSide) : CGRectMake(0, longSidePadding, shortSide, longSide);
+        _takenPhotoLayer.bounds = UIInterfaceOrientationIsLandscape(orientation) ? CGRectMake(0, 0, longSide, shortSide) : CGRectMake(0, 0, shortSide, longSide);
+        _augmentedView.bounds = UIInterfaceOrientationIsLandscape(orientation) ? CGRectMake(0, 0, longSide, shortSide) : CGRectMake(0, 0, shortSide, longSide);
     }];
 }
 
