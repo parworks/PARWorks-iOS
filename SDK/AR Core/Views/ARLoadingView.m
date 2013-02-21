@@ -26,6 +26,8 @@
 
 - (void)setup
 {
+    [self setUserInteractionEnabled: NO];
+    
     _block1 = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 15,15)];
     _block1.layer.cornerRadius = 10;
     _block1.transform = CGAffineTransformMakeRotation(M_PI / 100);
