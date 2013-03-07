@@ -13,7 +13,7 @@
 #import "InfHSBSupport.h"
 
 //------------------------------------------------------------------------------
-
+/*
 float pin( float minValue, float value, float maxValue )
 {
 	if( minValue > value )
@@ -23,7 +23,7 @@ float pin( float minValue, float value, float maxValue )
 	else
 		return value;
 }
-
+*/
 //------------------------------------------------------------------------------
 #pragma mark	Floating point conversion
 //------------------------------------------------------------------------------

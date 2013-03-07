@@ -19,7 +19,9 @@
 
 
 #import <Foundation/Foundation.h>
+#import "ARConstants.h"
 #import "GridCellView.h"
+
 
 @class ARSite;
 

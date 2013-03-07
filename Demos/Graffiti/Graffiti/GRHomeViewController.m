@@ -6,9 +6,12 @@
 //  Copyright (c) 2013 Demetri Miller. All rights reserved.
 //
 
+#import <MobileCoreServices/MobileCoreServices.h>
+#import "GRCameraOverlayView.h"
 #import "GRHomeViewController.h"
 #import "GRViewController.h"
-
+#import "UIView+ImageCapture.h"
+#import "UIViewController+Transitions.h"
 
 @implementation GRHomeViewController
 

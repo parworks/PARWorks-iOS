@@ -8,7 +8,9 @@
 
 #import <UIKit/UIKit.h>
 
-@interface GRHomeViewController : UIViewController
+@class GRCameraOverlayView;
+
+@interface GRHomeViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 
 - (IBAction)createGraffiti:(id)sender;
 - (IBAction)scanForGraffiti:(id)sender;

@@ -14,7 +14,7 @@
 
 //------------------------------------------------------------------------------
 
-float pin( float minValue, float value, float maxValue );
+//float pin( float minValue, float value, float maxValue );
 
 //------------------------------------------------------------------------------
 

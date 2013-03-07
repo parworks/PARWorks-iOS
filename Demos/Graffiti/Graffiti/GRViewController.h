@@ -20,16 +20,18 @@
 
 #import <UIKit/UIKit.h>
 #import "ARAugmentedView.h"
+#import "AROverlayView.h"
 
+@class ARSite;
 @class GRBrushPickerFolderView;
-@class GRCameraOverlayView;
 @class GRColorPickerFolderView;
 @class GRGraffitiLoadingView;
+@class GRGraffitiCameraOverlayView;
 @class GRGraffitiView;
 
-@interface GRViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, ARAugmentedViewDelegate>
+@interface GRViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate, ARAugmentedViewDelegate, AROverlayViewAnimationDelegate>
 {
-    __strong GRCameraOverlayView *_cameraOverlayView;
+    GRGraffitiCameraOverlayView * __strong _cameraOverlayView;
     
     __weak IBOutlet UISlider *brushSizeSlider;
     __weak IBOutlet UIView *brushControls;
@@ -48,7 +50,7 @@
     __weak GRGraffitiView *_focusedGraffitiView;
     NSArray *_graffitiViews;
     GRGraffitiLoadingView *_loadingView;
-    
+    ARSite *_site;
     BOOL _firstLoad;
 }
 

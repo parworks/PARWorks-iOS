@@ -309,7 +309,7 @@ static NSMutableDictionary *colorNameCache = nil;
 	return [NSString stringWithFormat:@"%0.6lX", self.rgbHex];
 }
 
-+ (UIColor *)colorWithString:(NSString *)stringToConvert {
++ (UIColor *)grColorWithString:(NSString *)stringToConvert {
 	NSScanner *scanner = [NSScanner scannerWithString:stringToConvert];
 	if (![scanner scanString:@"{" intoString:NULL]) return nil;
 	const NSUInteger kMaxComponents = 4;
@@ -351,7 +351,7 @@ static NSMutableDictionary *colorNameCache = nil;
 						   alpha:1.0f];
 }
 
-+ (UIColor *)colorWithRGBHex:(UInt32)hex {
++ (UIColor *)grColorWithRGBHex:(UInt32)hex {
 	int r = (hex >> 16) & 0xFF;
 	int g = (hex >> 8) & 0xFF;
 	int b = (hex) & 0xFF;
@@ -364,11 +364,11 @@ static NSMutableDictionary *colorNameCache = nil;
 
 // Returns a UIColor by scanning the string for a hex number and passing that to +[UIColor colorWithRGBHex:]
 // Skips any leading whitespace and ignores any trailing characters
-+ (UIColor *)colorWithHexString:(NSString *)stringToConvert {
++ (UIColor *)grColorWithHexString:(NSString *)stringToConvert {
 	NSScanner *scanner = [NSScanner scannerWithString:stringToConvert];
 	unsigned hexNum;
 	if (![scanner scanHexInt:&hexNum]) return nil;
-	return [UIColor colorWithRGBHex:hexNum];
+	return [UIColor grColorWithRGBHex:hexNum];
 }
 
 // Lookup a color using css 3/svg color name
@@ -467,7 +467,7 @@ static const char *colorNameDB = ","
 		const char *after = found + strlen(searchString);
 		int hex;
 		if (sscanf(after, "%x", &hex) == 1) {
-			result = [self colorWithRGBHex:hex];
+			result = [self grColorWithRGBHex:hex];
 		}
 	}
 	

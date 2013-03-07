@@ -20,6 +20,7 @@
 
 #import "GRAppDelegate.h"
 #import "GRHomeViewController.h"
+#import "ARManager.h"
 #import "ASIFormDataRequest.h"
 #import "ASIHTTPRequest.h"
 #import "GRViewController.h"

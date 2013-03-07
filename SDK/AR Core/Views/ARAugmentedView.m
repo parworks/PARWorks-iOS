@@ -18,7 +18,9 @@
 //
 
 #import "ARSite.h"
+#import "ARAugmentedPhoto.h"
 #import "ARAugmentedView.h"
+#import "ARLoadingView.h"
 #import "AROverlay.h"
 #import "AROverlayAnimation.h"
 #import "AROverlayViewFactory.h"

@@ -22,17 +22,20 @@
 #import <objc/runtime.h>
 
 #import "ASIHTTPRequest.h"
+#import "AROverlayView+Animations.h"
 #import "UIViewAdditions.h"
 #import "UIImageView+AnimationAdditions.h"
 #import "DMColorPickerView.h"
 #import "GRAppDelegate.h"
 #import "GRBrushPickerFolderView.h"
-#import "GRCameraOverlayView.h"
 #import "GRColorPickerFolderView.h"
 #import "GRFolderButton.h"
 #import "GRGraffitiLoadingView.h"
 #import "GRGraffitiView.h"
 #import "GRViewController.h"
+#import "GRGraffitiCameraOverlayView.h"
+
+
 #import "PARWorks.h"
 #import "SimplePaintView.h"
 #import "UIView+Layout.h"
@@ -41,7 +44,9 @@
 #define kOverlayGraffitiViewKey @"kOverlayGraffitiViewKey"
 
 @implementation GRViewController
-
+{
+    ARAugmentedPhoto *_curAugmentedPhoto;
+}
 #pragma mark - Lifecycle
 
 - (void)viewDidLoad
@@ -56,16 +61,39 @@
     [self disablePaintControlsWithGraffitiView:nil];
 }
 
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    if ([self.presentedViewController isKindOfClass:[UIImagePickerController class]] && [_cameraOverlayView augmentedPhoto]) {
+        _curAugmentedPhoto = [_cameraOverlayView augmentedPhoto];
+        [_loadingView startAnimating];
+
+        double delayInSeconds = 2.0;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            if (_curAugmentedPhoto.response == BackendResponseFinished) {
+                augmentedView.augmentedPhoto = _curAugmentedPhoto;
+                [self augmentProcessFinishedWithPhoto:_curAugmentedPhoto];
+            }
+        });
+    }
+}
+
+- (void)viewWillDisappear:(BOOL)animated
+{
+    [_cameraOverlayView setAugmentedPhoto:nil];
+    [super viewWillDisappear:animated];
+}
+
 - (void)viewDidAppear:(BOOL)animated
 {
     [super viewDidAppear:animated];
     if (_firstLoad) {
+        _firstLoad = NO;
+
         _loadingView = [[GRGraffitiLoadingView alloc] initWithFrame:self.view.bounds];
         _loadingView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
         [self.view addSubview:_loadingView];
-        
-        _cameraOverlayView = [[GRCameraOverlayView alloc] initWithFrame:self.view.bounds];
-        [_cameraOverlayView.augmentButton addTarget:self action:@selector(takePicture:) forControlEvents:UIControlEventTouchUpInside];
         
         _folderDimView = [[UIControl alloc] initWithFrame:self.view.bounds];
         _folderDimView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
@@ -82,15 +110,18 @@
         _brushPicker = [[GRBrushPickerFolderView alloc] initWithButtonOffsetY:75 image:[UIImage imageNamed:@"brush_icon.png"] frame:folderFrame];
         [_brushPicker.folderButton addTarget:self action:@selector(handleBrushPickerButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
         [self.view addSubview:_brushPicker];
-        
-        [self showCameraPicker];
-        _firstLoad = NO;
-    
+            
         cameraButton.layer.contentsScale = [UIScreen mainScreen].scale;
         cameraButton.layer.shadowColor = [UIColor blackColor].CGColor;
         cameraButton.layer.shadowOffset = CGSizeZero;
         cameraButton.layer.shadowRadius = 4.0;
         cameraButton.layer.shadowOpacity = 1.0;
+        
+        double delayInSeconds = 2.0;
+        dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+        dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+            [self showCameraPicker];
+        });
     }
 }
 
@@ -118,31 +149,34 @@
 
 
 #pragma mark - Presentation
-
 - (void)showCameraPicker
 {
-    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera]) {
-        if (!_picker) {
-            _picker = [[UIImagePickerController alloc] init];
-            _picker.delegate = self;
-            _picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-            _picker.mediaTypes = @[(NSString *) kUTTypeImage];
-            _picker.cameraOverlayView = _cameraOverlayView;
-            _picker.showsCameraControls = NO;
-            _picker.cameraViewTransform = CGAffineTransformMakeScale(CAMERA_TRANSFORM_SCALE, CAMERA_TRANSFORM_SCALE);
-        }
-        [self presentViewController:_picker animated:NO completion:nil];
+    _site = [[ARSite alloc] initWithIdentifier:@"Dollar1"];
+    _cameraOverlayView = [[GRGraffitiCameraOverlayView alloc] initWithFrame:self.view.bounds];
+    _cameraOverlayView.site = _site;
     
-    } else {
-        NSString * imgPath = [[NSBundle mainBundle] pathForResource:@"img_durham_1" ofType:@"jpg"];
-        NSString * pmPath = [[NSBundle mainBundle] pathForResource:@"img_durham_1" ofType:@"pm"];
-        ARAugmentedPhoto * p = [[ARAugmentedPhoto alloc] initWithImageFile: imgPath andPMFile: pmPath];
-        [augmentedView setAugmentedPhoto: p];
-        augmentedView.transform = CGAffineTransformMakeScale(1.2, 1.2);
-        
-        [self augmentProcessStarted];
-        [self performSelector:@selector(augmentProcessFinishedWithPhoto:) withObject:p afterDelay: 2];
+    UIImagePickerController *picker = [self imagePicker];
+    picker.delegate = _cameraOverlayView;
+    if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
+        picker.cameraOverlayView = _cameraOverlayView;
+        _cameraOverlayView.imagePicker = picker;
     }
+    
+    [self presentViewController:picker animated:YES completion:nil];
+}
+
+- (UIImagePickerController *)imagePicker
+{
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    if ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera]) {
+        picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        picker.mediaTypes = @[(NSString *) kUTTypeImage];
+        picker.showsCameraControls = NO;
+    } else {
+        picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    }
+    
+    return picker;
 }
 
 
@@ -204,11 +238,6 @@
 
 
 #pragma mark - Animations
-- (IBAction)takePicture:(id)sender
-{
-    [_picker takePicture];
-}
-
 - (void)augmentProcessStarted
 {
     [_loadingView startAnimating];    
@@ -268,10 +297,36 @@
     _focusedGraffitiView = nil;
 }
 
+
+#pragma mark - AROverlayViewAnimationDelegate
+- (void)focusOverlayView:(AROverlayView *)overlayView inParent:(ARAugmentedView *)parent
+{
+    GRViewController * __weak weakSelf = self;
+    GRGraffitiView *gv = (GRGraffitiView *)overlayView;
+    [overlayView animateBounceFocusWithParent:parent centeredBlock:nil complete:^{
+//        gv.userInteractionEnabled = YES;
+        gv.backgroundView.userInteractionEnabled = YES;
+        [weakSelf enablePaintControlsWithGraffitiView:gv];
+    }];
+}
+
+- (void)unfocusOverlayView:(AROverlayView *)overlayView inParent:(ARAugmentedView *)parent
+{
+    GRViewController * __weak weakSelf = self;
+    GRGraffitiView *gv = (GRGraffitiView *)overlayView;
+    [overlayView animateBounceUnfocusWithParent:parent uncenteredBlock:nil complete:^{
+//        gv.userInteractionEnabled = NO;
+        gv.backgroundView.userInteractionEnabled = NO;
+        [weakSelf disablePaintControlsWithGraffitiView:gv];
+    }];
+}
+
+
 #pragma mark - ARAugmentedViewDelegate
 - (AROverlayView *)overlayViewForOverlay:(AROverlay *)overlay
 {
     GRGraffitiView *graffitiView = [[GRGraffitiView alloc] initWithOverlay:overlay];
+    graffitiView.animDelegate = self;
     SimplePaintView *paintView = [graffitiView backgroundView];
     paintView.brushSize = _brushPicker.brushSizeSlider.value;
     paintView.brushName = _brushPicker.currentBrushName;
@@ -285,27 +340,6 @@
 - (void)didPickColor:(UIColor *)color
 {
     _focusedGraffitiView.backgroundView.strokeColor = color;
-}
-
-#pragma mark - UIImagePickerControllerDelegate
-
-- (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
-{
-    UIImage * image = [info objectForKey: UIImagePickerControllerOriginalImage];
-    [picker dismissViewControllerAnimated:NO completion:^{
-        // Upload the original image to the AR API for processing. We'll animate the
-        // resized image back on screen once it's finished.
-        [self augmentProcessStarted];
-        ARAugmentedPhoto * p = [[ARManager shared] augmentPhotoUsingNearbySites: image completion:^(ARAugmentedPhoto *augmentedPhoto) {
-            [self augmentProcessFinishedWithPhoto:augmentedPhoto];
-        }];
-        [augmentedView setAugmentedPhoto: p];
-    }];
-}
-
-- (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
-{
-    // do nothing
 }
 
 @end

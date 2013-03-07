@@ -12,12 +12,14 @@
 #import "UIView+ContentScaling.h"
 
 // Convenience method for pinning a value between a min and max.
-float pin(float min, float value, float max)
+float pin( float minValue, float value, float maxValue )
 {
-    float v = value;
-    v = MAX(min, v);
-    v = MIN(max, v);
-    return v;
+	if( minValue > value )
+		return minValue;
+	else if( maxValue < value )
+		return maxValue;
+	else
+		return value;
 }
 
 @implementation AROverlayBuilderView

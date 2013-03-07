@@ -19,6 +19,7 @@
 
 
 #import "ARAugmentedView.h"
+#import "AROverlayUtil.h"
 #import "GRGraffitiView.h"
 #import "SimplePaintView.h"
 #import "GRViewController.h"
@@ -29,9 +30,8 @@ static BOOL _animating = NO;
 
 - (id)initWithOverlay:(AROverlay *)model
 {
-    self = [super initWithFrame:CGRectMake(0, 0, 225, 225) points:model.points];
+    self = [super initWithOverlay:model];
     if (self) {
-        self.animDelegate = self;
         self.backgroundView = [[SimplePaintView alloc] initWithFrame:self.bounds];
         [self sharedInit];
     }
@@ -84,59 +84,6 @@ static BOOL _animating = NO;
     [self bringSubviewToFront:_sprayView];
     [_sprayView revealWithRevealType:type];
 }
-
-
-#pragma mark - AROverlayViewAnimationDelegate
-- (void)focusOverlayView:(AROverlayView *)overlayView inParent:(ARAugmentedView *)parent
-{
-    [UIView animateWithDuration:0.3 animations:^{
-        overlayView.layer.transform = CATransform3DScale(CATransform3DIdentity, 0.5, 0.5, 0.5);
-        overlayView.layer.position = [AROverlayUtil focusedCenterForOverlayView:self withParent:parent.overlayImageView];
-        self.layer.mask = nil;
-    } completion:^(BOOL finished) {
-        [UIView animateWithDuration:0.3 animations:^{
-            overlayView.layer.transform = CATransform3DScale(CATransform3DIdentity, 1.2, 1.2, 1.2);
-            overlayView.layer.position = [AROverlayUtil focusedCenterForOverlayView:self withParent:parent.overlayImageView];
-        } completion:^(BOOL finished) {
-            [UIView animateWithDuration:0.2 animations:^{
-                overlayView.layer.transform = CATransform3DScale(CATransform3DIdentity, 0.9, 0.9, 0.9);
-                overlayView.layer.position = [AROverlayUtil focusedCenterForOverlayView:self withParent:parent.overlayImageView];
-            } completion:^(BOOL finished) {
-                [UIView animateWithDuration:0.2 animations:^{
-                    overlayView.layer.transform = CATransform3DScale(CATransform3DIdentity, 1.1, 1.1, 1.1);
-                    overlayView.layer.position = [AROverlayUtil focusedCenterForOverlayView:self withParent:parent.overlayImageView];
-                } completion:^(BOOL finished) {
-                    [UIView animateWithDuration:0.2 animations:^{
-                        overlayView.layer.transform = CATransform3DScale(CATransform3DIdentity, 1.0, 1.0, 1.0);
-                        overlayView.layer.position = [AROverlayUtil focusedCenterForOverlayView:self withParent:parent.overlayImageView];
-                    } completion:^(BOOL finished) {
-                        self.userInteractionEnabled = YES;
-                        _backgroundView.userInteractionEnabled = YES;
-                        [_controller enablePaintControlsWithGraffitiView:self];
-                    }];
-                }];
-            }];
-        }];
-    }];
-}
-
-- (void)unfocusOverlayView:(AROverlayView *)overlayView inParent:(ARAugmentedView *)parent
-{
-    _backgroundView.userInteractionEnabled = NO;
-    [_controller disablePaintControlsWithGraffitiView:self];
-    [UIView animateWithDuration:0.3 animations:^{
-        // Shrink the view and then animate it back to it's proper position
-        overlayView.layer.transform = CATransform3DScale(CATransform3DIdentity, .5, .5, .5);
-        overlayView.layer.position = [AROverlayUtil focusedCenterForOverlayView:overlayView withParent:parent.overlayImageView];
-    } completion:^(BOOL finished) {
-        [UIView animateWithDuration:0.3 animations:^{
-            [overlayView applyAttachmentStyleWithParent:parent];
-            overlayView.layer.position = CGPointZero;
-        } completion:^(BOOL finished) {
-        }];
-    }];
-}
-
 
 #pragma mark - GRSprayViewDelegate
 

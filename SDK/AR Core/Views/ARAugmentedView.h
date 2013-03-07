@@ -20,12 +20,13 @@
 
 #import <UIKit/UIKit.h>
 #import <QuartzCore/QuartzCore.h>
-#import "ARAugmentedPhoto.h"
-#import "AROverlayView.h"
-#import "ARLoadingView.h"
 
+
+@class ARAugmentedPhoto;
+@class ARLoadingView;
 @class AROverlay;
 @class AROverlayOutlineView;
+@class AROverlayView;
 @class ARTotalAugmentedImagesView;
 
 #define NOTIF_PRESENT_NAVCONTROLLER_FULLSCREEN @"NOTIF_PRESENT_NAVCONTROLLER_FULLSCREEN"

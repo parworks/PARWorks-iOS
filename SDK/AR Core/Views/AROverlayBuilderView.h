@@ -32,6 +32,8 @@
 @property(nonatomic, strong) ARMagnifiedLensView *lensView;
 @property(nonatomic, weak) id<ARMagViewDelegate> delegate;
 
+float pin(float minValue, float value, float maxValue);
+
 - (id)initWithFrame:(CGRect)frame;
 - (void)setSiteImage:(ARSiteImage*)siteImage;
 

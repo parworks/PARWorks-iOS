@@ -68,7 +68,7 @@
         [_huePicker setSelectionColor:[UIColor colorWithHue:0.58 saturation:0.92 brightness:0.92 alpha:1.0]];
         [_brightSatPicker handleTouchAtPoint:CGPointMake(self.width, 0)];
     } else {
-        [_huePicker setSelectionColor:[UIColor colorWithString:colorStr]];
+        [_huePicker setSelectionColor:[UIColor grColorWithString:colorStr]];
         [_brightSatPicker handleTouchAtPoint:CGPointFromString(pointStr)];
     }
 }
@@ -81,6 +81,7 @@
     
     NSString *pointStr = NSStringFromCGPoint(_brightSatPicker.indicator.center);
     [[NSUserDefaults standardUserDefaults] setObject:pointStr forKey:kDMColorPickerBrightSatTouchPoint];
+    [[NSUserDefaults standardUserDefaults] synchronize];
 }
 
 #pragma mark - Color Picker Delegates

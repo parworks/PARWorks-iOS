@@ -19,12 +19,13 @@
 
 
 #import <UIKit/UIKit.h>
+#import "AROverlayView.h"
 #import "GRSprayView.h"
 
 @class SimplePaintView;
 @class GRViewController;
 
-@interface GRGraffitiView : AROverlayView <GRSprayViewDelegate, AROverlayViewAnimationDelegate>
+@interface GRGraffitiView : AROverlayView <GRSprayViewDelegate>
 
 @property(nonatomic, weak) GRViewController * controller;
 @property(nonatomic, strong) SimplePaintView *backgroundView;

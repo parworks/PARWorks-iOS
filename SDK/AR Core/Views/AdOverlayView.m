@@ -153,7 +153,7 @@
 
             [_player stop];
             overlayView.layer.position = CGPointZero;
-            [overlayView applyAttachmentStyleWithParent:parent];
+//            [overlayView applyAttachmentStyleWithParent:parent];
         } completion:^(BOOL finished) {
         }];
     }];
