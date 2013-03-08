@@ -27,7 +27,6 @@
 		A000672916290313007FADB2 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = A000672116290313007FADB2 /* libz.dylib */; };
 		A000672A16290313007FADB2 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A000672216290313007FADB2 /* MobileCoreServices.framework */; };
 		A000672B16290313007FADB2 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A000672316290313007FADB2 /* CoreFoundation.framework */; };
-		A000672C16290313007FADB2 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A000672416290313007FADB2 /* CoreGraphics.framework */; };
 		A000672D16290313007FADB2 /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A000672516290313007FADB2 /* CoreLocation.framework */; };
 		A000672E16290313007FADB2 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A000672616290313007FADB2 /* QuartzCore.framework */; };
 		A0035A83162B371400186D26 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0035A82162B371400186D26 /* AVFoundation.framework */; };
@@ -1124,7 +1123,6 @@
 				A000672916290313007FADB2 /* libz.dylib in Frameworks */,
 				A000672A16290313007FADB2 /* MobileCoreServices.framework in Frameworks */,
 				A000672B16290313007FADB2 /* CoreFoundation.framework in Frameworks */,
-				A000672C16290313007FADB2 /* CoreGraphics.framework in Frameworks */,
 				A000672D16290313007FADB2 /* CoreLocation.framework in Frameworks */,
 				A000672E16290313007FADB2 /* QuartzCore.framework in Frameworks */,
 			);
@@ -2192,7 +2190,7 @@
 			isa = PBXProject;
 			attributes = {
 				CLASSPREFIX = HN;
-				LastUpgradeCheck = 0450;
+				LastUpgradeCheck = 0460;
 				ORGANIZATIONNAME = "Demetri Miller";
 			};
 			buildConfigurationList = A00066581628FD06007FADB2 /* Build configuration list for PBXProject "Graffiti" */;

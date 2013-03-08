@@ -22,6 +22,12 @@
     return self;
 }
 
+- (void)cancelButtonTapped:(id)sender
+{
+    [self resetToLiveCameraInterface];
+    [self.imagePicker dismissViewControllerAnimated:YES completion:nil];    
+}
+
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
     [self resetToLiveCameraInterface];
@@ -30,23 +36,12 @@
 
 - (void)setAugmentedPhoto:(ARAugmentedPhoto *)augmentedPhoto
 {
-    _augmentedPhoto = augmentedPhoto;
+    [super setAugmentedPhoto:augmentedPhoto];
     
-    if (_augmentedPhoto.response == BackendResponseFinished) {
-        [_augmentedView setAugmentedPhoto: _augmentedPhoto];
-        _augmentedView.alpha = 1;
-        [self removeGestureRecognizer: _tap];
-        [self bringSubviewToFront: _augmentedView];
-        [self bringSubviewToFront: self.toolbar];
+    if (self.augmentedPhoto.response == BackendResponseFinished) {
         [self.imagePicker dismissViewControllerAnimated:YES completion:nil];
     }
-    
-    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(imageAugmentationStatusChanged:) name:NOTIF_AUGMENTED_PHOTO_UPDATED object:_augmentedPhoto];
 }
 
-- (ARAugmentedPhoto *)augmentedPhoto
-{
-    return _augmentedPhoto;
-}
 
 @end

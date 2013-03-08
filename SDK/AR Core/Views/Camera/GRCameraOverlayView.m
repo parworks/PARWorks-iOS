@@ -376,6 +376,10 @@
 
 - (void)imageAugmentationStatusChanged:(NSNotification*)notif
 {
+    if (_augmentedPhoto == nil) {
+        return;
+    }
+    
     if (_augmentedPhoto.response == BackendResponseFinished) {
         NSTimeInterval timeSinceStart = [NSDate timeIntervalSinceReferenceDate] - _pickerFinishedTimestamp;
         if (timeSinceStart < 3.5) {

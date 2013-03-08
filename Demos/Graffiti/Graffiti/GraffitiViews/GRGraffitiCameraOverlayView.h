@@ -10,10 +10,8 @@
 
 @interface GRGraffitiCameraOverlayView : GRCameraOverlayView
 
-- (ARAugmentedPhoto *)augmentedPhoto;
 
 /// Methods overridden from superclass.
-- (void)resetToLiveCameraInterface;
-- (void)setAugmentedPhoto:(ARAugmentedPhoto *)augmentedPhoto;
+- (void)cancelButtonTapped:(id)sender;
 
 @end

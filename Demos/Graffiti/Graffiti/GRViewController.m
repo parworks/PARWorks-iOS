@@ -21,6 +21,7 @@
 #import <MobileCoreServices/MobileCoreServices.h>
 #import <objc/runtime.h>
 
+#import "ARLoadingView.h"
 #import "ASIHTTPRequest.h"
 #import "AROverlayView+Animations.h"
 #import "UIViewAdditions.h"
@@ -64,7 +65,16 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    if ([self.presentedViewController isKindOfClass:[UIImagePickerController class]] && [_cameraOverlayView augmentedPhoto]) {
+    
+    if ([self.presentedViewController isKindOfClass:[UIImagePickerController class]] &&
+        [_cameraOverlayView augmentedPhoto] && [[_cameraOverlayView augmentedPhoto] response] == BackendResponseFinished &&
+        [[[_cameraOverlayView augmentedPhoto] overlays] count] > 0) {
+        augmentedView.overlayImageView.image = nil;
+        [augmentedView.outlineViews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+        [augmentedView.overlayViews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+        [augmentedView.overlayTitleViews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+        
+        [augmentedView.loadingView startAnimating];
         _curAugmentedPhoto = [_cameraOverlayView augmentedPhoto];
         [_loadingView startAnimating];
 
@@ -81,7 +91,6 @@
 
 - (void)viewWillDisappear:(BOOL)animated
 {
-    [_cameraOverlayView setAugmentedPhoto:nil];
     [super viewWillDisappear:animated];
 }
 
@@ -117,7 +126,7 @@
         cameraButton.layer.shadowRadius = 4.0;
         cameraButton.layer.shadowOpacity = 1.0;
         
-        double delayInSeconds = 2.0;
+        double delayInSeconds = 1.0;
         dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
         dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
             [self showCameraPicker];

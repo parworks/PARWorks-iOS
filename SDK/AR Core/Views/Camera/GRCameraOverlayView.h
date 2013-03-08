@@ -17,7 +17,6 @@
 
 @interface GRCameraOverlayView : UIView <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 {
-    ARAugmentedPhoto *_augmentedPhoto;
     ARAugmentedView  *_augmentedView;
     
     UITapGestureRecognizer  *_tap;
@@ -29,11 +28,13 @@
     BOOL                    _isiPhone5;
 }
 
+@property(nonatomic, strong) ARAugmentedPhoto *augmentedPhoto;
 @property(nonatomic, strong) GRCameraOverlayToolbar *toolbar;
 @property(nonatomic, strong) ARCameraOverlayTooltip *tooltip;
 @property(nonatomic, weak) UIImagePickerController *imagePicker;
 @property(nonatomic, weak) ARSite *site;
 
+- (void)resetToLiveCameraInterface;
 - (void)showTooltipWithString:(NSString *)string;
 - (UIImagePickerControllerCameraFlashMode)flashModeFromDefaults;
 

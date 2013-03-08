@@ -54,7 +54,6 @@
     BOOL _firstLoad;
 }
 
-- (IBAction)takePicture:(id)sender;
 - (IBAction)handleColorPickerButtonTapped:(id)sender;
 - (IBAction)handleBrushPickerButtonTapped:(id)sender;
 - (IBAction)handleCameraButtonTapped:(id)sender;
