@@ -7,6 +7,7 @@
 //
 
 #import <MobileCoreServices/MobileCoreServices.h>
+#import "GRAppDelegate.h"
 #import "GRCameraOverlayView.h"
 #import "GRHomeViewController.h"
 #import "GRViewController.h"
@@ -27,7 +28,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+
+    NSString * name = [[NSUserDefaults standardUserDefaults] objectForKey: SITENAME_KEY];
+    if (!name)
+        name = @"Dollar1";
+    
+    [[NSUserDefaults standardUserDefaults] setObject:name forKey:SITENAME_KEY];
+    [_sitename setText: name];
 }
 
 - (void)didReceiveMemoryWarning
@@ -42,8 +49,20 @@
 
 - (IBAction)scanForGraffiti:(id)sender
 {
+    [[NSUserDefaults standardUserDefaults] setObject:[_sitename text] forKey:SITENAME_KEY];
     GRViewController * scanner = [[GRViewController alloc] init];
     [self presentViewController:scanner animated:YES completion:NULL];
+}
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField
+{
+    [[NSUserDefaults standardUserDefaults] setObject:[textField text] forKey:SITENAME_KEY];
+    return YES;
+}
+
+- (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation
+{
+    return YES;
 }
 
 @end

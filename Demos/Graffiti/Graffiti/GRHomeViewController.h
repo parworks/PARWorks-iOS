@@ -10,9 +10,13 @@
 
 @class GRCameraOverlayView;
 
-@interface GRHomeViewController : UIViewController <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface GRHomeViewController : UIViewController <UITextFieldDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+
+@property (weak, nonatomic) IBOutlet UITextField *sitename;
 
 - (IBAction)createGraffiti:(id)sender;
 - (IBAction)scanForGraffiti:(id)sender;
+
+- (BOOL)textFieldShouldReturn:(UITextField *)textField;
 
 @end

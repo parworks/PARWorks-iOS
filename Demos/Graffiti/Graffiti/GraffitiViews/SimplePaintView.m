@@ -60,7 +60,10 @@
 
 - (UIImage*)getImage
 {
-    CGSize s = CGSizeMake(CGImageGetWidth(_sourceImage), CGImageGetHeight(_sourceImage));
+    CGSize s = CGSizeMake(self.bounds.size.width * 2, self.bounds.size.height * 2);
+    if (_sourceImage)
+        s = CGSizeMake(CGImageGetWidth(_sourceImage), CGImageGetHeight(_sourceImage));
+    
     UIGraphicsBeginImageContext(s);
     CGContextRef c = UIGraphicsGetCurrentContext();
     CGContextTranslateCTM(c, 0, s.height);

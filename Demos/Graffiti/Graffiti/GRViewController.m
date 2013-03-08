@@ -160,12 +160,14 @@
 #pragma mark - Presentation
 - (void)showCameraPicker
 {
-    _site = [[ARSite alloc] initWithIdentifier:@"Dollar1"];
+    NSString * sitename = [[NSUserDefaults standardUserDefaults] objectForKey: SITENAME_KEY];
+    _site = [[ARSite alloc] initWithIdentifier: sitename];
     _cameraOverlayView = [[GRGraffitiCameraOverlayView alloc] initWithFrame:self.view.bounds];
     _cameraOverlayView.site = _site;
     
     UIImagePickerController *picker = [self imagePicker];
     picker.delegate = _cameraOverlayView;
+    picker.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
         picker.cameraOverlayView = _cameraOverlayView;
         _cameraOverlayView.imagePicker = picker;
@@ -264,7 +266,7 @@
     
     for (AROverlay *overlay in photo.overlays) {
         GRGraffitiView *view = objc_getAssociatedObject(overlay, kOverlayGraffitiViewKey);
-        [delegate getGraffitiForSite:overlay.name withCompletionBlock:^(UIImage *image) {
+        [delegate getGraffitiForOverlay:overlay withCompletionBlock:^(UIImage *image) {
             [view.backgroundView setImage:image];
             [view.backgroundView setNeedsDisplay];
             [view setController: self];
@@ -294,15 +296,6 @@
     [_colorPicker shiftFrame:CGPointMake(50, 0)];
     [_brushPicker shiftFrame: CGPointMake(50, 0)];
     [UIView commitAnimations];
-    
-    // save the image
-    if (view) {
-        GRAppDelegate *delegate = [[UIApplication sharedApplication] delegate];
-        UIImage * img = [view.backgroundView getImage];
-        
-        AROverlay * overlay = augmentedView.augmentedPhoto.overlays[0];
-        [delegate saveGraffiti:img forSite: overlay.name];
-    }
     _focusedGraffitiView = nil;
 }
 
@@ -313,7 +306,6 @@
     GRViewController * __weak weakSelf = self;
     GRGraffitiView *gv = (GRGraffitiView *)overlayView;
     [overlayView animateBounceFocusWithParent:parent centeredBlock:nil complete:^{
-//        gv.userInteractionEnabled = YES;
         gv.backgroundView.userInteractionEnabled = YES;
         [weakSelf enablePaintControlsWithGraffitiView:gv];
     }];
@@ -322,10 +314,15 @@
 - (void)unfocusOverlayView:(AROverlayView *)overlayView inParent:(ARAugmentedView *)parent
 {
     GRViewController * __weak weakSelf = self;
-    GRGraffitiView *gv = (GRGraffitiView *)overlayView;
+    GRGraffitiView * gv = (GRGraffitiView *)overlayView;
+
     [overlayView animateBounceUnfocusWithParent:parent uncenteredBlock:nil complete:^{
-//        gv.userInteractionEnabled = NO;
         gv.backgroundView.userInteractionEnabled = NO;
+        
+        GRAppDelegate *delegate = [[UIApplication sharedApplication] delegate];
+        UIImage * img = [gv.backgroundView getImage];
+        [delegate saveGraffiti:img forOverlay: overlayView.overlay];
+
         [weakSelf disablePaintControlsWithGraffitiView:gv];
     }];
 }

@@ -91,8 +91,10 @@
     double delayInSeconds = 4.0;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        NSString *name = (_site.name && (_site.name.length > 0)) ? _site.name : @"the site";
-        [self showTooltipWithString: [NSString stringWithFormat: @"Take a picture of %@ to see overlays!", name]];
+        if (!_augmentedPhoto) {
+            NSString *name = (_site.name && (_site.name.length > 0)) ? _site.name : @"the site";
+            [self showTooltipWithString: [NSString stringWithFormat: @"Take a picture of %@ to see overlays!", name]];
+        }
     });
     
     // Augmented view that will show the augmented results in this view.
@@ -196,16 +198,25 @@
     
     // show for 1 second + 1 second per 4 words
     double delayInSeconds = 0.8 + [[string componentsSeparatedByString:@" "] count] * 0.32;
+    GRCameraOverlayView * __weak __self = self;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        CGAffineTransform t = _tooltip.transform;
-        [UIView animateWithDuration:0.2 animations:^{
-            _tooltip.alpha = 0.0;
-            _tooltip.transform = CGAffineTransformScale(_tooltip.transform, 0.5, 0.5);
-        } completion:^(BOOL finished) {
-            _tooltip.transform = t;
-        }];
+        [__self hideTooltip];
     });
+}
+
+- (void)hideTooltip
+{
+    if (_tooltip.alpha < 1)
+        return;
+    CGAffineTransform t = _tooltip.transform;
+    [UIView animateWithDuration:0.2 animations:^{
+        _tooltip.alpha = 0.0;
+        _tooltip.transform = CGAffineTransformScale(_tooltip.transform, 0.5, 0.5);
+    } completion:^(BOOL finished) {
+        _tooltip.transform = t;
+    }];
+
 }
 
 #pragma mark - Convenience
@@ -260,6 +271,8 @@
 #pragma mark - User Interaction
 - (void)cameraButtonTapped:(id)sender
 {
+    [self hideTooltip];
+    
     if (_augmentedView.alpha > 0)
         [self resetToLiveCameraInterface];
     else {

@@ -43,17 +43,19 @@
     return YES;
 }
 
-- (void)saveGraffiti:(UIImage*)img forSite:(NSString*)sitename
+- (void)saveGraffiti:(UIImage*)img forOverlay:(AROverlay*)overlay
 {
+    NSString * identifier = [NSString stringWithFormat: @"%@-%@", overlay.site.identifier, overlay.name];
     ASIFormDataRequest * f = [ASIFormDataRequest requestWithURL: [NSURL URLWithString: @"http://foundry376.com/hdar/site_graffiti.php"]];
     [f addData:UIImagePNGRepresentation(img) withFileName:@"img.png" andContentType:@"image/png" forKey:@"img"];
-    [f addPostValue:sitename forKey:@"site"];
+    [f addPostValue:identifier forKey: @"identifier"];
     [f startAsynchronous];
 }
 
-- (void)getGraffitiForSite:(NSString*)sitename withCompletionBlock:(GraffitiRetrievalBlock)block
+- (void)getGraffitiForOverlay:(AROverlay*)overlay withCompletionBlock:(GraffitiRetrievalBlock)block
 {
-    ASIHTTPRequest * req = [ASIHTTPRequest requestWithURL: [NSURL URLWithString: [NSString stringWithFormat: @"http://www.foundry376.com/hdar/site_graffiti.php?site=%@", sitename]]];
+    NSString * identifier = [[NSString stringWithFormat: @"%@-%@", overlay.site.identifier, overlay.name] stringByAddingPercentEscapesUsingEncoding: NSASCIIStringEncoding];
+    ASIHTTPRequest * req = [ASIHTTPRequest requestWithURL: [NSURL URLWithString: [NSString stringWithFormat: @"http://www.foundry376.com/hdar/site_graffiti.php?identifier=%@", identifier]]];
     ASIHTTPRequest * __weak weak = req;
     
     [req setCompletionBlock: ^(void) {

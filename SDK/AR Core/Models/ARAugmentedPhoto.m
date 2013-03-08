@@ -221,6 +221,7 @@
             p.x = p.x *= scale;
             p.y = p.y *= scale;
         }
+        [result setSite: self.site];
         [self addOverlay: result];
     }
 }
