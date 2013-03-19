@@ -49,19 +49,25 @@
 
     // start listening for changes to the augmented photo object
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(photoChanged:) name:NOTIF_AUGMENTED_PHOTO_UPDATED object: _photo];
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(presentNavController:) name:NOTIF_PRESENT_NAVCONTROLLER_FULLSCREEN object:nil];
     [_photoView setAugmentedPhoto: _photo];
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [[UIApplication sharedApplication] setStatusBarStyle: UIStatusBarStyleBlackOpaque];
-    [[self.navigationController navigationBar] setBarStyle: UIBarStyleBlackTranslucent];
+    [[self.navigationController navigationBar] setTranslucent: YES];
 }
 
 - (void)viewWillDisappear:(BOOL)animated
 {
     [[UIApplication sharedApplication] setStatusBarStyle: UIStatusBarStyleDefault];
-    [[self.navigationController navigationBar] setBarStyle: UIBarStyleDefault];
+    [[self.navigationController navigationBar] setTranslucent: NO];
 }
 
 - (void)viewDidUnload
@@ -79,6 +85,13 @@
     
     [_photoView setAugmentedPhoto: _photo];
 }
+
+- (void)presentNavController:(NSNotification*)notification{
+    UINavigationController *controller = [notification object];
+    [controller setModalTransitionStyle:UIModalTransitionStyleCrossDissolve];
+    [self presentViewController:controller animated:YES completion:nil];
+}
+
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
 {

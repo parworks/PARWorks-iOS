@@ -120,7 +120,7 @@
 - (void)setHighlighted:(BOOL)highlighted
 {
     [super setHighlighted:highlighted];
-    self.backgroundColor = highlighted ? [UIColor colorWithRed:0.15 green:0.4 blue:0.15 alpha:1] : [UIColor whiteColor];
+    self.backgroundColor = highlighted ? [UIColor colorWithRed:0.15 green:0.15 blue:0.4 alpha:1] : [UIColor whiteColor];
 }
 
 @end

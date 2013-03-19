@@ -216,9 +216,6 @@
 		436C48B616432AAF0031DBCA /* ARSitesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C489A16432AAF0031DBCA /* ARSitesViewController.m */; };
 		436C48B716432AAF0031DBCA /* ARSitesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 436C489B16432AAF0031DBCA /* ARSitesViewController.xib */; };
 		436C48B816432AAF0031DBCA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 436C489C16432AAF0031DBCA /* InfoPlist.strings */; };
-		436C48B916432AAF0031DBCA /* Default-568h@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 436C48A016432AAF0031DBCA /* Default-568h@2x.png */; };
-		436C48BA16432AAF0031DBCA /* state_failed.png in Resources */ = {isa = PBXBuildFile; fileRef = 436C48A116432AAF0031DBCA /* state_failed.png */; };
-		436C48BB16432AAF0031DBCA /* state_uploading.png in Resources */ = {isa = PBXBuildFile; fileRef = 436C48A216432AAF0031DBCA /* state_uploading.png */; };
 		436C48C116432AAF0031DBCA /* UIAlertInputView.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48AF16432AAF0031DBCA /* UIAlertInputView.m */; };
 		436C492316432AB20031DBCA /* AROverlayAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = 436C48C416432AB10031DBCA /* AROverlayAnimation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		436C492416432AB20031DBCA /* AROverlayAnimation.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C48C516432AB10031DBCA /* AROverlayAnimation.m */; };
@@ -300,6 +297,22 @@
 		43889B2015E98D99001B0C4D /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43889B1F15E98D99001B0C4D /* SystemConfiguration.framework */; };
 		43889B2215E98DA1001B0C4D /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 43889B2115E98DA1001B0C4D /* libz.dylib */; };
 		43889B2615E98DC2001B0C4D /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43889B2515E98DC2001B0C4D /* MobileCoreServices.framework */; };
+		43A2246A16F81F3F00B7F0AD /* camera-graphic.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A2245716F81F3F00B7F0AD /* camera-graphic.png */; };
+		43A2246B16F81F3F00B7F0AD /* camera-graphic@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A2245816F81F3F00B7F0AD /* camera-graphic@2x.png */; };
+		43A2246C16F81F3F00B7F0AD /* environment_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A2245916F81F3F00B7F0AD /* environment_background.png */; };
+		43A2246D16F81F3F00B7F0AD /* environment_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A2245A16F81F3F00B7F0AD /* environment_background@2x.png */; };
+		43A2247116F81F3F00B7F0AD /* infobar_shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A2245E16F81F3F00B7F0AD /* infobar_shadow.png */; };
+		43A2247216F81F3F00B7F0AD /* infobar_shaow.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A2245F16F81F3F00B7F0AD /* infobar_shaow.png */; };
+		43A2247316F81F3F00B7F0AD /* state_failed.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A2246016F81F3F00B7F0AD /* state_failed.png */; };
+		43A2247416F81F3F00B7F0AD /* state_uploading.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A2246116F81F3F00B7F0AD /* state_uploading.png */; };
+		43A2247516F81F3F00B7F0AD /* tab-photos.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A2246216F81F3F00B7F0AD /* tab-photos.png */; };
+		43A2247616F81F3F00B7F0AD /* tab-photos@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A2246316F81F3F00B7F0AD /* tab-photos@2x.png */; };
+		43A2247716F81F3F00B7F0AD /* tab-sites.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A2246416F81F3F00B7F0AD /* tab-sites.png */; };
+		43A2247816F81F3F00B7F0AD /* tab-sites@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A2246516F81F3F00B7F0AD /* tab-sites@2x.png */; };
+		43A2247916F81F3F00B7F0AD /* toolbar_hide.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A2246616F81F3F00B7F0AD /* toolbar_hide.png */; };
+		43A2247A16F81F3F00B7F0AD /* toolbar_hide@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A2246716F81F3F00B7F0AD /* toolbar_hide@2x.png */; };
+		43A2247B16F81F3F00B7F0AD /* toolbar_show.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A2246816F81F3F00B7F0AD /* toolbar_show.png */; };
+		43A2247C16F81F3F00B7F0AD /* toolbar_show@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A2246916F81F3F00B7F0AD /* toolbar_show@2x.png */; };
 		43AB7256165977A70092CD9B /* ARAuthViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 43AB7254165977A60092CD9B /* ARAuthViewController.m */; };
 		43AB7257165977A70092CD9B /* ARAuthViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 43AB7255165977A60092CD9B /* ARAuthViewController.xib */; };
 		43D330DE16097E4C0043B64C /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43D330DD16097E4C0043B64C /* CoreLocation.framework */; };
@@ -482,9 +495,6 @@
 		436C489A16432AAF0031DBCA /* ARSitesViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARSitesViewController.m; sourceTree = "<group>"; };
 		436C489B16432AAF0031DBCA /* ARSitesViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ARSitesViewController.xib; sourceTree = "<group>"; };
 		436C489D16432AAF0031DBCA /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		436C48A016432AAF0031DBCA /* Default-568h@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x.png"; sourceTree = "<group>"; };
-		436C48A116432AAF0031DBCA /* state_failed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = state_failed.png; sourceTree = "<group>"; };
-		436C48A216432AAF0031DBCA /* state_uploading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = state_uploading.png; sourceTree = "<group>"; };
 		436C48AE16432AAF0031DBCA /* UIAlertInputView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UIAlertInputView.h; sourceTree = "<group>"; };
 		436C48AF16432AAF0031DBCA /* UIAlertInputView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UIAlertInputView.m; sourceTree = "<group>"; };
 		436C48C416432AB10031DBCA /* AROverlayAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AROverlayAnimation.h; sourceTree = "<group>"; };
@@ -550,6 +560,22 @@
 		43889B2115E98DA1001B0C4D /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		43889B2315E98DAA001B0C4D /* CoreFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreFoundation.framework; path = System/Library/Frameworks/CoreFoundation.framework; sourceTree = SDKROOT; };
 		43889B2515E98DC2001B0C4D /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		43A2245716F81F3F00B7F0AD /* camera-graphic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera-graphic.png"; sourceTree = "<group>"; };
+		43A2245816F81F3F00B7F0AD /* camera-graphic@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera-graphic@2x.png"; sourceTree = "<group>"; };
+		43A2245916F81F3F00B7F0AD /* environment_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = environment_background.png; sourceTree = "<group>"; };
+		43A2245A16F81F3F00B7F0AD /* environment_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "environment_background@2x.png"; sourceTree = "<group>"; };
+		43A2245E16F81F3F00B7F0AD /* infobar_shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = infobar_shadow.png; sourceTree = "<group>"; };
+		43A2245F16F81F3F00B7F0AD /* infobar_shaow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = infobar_shaow.png; sourceTree = "<group>"; };
+		43A2246016F81F3F00B7F0AD /* state_failed.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = state_failed.png; sourceTree = "<group>"; };
+		43A2246116F81F3F00B7F0AD /* state_uploading.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = state_uploading.png; sourceTree = "<group>"; };
+		43A2246216F81F3F00B7F0AD /* tab-photos.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab-photos.png"; sourceTree = "<group>"; };
+		43A2246316F81F3F00B7F0AD /* tab-photos@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab-photos@2x.png"; sourceTree = "<group>"; };
+		43A2246416F81F3F00B7F0AD /* tab-sites.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab-sites.png"; sourceTree = "<group>"; };
+		43A2246516F81F3F00B7F0AD /* tab-sites@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tab-sites@2x.png"; sourceTree = "<group>"; };
+		43A2246616F81F3F00B7F0AD /* toolbar_hide.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toolbar_hide.png; sourceTree = "<group>"; };
+		43A2246716F81F3F00B7F0AD /* toolbar_hide@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toolbar_hide@2x.png"; sourceTree = "<group>"; };
+		43A2246816F81F3F00B7F0AD /* toolbar_show.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toolbar_show.png; sourceTree = "<group>"; };
+		43A2246916F81F3F00B7F0AD /* toolbar_show@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "toolbar_show@2x.png"; sourceTree = "<group>"; };
 		43AB7253165977A60092CD9B /* ARAuthViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ARAuthViewController.h; path = "AR Administration App/Controllers/ARAuthViewController.h"; sourceTree = SOURCE_ROOT; };
 		43AB7254165977A60092CD9B /* ARAuthViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = ARAuthViewController.m; path = "AR Administration App/Controllers/ARAuthViewController.m"; sourceTree = SOURCE_ROOT; };
 		43AB7255165977A60092CD9B /* ARAuthViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; name = ARAuthViewController.xib; path = "AR Administration App/Controllers/ARAuthViewController.xib"; sourceTree = SOURCE_ROOT; };
@@ -845,9 +871,22 @@
 		436C489F16432AAF0031DBCA /* Images */ = {
 			isa = PBXGroup;
 			children = (
-				436C48A016432AAF0031DBCA /* Default-568h@2x.png */,
-				436C48A116432AAF0031DBCA /* state_failed.png */,
-				436C48A216432AAF0031DBCA /* state_uploading.png */,
+				43A2245716F81F3F00B7F0AD /* camera-graphic.png */,
+				43A2245816F81F3F00B7F0AD /* camera-graphic@2x.png */,
+				43A2245916F81F3F00B7F0AD /* environment_background.png */,
+				43A2245A16F81F3F00B7F0AD /* environment_background@2x.png */,
+				43A2245E16F81F3F00B7F0AD /* infobar_shadow.png */,
+				43A2245F16F81F3F00B7F0AD /* infobar_shaow.png */,
+				43A2246016F81F3F00B7F0AD /* state_failed.png */,
+				43A2246116F81F3F00B7F0AD /* state_uploading.png */,
+				43A2246216F81F3F00B7F0AD /* tab-photos.png */,
+				43A2246316F81F3F00B7F0AD /* tab-photos@2x.png */,
+				43A2246416F81F3F00B7F0AD /* tab-sites.png */,
+				43A2246516F81F3F00B7F0AD /* tab-sites@2x.png */,
+				43A2246616F81F3F00B7F0AD /* toolbar_hide.png */,
+				43A2246716F81F3F00B7F0AD /* toolbar_hide@2x.png */,
+				43A2246816F81F3F00B7F0AD /* toolbar_show.png */,
+				43A2246916F81F3F00B7F0AD /* toolbar_show@2x.png */,
 			);
 			path = Images;
 			sourceTree = "<group>";
@@ -1245,9 +1284,6 @@
 				436C48B316432AAF0031DBCA /* ARAugmentedPhotosViewController.xib in Resources */,
 				436C48B716432AAF0031DBCA /* ARSitesViewController.xib in Resources */,
 				436C48B816432AAF0031DBCA /* InfoPlist.strings in Resources */,
-				436C48B916432AAF0031DBCA /* Default-568h@2x.png in Resources */,
-				436C48BA16432AAF0031DBCA /* state_failed.png in Resources */,
-				436C48BB16432AAF0031DBCA /* state_uploading.png in Resources */,
 				4386D7151647051A001F96E8 /* icon.png in Resources */,
 				4386D7161647051A001F96E8 /* icon@2x.png in Resources */,
 				43AB7257165977A70092CD9B /* ARAuthViewController.xib in Resources */,
@@ -1327,6 +1363,22 @@
 				433C1A4A16F81C8400E3E26E /* toolbar_hide@2x.png in Resources */,
 				433C1A4B16F81C8400E3E26E /* toolbar_show.png in Resources */,
 				433C1A4C16F81C8400E3E26E /* toolbar_show@2x.png in Resources */,
+				43A2246A16F81F3F00B7F0AD /* camera-graphic.png in Resources */,
+				43A2246B16F81F3F00B7F0AD /* camera-graphic@2x.png in Resources */,
+				43A2246C16F81F3F00B7F0AD /* environment_background.png in Resources */,
+				43A2246D16F81F3F00B7F0AD /* environment_background@2x.png in Resources */,
+				43A2247116F81F3F00B7F0AD /* infobar_shadow.png in Resources */,
+				43A2247216F81F3F00B7F0AD /* infobar_shaow.png in Resources */,
+				43A2247316F81F3F00B7F0AD /* state_failed.png in Resources */,
+				43A2247416F81F3F00B7F0AD /* state_uploading.png in Resources */,
+				43A2247516F81F3F00B7F0AD /* tab-photos.png in Resources */,
+				43A2247616F81F3F00B7F0AD /* tab-photos@2x.png in Resources */,
+				43A2247716F81F3F00B7F0AD /* tab-sites.png in Resources */,
+				43A2247816F81F3F00B7F0AD /* tab-sites@2x.png in Resources */,
+				43A2247916F81F3F00B7F0AD /* toolbar_hide.png in Resources */,
+				43A2247A16F81F3F00B7F0AD /* toolbar_hide@2x.png in Resources */,
+				43A2247B16F81F3F00B7F0AD /* toolbar_show.png in Resources */,
+				43A2247C16F81F3F00B7F0AD /* toolbar_show@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1617,8 +1669,8 @@
 			buildSettings = {
 				CLANG_ENABLE_OBJC_ARC = YES;
 				CLANG_WARN__ARC_BRIDGE_CAST_NONARC = NO;
-				CODE_SIGN_IDENTITY = "iPhone Distribution: Precision Augmented Reality Works, Inc.";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: Precision Augmented Reality Works, Inc.";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "AR Administration App/Administration-App-Prefix.pch";
 				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = YES;
@@ -1628,8 +1680,8 @@
 					"\"$(SDKROOT)/usr/lib/system\"",
 				);
 				PRODUCT_NAME = PARWorks;
-				PROVISIONING_PROFILE = "A34D76A8-DC9D-4D8F-8307-CB380D95DADA";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "A34D76A8-DC9D-4D8F-8307-CB380D95DADA";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				SCAN_ALL_SOURCE_FILES_FOR_INCLUDES = NO;
 				WRAPPER_EXTENSION = app;
 			};

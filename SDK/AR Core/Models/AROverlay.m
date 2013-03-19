@@ -50,21 +50,25 @@
         self.ID = dict[@"id"];
         
         NSData * descriptionData = [dict[@"description"] dataUsingEncoding: NSUTF8StringEncoding];
-        if (descriptionData) {
-            NSDictionary * description = [NSJSONSerialization JSONObjectWithData:descriptionData options:NSJSONReadingAllowFragments error:nil];
-            
-            self.siteImageIdentifier = dict[@"imageId"];
-            self.name = dict[@"name"];
+        NSDictionary * description = nil;
 
-            self.accuracy = dict[@"accuracy"];
-            self.success = [dict[@"success"] intValue];
-            
-            self.title = [description objectForKey:@"title" or: nil];
-            [self setBoundaryPropertiesWithDictionary:description[@"boundary"]];
-            [self setContentPropertiesWithDictionary:description[@"content"]];
-            [self setCoverPropertiesWithDictionary:description[@"cover"]];
-            [self setupPointsFromDictionary: dict];
-        }
+        if (descriptionData)
+            description = [NSJSONSerialization JSONObjectWithData:descriptionData options:NSJSONReadingAllowFragments error:nil];
+        else
+            description = dict;
+        
+
+        self.siteImageIdentifier = dict[@"imageId"];
+        self.name = dict[@"name"];
+
+        self.accuracy = dict[@"accuracy"];
+        self.success = [dict[@"success"] intValue];
+        
+        self.title = [description objectForKey:@"title" or: nil];
+        [self setBoundaryPropertiesWithDictionary:description[@"boundary"]];
+        [self setContentPropertiesWithDictionary:description[@"content"]];
+        [self setCoverPropertiesWithDictionary:description[@"cover"]];
+        [self setupPointsFromDictionary: dict];
     }
     return self;
 }
@@ -148,7 +152,7 @@
 
 - (void)setContentPropertiesWithDictionary:(NSDictionary *)dict
 {
-    if (!dict) {
+    if ((!dict) || ([dict isKindOfClass: [NSDictionary class]] == NO)) {
         _contentProvider = @"";
         _contentSize = AROverlayContentSize_Medium;
         _contentType = AROverlayContentType_Text;

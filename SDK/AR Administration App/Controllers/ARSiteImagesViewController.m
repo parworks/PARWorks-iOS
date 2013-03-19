@@ -201,7 +201,7 @@
     _picker = [[UIImagePickerController alloc] init];
     [_picker setDelegate: self];
     
-    if ((buttonIndex != 2) && ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera])) {
+    if ((buttonIndex == 0) && ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera])) {
         _picker.sourceType = UIImagePickerControllerSourceTypeCamera;
         _picker.showsCameraControls = NO;
         _picker.delegate = self;
@@ -212,6 +212,7 @@
             _cameraOverlayAugmentView.delegate = self;
             _cameraOverlayAugmentView.site = _site;
             _cameraOverlayAugmentView.imagePicker = _picker;
+            _picker.delegate = _cameraOverlayAugmentView;
             _picker.cameraOverlayView = _cameraOverlayAugmentView;
         }
     } else
@@ -220,11 +221,9 @@
     [self presentModalViewController: _picker animated:YES];
 }
 
-- (CALayer*)layerForWaitingOnImage:(UIImage*)img
+- (id)contentsForWaitingOnImage:(UIImage*)img
 {
-    CALayer * l = [CALayer layer];
-    l.contents = (id)[img CGImage];
-    return l;
+    return (id)[img CGImage];
 }
 
 - (void)dismissImagePicker

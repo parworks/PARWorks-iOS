@@ -112,13 +112,6 @@
     return [[d sites] count];
 }
 
-- (NSString *)tableView:(UITableView *)tableView titleForHeaderInSection:(NSInteger)section
-{
-    ARAppDelegate * d = (ARAppDelegate *)[[UIApplication sharedApplication] delegate];
-    ARSite * s = [[d sites] objectAtIndex: section];
-    return [s identifier];
-}
-
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section;
 {
     ARAppDelegate * d = (ARAppDelegate *)[[UIApplication sharedApplication] delegate];

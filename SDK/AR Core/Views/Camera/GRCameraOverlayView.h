@@ -16,7 +16,7 @@
 @class MBProgressHUD;
 
 @protocol GRCameraOverlayViewDelegate <NSObject>
-- (CALayer*)layerForWaitingOnImage:(UIImage*)img;
+- (id)contentsForWaitingOnImage:(UIImage*)img;
 - (void)dismissImagePicker;
 @end
 

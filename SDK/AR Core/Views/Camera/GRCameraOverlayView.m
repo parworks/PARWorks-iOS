@@ -336,24 +336,18 @@
     UIImage *image1000 = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
 
-    if ([_delegate respondsToSelector: @selector(layerForWaitingOnImage:)]) {
-        CALayer * contentLayer = [_delegate layerForWaitingOnImage: image1000];
-        [contentLayer setFrame: [_takenPhotoLayer bounds]];
-
-        [[_takenPhotoLayer sublayers] makeObjectsPerformSelector: @selector(removeFromSuperlayer)];
-        [_takenPhotoLayer addSublayer: contentLayer];
-        _takenPhotoLayer.opacity = 0;
+    if ([_delegate respondsToSelector: @selector(contentsForWaitingOnImage:)]) {
+        [CATransaction begin];
+        [CATransaction setDisableActions: YES];
+        _takenBlackLayer.opacity = 1.0;
+        _takenPhotoLayer.contents = [_delegate contentsForWaitingOnImage: image1000];
+        _takenPhotoLayer.opacity = 1.0;
+        [CATransaction commit];
         
         [self.layer insertSublayer:_takenPhotoLayer below:_toolbar.layer];
         [self bringSubviewToFront:_toolbar];
         [self bringSubviewToFront:_progressHUD];
     }
-
-    [CATransaction begin];
-    [CATransaction setDisableActions:YES];
-    _takenBlackLayer.opacity = 1.0;
-    _takenPhotoLayer.opacity = 1.0;
-    [CATransaction commit];
 
     // Upload the original image to the AR API for processing. We'll animate the
     // resized image back on screen once it's finished.

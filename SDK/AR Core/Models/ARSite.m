@@ -76,7 +76,7 @@
         [self setImages: [aDecoder decodeObjectForKey: @"images"]];
         [self setOverlays: [aDecoder decodeObjectForKey: @"overlays"]];
         [self setStatus: [aDecoder decodeIntForKey: @"status"]];
-        [self setAugmentedPhotos: [aDecoder decodeObjectForKey: @"augmentedPhotos"]];
+//        [self setAugmentedPhotos: [aDecoder decodeObjectForKey: @"augmentedPhotos"]];
         _summaryImageCount = [aDecoder decodeIntForKey: @"summaryImageCount"];
         _summaryOverlayCount = [aDecoder decodeIntForKey: @"summaryOverlayCount"];
     }
@@ -88,8 +88,8 @@
     [aCoder encodeObject: _identifier forKey: @"identifier"];
     [aCoder encodeObject: _images forKey: @"images"];
     [aCoder encodeObject: _overlays forKey: @"overlays"];
-    [aCoder encodeObject: _augmentedPhotos forKey: @"augmentedPhotos"];
     [aCoder encodeInt: _status forKey: @"status"];
+    //    [aCoder encodeObject: _augmentedPhotos forKey: @"augmentedPhotos"];
     [aCoder encodeInt: _summaryImageCount forKey: @"summaryImageCount"];
     [aCoder encodeInt: _summaryOverlayCount forKey: @"summaryOverlayCount"];
 }
@@ -330,9 +330,8 @@
     
     NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithObject:self.identifier forKey:@"site"];
     _overlaysReq = [[ARManager shared] createRequest: REQ_SITE_OVERLAYS withMethod:@"GET" withArguments: dict];
-
+    
     __weak ASIHTTPRequest * __req = _overlaysReq;
-    __weak NSMutableArray * __overlays = _overlays;
     __weak ARSite * __self = self;
 
     [_overlaysReq setCompletionBlock: ^(void) {
@@ -344,7 +343,7 @@
             for (NSDictionary * overlayJSON in [json objectForKey: @"overlays"]) {
                 AROverlay * overlay = [[AROverlay alloc] initWithDictionary: overlayJSON];
                 [overlay setSite: __self];
-                [__overlays addObject: overlay];
+                [(NSMutableArray*)__self.overlays addObject: overlay];
             }
             
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: __self];

@@ -30,6 +30,8 @@
 {
     self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
     
+    [[UINavigationBar appearance] setTintColor: [UIColor colorWithRed:50.0/255.0 green:98.0/255.0 blue:162.0/255.0 alpha:1]];
+    
     // Add checks to save state
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(save) name:NOTIF_AUGMENTED_PHOTO_UPDATED object:nil];
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(save) name:NOTIF_SITE_UPDATED object:nil];
