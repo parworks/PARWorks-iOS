@@ -1,11 +1,8 @@
 //
-//  UIViewAdditions.m
+//  UIViewAdditions.h
 //  PAR Works iOS SDK
 //
-//  This class contains convenience functions for manipulating the frame of a view,
-//  just to make things a little bit cleaner. (Plus, you can't beat Obj-C categories)
-//
-//  Copyright 2012 PAR Works, Inc.
+//  Copyright 2013 PAR Works, Inc.
 //
 //  Licensed under the Apache License, Version 2.0 (the "License");
 //  you may not use this file except in compliance with the License.
@@ -19,6 +16,7 @@
 //  See the License for the specific language governing permissions and
 //  limitations under the License.
 //
+
 
 
 #import <Foundation/Foundation.h>
