@@ -155,6 +155,7 @@
 		433C192716F80E9D00E3E26E /* UIImageAdditions.m in Sources */ = {isa = PBXBuildFile; fileRef = 433C192416F80E9D00E3E26E /* UIImageAdditions.m */; };
 		433C193316F80FA100E3E26E /* ARSiteImagesViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 433C193116F80FA100E3E26E /* ARSiteImagesViewController.m */; };
 		433C193416F80FA100E3E26E /* ARSiteImagesViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 433C193216F80FA100E3E26E /* ARSiteImagesViewController.xib */; };
+		433C193516F8139A00E3E26E /* ARSiteImagesInfoView.m in Sources */ = {isa = PBXBuildFile; fileRef = A05F04321673E747007A51CA /* ARSiteImagesInfoView.m */; };
 		436C48B116432AAF0031DBCA /* ARAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C489116432AAF0031DBCA /* ARAppDelegate.m */; };
 		436C48B216432AAF0031DBCA /* ARAugmentedPhotosViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 436C489416432AAF0031DBCA /* ARAugmentedPhotosViewController.m */; };
 		436C48B316432AAF0031DBCA /* ARAugmentedPhotosViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 436C489516432AAF0031DBCA /* ARAugmentedPhotosViewController.xib */; };
@@ -1247,6 +1248,7 @@
 				433C191F16F80E3F00E3E26E /* ARWebViewController.m in Sources */,
 				433C192616F80E9D00E3E26E /* UIImageAdditions.m in Sources */,
 				433C193316F80FA100E3E26E /* ARSiteImagesViewController.m in Sources */,
+				433C193516F8139A00E3E26E /* ARSiteImagesInfoView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
