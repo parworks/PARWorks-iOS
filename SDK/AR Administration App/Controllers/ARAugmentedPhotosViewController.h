@@ -19,9 +19,11 @@
 
 
 #import <UIKit/UIKit.h>
+#import "GRCameraOverlayView.h"
 
 @interface ARAugmentedPhotosViewController : UIViewController <UINavigationControllerDelegate, UITableViewDataSource, UITableViewDelegate, UIImagePickerControllerDelegate>
 
+@property (strong, nonatomic) GRCameraOverlayView * cameraOverlayView;
 @property (strong, nonatomic) IBOutlet UITableView *tableView;
 
 @end

@@ -8,7 +8,6 @@
 
 #import "ARCameraOverlayTooltip.h"
 #import "UIColor+Utils.h"
-#import "UIFont+ThemeAdditions.h"
 
 @implementation ARCameraOverlayTooltip
 
@@ -49,7 +48,7 @@
     _label.backgroundColor = [UIColor clearColor];
     _label.textColor = [UIColor whiteColor];
     _label.textAlignment = NSTextAlignmentLeft;
-    _label.font = [UIFont heavyParworksFontWithSize:13];
+    _label.font = [UIFont boldSystemFontOfSize:13];
     _label.numberOfLines = 0;
     [self addSubview:_label];
     

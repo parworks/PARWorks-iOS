@@ -15,6 +15,11 @@
 @class GRCameraOverlayToolbar;
 @class MBProgressHUD;
 
+@protocol GRCameraOverlayViewDelegate <NSObject>
+- (CALayer*)layerForWaitingOnImage:(UIImage*)img;
+- (void)dismissImagePicker;
+@end
+
 @interface GRCameraOverlayView : UIView <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 {
     ARAugmentedView  *_augmentedView;
@@ -32,6 +37,7 @@
 @property(nonatomic, strong) GRCameraOverlayToolbar *toolbar;
 @property(nonatomic, strong) ARCameraOverlayTooltip *tooltip;
 @property(nonatomic, weak) UIImagePickerController *imagePicker;
+@property(nonatomic, weak) NSObject<GRCameraOverlayViewDelegate> * delegate;
 @property(nonatomic, weak) ARSite *site;
 
 - (void)resetToLiveCameraInterface;

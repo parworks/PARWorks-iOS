@@ -46,10 +46,6 @@
 {
     [super viewDidLoad];
     
-    // create the upper right add button
-    UIBarButtonItem * add = [[UIBarButtonItem alloc] initWithBarButtonSystemItem: UIBarButtonSystemItemAdd target:self action:@selector(addPhoto:)];
-    [self.navigationItem setRightBarButtonItem:add animated:YES];
-
     // create the upper left clear button
     UIBarButtonItem * clear = [[UIBarButtonItem alloc] initWithTitle:@"Clear" style:UIBarButtonItemStyleBordered target:self action:@selector(clearPhotos:)];
     [self.navigationItem setLeftBarButtonItem:clear animated:YES];
@@ -83,19 +79,6 @@
     ARAppDelegate * d = (ARAppDelegate*)[[UIApplication sharedApplication] delegate];
     for (ARSite * s in [d sites])
         [s removeAllAugmentedPhotos];
-}
-
-- (void)addPhoto:(id)sender
-{
-//    UIImagePickerController * imgPicker = [[UIImagePickerController alloc] init];
-//    imgPicker.delegate = self;
-//
-//    if ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera])
-//        imgPicker.sourceType = UIImagePickerControllerSourceTypeCamera;
-//    else
-//        imgPicker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
-//        
-//    [self presentModalViewController: imgPicker animated:YES];
 }
 
 - (void)viewDidUnload

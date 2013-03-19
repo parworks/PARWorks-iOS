@@ -10,15 +10,12 @@
 #import "ARAugmentedView.h"
 #import "ARCameraOverlayTooltip.h"
 #import "ARSite.h"
-#import "GPUImageBrightnessFilter.h"
-#import "GPUImageGaussianBlurFilter.h"
-#import "GPUImage.h"
 #import "GRCameraOverlayToolbar.h"
 #import "GRCameraOverlayView.h"
 #import "MBProgressHUD.h"
 #import "UIImageAdditions.h"
 #import "UIViewAdditions.h"
-#import "UIViewController+Transitions.h"
+
 
 #define kDefaultsGRCameraFlashModeKey @"kDefaultsGRCameraFlashModeKey"
 #define IOS_CAMERA_ASPECT_RATIO 4.0/3.0
@@ -248,26 +245,6 @@
     [CATransaction commit];
 }
 
-- (void)updateLayer:(CALayer *)layer withBlurredImageWhenReady:(UIImage *)image
-{
-    GPUImagePicture * picture = [[GPUImagePicture alloc] initWithImage:[image scaledImage:0.10] smoothlyScaleOutput: NO];
-    GPUImageGaussianBlurFilter * blurFilter = [[GPUImageGaussianBlurFilter alloc] init];
-    GPUImageBrightnessFilter * brightnessFilter = [[GPUImageBrightnessFilter alloc] init];
-    
-    [blurFilter setBlurSize: 0.35];
-    [picture addTarget: blurFilter];
-    [blurFilter addTarget: brightnessFilter];
-    [brightnessFilter setBrightness: -0.3];
-    
-    [picture processImage];
-    
-    UIImage *result = [brightnessFilter imageFromCurrentlyProcessedOutput];
-    [CATransaction begin];
-    [CATransaction setAnimationDuration:2.0];
-    layer.contents = (id)result.CGImage;
-    [CATransaction commit];
-}
-
 #pragma mark - User Interaction
 - (void)cameraButtonTapped:(id)sender
 {
@@ -298,7 +275,7 @@
     _takenBlackLayer.opacity = 0.85;
     [CATransaction commit];
 
-    [_imagePicker unpeelViewController];
+    [_delegate dismissImagePicker];
 }
 
 - (void)flashButtonTapped:(id)sender
@@ -358,23 +335,25 @@
     [originalImage drawInRect: CGRectMake(0, 0, sizeFor1000.width, sizeFor1000.height)];
     UIImage *image1000 = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
- 
+
+    if ([_delegate respondsToSelector: @selector(layerForWaitingOnImage:)]) {
+        CALayer * contentLayer = [_delegate layerForWaitingOnImage: image1000];
+        [contentLayer setFrame: [_takenPhotoLayer bounds]];
+
+        [[_takenPhotoLayer sublayers] makeObjectsPerformSelector: @selector(removeFromSuperlayer)];
+        [_takenPhotoLayer addSublayer: contentLayer];
+        _takenPhotoLayer.opacity = 0;
+        
+        [self.layer insertSublayer:_takenPhotoLayer below:_toolbar.layer];
+        [self bringSubviewToFront:_toolbar];
+        [self bringSubviewToFront:_progressHUD];
+    }
+
     [CATransaction begin];
     [CATransaction setDisableActions:YES];
     _takenBlackLayer.opacity = 1.0;
-    _takenPhotoLayer.contents = (id)image1000.CGImage;
     _takenPhotoLayer.opacity = 1.0;
     [CATransaction commit];
-
-    [self.layer insertSublayer:_takenPhotoLayer below:_toolbar.layer];
-    [self bringSubviewToFront:_toolbar];
-    [self bringSubviewToFront:_progressHUD];
-
-    double delayInSeconds = 1.0;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        [self updateLayer:_takenPhotoLayer withBlurredImageWhenReady:image1000];
-    });
 
     // Upload the original image to the AR API for processing. We'll animate the
     // resized image back on screen once it's finished.
@@ -384,7 +363,7 @@
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
 {
     [self resetToLiveCameraInterface];
-    [_imagePicker unpeelViewController];
+    [_delegate dismissImagePicker];
 }
 
 - (void)imageAugmentationStatusChanged:(NSNotification*)notif
