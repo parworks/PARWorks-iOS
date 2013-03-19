@@ -38,13 +38,16 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    _metadataTextView.layer.borderColor = [UIColor blackColor].CGColor;
-    _metadataTextView.layer.borderWidth = 1.0;
-    [_nameField becomeFirstResponder];
-    
-    _nameField.text = _overlay.ID;
-//    _metadataTextView.text = _overlay.content;
+}
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    [super viewWillAppear:animated];
+    NSURL *jqueryURL = [[NSBundle mainBundle] URLForResource:@"jquery-1.9.0.min" withExtension:@"js"];
+    NSString *filepath = [[NSBundle mainBundle] pathForResource:@"overlay_editor_form" ofType:@"html"];
+    NSString *html = [NSString stringWithContentsOfFile:filepath encoding:NSUTF8StringEncoding error:nil];
+    html = [html stringByReplacingOccurrencesOfString:@"{{JQUERY_FILEPATH}}" withString:jqueryURL.absoluteString];
+    [_webView loadHTMLString:html baseURL:nil];
 }
 
 - (void)didReceiveMemoryWarning
@@ -54,12 +57,45 @@
 
 - (IBAction)doneTapped:(id)sender
 {
-    _overlay.name = _nameField.text;
-//    _overlay.content = _metadataTextView.text;
 
     [_overlay save];
     
     [self dismissViewControllerAnimated:YES completion:nil];
+}
+
+- (NSDictionary *)dictionaryFromFormString:(NSString *)formString
+{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    NSArray *components = [formString componentsSeparatedByString:@"&"];
+    for (NSString *s in components) {
+        NSArray *tuple = [s componentsSeparatedByString:@"="];
+        if (tuple.count == 2) {
+            [dict setObject:tuple[1] forKey:tuple[0]];
+        }
+    }
+    return dict;
+}
+
+- (NSString *)jsonStringFromFormString:(NSString *)formString
+{
+    NSDictionary *formDict = [self dictionaryFromFormString:formString];
+    NSData *data = [NSJSONSerialization dataWithJSONObject:formDict options:0 error:nil];
+    NSString *jsonString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    return jsonString;
+}
+
+
+#pragma mark - UIWebViewDelegate
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+{
+    BOOL shouldStart = YES;
+    if ([request.URL.scheme isEqualToString:@"parworks"]) {
+        shouldStart = NO;
+        NSString *formString = [webView stringByEvaluatingJavaScriptFromString:@"showValues()"];
+        NSString *json = [self jsonStringFromFormString:formString];
+        NSLog(@"%@",json);
+    }
+    return shouldStart;
 }
 
 @end

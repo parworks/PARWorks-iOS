@@ -307,6 +307,8 @@
 		A04415B0166019CC0083795B /* MBProgressHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = A04415AF166019CC0083795B /* MBProgressHUD.m */; };
 		A05F043D16796E0C007A51CA /* bubble.png in Resources */ = {isa = PBXBuildFile; fileRef = A05F043C16796E0B007A51CA /* bubble.png */; };
 		A05F043E16796E0C007A51CA /* bubble.png in Resources */ = {isa = PBXBuildFile; fileRef = A05F043C16796E0B007A51CA /* bubble.png */; };
+		A0C859D016F81F3F00E9EB32 /* overlay_editor_form.html in Resources */ = {isa = PBXBuildFile; fileRef = A0C859CE16F81DBA00E9EB32 /* overlay_editor_form.html */; };
+		A0C859D316F82B0C00E9EB32 /* jquery-1.9.0.min.js in Resources */ = {isa = PBXBuildFile; fileRef = A0C859D116F82A6900E9EB32 /* jquery-1.9.0.min.js */; };
 		A0F662D415FEFBD100FA709B /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0F662D315FEFBD100FA709B /* QuartzCore.framework */; };
 /* End PBXBuildFile section */
 
@@ -558,6 +560,8 @@
 		A05F04311673E747007A51CA /* ARSiteImagesInfoView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARSiteImagesInfoView.h; sourceTree = "<group>"; };
 		A05F04321673E747007A51CA /* ARSiteImagesInfoView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARSiteImagesInfoView.m; sourceTree = "<group>"; };
 		A05F043C16796E0B007A51CA /* bubble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bubble.png; sourceTree = "<group>"; };
+		A0C859CE16F81DBA00E9EB32 /* overlay_editor_form.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = overlay_editor_form.html; sourceTree = "<group>"; };
+		A0C859D116F82A6900E9EB32 /* jquery-1.9.0.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery-1.9.0.min.js"; sourceTree = "<group>"; };
 		A0F662D315FEFBD100FA709B /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
@@ -708,6 +712,8 @@
 			children = (
 				433C19CD16F81C8400E3E26E /* Camera */,
 				433C19FE16F81C8400E3E26E /* cow.ply */,
+				A0C859CE16F81DBA00E9EB32 /* overlay_editor_form.html */,
+				A0C859D116F82A6900E9EB32 /* jquery-1.9.0.min.js */,
 				433C19FF16F81C8400E3E26E /* Images */,
 			);
 			name = "Core Resources";
@@ -1246,6 +1252,7 @@
 				4386D7161647051A001F96E8 /* icon@2x.png in Resources */,
 				43AB7257165977A70092CD9B /* ARAuthViewController.xib in Resources */,
 				A05F043D16796E0C007A51CA /* bubble.png in Resources */,
+				A0C859D016F81F3F00E9EB32 /* overlay_editor_form.html in Resources */,
 				433C188E16F808E600E3E26E /* GRCameraOverlayToolbar_3_5.xib in Resources */,
 				433C189016F808E600E3E26E /* GRCameraOverlayToolbar_4_0.xib in Resources */,
 				433C190D16F80E3F00E3E26E /* AROverlayCreatorViewController.xib in Resources */,
@@ -1304,6 +1311,7 @@
 				433C1A3B16F81C8400E3E26E /* camera_x_4_pressed.png in Resources */,
 				433C1A3C16F81C8400E3E26E /* camera_x_4_pressed@2x.png in Resources */,
 				433C1A3D16F81C8400E3E26E /* map_icon_recenter_background@2x.png in Resources */,
+				A0C859D316F82B0C00E9EB32 /* jquery-1.9.0.min.js in Resources */,
 				433C1A3E16F81C8400E3E26E /* cow.ply in Resources */,
 				433C1A3F16F81C8400E3E26E /* camera-graphic.png in Resources */,
 				433C1A4016F81C8400E3E26E /* camera-graphic@2x.png in Resources */,

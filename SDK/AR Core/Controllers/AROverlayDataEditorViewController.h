@@ -21,16 +21,13 @@
 #import <UIKit/UIKit.h>
 #import "AROverlay.h"
 
-@interface AROverlayDataEditorViewController : UIViewController
+@interface AROverlayDataEditorViewController : UIViewController <UIWebViewDelegate>
 {
     __strong AROverlay *_overlay;
 }
 
 @property(nonatomic, weak) IBOutlet UIBarButtonItem *doneButton;
-@property(nonatomic, weak) IBOutlet UILabel *nameLabel;
-@property(nonatomic, weak) IBOutlet UILabel *metadataLabel;
-@property(nonatomic, weak) IBOutlet UITextField *nameField;
-@property(nonatomic, weak) IBOutlet UITextView *metadataTextView;
+@property(nonatomic, weak) IBOutlet UIWebView *webView;
 
 /// Lifecycle
 - (id)initWithOverlay:(AROverlay *)overlay;
