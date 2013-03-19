@@ -50,19 +50,21 @@
         self.ID = dict[@"id"];
         
         NSData * descriptionData = [dict[@"description"] dataUsingEncoding: NSUTF8StringEncoding];
-        NSDictionary * description = [NSJSONSerialization JSONObjectWithData:descriptionData options:NSJSONReadingAllowFragments error:nil];
-        
-        self.siteImageIdentifier = dict[@"imageId"];
-        self.name = dict[@"name"];
+        if (descriptionData) {
+            NSDictionary * description = [NSJSONSerialization JSONObjectWithData:descriptionData options:NSJSONReadingAllowFragments error:nil];
+            
+            self.siteImageIdentifier = dict[@"imageId"];
+            self.name = dict[@"name"];
 
-        self.accuracy = dict[@"accuracy"];
-        self.success = [dict[@"success"] intValue];
-        
-        self.title = [description objectForKey:@"title" or: nil];
-        [self setBoundaryPropertiesWithDictionary:description[@"boundary"]];
-        [self setContentPropertiesWithDictionary:description[@"content"]];
-        [self setCoverPropertiesWithDictionary:description[@"cover"]];
-        [self setupPointsFromDictionary: dict];
+            self.accuracy = dict[@"accuracy"];
+            self.success = [dict[@"success"] intValue];
+            
+            self.title = [description objectForKey:@"title" or: nil];
+            [self setBoundaryPropertiesWithDictionary:description[@"boundary"]];
+            [self setContentPropertiesWithDictionary:description[@"content"]];
+            [self setCoverPropertiesWithDictionary:description[@"cover"]];
+            [self setupPointsFromDictionary: dict];
+        }
     }
     return self;
 }

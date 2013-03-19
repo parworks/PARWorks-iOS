@@ -22,12 +22,17 @@
 #import "ARSite.h"
 #import "GridView.h"
 #import "PointCloudView.h"
+#import "GRCameraOverlayView.h"
+
+#define PICKER_ORIGIN_TRY_IT    0
+#define PICKER_ORIGIN_BASE      1
 
 @class ARSiteImagesInfoView;
 
-@interface ARSiteImagesViewController : UIViewController <GridViewDelegate, UIActionSheetDelegate, UIAlertViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
+@interface ARSiteImagesViewController : UIViewController <GRCameraOverlayViewDelegate, GridViewDelegate, UIActionSheetDelegate, UIAlertViewDelegate, UINavigationControllerDelegate, UIImagePickerControllerDelegate>
 {
     UIImagePickerController * _picker;
+    int                       _pickerOrigin;
     BOOL    _imageIsSiteImage;
     PointCloudView * _pointCloudView;
 }
@@ -39,6 +44,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *cameraCaptureButton;
 @property (weak, nonatomic) IBOutlet UIButton *cameraDoneButton;
 @property (strong, nonatomic) IBOutlet UIView *cameraOverlayView;
+@property (strong, nonatomic) IBOutlet GRCameraOverlayView *cameraOverlayAugmentView;
 
 - (id)initWithSite:(ARSite*)s;
 

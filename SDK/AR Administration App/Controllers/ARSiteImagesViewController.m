@@ -148,6 +148,7 @@
 {
     _imageIsSiteImage = YES;
     
+    _pickerOrigin = PICKER_ORIGIN_BASE;
     _picker = [[UIImagePickerController alloc] init];
     [_picker setDelegate: self];
     if ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera]) {
@@ -162,6 +163,7 @@
 
 - (IBAction)augmentPhoto:(id)sender
 {
+    _pickerOrigin = PICKER_ORIGIN_TRY_IT;
     UIActionSheet * s = [[UIActionSheet alloc] initWithTitle:@"Image Type" delegate:self cancelButtonTitle:@"Cancel" destructiveButtonTitle:nil otherButtonTitles: @"Augment an Image", @"Augment a Saved Image", nil];
     [s showFromTabBar: self.tabBarController.tabBar];
 }
@@ -201,12 +203,33 @@
     
     if ((buttonIndex != 2) && ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera])) {
         _picker.sourceType = UIImagePickerControllerSourceTypeCamera;
-        [_picker setCameraOverlayView: _cameraOverlayView];
-        [_picker setShowsCameraControls: NO];
+        _picker.showsCameraControls = NO;
+        _picker.delegate = self;
+        if (_pickerOrigin == PICKER_ORIGIN_BASE) {
+            _picker.cameraOverlayView = _cameraOverlayView;
+        } else {
+            _cameraOverlayAugmentView = [[GRCameraOverlayView alloc] initWithFrame:self.view.bounds];
+            _cameraOverlayAugmentView.delegate = self;
+            _cameraOverlayAugmentView.site = _site;
+            _cameraOverlayAugmentView.imagePicker = _picker;
+            _picker.cameraOverlayView = _cameraOverlayAugmentView;
+        }
     } else
         _picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
     
     [self presentModalViewController: _picker animated:YES];
+}
+
+- (CALayer*)layerForWaitingOnImage:(UIImage*)img
+{
+    CALayer * l = [CALayer layer];
+    l.contents = (id)[img CGImage];
+    return l;
+}
+
+- (void)dismissImagePicker
+{
+    [_picker dismissModalViewControllerAnimated: YES];
 }
 
 - (void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary *)info
