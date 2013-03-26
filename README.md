@@ -1,7 +1,7 @@
 Welcome to the PARWorks iOS SDK.
 =========
 
-For full API documentation of the SDK, download the [Xcode .docset](raw/master/Documentation/com.parworks.ios.PARWorks-iOS-SDK-Documentation.docset.zip)!
+For full API documentation of the SDK, download the [Xcode .docset](PARWorks-iOS/raw/master/Documentation/com.parworks.ios.PARWorks-iOS-SDK-Documentation.docset.zip)!
 
 
 The iOS SDK provides a native Objective-C interface to the PARWorks API, so you can dive right in and build great apps on top of the technology. We've built the SDK to eliminate the need for manually managing device location, augmentation jobs, image processing, and more. The SDK provides model objects for working with sites, augmented images, and overlays, and UIKit views that make it easy to present overlays within your app, leveraging matrix math, CoreAnimation and more. 
