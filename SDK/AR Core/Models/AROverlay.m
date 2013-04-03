@@ -25,6 +25,7 @@
 #import "ASIHTTPRequest+JSONAdditions.h"
 #import "UIColor+Utils.h"
 #import "NSContainers+NullHandlers.h"
+#import "ARCentroidView.h"
 
 @implementation AROverlay
 
@@ -191,7 +192,7 @@
     if (!dict) {
         _coverColor = [UIColor yellowColor];
         _coverTransparency = 20;
-        _coverProvider = @"";
+        _coverProvider = nil;
         _coverType = AROverlayCoverType_Regular;
         return;
     }
@@ -200,10 +201,17 @@
     _coverTransparency = dict[@"transparency"] ? [dict[@"transparency"] intValue] : 25;
     _coverProvider = dict[@"provider"];
     
+    if ([_coverProvider isKindOfClass: [NSString class]] && (_coverProvider.length == 0))
+        _coverProvider = nil;
+    
     NSString *type = dict[@"type"];
     if ([type.lowercaseString isEqualToString:@"hide"]) {
         _coverType = AROverlayCoverType_Hidden;
         _coverColor = [UIColor clearColor];
+    } else if ([type.lowercaseString isEqualToString:@"centroid"]) {
+        _boundaryType = AROverlayBoundaryType_Hidden;
+        _coverType = AROverlayCoverType_Centroid;
+
     } else if ([type.lowercaseString isEqualToString:@"image"]) {
         _coverType = AROverlayCoverType_Image;
     } else {

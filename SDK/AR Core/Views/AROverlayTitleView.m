@@ -10,6 +10,7 @@
 #import "ARAugmentedView.h"
 #import "AROverlayUtil.h"
 #import "UIViewAdditions.h"
+#import "AROverlayView.h"
 
 @implementation AROverlayTitleView
 
@@ -62,7 +63,11 @@
     NSArray * points = [AROverlayUtil scaledOverlayPointsForPoints:_overlay.points withScaleFactor:parent.overlayScaleFactor];
     CGRect rect = [AROverlayUtil boundingFrameForPoints: points];
     
-    CGPoint p = CGPointMake(CGRectGetMidX(rect), rect.origin.y);
+    CGPoint p;
+    if (_overlay.coverType == AROverlayCoverType_Centroid)
+        p = CGPointMake(CGRectGetMidX(rect), CGRectGetMidY(rect) - CENTROID_SIZE / 2 + 10);
+    else
+        p = CGPointMake(CGRectGetMidX(rect), rect.origin.y);
     [self showWithText:_overlay.title atPoint:p withinBounds:[parent bounds] animated:[parent animateOutlineViewDrawing]];
 }
 

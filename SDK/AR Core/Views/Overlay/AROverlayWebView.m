@@ -53,6 +53,8 @@
         }
         else{
             weakSelf.webView.alpha = 1.0;
+            [self.layer setBorderColor: [[UIColor colorWithWhite:0.25 alpha:1] CGColor]];
+            [self.layer setBorderWidth: 3];
         }
     } complete:^{
         [self focusOverlayViewCompleted:weakSelf];
@@ -66,6 +68,7 @@
         weakSelf.webView.alpha = 0.0;
         weakSelf.loadingView.alpha = 0.0;
         [weakSelf.loadingView stopAnimating];
+        [self.layer setBorderColor: [[UIColor clearColor] CGColor]];
     } complete:nil];
 }
 

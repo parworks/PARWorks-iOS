@@ -63,7 +63,8 @@
 - (void)drawAnimated:(BOOL)animated
 {
     if (_scaledPath == nil) return;
-
+    if (_overlay.boundaryType == AROverlayBoundaryType_Hidden) return;
+    
     CAShapeLayer *l = (CAShapeLayer *)self.layer;
     self.layer.sublayers = nil;
 
