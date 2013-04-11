@@ -110,6 +110,7 @@
 		439CF0AF171700C4009E2A26 /* tooltip_background_up.png in Resources */ = {isa = PBXBuildFile; fileRef = 439CF0AD171700C4009E2A26 /* tooltip_background_up.png */; };
 		439CF0B2171700CC009E2A26 /* tooltip_arrow_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 439CF0B0171700CC009E2A26 /* tooltip_arrow_background@2x.png */; };
 		439CF0B3171700CC009E2A26 /* tooltip_background_up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 439CF0B1171700CC009E2A26 /* tooltip_background_up@2x.png */; };
+		439CF0B6171740B1009E2A26 /* ARCentroidView.m in Sources */ = {isa = PBXBuildFile; fileRef = 439CF0B5171740B1009E2A26 /* ARCentroidView.m */; };
 		43A452F21665C21400D594E9 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A452F11665C21400D594E9 /* icon.png */; };
 		43A452F41665C21600D594E9 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A452F31665C21600D594E9 /* icon@2x.png */; };
 		43A453061665C2D800D594E9 /* camera-graphic.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A452F61665C2D800D594E9 /* camera-graphic.png */; };
@@ -359,6 +360,8 @@
 		439CF0AD171700C4009E2A26 /* tooltip_background_up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tooltip_background_up.png; path = "../../../../../PARWorks-iOS-MARS/Resources/tooltip_background_up.png"; sourceTree = "<group>"; };
 		439CF0B0171700CC009E2A26 /* tooltip_arrow_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tooltip_arrow_background@2x.png"; path = "../../../../../PARWorks-iOS-MARS/Resources@2x/tooltip_arrow_background@2x.png"; sourceTree = "<group>"; };
 		439CF0B1171700CC009E2A26 /* tooltip_background_up@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tooltip_background_up@2x.png"; path = "../../../../../PARWorks-iOS-MARS/Resources@2x/tooltip_background_up@2x.png"; sourceTree = "<group>"; };
+		439CF0B4171740B1009E2A26 /* ARCentroidView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARCentroidView.h; sourceTree = "<group>"; };
+		439CF0B5171740B1009E2A26 /* ARCentroidView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARCentroidView.m; sourceTree = "<group>"; };
 		43A452F11665C21400D594E9 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		43A452F31665C21600D594E9 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
 		43A452F61665C2D800D594E9 /* camera-graphic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera-graphic.png"; sourceTree = "<group>"; };
@@ -520,6 +523,8 @@
 		439CEF8B171682DF009E2A26 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				439CF0B4171740B1009E2A26 /* ARCentroidView.h */,
+				439CF0B5171740B1009E2A26 /* ARCentroidView.m */,
 				439CEF8C171682DF009E2A26 /* AdOverlayView.h */,
 				439CEF8D171682DF009E2A26 /* AdOverlayView.m */,
 				439CEF8E171682DF009E2A26 /* ARAugmentedView.h */,
@@ -1250,6 +1255,7 @@
 				439CEFFD1716853B009E2A26 /* ARWebViewController.m in Sources */,
 				439CF06917168B1C009E2A26 /* ARMultisiteAugmentedPhoto.m in Sources */,
 				439CF06D17169410009E2A26 /* ARMultiSite.m in Sources */,
+				439CF0B6171740B1009E2A26 /* ARCentroidView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1335,16 +1341,16 @@
 		A02149AB16191E9400B74C39 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_IDENTITY = "iPhone Developer: Demetri Miller (J8ERALU9C7)";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Demetri Miller (36WPJ8C3NF)";
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EasyPAR/EasyPAR-Prefix.pch";
 				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../../PARWorks-iOS-MARS/Submodules/GPUImage/framework/Source\"";
 				INFOPLIST_FILE = "EasyPAR/EasyPAR-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = EasyPAR;
-				PROVISIONING_PROFILE = "7BE79BEB-89EE-4CB6-ABEB-5759F8600440";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "45975812-EAE3-489F-A717-5A6C472B582E";
+				PROVISIONING_PROFILE = "";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "";
 				WRAPPER_EXTENSION = app;
 			};
 			name = Debug;
