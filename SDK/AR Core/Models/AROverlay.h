@@ -48,6 +48,7 @@ typedef enum {
 typedef enum {
     AROverlayCoverType_Hidden = 0,
     AROverlayCoverType_Image,
+    AROverlayCoverType_Centroid,
     AROverlayCoverType_Regular
 } AROverlayCoverType;
 

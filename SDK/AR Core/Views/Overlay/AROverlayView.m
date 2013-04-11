@@ -22,6 +22,7 @@
 #import "AROverlayUtil.h"
 #import "AROverlayView.h"
 #import "AROverlayPoint.h"
+#import "ARCentroidView.h"
 #import "AROverlay.h"
 
 
@@ -78,29 +79,34 @@
 }
 
 - (void)setupCoverView
-{
+{    // temporary
+    _overlay.coverType = AROverlayCoverType_Centroid;
+    _overlay.boundaryType = AROverlayBoundaryType_Hidden;
 
-    self.coverView = [[UIView alloc] initWithFrame:self.bounds];
+    if (_overlay.coverType == AROverlayCoverType_Centroid && !_overlay.coverProvider) {
+        self.coverView = [[ARCentroidView alloc] initWithFrame: self.bounds];
+        
+    } else {
+        self.coverView = [[UIView alloc] initWithFrame:self.bounds];
+        _coverView.backgroundColor = _overlay.coverColor;
+        _coverView.alpha = _overlay.coverTransparency/100.0;
+        if (_overlay.coverProvider) {
+            NSURLRequest *req = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:_overlay.coverProvider]];
+            [NSURLConnection sendAsynchronousRequest:req queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *err) {
+                UIImage *img = [UIImage imageWithData:data];
+                if (img != nil) {
+                    self.coverView.layer.contents = (id)img.CGImage;
+                }
+            }];
+         }
+    }
+
     _coverView.userInteractionEnabled = NO;
     _coverView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-    _coverView.alpha = _overlay.coverTransparency/100.0;
-    _coverView.backgroundColor = _overlay.coverColor;
     _coverView.hidden = (_overlay.coverType == AROverlayCoverType_Hidden);
-    
-    // Load the image into the view.
-    if (_overlay.coverType == AROverlayCoverType_Image && _overlay.coverProvider) {
-        NSURLRequest *req = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:_overlay.coverProvider]];
-        [NSURLConnection sendAsynchronousRequest:req queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *err) {
-            UIImage *img = [UIImage imageWithData:data];
-            if (img != nil) {
-                self.coverView.layer.contents = (id)img.CGImage;
-            }
-        }];
-    }
     
     [self addSubview:_coverView];
 }
-
 
 
 #pragma mark - Layout
@@ -129,6 +135,14 @@
 #pragma mark - Presentation
 - (void)focusInParent:(ARAugmentedView *)parent
 {
+    CGRect f = self.frame;
+    if (UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation]) && (f.size.height > f.size.width)) {
+        float w = f.size.width;
+        f.size.width = f.size.height;
+        f.size.height = w;
+        self.frame = f;
+    }
+
     if (_animDelegate) {
         [_animDelegate focusOverlayView:self inParent:parent];
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_OVERLAY_VIEW_FOCUSED object: self];
@@ -161,12 +175,18 @@
     AROverlayPoint *br = [scaledPoints objectAtIndex:2];
     AROverlayPoint *bl = [scaledPoints objectAtIndex:3];
     
-    CATransform3D transform = [AROverlayUtil rectToQuad:self.bounds
-                                                quadTLX:tl.x quadTLY:tl.y
-                                                quadTRX:tr.x quadTRY:tr.y
-                                                quadBLX:bl.x quadBLY:bl.y
-                                                quadBRX:br.x quadBRY:br.y];
-    self.layer.transform = transform;
+    if (_overlay.coverType == AROverlayCoverType_Centroid) {
+        float scale = CENTROID_SIZE / fminf(self.bounds.size.width, self.bounds.size.height);
+        
+        CATransform3D t = CATransform3DMakeTranslation((tl.x + tr.x + br.x + bl.x) / 4, (tl.y + tr.y + br.y + bl.y) / 4, 0);
+        t = CATransform3DScale(t, scale, scale, 1);
+        t = CATransform3DTranslate(t, -self.bounds.size.width / 2, -self.bounds.size.height / 2, 0);
+        self.layer.position = CGPointZero;
+        self.layer.transform = t;
+    } else {
+        CATransform3D transform = [AROverlayUtil rectToQuad:self.bounds quadTLX:tl.x quadTLY:tl.y quadTRX:tr.x quadTRY:tr.y quadBLX:bl.x quadBLY:bl.y quadBRX:br.x quadBRY:br.y];
+        self.layer.transform = transform;
+    }
 }
 
 #pragma mark - Convenience
@@ -181,7 +201,7 @@
             frame = CGRectMake(0, 0, 200, 200);
             break;
         case AROverlayContentSize_Large:
-            frame = CGRectMake(0, 0, 300, 300);
+            frame = CGRectMake(0, 0, 300, 420);
             break;
         case AROverlayContentSize_Fullscreen:
             frame = CGRectMake(0, 0, 320, 480);
@@ -189,6 +209,7 @@
         default:
             break;
     }
+    
     return frame;
 }
 
