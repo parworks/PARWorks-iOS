@@ -41,7 +41,8 @@
     NSDictionary * json = [req responseJSON];
     _pendingPhotos = [[NSMutableArray alloc] init];
     _sites = [[NSMutableDictionary alloc] init];
-    
+    self.overlays = [NSMutableArray array];
+
     for (NSDictionary * candidate in [json objectForKey: @"candidates"]) {
         ARAugmentedPhoto * p = [[ARAugmentedPhoto alloc] init];
         ARSite * s = [[ARSite alloc] initWithIdentifier: [candidate objectForKey: @"site"]];
@@ -73,6 +74,11 @@
         [[NSNotificationCenter defaultCenter] removeObserver: self];
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_AUGMENTED_PHOTO_UPDATED object: self];
     }
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver: self];
 }
 
 @end

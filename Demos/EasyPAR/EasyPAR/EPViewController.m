@@ -28,7 +28,10 @@
 #import "UIImageView+AnimationAdditions.h"
 #import "ARMultiSite.h"
 #import "PARWorks.h"
-
+#import "GPUImagePicture.h"
+#import "GPUImageGaussianBlurFilter.h"
+#import "GPUImageBrightnessFilter.h"
+#import "UIImageAdditions.h"
 
 #define WIDTH 20
 #define HEIGHT 20
@@ -125,6 +128,7 @@
     _cameraOverlayView = [[GRCameraOverlayView alloc] initWithFrame:self.view.bounds];
     _augmentedPhotoSource = [[ARMultiSite alloc] initWithSiteIdentifiers: @[@"staples-printer2", @"staples-printer3", @"staples-printer9", @"staples-printer5", @"staples-printer6", @"staples-printer7"]];
     _cameraOverlayView.site = _augmentedPhotoSource;
+    _cameraOverlayView.delegate = self;
     
     UIImagePickerController *picker = [self imagePicker];
     picker.delegate = _cameraOverlayView;
@@ -132,6 +136,9 @@
     picker.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     if (picker.sourceType == UIImagePickerControllerSourceTypeCamera) {
         picker.cameraOverlayView = _cameraOverlayView;
+    } else {
+        [_cameraOverlayView setUserInteractionEnabled: NO];
+        [picker.view addSubview: _cameraOverlayView];
     }
     
     [self presentViewController:picker animated:YES completion:nil];
@@ -151,6 +158,23 @@
     return picker;
 }
 
+
+- (id)contentsForWaitingOnImage:(UIImage*)img
+{
+    GPUImagePicture * picture = [[GPUImagePicture alloc] initWithImage:[img scaledImage:0.10] smoothlyScaleOutput: NO];
+    GPUImageGaussianBlurFilter * blurFilter = [[GPUImageGaussianBlurFilter alloc] init];
+    GPUImageBrightnessFilter * brightnessFilter = [[GPUImageBrightnessFilter alloc] init];
+    
+    [blurFilter setBlurSize: 0.35];
+    [picture addTarget: blurFilter];
+    [blurFilter addTarget: brightnessFilter];
+    [brightnessFilter setBrightness: -0.1];
+    
+    [picture processImage];
+    
+    UIImage *result = [brightnessFilter imageFromCurrentlyProcessedOutput];
+    return (id)result.CGImage;
+}
 
 #pragma mark - User Interaction
 

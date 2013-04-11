@@ -102,6 +102,14 @@
 		439CF066171689D2009E2A26 /* map_icon_recenter_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 439CF036171689D2009E2A26 /* map_icon_recenter_background@2x.png */; };
 		439CF06917168B1C009E2A26 /* ARMultisiteAugmentedPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = 439CF06817168B1B009E2A26 /* ARMultisiteAugmentedPhoto.m */; };
 		439CF06D17169410009E2A26 /* ARMultiSite.m in Sources */ = {isa = PBXBuildFile; fileRef = 439CF06C17169410009E2A26 /* ARMultiSite.m */; };
+		439CF0A517170036009E2A26 /* libGPUImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 439CF09D1716FF8E009E2A26 /* libGPUImage.a */; };
+		439CF0A71717004D009E2A26 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 439CF0A61717004D009E2A26 /* CoreVideo.framework */; };
+		439CF0A917170054009E2A26 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 439CF0A817170053009E2A26 /* CoreMedia.framework */; };
+		439CF0AB1717005A009E2A26 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 439CF0AA1717005A009E2A26 /* AVFoundation.framework */; };
+		439CF0AE171700C4009E2A26 /* tooltip_arrow_background.png in Resources */ = {isa = PBXBuildFile; fileRef = 439CF0AC171700C4009E2A26 /* tooltip_arrow_background.png */; };
+		439CF0AF171700C4009E2A26 /* tooltip_background_up.png in Resources */ = {isa = PBXBuildFile; fileRef = 439CF0AD171700C4009E2A26 /* tooltip_background_up.png */; };
+		439CF0B2171700CC009E2A26 /* tooltip_arrow_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 439CF0B0171700CC009E2A26 /* tooltip_arrow_background@2x.png */; };
+		439CF0B3171700CC009E2A26 /* tooltip_background_up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 439CF0B1171700CC009E2A26 /* tooltip_background_up@2x.png */; };
 		43A452F21665C21400D594E9 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A452F11665C21400D594E9 /* icon.png */; };
 		43A452F41665C21600D594E9 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A452F31665C21600D594E9 /* icon@2x.png */; };
 		43A453061665C2D800D594E9 /* camera-graphic.png in Resources */ = {isa = PBXBuildFile; fileRef = 43A452F61665C2D800D594E9 /* camera-graphic.png */; };
@@ -185,6 +193,30 @@
 		A0FBF877161932590052EAC6 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0FBF876161932590052EAC6 /* SystemConfiguration.framework */; };
 		A0FBF8791619325F0052EAC6 /* CFNetwork.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0FBF8781619325F0052EAC6 /* CFNetwork.framework */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		439CF09C1716FF8E009E2A26 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 439CF0961716FF8D009E2A26 /* GPUImage.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BCF1A33414DDB1EC00852800;
+			remoteInfo = GPUImage;
+		};
+		439CF09E1716FF8E009E2A26 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 439CF0961716FF8D009E2A26 /* GPUImage.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = BCF1A34414DDB1EC00852800;
+			remoteInfo = GPUImageTests;
+		};
+		439CF0A01716FF92009E2A26 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 439CF0961716FF8D009E2A26 /* GPUImage.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = BCF1A33314DDB1EC00852800;
+			remoteInfo = GPUImage;
+		};
+/* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
 		43109DEE16671E4500BC8E83 /* ad.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ad.png; sourceTree = "<group>"; };
@@ -319,6 +351,14 @@
 		439CF06A171693CB009E2A26 /* ARAugmentedPhotoSource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARAugmentedPhotoSource.h; sourceTree = "<group>"; };
 		439CF06B17169410009E2A26 /* ARMultiSite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARMultiSite.h; sourceTree = "<group>"; };
 		439CF06C17169410009E2A26 /* ARMultiSite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARMultiSite.m; sourceTree = "<group>"; };
+		439CF0961716FF8D009E2A26 /* GPUImage.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GPUImage.xcodeproj; path = "../../../PARWorks-iOS-MARS/Submodules/GPUImage/framework/GPUImage.xcodeproj"; sourceTree = "<group>"; };
+		439CF0A61717004D009E2A26 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
+		439CF0A817170053009E2A26 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		439CF0AA1717005A009E2A26 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		439CF0AC171700C4009E2A26 /* tooltip_arrow_background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tooltip_arrow_background.png; path = "../../../../../PARWorks-iOS-MARS/Resources/tooltip_arrow_background.png"; sourceTree = "<group>"; };
+		439CF0AD171700C4009E2A26 /* tooltip_background_up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = tooltip_background_up.png; path = "../../../../../PARWorks-iOS-MARS/Resources/tooltip_background_up.png"; sourceTree = "<group>"; };
+		439CF0B0171700CC009E2A26 /* tooltip_arrow_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tooltip_arrow_background@2x.png"; path = "../../../../../PARWorks-iOS-MARS/Resources@2x/tooltip_arrow_background@2x.png"; sourceTree = "<group>"; };
+		439CF0B1171700CC009E2A26 /* tooltip_background_up@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = "tooltip_background_up@2x.png"; path = "../../../../../PARWorks-iOS-MARS/Resources@2x/tooltip_background_up@2x.png"; sourceTree = "<group>"; };
 		43A452F11665C21400D594E9 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
 		43A452F31665C21600D594E9 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
 		43A452F61665C2D800D594E9 /* camera-graphic.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "camera-graphic.png"; sourceTree = "<group>"; };
@@ -454,6 +494,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				439CF0AB1717005A009E2A26 /* AVFoundation.framework in Frameworks */,
+				439CF0A917170054009E2A26 /* CoreMedia.framework in Frameworks */,
+				439CF0A71717004D009E2A26 /* CoreVideo.framework in Frameworks */,
+				439CF0A517170036009E2A26 /* libGPUImage.a in Frameworks */,
 				439CF005171688B5009E2A26 /* GLKit.framework in Frameworks */,
 				439CF003171688A7009E2A26 /* OpenGLES.framework in Frameworks */,
 				43109DF41667261200BC8E83 /* MediaPlayer.framework in Frameworks */,
@@ -596,9 +640,22 @@
 			path = "../../../../SDK/AR Core/Resources/Camera";
 			sourceTree = "<group>";
 		};
+		439CF0971716FF8D009E2A26 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				439CF09D1716FF8E009E2A26 /* libGPUImage.a */,
+				439CF09F1716FF8E009E2A26 /* GPUImageTests.octest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		43A452F51665C2D800D594E9 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				439CF0AC171700C4009E2A26 /* tooltip_arrow_background.png */,
+				439CF0B0171700CC009E2A26 /* tooltip_arrow_background@2x.png */,
+				439CF0B1171700CC009E2A26 /* tooltip_background_up@2x.png */,
+				439CF0AD171700C4009E2A26 /* tooltip_background_up.png */,
 				439CF006171689D2009E2A26 /* Camera */,
 				A04A41BC167035BD00FC63FB /* border_brush.png */,
 				43109DEE16671E4500BC8E83 /* ad.png */,
@@ -636,6 +693,10 @@
 		A021497B16191E9400B74C39 = {
 			isa = PBXGroup;
 			children = (
+				439CF0AA1717005A009E2A26 /* AVFoundation.framework */,
+				439CF0A817170053009E2A26 /* CoreMedia.framework */,
+				439CF0A61717004D009E2A26 /* CoreVideo.framework */,
+				439CF0961716FF8D009E2A26 /* GPUImage.xcodeproj */,
 				439CF004171688B5009E2A26 /* GLKit.framework */,
 				439CF002171688A7009E2A26 /* OpenGLES.framework */,
 				43109DF31667261200BC8E83 /* MediaPlayer.framework */,
@@ -949,6 +1010,7 @@
 			buildRules = (
 			);
 			dependencies = (
+				439CF0A11716FF92009E2A26 /* PBXTargetDependency */,
 			);
 			name = EasyPAR;
 			productName = SIDemo;
@@ -975,12 +1037,35 @@
 			mainGroup = A021497B16191E9400B74C39;
 			productRefGroup = A021498716191E9400B74C39 /* Products */;
 			projectDirPath = "";
+			projectReferences = (
+				{
+					ProductGroup = 439CF0971716FF8D009E2A26 /* Products */;
+					ProjectRef = 439CF0961716FF8D009E2A26 /* GPUImage.xcodeproj */;
+				},
+			);
 			projectRoot = "";
 			targets = (
 				A021498516191E9400B74C39 /* EasyPAR */,
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXReferenceProxy section */
+		439CF09D1716FF8E009E2A26 /* libGPUImage.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libGPUImage.a;
+			remoteRef = 439CF09C1716FF8E009E2A26 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		439CF09F1716FF8E009E2A26 /* GPUImageTests.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = GPUImageTests.octest;
+			remoteRef = 439CF09E1716FF8E009E2A26 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+/* End PBXReferenceProxy section */
 
 /* Begin PBXResourcesBuildPhase section */
 		A021498416191E9400B74C39 /* Resources */ = {
@@ -1078,6 +1163,10 @@
 				439CF064171689D2009E2A26 /* camera_x_4_pressed.png in Resources */,
 				439CF065171689D2009E2A26 /* camera_x_4_pressed@2x.png in Resources */,
 				439CF066171689D2009E2A26 /* map_icon_recenter_background@2x.png in Resources */,
+				439CF0AE171700C4009E2A26 /* tooltip_arrow_background.png in Resources */,
+				439CF0AF171700C4009E2A26 /* tooltip_background_up.png in Resources */,
+				439CF0B2171700CC009E2A26 /* tooltip_arrow_background@2x.png in Resources */,
+				439CF0B3171700CC009E2A26 /* tooltip_background_up@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1166,6 +1255,14 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		439CF0A11716FF92009E2A26 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = GPUImage;
+			targetProxy = 439CF0A01716FF92009E2A26 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin PBXVariantGroup section */
 		A0DDF5E7164378FA00BB9C82 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
@@ -1242,6 +1339,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Demetri Miller (36WPJ8C3NF)";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EasyPAR/EasyPAR-Prefix.pch";
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../../PARWorks-iOS-MARS/Submodules/GPUImage/framework/Source\"";
 				INFOPLIST_FILE = "EasyPAR/EasyPAR-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = EasyPAR;
@@ -1258,6 +1356,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "EasyPAR/EasyPAR-Prefix.pch";
+				HEADER_SEARCH_PATHS = "\"$(SRCROOT)/../../../PARWorks-iOS-MARS/Submodules/GPUImage/framework/Source\"";
 				INFOPLIST_FILE = "EasyPAR/EasyPAR-Info.plist";
 				IPHONEOS_DEPLOYMENT_TARGET = 5.0;
 				PRODUCT_NAME = EasyPAR;

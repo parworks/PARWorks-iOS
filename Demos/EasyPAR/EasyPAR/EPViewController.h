@@ -23,7 +23,7 @@
 #import "AROverlayView.h"
 #import "ARAugmentedPhotoSource.h"
 
-@interface EPViewController : UIViewController <UIAlertViewDelegate, ARAugmentedViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface EPViewController : UIViewController <UIAlertViewDelegate, GRCameraOverlayViewDelegate, ARAugmentedViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 {
     GRCameraOverlayView * __strong _cameraOverlayView;
     __weak IBOutlet ARAugmentedView * augmentedView;
