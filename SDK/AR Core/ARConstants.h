@@ -44,6 +44,7 @@
 
 #define REQ_IMAGE_AUGMENT               @"/ar/image/augment"
 #define REQ_IMAGE_AUGMENT_GEO           @"/ar/image/augment/geo"
+#define REQ_IMAGE_AUGMENT_MULTI         @"/ar/image/augment/group?site="
 #define REQ_IMAGE_AUGMENT_RESULT        @"/ar/image/augment/result"
 
 #define REQ_USER_REGISTER               @"/ar/mars/user/account/create"

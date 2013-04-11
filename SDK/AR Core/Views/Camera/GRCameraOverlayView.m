@@ -305,7 +305,8 @@
 - (void)setImagePicker:(UIImagePickerController *)imagePicker
 {
     _imagePicker = imagePicker;
-    imagePicker.cameraFlashMode = [self flashModeFromDefaults];
+    if ([_imagePicker sourceType] == UIImagePickerControllerSourceTypeCamera)
+        imagePicker.cameraFlashMode = [self flashModeFromDefaults];
 }
 
 - (UIImagePickerControllerCameraFlashMode)flashModeFromDefaults

@@ -32,6 +32,7 @@ typedef void(^ARProcessingCompletionBlock)(ARAugmentedPhoto *augmentedPhoto);
 @interface ARAugmentedPhoto : NSObject <GridCellViewDataProvider, NSCoding>
 {
     NSTimer * _pollTimer;
+    int _pollCount;
 }
 
 @property (nonatomic, weak) ARSite * site;
@@ -117,5 +118,9 @@ typedef void(^ARProcessingCompletionBlock)(ARAugmentedPhoto *augmentedPhoto);
   but you should consider using the initWithImageFile:andPMFile: method instead.
 */ 
 - (void)processPMData:(NSString*)data;
+
+/** Call this method manually to start polling for the result of an image uploaded elsewhere. 
+*/
+- (void)startPollForImageIdentifier:(NSString*)ident;
 
 @end

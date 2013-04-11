@@ -20,38 +20,57 @@
 #import <UIKit/UIKit.h>
 #import "GRCameraOverlayView.h"
 #import "ARAugmentedView.h"
+#import "AROverlayView.h"
+#import "ARAugmentedPhotoSource.h"
 
-@interface EPViewController : UIViewController <UIAlertViewDelegate,ARAugmentedViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface EPViewController : UIViewController <UIAlertViewDelegate, ARAugmentedViewDelegate, UIImagePickerControllerDelegate, UINavigationControllerDelegate>
 {
-    GRCameraOverlayView         * _cameraOverlayView;
-    CATextLayer                 * _loadingLayer;
-    
-    UIImage                     * _image;
-    UIImageView                 * _shrinking;
-    CALayer                     * _shrinkingMask;
-    UIImageView                 * _scanline;
-    BOOL                          _scanlineAnimationRunning;
-    BOOL                          _augmentCompleteAnimationRunning;
-    
-    NSMutableArray              * _layers;
-    UIImagePickerController     * _picker;
-    
-    BOOL                        _firstLoad;
-    BOOL                        _selectedSite;
-    
-    ARSite                      * _site;
-    ARAugmentedPhoto            * _augmentedPhoto;
-    __weak IBOutlet ARAugmentedView *_augmentedView;
-    __weak IBOutlet UIView          *_toolbarContainer;
-    __weak IBOutlet UIButton        *_cameraButton;
-    __weak IBOutlet UIButton        *_libraryButton;
-    __weak IBOutlet UIButton        *_settingButton;
+    GRCameraOverlayView * __strong _cameraOverlayView;
+    __weak IBOutlet ARAugmentedView * augmentedView;
+    __weak IBOutlet UIButton        * cameraButton;
+
+    NSObject<ARAugmentedPhotoSource>* _augmentedPhotoSource;
+    ARAugmentedPhoto *_curAugmentedPhoto;
+    BOOL _loaded;
 }
 
-- (void)translateLayers:(float)baseSpeed;
+- (void)viewDidLoad;
+- (void)viewWillAppear:(BOOL)animated;
+- (void)viewWillDisappear:(BOOL)animated;
+- (void)viewDidAppear:(BOOL)animated;
+- (void)didReceiveMemoryWarning;
+- (NSUInteger)supportedInterfaceOrientations;
+- (BOOL)shouldAutorotate;
 
-- (IBAction)showCameraPicker:(id)sender;
-- (IBAction)showLibraryPicker:(id)sender;
-- (IBAction)selectSite:(id)sender;
+#pragma mark - Rotation
+
+- (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration;
+
+#pragma mark - Presentation
+
+- (void)showCameraPicker;
+- (UIImagePickerController *)imagePicker;
+
+#pragma mark - User Interaction
+
+- (IBAction)handleCameraButtonTapped:(id)sender;
+
+#pragma mark - Animations
+
+- (void)augmentProcessStarted;
+- (void)augmentProcessFinishedWithPhoto:(ARAugmentedPhoto *)photo;
+
+#pragma mark - AROverlayViewAnimationDelegate
+
+- (void)focusOverlayView:(AROverlayView *)overlayView inParent:(ARAugmentedView *)parent;
+- (void)unfocusOverlayView:(AROverlayView *)overlayView inParent:(ARAugmentedView *)parent;
+
+#pragma mark - ARAugmentedViewDelegate
+
+- (AROverlayView *)overlayViewForOverlay:(AROverlay *)overlay;
+
+#pragma mark - GRColorPickerDelegate
+
+- (void)didPickColor:(UIColor *)color;
 
 @end

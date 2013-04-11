@@ -21,6 +21,7 @@
 #import <Foundation/Foundation.h>
 #import <CoreLocation/CoreLocation.h>
 #import "ARAugmentedPhoto.h"
+#import "ARAugmentedPhotoSource.h"
 #import "AROverlay.h"
 
 typedef enum ARSiteStatus {
@@ -32,7 +33,7 @@ typedef enum ARSiteStatus {
     ARSiteStatusCreating = 4
 } ARSiteStatus;
     
-@interface ARSite : NSObject <NSCoding>
+@interface ARSite : NSObject <NSCoding, ARAugmentedPhotoSource>
 {
     ASIHTTPRequest * _imageReq;
     ASIHTTPRequest * _overlaysReq;

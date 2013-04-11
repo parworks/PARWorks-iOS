@@ -134,6 +134,15 @@
     return _image;
 }
 
+- (ASIFormDataRequest*)requestForProcessing
+{
+    NSMutableDictionary * args = [self processArguments];
+    if (_site == nil)
+        return (ASIFormDataRequest*)[[ARManager shared] createRequest:REQ_IMAGE_AUGMENT_GEO withMethod:@"POST" withArguments:args];
+    else
+        return (ASIFormDataRequest*)[[ARManager shared] createRequest:REQ_IMAGE_AUGMENT withMethod:@"POST" withArguments:args];
+}
+
 - (void)process
 {
     if (_image == nil)
@@ -143,18 +152,11 @@
         @throw [NSException exceptionWithName: @"ProcessException" reason: @"You cannot process an image without specifying a site or enabling location services in the ARManager." userInfo: nil];
 
     _image = [[ARManager shared] rotateImage:_image byOrientationFlag:_image.imageOrientation];
-    NSData * imgData = UIImageJPEGRepresentation(_image, 0.45);
-    NSMutableDictionary * args = [self processArguments];
-    ASIFormDataRequest * req;
-    
-    if (_site == nil)
-        req = (ASIFormDataRequest*)[[ARManager shared] createRequest:REQ_IMAGE_AUGMENT_GEO withMethod:@"POST" withArguments:args];
-    else
-        req = (ASIFormDataRequest*)[[ARManager shared] createRequest:REQ_IMAGE_AUGMENT withMethod:@"POST" withArguments:args];
-    
+
+    ASIFormDataRequest * req = [self requestForProcessing];
     ASIFormDataRequest * __weak __req = req;
 
-    [req setData:imgData forKey:@"image"];
+    [req setData:UIImageJPEGRepresentation(_image, 0.45) forKey:@"image"];
     [req setFailedBlock: ^(void) {
         _response = BackendResponseFailed;
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_AUGMENTED_PHOTO_UPDATED object: self];
@@ -163,10 +165,7 @@
     }];
     [req setCompletionBlock: ^(void) {
         if ([[ARManager shared] handleResponseErrors: __req]) {
-            _response = BackendResponseProcessing;
-            _imageIdentifier = [[__req responseJSON] objectForKey: @"imgId"];
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_AUGMENTED_PHOTO_UPDATED object: self];
-            _pollTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(processPoll) userInfo:nil repeats:NO];
+            [self processPostComplete: __req];
 
         } else {
             _response = BackendResponseFailed;
@@ -180,18 +179,38 @@
     
     [req startAsynchronous];
 }
-        
+
+- (void)processPostComplete:(ASIFormDataRequest*)req
+{
+    [self startPollForImageIdentifier: [[req responseJSON] objectForKey: @"imgId"]];
+}
+
+- (void)startPollForImageIdentifier:(NSString*)ident
+{
+    _response = BackendResponseProcessing;
+    _imageIdentifier = ident;
+    _pollCount = 0;
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_AUGMENTED_PHOTO_UPDATED object: self];
+    _pollTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(processPoll) userInfo:nil repeats:NO];
+}
+
 - (void)processPoll
 {
     _pollTimer = nil;
+    if (_pollCount == 20) {
+        self.response = BackendResponseFailed;
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_AUGMENTED_PHOTO_UPDATED object: self];
+        return;
+    }
     
     ASIHTTPRequest * req = [[ARManager shared] createRequest:REQ_IMAGE_AUGMENT_RESULT withMethod:@"GET" withArguments:[self processArguments]];
     ASIHTTPRequest * __weak __req = req;
     
     [req setCompletionBlock: ^(void) {
-        if ([__req responseStatusCode] != 200)
+        if ([__req responseStatusCode] != 200) {
             _pollTimer = [NSTimer scheduledTimerWithTimeInterval:0.8 target:self selector:@selector(processPoll) userInfo:nil repeats:NO];
-        else {
+            _pollCount ++;
+        } else {
             [self processJSONData: [__req responseJSON]];
             self.response = BackendResponseFinished;
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_AUGMENTED_PHOTO_UPDATED object: self];

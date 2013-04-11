@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "ARAugmentedPhotoSource.h"
 
 @class ARAugmentedPhoto;
 @class ARCameraOverlayTooltip;
@@ -38,7 +39,8 @@
 @property(nonatomic, strong) ARCameraOverlayTooltip *tooltip;
 @property(nonatomic, weak) UIImagePickerController *imagePicker;
 @property(nonatomic, weak) NSObject<GRCameraOverlayViewDelegate> * delegate;
-@property(nonatomic, weak) ARSite *site;
+@property(nonatomic, strong) NSMutableArray *siteSet;
+@property(nonatomic, weak) NSObject <ARAugmentedPhotoSource> *site;
 
 - (void)resetToLiveCameraInterface;
 - (void)showTooltipWithString:(NSString *)string;
