@@ -79,10 +79,7 @@
 }
 
 - (void)setupCoverView
-{    // temporary
-    _overlay.coverType = AROverlayCoverType_Centroid;
-    _overlay.boundaryType = AROverlayBoundaryType_Hidden;
-
+{
     if (_overlay.coverType == AROverlayCoverType_Centroid && !_overlay.coverProvider) {
         self.coverView = [[ARCentroidView alloc] initWithFrame: self.bounds];
         

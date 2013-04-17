@@ -126,7 +126,16 @@
 - (void)showCameraPicker
 {
     _cameraOverlayView = [[GRCameraOverlayView alloc] initWithFrame:self.view.bounds];
-    _augmentedPhotoSource = [[ARMultiSite alloc] initWithSiteIdentifiers: @[@"staples-printer2", @"staples-printer3", @"staples-printer9", @"staples-printer5", @"staples-printer6", @"staples-printer7"]];
+    NSArray * identifiers = @[@"michaels-p2",
+                            @"michaels-p10",
+                            @"michaels-p4",
+                            @"michaels-p5",
+                            @"michaels-p6",
+                            @"michaels-p7",
+                            @"michaels-p8",
+                              @"michaels-p9"];
+
+    _augmentedPhotoSource = [[ARMultiSite alloc] initWithSiteIdentifiers: identifiers];
     _cameraOverlayView.site = _augmentedPhotoSource;
     _cameraOverlayView.delegate = self;
     

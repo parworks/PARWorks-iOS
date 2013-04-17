@@ -353,6 +353,7 @@
     // Upload the original image to the AR API for processing. We'll animate the
     // resized image back on screen once it's finished.
     [self setAugmentedPhoto:[_site augmentImage:image1000]];
+    [self setUserInteractionEnabled: YES];
 }
 
 - (void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
