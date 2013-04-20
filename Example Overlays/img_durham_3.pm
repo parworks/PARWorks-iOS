@@ -1,9 +1,0 @@
-localization=true
-focallength=2895.9482
-score=69.5122
-fov=48.219112,37.107765
-name=Instruction
-description=file:///android_asset/demo/car1.html
-texture=car_overlay
-color=1.0,1.0,0.0
-vertices=-1310.9707,436.95264,0.0,212.35242,462.65402,0.0,441.8601,1563.5112,0.0,-634.7001,1617.3577,0.0
