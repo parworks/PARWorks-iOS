@@ -1,6 +1,6 @@
 //
 //  AROverlayTitleView.m
-//  PARViewer
+//  ARCore
 //
 //  Created by Ben Gotow on 2/10/13.
 //  Copyright (c) 2013 Ben Gotow. All rights reserved.

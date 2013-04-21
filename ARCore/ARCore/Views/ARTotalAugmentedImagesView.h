@@ -1,6 +1,6 @@
 //
 //  ARTotalAugmentedImagesView.h
-//  PARViewer
+//  ARCore
 //
 //  Created by Demetri Miller on 2/5/13.
 //  Copyright (c) 2013 Ben Gotow. All rights reserved.
