@@ -19,6 +19,7 @@
 
 
 #import "AROverlayDataEditorViewController.h"
+#import "NSBundle+ARCoreResources.h"
 
 @interface AROverlayDataEditorViewController ()
 
@@ -43,8 +44,8 @@
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
-    NSURL *jqueryURL = [[NSBundle mainBundle] URLForResource:@"jquery-1.9.0.min" withExtension:@"js"];
-    NSString *filepath = [[NSBundle mainBundle] pathForResource:@"overlay_editor_form" ofType:@"html"];
+    NSURL *jqueryURL = [[NSBundle arCoreResourcesBundle] URLForResource:@"jquery-1.9.0.min" withExtension:@"js"];
+    NSString *filepath = [[NSBundle arCoreResourcesBundle] pathForResource:@"overlay_editor_form" ofType:@"html"];
     NSString *html = [NSString stringWithContentsOfFile:filepath encoding:NSUTF8StringEncoding error:nil];
     html = [html stringByReplacingOccurrencesOfString:@"{{JQUERY_FILEPATH}}" withString:jqueryURL.absoluteString];
     [_webView loadHTMLString:html baseURL:nil];

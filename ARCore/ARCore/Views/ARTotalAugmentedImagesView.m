@@ -7,6 +7,7 @@
 //
 
 #import "ARTotalAugmentedImagesView.h"
+#import "UIImage+ARCoreResources.h"
 #import "UIViewAdditions.h"
 
 @implementation ARTotalAugmentedImagesView
@@ -28,7 +29,7 @@
         [self addSubview:_countLabel];
         
         _cameraIconView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 15, 15)];
-        [_cameraIconView setImage: [UIImage imageNamed: @"tiny_camera.png"]];
+        [_cameraIconView setImage: [UIImage arCoreImageNamed: @"tiny_camera.png"]];
         [self addSubview:_cameraIconView];
     }
     return self;

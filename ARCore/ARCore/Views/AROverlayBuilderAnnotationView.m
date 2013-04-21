@@ -23,6 +23,7 @@
 #import "AROverlay.h"
 #import "AROverlayPoint.h"
 #import "AROverlayBuilderAnnotationView.h"
+#import "UIImage+ARCoreResources.h"
 #import "UIView+ContentScaling.h"
 
 @implementation AROverlayBuilderAnnotationView
@@ -85,7 +86,7 @@
             // Dequeue a point view or create one if we have to
             UIView * pointView = [unusedPointViews lastObject];
             if (!pointView) {
-                pointView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"bubble.png"]];
+                pointView = [[UIImageView alloc] initWithImage:[UIImage arCoreImageNamed:@"bubble.png"]];
                 pointView.contentMode = UIViewContentModeCenter;
                 [_pointViews addObject:pointView];
             }
@@ -113,7 +114,7 @@
         UIImageView *lockView = [unusedPointViews lastObject];
         if (!lockView) {
             lockView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
-            lockView.image = [UIImage imageNamed:@"stock_lock_open.png"];
+            lockView.image = [UIImage arCoreImageNamed:@"stock_lock_open.png"];
             lockView.contentMode = UIViewContentModeScaleAspectFit;
             [_lockViews addObject: lockView];
         }
