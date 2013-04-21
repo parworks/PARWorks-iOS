@@ -1,6 +1,6 @@
 //
 //  ARCameraOverlayTooltip.h
-//  PARViewer
+//  ARCore
 //
 //  Created by Demetri Miller on 2/18/13.
 //  Copyright (c) 2013 Ben Gotow. All rights reserved.

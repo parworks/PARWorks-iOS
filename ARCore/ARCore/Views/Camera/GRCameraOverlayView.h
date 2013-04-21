@@ -17,8 +17,13 @@
 @class MBProgressHUD;
 
 @protocol GRCameraOverlayViewDelegate <NSObject>
+
+@optional
 - (id)contentsForWaitingOnImage:(UIImage*)img;
+
+@required
 - (void)dismissImagePicker;
+
 @end
 
 @interface GRCameraOverlayView : UIView <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
@@ -41,6 +46,9 @@
 @property(nonatomic, weak) NSObject<GRCameraOverlayViewDelegate> * delegate;
 @property(nonatomic, strong) NSMutableArray *siteSet;
 @property(nonatomic, weak) NSObject <ARAugmentedPhotoSource> *site;
+
+/// Convenience Class Methods
++ (UIImagePickerController *)defaultImagePicker;
 
 - (void)resetToLiveCameraInterface;
 - (void)showTooltipWithString:(NSString *)string;

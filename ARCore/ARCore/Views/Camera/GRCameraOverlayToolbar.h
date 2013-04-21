@@ -1,6 +1,6 @@
 //
 //  GRCameraOverlayToolbar.h
-//  PARViewer
+//  ARCore
 //
 //  Created by Demetri Miller on 2/13/13.
 //  Copyright (c) 2013 Ben Gotow. All rights reserved.
