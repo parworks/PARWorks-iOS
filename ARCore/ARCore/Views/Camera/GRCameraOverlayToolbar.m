@@ -8,7 +8,8 @@
 
 #import "GRCameraOverlayToolbar.h"
 #import "GRCameraOverlayView.h"
-
+#import "NSBundle+ARCoreResources.h"
+#import "UIImage+ARCoreResources.h"
 
 @implementation GRCameraOverlayToolbar
 
@@ -23,11 +24,11 @@
         cameraIconName = @"camera_icon_3.5.png";
     }
     
-    GRCameraOverlayToolbar *toolbar = [[[NSBundle mainBundle] loadNibNamed:nibName owner:nil options:nil] objectAtIndex:0];
+    GRCameraOverlayToolbar *toolbar = [[[NSBundle arCoreResourcesBundle] loadNibNamed:nibName owner:nil options:nil] objectAtIndex:0];
     [toolbar updateFlashImageForFlashMode:[parent flashModeFromDefaults] withParent:parent];
     
     UIButton *camera = toolbar.cameraButton;
-    UIImage *image = [UIImage imageNamed:cameraIconName];
+    UIImage *image = [UIImage arCoreImageNamed:cameraIconName];
     toolbar.cameraIcon = [[UIImageView alloc] initWithImage:image];
     toolbar.cameraIcon.center = CGPointMake(camera.bounds.size.width/2, camera.bounds.size.height/2);
     toolbar.cameraIcon.userInteractionEnabled = NO;
@@ -65,8 +66,8 @@
 - (void)updateFlashImageForFlashMode:(UIImagePickerControllerCameraFlashMode)mode withParent:(GRCameraOverlayView *)parent
 {
     NSString *flashImageName = [[self class] flashImageNameWithParent:parent];
-    [_flashButton setImage:[UIImage imageNamed:flashImageName] forState:UIControlStateNormal];
-    [_flashButton setImage:[UIImage imageNamed:[flashImageName stringByReplacingOccurrencesOfString:@".png" withString:@"_pressed.png"]] forState:UIControlStateHighlighted];
+    [_flashButton setImage:[UIImage arCoreImageNamed:flashImageName] forState:UIControlStateNormal];
+    [_flashButton setImage:[UIImage arCoreImageNamed:[flashImageName stringByReplacingOccurrencesOfString:@".png" withString:@"_pressed.png"]] forState:UIControlStateHighlighted];
 }
 
 @end

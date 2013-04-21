@@ -9,9 +9,19 @@
 			<key>orderHint</key>
 			<integer>0</integer>
 		</dict>
+		<key>ARCoreResources.xcscheme</key>
+		<dict>
+			<key>orderHint</key>
+			<integer>4</integer>
+		</dict>
 	</dict>
 	<key>SuppressBuildableAutocreation</key>
 	<dict>
+		<key>A057A60017244FAB00662670</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
 		<key>A09A89C81723094A000D9AF7</key>
 		<dict>
 			<key>primary</key>

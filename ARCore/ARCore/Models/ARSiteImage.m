@@ -23,6 +23,7 @@
 #import "ARManager.h"
 #import "ARSite.h"
 #import "AROverlay.h"
+#import "NSBundle+ARCoreResources.h"
 
 @implementation ARSiteImage
 
@@ -112,9 +113,9 @@
 - (NSString*)imagePathForCell:(GridCellView*)cell
 {
     if (_response == BackendResponseUploading)
-        return [[[NSBundle mainBundle] URLForResource:@"state_uploading" withExtension:@"png"] absoluteString];
+        return [[[NSBundle arCoreResourcesBundle] URLForResource:@"state_uploading" withExtension:@"png"] absoluteString];
     else if (_response == BackendResponseFailed)
-        return [[[NSBundle mainBundle] URLForResource:@"state_failed" withExtension:@"png"] absoluteString];
+        return [[[NSBundle arCoreResourcesBundle] URLForResource:@"state_failed" withExtension:@"png"] absoluteString];
     else
         return [[self urlForSize: 120] absoluteString];
 }

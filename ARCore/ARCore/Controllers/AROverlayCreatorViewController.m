@@ -20,6 +20,8 @@
 
 #import "AROverlayCreatorViewController.h"
 #import "AROverlayDataEditorViewController.h"
+#import "NSBundle+ARCoreResources.h"
+#import "UIImage+ARCoreResources.h"
 
 @interface AROverlayCreatorViewController ()
 
@@ -34,7 +36,7 @@
 
 - (id)initWithSiteImage:(ARSiteImage*)s
 {
-    self = [super initWithNibName:@"AROverlayCreatorViewController" bundle:nil];
+    self = [super initWithNibName:@"AROverlayCreatorViewController" bundle:[NSBundle arCoreResourcesBundle]];
     if (self) {
         _siteImage = s;
     }
@@ -115,10 +117,10 @@
     CGRect frame = _toolbar.frame;
     if (frame.origin.y < _overlayBuilderView.frame.size.height) {
         frame.origin.y = _overlayBuilderView.frame.size.height;
-        _toggleToolbarButton.image = [UIImage imageNamed:@"toolbar_show.png"];
+        _toggleToolbarButton.image = [UIImage arCoreImageNamed:@"toolbar_show.png"];
     } else {
         frame.origin.y = _overlayBuilderView.frame.size.height - frame.size.height;
-        _toggleToolbarButton.image = [UIImage imageNamed:@"toolbar_hide.png"];
+        _toggleToolbarButton.image = [UIImage arCoreImageNamed:@"toolbar_hide.png"];
     }
     
     [UIView animateWithDuration:0.2 animations:^{

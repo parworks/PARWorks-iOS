@@ -21,6 +21,7 @@
 #import "CachedImageView.h"
 #import "ASIHTTPRequest.h"
 #import "ASINetworkQueue.h"
+#import "UIImage+ARCoreResources.h"
 
 static NSOperationQueue * _downloadsRequestQueue = nil;
 static NSCache * _imageCache = nil;
@@ -60,7 +61,7 @@ static NSCache * _imageCache = nil;
     _path = p;
     
     if ((p == nil) || ([p isKindOfClass: [NSNull class]])) {
-        [self setImage: [UIImage imageNamed: _placeholderImageName]];
+        [self setImage: [UIImage arCoreImageNamed: _placeholderImageName]];
         return;
     } 
     
@@ -109,7 +110,7 @@ static NSCache * _imageCache = nil;
                 if (i) 
                     [_imageCache setObject: i forKey: resourceKey];
                 else
-                    i = [UIImage imageNamed: _placeholderImageName];
+                    i = [UIImage arCoreImageNamed: _placeholderImageName];
                     
             } else {
                 [[NSData data] writeToFile:cachePath atomically:NO];
@@ -142,7 +143,7 @@ static NSCache * _imageCache = nil;
             if (i) 
                 [_imageCache setObject: i forKey: resourceKey];
             else
-                i = [UIImage imageNamed: _placeholderImageName];
+                i = [UIImage arCoreImageNamed: _placeholderImageName];
 
         }
         _downloadCompleted = YES;

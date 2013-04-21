@@ -11,6 +11,7 @@
 #import "AROverlayUtil.h"
 #import "UIViewAdditions.h"
 #import "AROverlayView.h"
+#import "UIImage+ARCoreResources.h"
 
 @implementation AROverlayTitleView
 
@@ -22,7 +23,7 @@
     if (self) {
         self.overlay = overlay;
         
-        UIImage * i = [UIImage imageNamed: @"tooltip_background_up.png"];
+        UIImage * i = [UIImage arCoreImageNamed: @"tooltip_background_up.png"];
         i = [i resizableImageWithCapInsets:UIEdgeInsetsMake(11, 11, 28, 11)];
         [self setBackgroundImage:i forState:UIControlStateNormal];
         [self setContentEdgeInsets: UIEdgeInsetsMake(0, 0, 17, 0)];
@@ -33,7 +34,7 @@
         [[self titleLabel] setShadowOffset: CGSizeMake(0, 1)];
         
         _arrowView = [[UIButton alloc] initWithFrame:CGRectMake(0, 24, 8, 8)];
-        [_arrowView setBackgroundImage: [UIImage imageNamed: @"tooltip_arrow_background.png"] forState: UIControlStateNormal];
+        [_arrowView setBackgroundImage: [UIImage arCoreImageNamed: @"tooltip_arrow_background.png"] forState: UIControlStateNormal];
         [_arrowView setUserInteractionEnabled: NO];
         [self addSubview: _arrowView];
         
