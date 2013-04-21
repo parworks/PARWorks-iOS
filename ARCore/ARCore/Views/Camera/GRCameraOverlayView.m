@@ -6,6 +6,8 @@
 //  Copyright (c) 2012 Demetri Miller. All rights reserved.
 //
 
+#import <MediaPlayer/MediaPlayer.h>
+#import <MobileCoreServices/MobileCoreServices.h>
 #import "ARAugmentedPhoto.h"
 #import "ARAugmentedView.h"
 #import "ARCameraOverlayTooltip.h"
@@ -110,6 +112,22 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+
+#pragma mark - Convenience Class Methods
++ (UIImagePickerController *)defaultImagePicker
+{
+    UIImagePickerController *picker = [[UIImagePickerController alloc] init];
+    if ([UIImagePickerController isSourceTypeAvailable: UIImagePickerControllerSourceTypeCamera]) {
+        picker.sourceType = UIImagePickerControllerSourceTypeCamera;
+        picker.mediaTypes = @[(NSString *) kUTTypeImage];
+        picker.showsCameraControls = NO;
+    } else {
+        picker.sourceType = UIImagePickerControllerSourceTypePhotoLibrary;
+    }
+    
+    return picker;
 }
 
 #pragma mark - Layout
