@@ -317,7 +317,6 @@
 }
 
 - (void)willExitFullscreen {
-    NSLog(@"willExitFullscreen");
     [self resetFocusedOverlay];
 }
 

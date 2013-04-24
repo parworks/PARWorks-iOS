@@ -10,6 +10,7 @@
 #import "AROverlayView+Animations.h"
 #import "ARAugmentedView.h"
 #import "ARWebViewController.h"
+#import "NSBundle+ARCoreResources.h"
 
 @implementation AROverlayWebView
 
@@ -45,7 +46,7 @@
     __weak AROverlayWebView * weakSelf = self;
     [self animateBounceFocusWithParent:parent centeredBlock:^{
         if(overlayView.overlay.contentSize == AROverlayContentSize_Fullscreen){
-            ARWebViewController *webViewController = [[ARWebViewController alloc] initWithNibName:@"ARCore.bundle/ARWebViewController" bundle:nil];
+            ARWebViewController *webViewController = [[ARWebViewController alloc] initWithNibName:@"ARWebViewController" bundle:[NSBundle arCoreResourcesBundle]];
             webViewController.sUrl = overlayView.overlay.contentProvider;
             webViewController.sTitle = overlayView.overlay.name;
             [parent presentFullscreenNavigationController:[[UINavigationController alloc] initWithRootViewController:webViewController]];
