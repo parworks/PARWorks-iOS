@@ -239,6 +239,7 @@
         _coverTransparency = 20;
         _coverProvider = nil;
         _coverType = AROverlayCoverType_Regular;
+        _centroidOffset = CGSizeZero;
         return;
     }
     
@@ -256,12 +257,25 @@
     } else if ([type.lowercaseString isEqualToString:@"centroid"]) {
         _boundaryType = AROverlayBoundaryType_Hidden;
         _coverType = AROverlayCoverType_Centroid;
-
+        _centroidOffset = [self centroidSizeFromProviderString:_coverProvider];
     } else if ([type.lowercaseString isEqualToString:@"image"]) {
         _coverType = AROverlayCoverType_Image;
     } else {
         _coverType = AROverlayCoverType_Regular;
     }
+}
+
+- (CGSize)centroidSizeFromProviderString:(NSString *)provider
+{
+    CGSize size = CGSizeZero;
+    NSArray *components = [_coverProvider componentsSeparatedByString:@"#"];
+    if (components.count > 1) {
+        NSString *rawSize = components[1];
+        rawSize = [rawSize stringByReplacingOccurrencesOfString:@"[" withString:@"{"];
+        rawSize = [rawSize stringByReplacingOccurrencesOfString:@"]" withString:@"}"];
+        size = CGSizeFromString(rawSize);
+    }
+    return size;
 }
 
 - (BOOL)isSaved

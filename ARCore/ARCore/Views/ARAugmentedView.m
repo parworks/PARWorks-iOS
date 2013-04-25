@@ -110,6 +110,8 @@
     if ((_augmentedPhoto) && (_augmentedPhoto.image)) {
         [_loadingView stopAnimating];
         [self attachOverlayViews];
+    } else if (!_augmentedPhoto) {
+        [self removeSupplementalViews];
     }
 }
 
@@ -150,14 +152,7 @@
 
 - (void)attachOverlayViews
 {
-    [_overlayViews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    [_overlayViews removeAllObjects];
-
-    [_outlineViews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    [_outlineViews removeAllObjects];
-    
-    [_overlayTitleViews makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    [_overlayTitleViews removeAllObjects];
+    [self removeSupplementalViews];
 
     for (int i=0; i < _augmentedPhoto.overlays.count; i++) {
         AROverlay *overlay = _augmentedPhoto.overlays[i];
@@ -201,6 +196,18 @@
         }
     }
     [self setNeedsLayout];
+}
+
+- (void)removeSupplementalViews
+{
+    [_overlayViews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [_overlayViews removeAllObjects];
+    
+    [_outlineViews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [_outlineViews removeAllObjects];
+    
+    [_overlayTitleViews makeObjectsPerformSelector:@selector(removeFromSuperview)];
+    [_overlayTitleViews removeAllObjects];
 }
 
 #pragma mark - Dim View User Interaction

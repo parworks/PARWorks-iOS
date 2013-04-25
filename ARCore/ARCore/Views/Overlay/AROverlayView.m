@@ -24,7 +24,7 @@
 #import "AROverlayPoint.h"
 #import "ARCentroidView.h"
 #import "AROverlay.h"
-
+#import "UIViewAdditions.h"
 
 @implementation AROverlayView
 
@@ -81,7 +81,8 @@
 - (void)setupCoverView
 {
     if (_overlay.coverType == AROverlayCoverType_Centroid && !_overlay.coverProvider) {
-        self.coverView = [[ARCentroidView alloc] initWithFrame: self.bounds];
+        _coverView = [[ARCentroidView alloc] initWithFrame: self.bounds];
+        [_coverView shiftFrame:CGPointMake(_overlay.centroidOffset.width, _overlay.centroidOffset.height)];
         
     } else {
         self.coverView = [[UIView alloc] initWithFrame:self.bounds];
@@ -132,14 +133,8 @@
 #pragma mark - Presentation
 - (void)focusInParent:(ARAugmentedView *)parent
 {
-    CGRect f = self.frame;
-    if (UIDeviceOrientationIsLandscape([[UIDevice currentDevice] orientation]) && (f.size.height > f.size.width)) {
-        float w = f.size.width;
-        f.size.width = f.size.height;
-        f.size.height = w;
-        self.frame = f;
-    }
-
+    self.frame = [self frameWithOverlayContentSize:_overlay.contentSize];
+    
     if (_animDelegate) {
         [_animDelegate focusOverlayView:self inParent:parent];
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_OVERLAY_VIEW_FOCUSED object: self];
@@ -198,7 +193,7 @@
             frame = CGRectMake(0, 0, 200, 200);
             break;
         case AROverlayContentSize_Large:
-            frame = CGRectMake(0, 0, 300, 420);
+            frame = CGRectMake(0, 0, 280, 420);
             break;
         case AROverlayContentSize_Fullscreen:
             frame = CGRectMake(0, 0, 320, 480);
@@ -207,6 +202,14 @@
             break;
     }
     
+    // If the orientation is landscape, flip to width and height. We don't need to handle rotation events
+    // while an overlay is focused since a rotation unfocuses the overlay.
+    UIInterfaceOrientation orientation = [[UIApplication sharedApplication] statusBarOrientation];
+    if (UIInterfaceOrientationIsLandscape(orientation)) {
+        CGFloat tmp = frame.size.width;
+        frame.size.width = frame.size.height;
+        frame.size.height = tmp;
+    } 
     return frame;
 }
 
