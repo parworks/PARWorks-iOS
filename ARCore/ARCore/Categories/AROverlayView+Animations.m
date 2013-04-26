@@ -65,7 +65,6 @@
             if (uncentered) {
                 uncentered();
             }
-            self.layer.position = CGPointZero;
             [self layoutWithinParent:parent];
         } completion:^(BOOL finished) {
             if (complete) {

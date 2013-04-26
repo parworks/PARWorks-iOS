@@ -176,21 +176,17 @@
     AROverlayPoint *bl = [scaledPoints objectAtIndex:3];
     
     if (_overlay.coverType == AROverlayCoverType_Centroid) {
+        [CATransaction setDisableActions: YES];
+        [UIView setAnimationsEnabled: NO];
+        self.layer.position = CGPointZero;
         self.layer.transform = CATransform3DIdentity;
-
-//        self.layer.position = CGPointMake((tl.x + tr.x + br.x + bl.x) / 4 -self.frame.size.width/2, (tl.y + tr.y + br.y + bl.y) / 4 -self.frame.size.height/2);
         [self setFrame: CGRectMake((tl.x + tr.x + br.x + bl.x) / 4 - 15, (tl.y + tr.y + br.y + bl.y) / 4 - 15, 30, 30)];
-        
-//        CGRect r = [AROverlayUtil boundingFrameForPoints: scaledPoints];
-//        float scale = 0.1;//CENTROID_SIZE / fminf(r.size.width, r.size.height);
-//        
-//        CATransform3D t = CATransform3DMakeTranslation((tl.x + tr.x + br.x + bl.x) / 4, (tl.y + tr.y + br.y + bl.y) / 4, 0);
-//        t = CATransform3DScale(t, scale, scale, 1);
-//        t = CATransform3DTranslate(t, -self.bounds.size.width / 2, -self.bounds.size.height / 2, 0);
-//        self.layer.position = CGPointZero;
-//        self.layer.transform = t;
+        [UIView setAnimationsEnabled: YES];
+        [CATransaction setDisableActions: NO];
+
     } else {
         CATransform3D transform = [AROverlayUtil rectToQuad:self.bounds quadTLX:tl.x quadTLY:tl.y quadTRX:tr.x quadTRY:tr.y quadBLX:bl.x quadBLY:bl.y quadBRX:br.x quadBRY:br.y];
+        self.layer.position = CGPointZero;
         self.layer.transform = transform;
     }
 }
