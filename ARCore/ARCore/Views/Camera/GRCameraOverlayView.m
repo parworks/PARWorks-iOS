@@ -357,6 +357,11 @@
     UIImage *image1000 = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
 
+    // hack to make the image picker mode work
+    if (([picker sourceType] == UIImagePickerControllerSourceTypePhotoLibrary) && ([self superview] == nil)) {
+        [picker.view addSubview: self];
+    }
+
     if ([_delegate respondsToSelector: @selector(contentsForWaitingOnImage:)]) {
         [CATransaction begin];
         [CATransaction setDisableActions: YES];

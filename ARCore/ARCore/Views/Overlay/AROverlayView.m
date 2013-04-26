@@ -81,13 +81,15 @@
 - (void)setupCoverView
 {
     if (_overlay.coverType == AROverlayCoverType_Centroid && !_overlay.coverProvider) {
-        _coverView = [[ARCentroidView alloc] initWithFrame: self.bounds];
+        _coverView = [[ARCentroidView alloc] initWithFrame: CGRectMake(0, 0, 30, 30)];
+        _coverView.autoresizingMask = UIViewAutoresizingNone;
         [_coverView shiftFrame:CGPointMake(_overlay.centroidOffset.width, _overlay.centroidOffset.height)];
         
     } else {
         self.coverView = [[UIView alloc] initWithFrame:self.bounds];
         _coverView.backgroundColor = _overlay.coverColor;
         _coverView.alpha = _overlay.coverTransparency/100.0;
+        _coverView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
         if (_overlay.coverProvider) {
             NSURLRequest *req = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:_overlay.coverProvider]];
             [NSURLConnection sendAsynchronousRequest:req queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *err) {
@@ -100,7 +102,6 @@
     }
 
     _coverView.userInteractionEnabled = NO;
-    _coverView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     _coverView.hidden = (_overlay.coverType == AROverlayCoverType_Hidden);
     
     [self addSubview:_coverView];
@@ -135,6 +136,10 @@
 {
     self.frame = [self frameWithOverlayContentSize:_overlay.contentSize];
     
+    if ([_coverView isKindOfClass: [ARCentroidView class]]) {
+        [_coverView setAlpha: 0];
+    }
+    
     if (_animDelegate) {
         [_animDelegate focusOverlayView:self inParent:parent];
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_OVERLAY_VIEW_FOCUSED object: self];
@@ -151,6 +156,9 @@
     }
     [UIView animateWithDuration:0.2 delay:0.6 options:UIViewAnimationOptionCurveLinear animations:^{
         _outlineView.alpha = 1.0;
+        if ([_coverView isKindOfClass: [ARCentroidView class]])
+            _coverView.alpha = 1.0;
+        
     } completion:nil];
     [parent.overlayImageView bringSubviewToFront:_outlineView];
 }
@@ -168,13 +176,19 @@
     AROverlayPoint *bl = [scaledPoints objectAtIndex:3];
     
     if (_overlay.coverType == AROverlayCoverType_Centroid) {
-        float scale = CENTROID_SIZE / fminf(self.bounds.size.width, self.bounds.size.height);
+        self.layer.transform = CATransform3DIdentity;
+
+//        self.layer.position = CGPointMake((tl.x + tr.x + br.x + bl.x) / 4 -self.frame.size.width/2, (tl.y + tr.y + br.y + bl.y) / 4 -self.frame.size.height/2);
+        [self setFrame: CGRectMake((tl.x + tr.x + br.x + bl.x) / 4 - 15, (tl.y + tr.y + br.y + bl.y) / 4 - 15, 30, 30)];
         
-        CATransform3D t = CATransform3DMakeTranslation((tl.x + tr.x + br.x + bl.x) / 4, (tl.y + tr.y + br.y + bl.y) / 4, 0);
-        t = CATransform3DScale(t, scale, scale, 1);
-        t = CATransform3DTranslate(t, -self.bounds.size.width / 2, -self.bounds.size.height / 2, 0);
-        self.layer.position = CGPointZero;
-        self.layer.transform = t;
+//        CGRect r = [AROverlayUtil boundingFrameForPoints: scaledPoints];
+//        float scale = 0.1;//CENTROID_SIZE / fminf(r.size.width, r.size.height);
+//        
+//        CATransform3D t = CATransform3DMakeTranslation((tl.x + tr.x + br.x + bl.x) / 4, (tl.y + tr.y + br.y + bl.y) / 4, 0);
+//        t = CATransform3DScale(t, scale, scale, 1);
+//        t = CATransform3DTranslate(t, -self.bounds.size.width / 2, -self.bounds.size.height / 2, 0);
+//        self.layer.position = CGPointZero;
+//        self.layer.transform = t;
     } else {
         CATransform3D transform = [AROverlayUtil rectToQuad:self.bounds quadTLX:tl.x quadTLY:tl.y quadTRX:tr.x quadTRY:tr.y quadBLX:bl.x quadBLY:bl.y quadBRX:br.x quadBRY:br.y];
         self.layer.transform = transform;
