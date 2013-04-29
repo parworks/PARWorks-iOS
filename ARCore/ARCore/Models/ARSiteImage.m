@@ -27,8 +27,6 @@
 
 @implementation ARSiteImage
 
-@synthesize site = _site;
-@synthesize response = _response;
 
 - (id)initWithDictionary:(NSDictionary*)dict
 {
@@ -142,6 +140,26 @@
     return [NSURL URLWithString: url];
 }
 
-
+- (NSString *)urlStringForSiteImageSize:(ARSiteImageSize)sizeType
+{
+    NSString *key;
+    switch (sizeType) {
+        case ARSiteImageSize_Gallery:
+            key = @"gallery_size";
+            break;
+        case ARSiteImageSize_Content:
+            key = @"content_size";
+            break;
+        case ARSiteImageSize_Full:
+            key = @"full_size";
+            break;
+        default:
+            NSLog(@"Invalid size type... returning content size.");
+            key = @"content_size";
+            break;
+    }
+    
+    return _dict[key];
+}
 
 @end

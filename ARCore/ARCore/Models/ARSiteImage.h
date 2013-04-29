@@ -22,8 +22,15 @@
 #import "ARConstants.h"
 #import "GridCellView.h"
 
-
 @class ARSite;
+
+typedef enum {
+    ARSiteImageSize_Gallery = 0,
+    ARSiteImageSize_Content,
+    ARSiteImageSize_Full
+} ARSiteImageSize;
+
+
 
 @interface ARSiteImage : NSObject <GridCellViewDataProvider>
 {
@@ -74,5 +81,13 @@
 */
 - (NSURL *)urlForSize:(int)size;
 
+/** This method returns an URL corresponding to the size type specified.
+    Applications should cache site images themselves.
+ 
+ @param sizeType The size type for the iamge.
+ 
+ @return An NSString that can be used to request the image of this size.
+ */
+- (NSString *)urlStringForSiteImageSize:(ARSiteImageSize)sizeType;
 
 @end
