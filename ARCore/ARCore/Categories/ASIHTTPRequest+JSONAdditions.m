@@ -23,17 +23,39 @@
 
 @implementation ASIHTTPRequest (JSONAdditions)
 
+
 - (id)responseJSON
 {
+    // parse the JSON
+    // discover any new streams and update existing ones
     SBJsonParser * parser = [SBJsonParser new];
-    id obj = [parser objectWithString: [self responseString]];
-    if (obj == nil)
-        NSLog(@"JSON parse error: %@", [[parser errorTrace] description]);
+    id obj = nil;
     
-    if ([parser errorTrace] != nil) {
+    @try {
+        obj = [parser objectWithString: [self responseString]];
+    } @catch (NSException * e) {
+        NSLog(@"JSON parse error: %@", [e description]);
         return [NSError errorWithDomain:@"JSONParseError" code:200 userInfo: nil];
     }
     
+    if ((obj == nil) || ([parser errorTrace] != nil)) {
+        NSLog(@"JSON parse error: %@", [[parser errorTrace] description]);
+        return [NSError errorWithDomain:@"JSONParseError" code:200 userInfo: nil];
+    }
+    
+    NSLog(@"JSON parsed: %@ %@", [[self url] absoluteString], [obj description]);
     return obj;
 }
+
+- (void)setPostJSONObject:(id)obj
+{
+    SBJsonWriter * w = [SBJsonWriter new];
+    NSData * d =  [[w stringWithObject: obj] dataUsingEncoding: NSUTF8StringEncoding];
+    if (d) {
+        [self setPostBody: [d mutableCopy]];
+    } else {
+        NSLog(@"Could not generate JSON from %@", [obj description]);
+    }
+}
+
 @end
