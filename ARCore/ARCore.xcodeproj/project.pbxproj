@@ -79,7 +79,6 @@
 		A057A65917244FFD00662670 /* GRCameraOverlayToolbar_4_0.xib in Resources */ = {isa = PBXBuildFile; fileRef = A09A8A3617230A6B000D9AF7 /* GRCameraOverlayToolbar_4_0.xib */; };
 		A057A664172450EE00662670 /* NSBundle+ARCoreResources.m in Sources */ = {isa = PBXBuildFile; fileRef = A057A663172450EE00662670 /* NSBundle+ARCoreResources.m */; };
 		A057A66A1724522C00662670 /* UIImage+ARCoreResources.m in Sources */ = {isa = PBXBuildFile; fileRef = A057A6691724522C00662670 /* UIImage+ARCoreResources.m */; };
-		A057A66F1724595E00662670 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A057A66E1724595E00662670 /* CoreFoundation.framework */; };
 		A09A89CD1723094A000D9AF7 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A09A89CC1723094A000D9AF7 /* Foundation.framework */; };
 		A09A8A8417230A6B000D9AF7 /* ARAugmentedView.m in Sources */ = {isa = PBXBuildFile; fileRef = A09A8A2117230A6B000D9AF7 /* ARAugmentedView.m */; };
 		A09A8A8517230A6B000D9AF7 /* ARCentroidView.m in Sources */ = {isa = PBXBuildFile; fileRef = A09A8A2317230A6B000D9AF7 /* ARCentroidView.m */; };
@@ -90,8 +89,6 @@
 		A09A8A8A17230A6B000D9AF7 /* ARTotalAugmentedImagesView.m in Sources */ = {isa = PBXBuildFile; fileRef = A09A8A2D17230A6B000D9AF7 /* ARTotalAugmentedImagesView.m */; };
 		A09A8A8B17230A6B000D9AF7 /* CachedImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = A09A8A2F17230A6B000D9AF7 /* CachedImageView.m */; };
 		A09A8A8C17230A6B000D9AF7 /* ARCameraOverlayTooltip.m in Sources */ = {isa = PBXBuildFile; fileRef = A09A8A3217230A6B000D9AF7 /* ARCameraOverlayTooltip.m */; };
-		A09A8A8D17230A6B000D9AF7 /* GRCameraOverlayToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = A09A8A3417230A6B000D9AF7 /* GRCameraOverlayToolbar.m */; };
-		A09A8A8E17230A6B000D9AF7 /* GRCameraOverlayView.m in Sources */ = {isa = PBXBuildFile; fileRef = A09A8A3817230A6B000D9AF7 /* GRCameraOverlayView.m */; };
 		A09A8A8F17230A6B000D9AF7 /* GridCellView.m in Sources */ = {isa = PBXBuildFile; fileRef = A09A8A3A17230A6B000D9AF7 /* GridCellView.m */; };
 		A09A8A9017230A6B000D9AF7 /* GridView.m in Sources */ = {isa = PBXBuildFile; fileRef = A09A8A3C17230A6B000D9AF7 /* GridView.m */; };
 		A09A8A9117230A6B000D9AF7 /* AROverlayAudioView.m in Sources */ = {isa = PBXBuildFile; fileRef = A09A8A3F17230A6B000D9AF7 /* AROverlayAudioView.m */; };
@@ -155,6 +152,22 @@
 		A0CEF1AD1728877C0016E3D6 /* tooltip_background_up.png in Resources */ = {isa = PBXBuildFile; fileRef = A0CEF1AB1728877C0016E3D6 /* tooltip_background_up.png */; };
 		A0CEF1B0172887CB0016E3D6 /* tooltip_arrow_background@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A0CEF1AE172887CB0016E3D6 /* tooltip_arrow_background@2x.png */; };
 		A0CEF1B1172887CB0016E3D6 /* tooltip_background_up@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A0CEF1AF172887CB0016E3D6 /* tooltip_background_up@2x.png */; };
+		A0EC456D17330715006D9DB9 /* ARCameraVC_iPhone.m in Sources */ = {isa = PBXBuildFile; fileRef = A0EC456717330715006D9DB9 /* ARCameraVC_iPhone.m */; };
+		A0EC456E17330715006D9DB9 /* ARCameraVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A0EC456917330715006D9DB9 /* ARCameraVC.m */; };
+		A0EC456F17330715006D9DB9 /* ARCameraVC_iPad.m in Sources */ = {isa = PBXBuildFile; fileRef = A0EC456C17330715006D9DB9 /* ARCameraVC_iPad.m */; };
+		A0EC457217330723006D9DB9 /* ARCameraVC_iPad.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0EC457017330723006D9DB9 /* ARCameraVC_iPad.xib */; };
+		A0EC457317330723006D9DB9 /* ARCameraVC_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = A0EC457117330723006D9DB9 /* ARCameraVC_iPhone.xib */; };
+		A0EC457617330768006D9DB9 /* GRCameraOverlayToolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = A0EC457417330768006D9DB9 /* GRCameraOverlayToolbar.m */; };
+		A0EC4579173307A6006D9DB9 /* ARCameraViewUtil.m in Sources */ = {isa = PBXBuildFile; fileRef = A0EC4578173307A6006D9DB9 /* ARCameraViewUtil.m */; };
+		A0EC457C173307DD006D9DB9 /* DMRotatableCameraHUD.m in Sources */ = {isa = PBXBuildFile; fileRef = A0EC457A173307DD006D9DB9 /* DMRotatableCameraHUD.m */; };
+		A0EC457F173308B4006D9DB9 /* ARCameraPreviewView.m in Sources */ = {isa = PBXBuildFile; fileRef = A0EC457E173308B3006D9DB9 /* ARCameraPreviewView.m */; };
+		A0EC45821734A104006D9DB9 /* ARAugmentedPhotoVC.m in Sources */ = {isa = PBXBuildFile; fileRef = A0EC45811734A104006D9DB9 /* ARAugmentedPhotoVC.m */; };
+		A0EC45881734B7E1006D9DB9 /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0EC45871734B7E1006D9DB9 /* AssetsLibrary.framework */; };
+		A0EC458C1734B8BF006D9DB9 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0EC458B1734B8BF006D9DB9 /* CoreImage.framework */; };
+		A0EC45901734B955006D9DB9 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0EC458F1734B955006D9DB9 /* CoreMedia.framework */; };
+		A0EC45941734B962006D9DB9 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0EC45911734B962006D9DB9 /* CoreVideo.framework */; };
+		A0EC45961734B962006D9DB9 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0EC45931734B962006D9DB9 /* AVFoundation.framework */; };
+		A0EC45991734BA57006D9DB9 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A057A66E1724595E00662670 /* CoreFoundation.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -278,12 +291,8 @@
 		A09A8A2F17230A6B000D9AF7 /* CachedImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CachedImageView.m; sourceTree = "<group>"; };
 		A09A8A3117230A6B000D9AF7 /* ARCameraOverlayTooltip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARCameraOverlayTooltip.h; sourceTree = "<group>"; };
 		A09A8A3217230A6B000D9AF7 /* ARCameraOverlayTooltip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARCameraOverlayTooltip.m; sourceTree = "<group>"; };
-		A09A8A3317230A6B000D9AF7 /* GRCameraOverlayToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRCameraOverlayToolbar.h; sourceTree = "<group>"; };
-		A09A8A3417230A6B000D9AF7 /* GRCameraOverlayToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRCameraOverlayToolbar.m; sourceTree = "<group>"; };
 		A09A8A3517230A6B000D9AF7 /* GRCameraOverlayToolbar_3_5.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GRCameraOverlayToolbar_3_5.xib; sourceTree = "<group>"; };
 		A09A8A3617230A6B000D9AF7 /* GRCameraOverlayToolbar_4_0.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = GRCameraOverlayToolbar_4_0.xib; sourceTree = "<group>"; };
-		A09A8A3717230A6B000D9AF7 /* GRCameraOverlayView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRCameraOverlayView.h; sourceTree = "<group>"; };
-		A09A8A3817230A6B000D9AF7 /* GRCameraOverlayView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRCameraOverlayView.m; sourceTree = "<group>"; };
 		A09A8A3917230A6B000D9AF7 /* GridCellView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridCellView.h; sourceTree = "<group>"; };
 		A09A8A3A17230A6B000D9AF7 /* GridCellView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GridCellView.m; sourceTree = "<group>"; };
 		A09A8A3B17230A6B000D9AF7 /* GridView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GridView.h; sourceTree = "<group>"; };
@@ -412,6 +421,29 @@
 		A0CEF1AB1728877C0016E3D6 /* tooltip_background_up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tooltip_background_up.png; sourceTree = "<group>"; };
 		A0CEF1AE172887CB0016E3D6 /* tooltip_arrow_background@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tooltip_arrow_background@2x.png"; sourceTree = "<group>"; };
 		A0CEF1AF172887CB0016E3D6 /* tooltip_background_up@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "tooltip_background_up@2x.png"; sourceTree = "<group>"; };
+		A0EC456717330715006D9DB9 /* ARCameraVC_iPhone.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARCameraVC_iPhone.m; sourceTree = "<group>"; };
+		A0EC456817330715006D9DB9 /* ARCameraVC_iPhone.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARCameraVC_iPhone.h; sourceTree = "<group>"; };
+		A0EC456917330715006D9DB9 /* ARCameraVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARCameraVC.m; sourceTree = "<group>"; };
+		A0EC456A17330715006D9DB9 /* ARCameraVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARCameraVC.h; sourceTree = "<group>"; };
+		A0EC456B17330715006D9DB9 /* ARCameraVC_iPad.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARCameraVC_iPad.h; sourceTree = "<group>"; };
+		A0EC456C17330715006D9DB9 /* ARCameraVC_iPad.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARCameraVC_iPad.m; sourceTree = "<group>"; };
+		A0EC457017330723006D9DB9 /* ARCameraVC_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ARCameraVC_iPad.xib; sourceTree = "<group>"; };
+		A0EC457117330723006D9DB9 /* ARCameraVC_iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ARCameraVC_iPhone.xib; sourceTree = "<group>"; };
+		A0EC457417330768006D9DB9 /* GRCameraOverlayToolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GRCameraOverlayToolbar.m; sourceTree = "<group>"; };
+		A0EC457517330768006D9DB9 /* GRCameraOverlayToolbar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GRCameraOverlayToolbar.h; sourceTree = "<group>"; };
+		A0EC4577173307A6006D9DB9 /* ARCameraViewUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARCameraViewUtil.h; sourceTree = "<group>"; };
+		A0EC4578173307A6006D9DB9 /* ARCameraViewUtil.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARCameraViewUtil.m; sourceTree = "<group>"; };
+		A0EC457A173307DD006D9DB9 /* DMRotatableCameraHUD.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DMRotatableCameraHUD.m; sourceTree = "<group>"; };
+		A0EC457B173307DD006D9DB9 /* DMRotatableCameraHUD.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DMRotatableCameraHUD.h; sourceTree = "<group>"; };
+		A0EC457D173308B3006D9DB9 /* ARCameraPreviewView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARCameraPreviewView.h; sourceTree = "<group>"; };
+		A0EC457E173308B3006D9DB9 /* ARCameraPreviewView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARCameraPreviewView.m; sourceTree = "<group>"; };
+		A0EC45801734A104006D9DB9 /* ARAugmentedPhotoVC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARAugmentedPhotoVC.h; sourceTree = "<group>"; };
+		A0EC45811734A104006D9DB9 /* ARAugmentedPhotoVC.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARAugmentedPhotoVC.m; sourceTree = "<group>"; };
+		A0EC45871734B7E1006D9DB9 /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = System/Library/Frameworks/AssetsLibrary.framework; sourceTree = SDKROOT; };
+		A0EC458B1734B8BF006D9DB9 /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
+		A0EC458F1734B955006D9DB9 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		A0EC45911734B962006D9DB9 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/CoreVideo.framework; sourceTree = "<absolute>"; };
+		A0EC45931734B962006D9DB9 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/AVFoundation.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -419,7 +451,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A057A66F1724595E00662670 /* CoreFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -427,6 +458,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				A0EC45961734B962006D9DB9 /* AVFoundation.framework in Frameworks */,
+				A0EC45901734B955006D9DB9 /* CoreMedia.framework in Frameworks */,
+				A0EC458C1734B8BF006D9DB9 /* CoreImage.framework in Frameworks */,
+				A0EC45881734B7E1006D9DB9 /* AssetsLibrary.framework in Frameworks */,
 				A09A8B0A17230B52000D9AF7 /* CFNetwork.framework in Frameworks */,
 				A09A8ABC17230AC3000D9AF7 /* CoreLocation.framework in Frameworks */,
 				A09A8ABA17230ABD000D9AF7 /* OpenGLES.framework in Frameworks */,
@@ -435,6 +470,9 @@
 				A09A8AB217230A9F000D9AF7 /* UIKit.framework in Frameworks */,
 				A09A8AB017230A99000D9AF7 /* QuartzCore.framework in Frameworks */,
 				A09A89CD1723094A000D9AF7 /* Foundation.framework in Frameworks */,
+				A0EC45941734B962006D9DB9 /* CoreVideo.framework in Frameworks */,
+				A0EC45961734B962006D9DB9 /* AVFoundation.framework in Frameworks */,
+				A0EC45991734BA57006D9DB9 /* CoreFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -472,7 +510,6 @@
 		A09A89C01723094A000D9AF7 = {
 			isa = PBXGroup;
 			children = (
-				A057A66E1724595E00662670 /* CoreFoundation.framework */,
 				A09A89CE1723094A000D9AF7 /* ARCore */,
 				A09A8AC817230B06000D9AF7 /* Libraries */,
 				A057A60817244FAB00662670 /* ARCoreResources */,
@@ -493,6 +530,12 @@
 		A09A89CB1723094A000D9AF7 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				A0EC45931734B962006D9DB9 /* AVFoundation.framework */,
+				A0EC458F1734B955006D9DB9 /* CoreMedia.framework */,
+				A0EC45911734B962006D9DB9 /* CoreVideo.framework */,
+				A0EC458B1734B8BF006D9DB9 /* CoreImage.framework */,
+				A0EC45871734B7E1006D9DB9 /* AssetsLibrary.framework */,
+				A057A66E1724595E00662670 /* CoreFoundation.framework */,
 				A09A8B0917230B52000D9AF7 /* CFNetwork.framework */,
 				A09A8ABB17230AC3000D9AF7 /* CoreLocation.framework */,
 				A09A89CC1723094A000D9AF7 /* Foundation.framework */,
@@ -629,6 +672,8 @@
 		A09A8A1F17230A6A000D9AF7 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				A09A8A3017230A6B000D9AF7 /* Camera */,
+				A09A8A3D17230A6B000D9AF7 /* Overlay */,
 				A09A8A2017230A6B000D9AF7 /* ARAugmentedView.h */,
 				A09A8A2117230A6B000D9AF7 /* ARAugmentedView.m */,
 				A09A8A2217230A6B000D9AF7 /* ARCentroidView.h */,
@@ -645,12 +690,10 @@
 				A09A8A2D17230A6B000D9AF7 /* ARTotalAugmentedImagesView.m */,
 				A09A8A2E17230A6B000D9AF7 /* CachedImageView.h */,
 				A09A8A2F17230A6B000D9AF7 /* CachedImageView.m */,
-				A09A8A3017230A6B000D9AF7 /* Camera */,
 				A09A8A3917230A6B000D9AF7 /* GridCellView.h */,
 				A09A8A3A17230A6B000D9AF7 /* GridCellView.m */,
 				A09A8A3B17230A6B000D9AF7 /* GridView.h */,
 				A09A8A3C17230A6B000D9AF7 /* GridView.m */,
-				A09A8A3D17230A6B000D9AF7 /* Overlay */,
 				A09A8A4C17230A6B000D9AF7 /* PointCloudView.h */,
 				A09A8A4D17230A6B000D9AF7 /* PointCloudView.m */,
 			);
@@ -660,14 +703,18 @@
 		A09A8A3017230A6B000D9AF7 /* Camera */ = {
 			isa = PBXGroup;
 			children = (
+				A0EC4577173307A6006D9DB9 /* ARCameraViewUtil.h */,
+				A0EC4578173307A6006D9DB9 /* ARCameraViewUtil.m */,
 				A09A8A3117230A6B000D9AF7 /* ARCameraOverlayTooltip.h */,
 				A09A8A3217230A6B000D9AF7 /* ARCameraOverlayTooltip.m */,
-				A09A8A3317230A6B000D9AF7 /* GRCameraOverlayToolbar.h */,
-				A09A8A3417230A6B000D9AF7 /* GRCameraOverlayToolbar.m */,
+				A0EC457D173308B3006D9DB9 /* ARCameraPreviewView.h */,
+				A0EC457E173308B3006D9DB9 /* ARCameraPreviewView.m */,
+				A0EC457B173307DD006D9DB9 /* DMRotatableCameraHUD.h */,
+				A0EC457A173307DD006D9DB9 /* DMRotatableCameraHUD.m */,
+				A0EC457517330768006D9DB9 /* GRCameraOverlayToolbar.h */,
+				A0EC457417330768006D9DB9 /* GRCameraOverlayToolbar.m */,
 				A09A8A3517230A6B000D9AF7 /* GRCameraOverlayToolbar_3_5.xib */,
 				A09A8A3617230A6B000D9AF7 /* GRCameraOverlayToolbar_4_0.xib */,
-				A09A8A3717230A6B000D9AF7 /* GRCameraOverlayView.h */,
-				A09A8A3817230A6B000D9AF7 /* GRCameraOverlayView.m */,
 			);
 			path = Camera;
 			sourceTree = "<group>";
@@ -722,6 +769,9 @@
 		A09A8A6217230A6B000D9AF7 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				A0EC45661733069B006D9DB9 /* Camera */,
+				A0EC45801734A104006D9DB9 /* ARAugmentedPhotoVC.h */,
+				A0EC45811734A104006D9DB9 /* ARAugmentedPhotoVC.m */,
 				A09A8A6317230A6B000D9AF7 /* AROverlayCreatorViewController.h */,
 				A09A8A6417230A6B000D9AF7 /* AROverlayCreatorViewController.m */,
 				A09A8A6517230A6B000D9AF7 /* AROverlayCreatorViewController.xib */,
@@ -887,6 +937,21 @@
 			path = MBProgressHUD;
 			sourceTree = "<group>";
 		};
+		A0EC45661733069B006D9DB9 /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				A0EC456A17330715006D9DB9 /* ARCameraVC.h */,
+				A0EC456917330715006D9DB9 /* ARCameraVC.m */,
+				A0EC456817330715006D9DB9 /* ARCameraVC_iPhone.h */,
+				A0EC456717330715006D9DB9 /* ARCameraVC_iPhone.m */,
+				A0EC457117330723006D9DB9 /* ARCameraVC_iPhone.xib */,
+				A0EC456B17330715006D9DB9 /* ARCameraVC_iPad.h */,
+				A0EC456C17330715006D9DB9 /* ARCameraVC_iPad.m */,
+				A0EC457017330723006D9DB9 /* ARCameraVC_iPad.xib */,
+			);
+			path = Camera;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -1031,6 +1096,8 @@
 				A0CEF1AD1728877C0016E3D6 /* tooltip_background_up.png in Resources */,
 				A0CEF1B0172887CB0016E3D6 /* tooltip_arrow_background@2x.png in Resources */,
 				A0CEF1B1172887CB0016E3D6 /* tooltip_background_up@2x.png in Resources */,
+				A0EC457217330723006D9DB9 /* ARCameraVC_iPad.xib in Resources */,
+				A0EC457317330723006D9DB9 /* ARCameraVC_iPhone.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1057,8 +1124,6 @@
 				A09A8A8A17230A6B000D9AF7 /* ARTotalAugmentedImagesView.m in Sources */,
 				A09A8A8B17230A6B000D9AF7 /* CachedImageView.m in Sources */,
 				A09A8A8C17230A6B000D9AF7 /* ARCameraOverlayTooltip.m in Sources */,
-				A09A8A8D17230A6B000D9AF7 /* GRCameraOverlayToolbar.m in Sources */,
-				A09A8A8E17230A6B000D9AF7 /* GRCameraOverlayView.m in Sources */,
 				A09A8A8F17230A6B000D9AF7 /* GridCellView.m in Sources */,
 				A09A8A9017230A6B000D9AF7 /* GridView.m in Sources */,
 				A09A8A9117230A6B000D9AF7 /* AROverlayAudioView.m in Sources */,
@@ -1113,6 +1178,14 @@
 				A09A8EEC172322EF000D9AF7 /* MBProgressHUD.m in Sources */,
 				A057A664172450EE00662670 /* NSBundle+ARCoreResources.m in Sources */,
 				A057A66A1724522C00662670 /* UIImage+ARCoreResources.m in Sources */,
+				A0EC456D17330715006D9DB9 /* ARCameraVC_iPhone.m in Sources */,
+				A0EC456E17330715006D9DB9 /* ARCameraVC.m in Sources */,
+				A0EC456F17330715006D9DB9 /* ARCameraVC_iPad.m in Sources */,
+				A0EC457617330768006D9DB9 /* GRCameraOverlayToolbar.m in Sources */,
+				A0EC4579173307A6006D9DB9 /* ARCameraViewUtil.m in Sources */,
+				A0EC457C173307DD006D9DB9 /* DMRotatableCameraHUD.m in Sources */,
+				A0EC457F173308B4006D9DB9 /* ARCameraPreviewView.m in Sources */,
+				A0EC45821734A104006D9DB9 /* ARAugmentedPhotoVC.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

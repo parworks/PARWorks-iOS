@@ -13,7 +13,13 @@
 
 + (UIImage *)arCoreImageNamed:(NSString *)name
 {
-    UIImage *img = [UIImage imageNamed:[NSString stringWithFormat:@"ARCore.bundle/%@", name]];
+    // Check the default bundle first before trying to load the image
+    // from our custom bundle.
+    UIImage *img = [UIImage imageNamed:name];
+    if (!img) {
+        img = [UIImage imageNamed:[NSString stringWithFormat:@"ARCore.bundle/%@", name]];
+    }
+    
     return img;
 }
 
