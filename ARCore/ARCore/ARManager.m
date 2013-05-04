@@ -179,7 +179,6 @@ static ARManager * sharedManager;
     
     [h setUserAgent:@"HD4AR-iOS"];
     [h setTimeOutSeconds: 60];
-    [h addRequestHeader:@"Expect" value:@"100-Continue"];
     [h addRequestHeader:@"Content-Encoding" value:@"identity"];
     [h addRequestHeader:@"Content-Type" value:@"text/plain"];
     [h addRequestHeader:@"X-AppVersion" value: _appVersion];
@@ -251,14 +250,13 @@ static ARManager * sharedManager;
     ASIHTTPRequest * __weak __req = req;
     [req setTimeOutSeconds: 500];
     [req setCompletionBlock: ^(void) {
-        [self handleResponseErrors: __req];
-        NSArray *rawSites = [__req responseJSON];
-        
         NSMutableArray *sites = [NSMutableArray array];
-        for (NSDictionary *dict in rawSites) {
-            [sites addObject:[[ARSite alloc] initWithSummaryDictionary:dict]];
+        if ([self handleResponseErrors: __req]) {
+            NSArray *rawSites = [__req responseJSON];
+            for (NSDictionary *dict in rawSites) {
+                [sites addObject:[[ARSite alloc] initWithSummaryDictionary:dict]];
+            }
         }
-        
         if (completionBlock)
             completionBlock(sites);
     }];
@@ -393,7 +391,7 @@ static ARManager * sharedManager;
 - (BOOL)handleResponseErrors:(ASIHTTPRequest*)req
 {
     id json = [req responseJSON];
-    if (([req responseStatusCode] != 200) ||
+    if (([req responseStatusCode] != 200) || ([json isKindOfClass: [NSError class]]) ||
         ([json isKindOfClass: [NSDictionary class]] && [json objectForKey: @"reason"])) {
         [self criticalRequestFailed: req];
         return NO;
