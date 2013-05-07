@@ -10,7 +10,6 @@
 #import "ARCameraVC_iPad.h"
 #import "ARCameraVC_iPhone.h"
 #import "ARCameraViewUtil.h"
-#import "MBProgressHUD.h"
 #import "NSBundle+ARCoreResources.h"
 
 // used for KVO observation of the @"capturingStillImage" property to perform flash bulb animation

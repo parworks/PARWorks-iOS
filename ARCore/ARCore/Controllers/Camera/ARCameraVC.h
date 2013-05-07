@@ -10,14 +10,27 @@
 #import <AVFoundation/AVFoundation.h>
 #import "ARCameraPreviewView.h"
 
-@class DMRotatableCameraHUD;
+@class ARCameraVC;
 
 typedef void(^ARCameraVCPhotoTakenBlock)(NSData *jpegData, NSError *error);
+
+/** TODO: Implement this...
+@protocol ARCameraVCDelegate <NSObject>
+
+@optional
+- (UIView *)hudForCameraVC:(ARCameraVC *)cameraVC;
+- (void)didTakePhotoWithData:(NSData *)jpegData error:(NSError *)error;
+
+@end
+*/
+
 
 @interface ARCameraVC : UIViewController <UIGestureRecognizerDelegate, AVCaptureVideoDataOutputSampleBufferDelegate, ARCameraPreviewViewDelegate>
 
 @property(nonatomic, strong) ARCameraPreviewView *previewView;
 @property(nonatomic, copy) ARCameraVCPhotoTakenBlock photoTakenBlock;
+//@property(nonatomic, weak) id<ARCameraVCDelegate> delegate;
+
 
 /// Lifecycle
 - (id)initForCurrentDeviceIdiom;

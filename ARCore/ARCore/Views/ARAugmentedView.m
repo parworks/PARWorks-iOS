@@ -116,31 +116,55 @@
 }
 
 #pragma mark - Layout
-
-- (void)layoutSubviews
+- (void)setBounds:(CGRect)bounds
 {
-    [super layoutSubviews];
+    CGFloat duration = _shouldAnimateViewLayout ? _viewLayoutAnimationDuration : 0.0;
+    [UIView animateWithDuration:duration animations:^{
+        [super setBounds:bounds];
+        [self layoutForCurrentViewMetrics];
+    }];
+}
+
+- (void)setFrame:(CGRect)frame
+{
+    CGFloat duration = _shouldAnimateViewLayout ? _viewLayoutAnimationDuration : 0.0;
+    [UIView animateWithDuration:duration animations:^{
+        [super setFrame:frame];
+        [self layoutForCurrentViewMetrics];
+    }];
+}
+
+- (void)setCenter:(CGPoint)center
+{
+    CGFloat duration = _shouldAnimateViewLayout ? _viewLayoutAnimationDuration : 0.0;
+    [UIView animateWithDuration:duration animations:^{
+        [super setCenter:center];
+        [self layoutForCurrentViewMetrics];
+    }];
+}
+
+// Layout our subviews based on the current frame of the view
+- (void)layoutForCurrentViewMetrics
+{
     [_dimView setFrame: [self bounds]];
     if(CGPointEqualToPoint(_loadingViewPoint, CGPointMake(0, 0)))
-        [_loadingView setCenter:[self center]];
+        [_loadingView setCenter:CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2)];
     else
         [_loadingView setCenter:_loadingViewPoint];
     
     CGFloat x = (self.bounds.size.width - _totalAugmentedImagesView.frame.size.width - 10);
     [_totalAugmentedImagesView setFrameX:x];
     [_totalAugmentedImagesView setFrameY:10];
-
-    _overlayScaleFactor = [self scaleFactorForBounds:self.bounds withImage:_augmentedPhoto.image];
-    [_overlayImageView setFrame: [self centeredAspectScaleFrameForImage: _augmentedPhoto.image]];
     
+    _overlayScaleFactor = [self scaleFactorForBounds:self.bounds withImage:_augmentedPhoto.image];
+    [_overlayImageView setBounds: [self centeredAspectScaleBoundsForImage: _augmentedPhoto.image]];
+    [_overlayImageView setCenter: CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2)];
     
     // reattach the overlay views
     [self resetFocusedOverlay];
     [_overlayViews makeObjectsPerformSelector:@selector(layoutWithinParent:) withObject:self];
     [_outlineViews makeObjectsPerformSelector:@selector(layoutWithinParent:) withObject:self];
     [_overlayTitleViews makeObjectsPerformSelector:@selector(layoutWithinParent:) withObject: self];
-    
-//    NSLog(@"%f,%f,%f,%f inside %f,%f", _overlayImageView.frame.origin.x,_overlayImageView.frame.origin.y, _overlayImageView.frame.size.width, _overlayImageView.frame.size.height, self.frame.size.width, self.frame.size.height);
 }
 
 - (void)setShowOutlineViewsOnly:(BOOL)showOutlineViewsOnly
@@ -304,6 +328,14 @@
         NSLog(@"WARNING Huge image in ARAugmentedView: %f", scale);
 
     return scale;
+}
+
+- (CGRect)centeredAspectScaleBoundsForImage:(UIImage *)image
+{
+    if (_augmentedPhoto.image == nil)
+        return [self bounds];
+    
+    return CGRectMake(0, 0, image.size.width * _overlayScaleFactor, image.size.height * _overlayScaleFactor);
 }
 
 - (CGRect)centeredAspectScaleFrameForImage:(UIImage *)image

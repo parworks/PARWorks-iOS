@@ -17,7 +17,6 @@
 {
     BOOL _isFirstLoad;
     NSTimeInterval _controllerLoadedTimestamp;
-
 }
 
 
@@ -30,6 +29,7 @@
         _site = site;
         _imageToAugment = image;
         _waitingImageContents = contents;
+        NSLog(@"Showing image with size %@", NSStringFromCGSize(image.size));
     }
     return self;
 }
@@ -61,14 +61,21 @@
     // Augmented view that will show the augmented results in this view.
     _augmentedView = [[ARAugmentedView alloc] initWithFrame:self.view.bounds];
     _augmentedView.alpha = 0.0;
-    _augmentedView.backgroundColor = [UIColor blackColor];
+    _augmentedView.backgroundColor = [UIColor redColor];
+    _augmentedView.shouldAnimateViewLayout = YES;
     [self.view addSubview:_augmentedView];
+    
+    _backButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    _backButton.titleLabel.text = @"Back";
+    [_backButton addTarget:self action:@selector(handleBackButtonTapped) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:_backButton];
 }
 
 - (void)viewWillAppear:(BOOL)animated
 {
     [super viewWillAppear:animated];
     _progressHUD.center = CGPointMake(self.view.bounds.size.width/2, self.view.bounds.size.height/2);
+    _backButton.frame = CGRectMake(10, 10, 60, 40);
     
     [self setAugmentedPhoto:[_site augmentImage:_imageToAugment]];
     [self showAugmentingInterface];
@@ -87,7 +94,12 @@
 }
 
 
-#pragma mark - Convenience
+#pragma mark - Interaction
+- (void)handleBackButtonTapped
+{
+    [self dismissViewControllerAnimated:YES completion:nil];
+}
+
 - (void)showAugmentingInterface
 {
     double delayInSeconds = 0.3;
@@ -111,8 +123,10 @@
 #pragma mark - Rotation
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
+    [_augmentedView setViewLayoutAnimationDuration:duration];
+    [_augmentedView setBounds:self.view.bounds];
+    
     _progressHUD.center = CGPointMake(self.view.bounds.size.width/2, self.view.bounds.size.height/2);
-    _augmentedView.bounds = self.view.bounds;
     _takenPhotoLayer.bounds = self.view.bounds;
     _takenBlackLayer.bounds = self.view.bounds;
 }
@@ -173,6 +187,7 @@
         _augmentedView.alpha = 1;
         [self.view removeGestureRecognizer: _tap];
         [self.view bringSubviewToFront: _augmentedView];
+        [self.view bringSubviewToFront:_backButton];
     }
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(imageAugmentationStatusChanged:) name:NOTIF_AUGMENTED_PHOTO_UPDATED object:_augmentedPhoto];

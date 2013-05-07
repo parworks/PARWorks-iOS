@@ -20,6 +20,8 @@
     UIImage *_imageToAugment;
     id _waitingImageContents;
 
+    UIButton *_backButton;
+    
     UITapGestureRecognizer  *_tap;
     MBProgressHUD           *_progressHUD;
     CALayer                 *_takenBlackLayer;
