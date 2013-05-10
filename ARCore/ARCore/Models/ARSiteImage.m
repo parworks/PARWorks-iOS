@@ -162,4 +162,8 @@
     return _dict[key];
 }
 
+- (NSTimeInterval)timestamp{
+    return [[_dict objectForKey: @"timestamp"] doubleValue];
+}
+
 @end
