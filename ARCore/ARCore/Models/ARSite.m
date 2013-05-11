@@ -63,6 +63,11 @@
         _summaryOverlayCount = [dict[@"numOverlays"] intValue];
         self.identifier = dict[@"id"];
         self.status = [self siteStatusForString:dict[@"siteState"]];
+
+        if ([[dict objectForKey:@"posterImageUrl"] isKindOfClass: [NSString class]]) {
+            NSString * url = [dict objectForKey:@"posterImageUrl"];
+            _posterImage = [NSDictionary dictionaryWithObject:url forKey:@"imgContentPath"];
+        }
         [self checkStatusIn20Seconds];
     }
     return self;
@@ -76,9 +81,9 @@
         [self setImages: [aDecoder decodeObjectForKey: @"images"]];
         [self setOverlays: [aDecoder decodeObjectForKey: @"overlays"]];
         [self setStatus: [aDecoder decodeIntForKey: @"status"]];
-//        [self setAugmentedPhotos: [aDecoder decodeObjectForKey: @"augmentedPhotos"]];
         _summaryImageCount = [aDecoder decodeIntForKey: @"summaryImageCount"];
         _summaryOverlayCount = [aDecoder decodeIntForKey: @"summaryOverlayCount"];
+        _posterImage = [aDecoder decodeObjectForKey:@"_posterImage"];
     }
     return self;    
 }
@@ -89,9 +94,9 @@
     [aCoder encodeObject: _images forKey: @"images"];
     [aCoder encodeObject: _overlays forKey: @"overlays"];
     [aCoder encodeInt: _status forKey: @"status"];
-    //    [aCoder encodeObject: _augmentedPhotos forKey: @"augmentedPhotos"];
     [aCoder encodeInt: _summaryImageCount forKey: @"summaryImageCount"];
     [aCoder encodeInt: _summaryOverlayCount forKey: @"summaryOverlayCount"];
+    [aCoder encodeObject: _posterImage forKey: @"_posterImage"];
 }
 
 - (void)fetchInfo
@@ -129,6 +134,9 @@
     
     if (_posterImage == nil)
         _posterImage = [_recentAugmentationOutput lastObject];
+    
+    if ((_posterImage == nil) && ([dict objectForKey:@"posterImageUrl"]))
+        _posterImage = [NSDictionary dictionaryWithObject:[dict objectForKey:@"posterImageUrl"] forKey:@"imgContentPath"];
 }
 
 #pragma mark Site Status
@@ -203,6 +211,7 @@
 
 - (NSURL*)posterImageURL
 {
+    NSLog(@"%@", [_posterImage description]);
     return [NSURL URLWithString: [_posterImage objectForKey: @"imgContentPath" or: [_posterImage objectForKey: @"imgPath"]]];
 }
 
