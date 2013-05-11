@@ -23,6 +23,4 @@
 
 @property(nonatomic, weak) IBOutlet UIButton *cameraButton;
 
-
-
 @end

@@ -90,4 +90,10 @@ typedef enum {
  */
 - (NSString *)urlStringForSiteImageSize:(ARSiteImageSize)sizeType;
 
+
+/**
+  @return The timestamp of the ARSiteImage
+*/
+- (NSTimeInterval)timestamp;
+
 @end

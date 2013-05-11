@@ -93,6 +93,12 @@
 /// Tells the view whether or not it should animate the drawing of outline views. Defaults to YES.
 @property(nonatomic, assign) BOOL animateOutlineViewDrawing;
 
+/// Tells the view whether or not it should animate the layout of its subviews. Defaults to NO.
+@property(nonatomic, assign) BOOL shouldAnimateViewLayout;
+
+/// The duration the view should use when laying out its subviews. Defaults to 0.4.
+@property(nonatomic, assign) CGFloat viewLayoutAnimationDuration;
+
 /// The delegate for the augmented view.
 @property(nonatomic, weak) IBOutlet id<ARAugmentedViewDelegate> delegate;
 
