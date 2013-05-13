@@ -29,6 +29,7 @@
 
 @property(nonatomic, weak) IBOutlet AROverlayBuilderView * overlayBuilderView;
 
+@property(nonatomic, weak) IBOutlet UINavigationBar *navBar;
 @property(nonatomic, weak) IBOutlet UIToolbar *toolbar;
 @property(nonatomic, weak) IBOutlet UIBarButtonItem *toggleToolbarButton;
 @property(nonatomic, weak) IBOutlet UIBarButtonItem *saveButton;
@@ -38,6 +39,8 @@
 /// Lifecycle
 - (id)initWithSiteImage:(ARSiteImage*)s;
 
+- (void)showHUD;
+- (void)hideHUD;
 
 /// User Interaction
 - (IBAction)toggleToolbarTapped:(id)sender;

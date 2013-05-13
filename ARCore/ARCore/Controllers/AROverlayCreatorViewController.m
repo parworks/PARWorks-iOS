@@ -36,7 +36,14 @@
 
 - (id)initWithSiteImage:(ARSiteImage*)s
 {
-    self = [super initWithNibName:@"AROverlayCreatorViewController" bundle:[NSBundle arCoreResourcesBundle]];
+    NSString *nibName = NSStringFromClass([self class]);
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        nibName = [nibName stringByAppendingString:@"_iPhone"];
+    } else {
+        nibName = [nibName stringByAppendingString:@"_iPad"];
+    }
+
+    self = [super initWithNibName:nibName bundle:[NSBundle arCoreResourcesBundle]];
     if (self) {
         _siteImage = s;
     }

@@ -71,7 +71,7 @@
 		A057A65117244FE400662670 /* toolbar_hide@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A09A8A1A17230A6A000D9AF7 /* toolbar_hide@2x.png */; };
 		A057A65217244FE400662670 /* toolbar_show.png in Resources */ = {isa = PBXBuildFile; fileRef = A09A8A1B17230A6A000D9AF7 /* toolbar_show.png */; };
 		A057A65317244FE400662670 /* toolbar_show@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = A09A8A1C17230A6A000D9AF7 /* toolbar_show@2x.png */; };
-		A057A65417244FF200662670 /* AROverlayCreatorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A09A8A6517230A6B000D9AF7 /* AROverlayCreatorViewController.xib */; };
+		A057A65417244FF200662670 /* AROverlayCreatorViewController_iPhone.xib in Resources */ = {isa = PBXBuildFile; fileRef = A09A8A6517230A6B000D9AF7 /* AROverlayCreatorViewController_iPhone.xib */; };
 		A057A65517244FF200662670 /* AROverlayDataEditorViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A09A8A6817230A6B000D9AF7 /* AROverlayDataEditorViewController.xib */; };
 		A057A65617244FF200662670 /* ARPhotoViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A09A8A6B17230A6B000D9AF7 /* ARPhotoViewController.xib */; };
 		A057A65717244FF200662670 /* ARWebViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = A09A8A6E17230A6B000D9AF7 /* ARWebViewController.xib */; };
@@ -334,7 +334,7 @@
 		A09A8A6117230A6B000D9AF7 /* ARSiteOverlayPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARSiteOverlayPoint.m; sourceTree = "<group>"; };
 		A09A8A6317230A6B000D9AF7 /* AROverlayCreatorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AROverlayCreatorViewController.h; sourceTree = "<group>"; };
 		A09A8A6417230A6B000D9AF7 /* AROverlayCreatorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AROverlayCreatorViewController.m; sourceTree = "<group>"; };
-		A09A8A6517230A6B000D9AF7 /* AROverlayCreatorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AROverlayCreatorViewController.xib; sourceTree = "<group>"; };
+		A09A8A6517230A6B000D9AF7 /* AROverlayCreatorViewController_iPhone.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AROverlayCreatorViewController_iPhone.xib; sourceTree = "<group>"; };
 		A09A8A6617230A6B000D9AF7 /* AROverlayDataEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AROverlayDataEditorViewController.h; sourceTree = "<group>"; };
 		A09A8A6717230A6B000D9AF7 /* AROverlayDataEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AROverlayDataEditorViewController.m; sourceTree = "<group>"; };
 		A09A8A6817230A6B000D9AF7 /* AROverlayDataEditorViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AROverlayDataEditorViewController.xib; sourceTree = "<group>"; };
@@ -444,6 +444,7 @@
 		A0EC458F1734B955006D9DB9 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		A0EC45911734B962006D9DB9 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/CoreVideo.framework; sourceTree = "<absolute>"; };
 		A0EC45931734B962006D9DB9 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/AVFoundation.framework; sourceTree = "<absolute>"; };
+		A0EC45B1173890FA006D9DB9 /* AROverlayCreatorViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AROverlayCreatorViewController_iPad.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -774,7 +775,8 @@
 				A0EC45811734A104006D9DB9 /* ARAugmentedPhotoVC.m */,
 				A09A8A6317230A6B000D9AF7 /* AROverlayCreatorViewController.h */,
 				A09A8A6417230A6B000D9AF7 /* AROverlayCreatorViewController.m */,
-				A09A8A6517230A6B000D9AF7 /* AROverlayCreatorViewController.xib */,
+				A09A8A6517230A6B000D9AF7 /* AROverlayCreatorViewController_iPhone.xib */,
+				A0EC45B1173890FA006D9DB9 /* AROverlayCreatorViewController_iPad.xib */,
 				A09A8A6617230A6B000D9AF7 /* AROverlayDataEditorViewController.h */,
 				A09A8A6717230A6B000D9AF7 /* AROverlayDataEditorViewController.m */,
 				A09A8A6817230A6B000D9AF7 /* AROverlayDataEditorViewController.xib */,
@@ -1022,7 +1024,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A057A65417244FF200662670 /* AROverlayCreatorViewController.xib in Resources */,
+				A057A65417244FF200662670 /* AROverlayCreatorViewController_iPhone.xib in Resources */,
 				A057A65517244FF200662670 /* AROverlayDataEditorViewController.xib in Resources */,
 				A057A65617244FF200662670 /* ARPhotoViewController.xib in Resources */,
 				A057A65717244FF200662670 /* ARWebViewController.xib in Resources */,
