@@ -213,10 +213,13 @@ float pin( float minValue, float value, float maxValue )
     CGPoint imageZoomPoint = [self cappedTouchPointForPoint:p withScaledImageFrame:scaledFrame];
     _lensView.currentZoomPoint = imageZoomPoint;
     
+    CGRect draggableFrame = CGRectInset(scaledFrame, _lensView.bounds.size.width/2, _lensView.bounds.size.height/2);
     CGFloat zoomOffsetY = (_lensView.bounds.size.height/2) + 10;
     CGPoint zoomCenter = CGPointMake(p.x, p.y - zoomOffsetY);
-    zoomCenter.x = pin(0 + _lensView.bounds.size.width/2, zoomCenter.x, self.frame.size.width - scaledFrame.origin.x - _lensView.bounds.size.width/2);
-    zoomCenter.y = pin(0 + _lensView.bounds.size.height/2, zoomCenter.y, self.frame.size.height - scaledFrame.origin.y - _lensView.bounds.size.height/2);
+
+    zoomCenter.x = pin(draggableFrame.origin.x, zoomCenter.x, draggableFrame.origin.x + draggableFrame.size.width);
+    zoomCenter.y = pin(draggableFrame.origin.y, zoomCenter.y, draggableFrame.origin.y + draggableFrame.size.height);
+    
     _lensView.center = zoomCenter;
     [_lensView setNeedsDisplay];
 }

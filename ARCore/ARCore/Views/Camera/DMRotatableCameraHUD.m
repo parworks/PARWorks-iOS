@@ -6,6 +6,7 @@
 //
 //
 
+#import "ARCameraViewUtil.h"
 #import "DMRotatableCameraHUD.h"
 
 @implementation DMRotatableCameraHUD
@@ -91,6 +92,21 @@ CGFloat UIDeviceOrientationAngleOfOrientation(UIDeviceOrientation orientation);
     if (!CGRectEqualToRect(self.frame, frame)) {
         self.frame = frame;
     }
+}
+
+- (UIInterfaceOrientation)currentDisplayedInterfaceOrientation
+{
+    CGFloat angle = UIDeviceOrientationAngleOfOrientation([[UIDevice currentDevice] orientation]);
+    UIInterfaceOrientation orientation = UIInterfaceOrientationPortrait;
+    if (angle == M_PI) {
+        orientation = UIInterfaceOrientationPortraitUpsideDown;
+    } else if (angle == M_PI_2) {
+        orientation = UIInterfaceOrientationLandscapeLeft;
+    } else if (angle == -M_PI_2) {
+        orientation = UIInterfaceOrientationLandscapeRight;
+    }
+    
+    return orientation;
 }
 
 

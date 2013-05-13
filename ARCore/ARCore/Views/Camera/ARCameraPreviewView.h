@@ -16,6 +16,9 @@
 - (void)capturingStateDidChange:(BOOL)isCapturing;
 - (void)didCaptureImageWithData:(NSData *)imageData error:(NSError *)error;
 
+// In case the owning view controller needs to explicitly tell the preview view the orientation for the
+// image capture.
+- (UIInterfaceOrientation)currentCaptureInterfaceOrientation;
 @end
 
 

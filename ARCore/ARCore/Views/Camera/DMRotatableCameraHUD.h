@@ -10,4 +10,7 @@
 
 @interface DMRotatableCameraHUD : UIView
 
+- (void)rotateAccordingToDeviceOrientation;
+- (UIInterfaceOrientation)currentDisplayedInterfaceOrientation;
+
 @end

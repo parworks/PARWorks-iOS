@@ -38,8 +38,9 @@
         [self setSiteImageIdentifier: s.identifier];
         self.points = [NSMutableArray array];
         
-        if (_site.status != ARSiteStatusProcessed)
-            @throw [NSException exceptionWithName:@"PAR Works API Error" reason:@"You must process the base images in your site before creating an overlay." userInfo:nil];
+        if (_site.status != ARSiteStatusProcessed) {
+//            @throw [NSException exceptionWithName:@"PAR Works API Error" reason:@"You must process the base images in your site before creating an overlay." userInfo:nil];
+        }
     }
     return self;
 }

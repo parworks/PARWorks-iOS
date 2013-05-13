@@ -21,6 +21,7 @@ static NSString * const AVCaptureStillImageIsCapturingStillImageContext = @"AVCa
 {
     self = [super initWithFrame:frame];
     if (self) {
+        _delegate = delegate;
         [self sharedInit];
     }
     return self;
@@ -56,7 +57,7 @@ static NSString * const AVCaptureStillImageIsCapturingStillImageContext = @"AVCa
 	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         session.sessionPreset = AVCaptureSessionPresetMedium;
     } else {
-        session.sessionPreset = AVCaptureSessionPresetHigh;
+        session.sessionPreset = AVCaptureSessionPreset1920x1080;
     }
     
     // Select a video device, make an input
@@ -124,7 +125,11 @@ static NSString * const AVCaptureStillImageIsCapturingStillImageContext = @"AVCa
     }
 }
 
-
+- (void)setFrame:(CGRect)frame
+{
+    [super setFrame:frame];
+    _previewLayer.frame = self.layer.bounds;
+}
 
 #pragma mark - Getters/Setters
 - (void)setFlashMode:(AVCaptureFlashMode)flashMode
@@ -156,8 +161,9 @@ static NSString * const AVCaptureStillImageIsCapturingStillImageContext = @"AVCa
 - (void)takePictureWithCompletionBlock:(ARCameraCaptureCompleteBlock)complete
 {
 	// Find out the current orientation and tell the still image output.
-	UIDeviceOrientation curDeviceOrientation = [[UIDevice currentDevice] orientation];
-	AVCaptureVideoOrientation avcaptureOrientation = [ARCameraViewUtil avOrientationForDeviceOrientation:curDeviceOrientation];
+    AVCaptureVideoOrientation avcaptureOrientation;
+    UIDeviceOrientation curDeviceOrientation = [[UIDevice currentDevice] orientation];
+    avcaptureOrientation = [ARCameraViewUtil avOrientationForDeviceOrientation:curDeviceOrientation];
     
 	AVCaptureConnection *stillImageConnection = [_stillImageOutput connectionWithMediaType:AVMediaTypeVideo];
     stillImageConnection.videoOrientation = avcaptureOrientation;
