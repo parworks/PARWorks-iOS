@@ -39,8 +39,6 @@
 /// Lifecycle
 - (id)initWithSiteImage:(ARSiteImage*)s;
 
-- (void)showHUD;
-- (void)hideHUD;
 
 /// User Interaction
 - (IBAction)toggleToolbarTapped:(id)sender;

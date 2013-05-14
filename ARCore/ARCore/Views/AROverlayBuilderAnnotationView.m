@@ -58,71 +58,36 @@
     CGContextRef context = UIGraphicsGetCurrentContext();
     CGContextClearRect(context, rect);
     CGContextSaveGState(context);
-
-
-    // Remove all the overlay views and put them in a reuse array
-    NSMutableArray * unusedPointViews = [[NSMutableArray alloc] initWithArray: _pointViews];
-    [_pointViews removeAllObjects];
-
-    // Remove all the lock views and put them in a reuse array
-    NSMutableArray * unusedLockViews = [[NSMutableArray alloc] initWithArray: _lockViews];
-    [_lockViews removeAllObjects];
-    
-    [[self subviews] makeObjectsPerformSelector:@selector(removeFromSuperview)];
-    
+        
     // Create / place point views for our overlays
     for (AROverlay * overlay in _siteImage.overlays) {
         NSArray * scaledPoints = [self scaledPointsForOverlay: overlay];
-        CGRect lockViewRect = CGRectZero;
 
-        if (![overlay isSaved])
+        if (![overlay isSaved]) {
             [[[UIColor greenColor] colorWithAlphaComponent:0.4] set];
-        else
+        } else {
             [[[UIColor redColor] colorWithAlphaComponent:0.4] set];
-
+        }
+        
         for (int i = 0; i < scaledPoints.count; i++) {
             AROverlayPoint * point = scaledPoints[i];
             
-            // Dequeue a point view or create one if we have to
-            UIView * pointView = [unusedPointViews lastObject];
-            if (!pointView) {
-                pointView = [[UIImageView alloc] initWithImage:[UIImage arCoreImageNamed:@"bubble.png"]];
-                pointView.contentMode = UIViewContentModeCenter;
-                [_pointViews addObject:pointView];
-            }
-            
-            // Place a point view
-            [pointView setCenter: CGPointMake(point.x, point.y)];
-            [self addSubview:pointView];
-            [unusedPointViews removeLastObject];
-
-            // Add this point to the rect that we'll use to center the lock view
-            if (CGRectEqualToRect(lockViewRect, CGRectZero))
-                lockViewRect = CGRectMake(point.x, point.y, 1, 1);
-            lockViewRect = CGRectUnion(lockViewRect, CGRectMake(point.x, point.y, 1, 1));
+            // Place a point view centered at our point.
+            UIImage *image = [UIImage arCoreImageNamed:@"bubble.png"];
+            CGRect rect = CGRectMake(0, 0, image.size.width, image.size.height);
+            rect.origin.x = point.x - floorf(image.size.width/2.0);
+            rect.origin.y = point.y - floorf(image.size.height/2.0);
+            CGContextDrawImage(context, rect, image.CGImage);
             
             // Add a point to the path we're drawing
-            if (i==0)
+            if (i==0) {
                 CGContextMoveToPoint(context, point.x, point.y);
-            else
+            } else {
                 CGContextAddLineToPoint(context, point.x, point.y);
+            }
         }
     
         CGContextFillPath(context);
-        
-        // Dequeue a lock view or create one if we have to
-        UIImageView *lockView = [unusedPointViews lastObject];
-        if (!lockView) {
-            lockView = [[UIImageView alloc] initWithFrame:CGRectMake(0, 0, 30, 30)];
-            lockView.image = [UIImage arCoreImageNamed:@"stock_lock_open.png"];
-            lockView.contentMode = UIViewContentModeScaleAspectFit;
-            [_lockViews addObject: lockView];
-        }
-
-        lockView.center = CGPointMake(lockViewRect.origin.x + (lockViewRect.size.width/2), lockViewRect.origin.y + (lockViewRect.size.height/2));
-        lockView.hidden = (overlay.points.count <= 2);
-//        [self addSubview: lockView];
-        [unusedLockViews removeLastObject];
     }
 }
 
@@ -132,6 +97,20 @@
 {
     [super layoutSubviews];
     _imageScale = [_backingImageView aspectFitScaleForCurrentImage];
+}
+
+- (void)createAndLayoutOverlayPoints
+{
+    // TODO: Refactor how the dots showing corners are handled.
+    
+    // Create any points needed.
+//    NSInteger totalPointCount = 0;
+//    for (int i=0; i<_siteImage.overlays.count; i++) {
+//        AROverlay *overlay = _siteImage.overlays[i];
+//        totalPointCount += overlay.points.count;
+//    }
+    
+    
 }
 
 #pragma mark - Convenience

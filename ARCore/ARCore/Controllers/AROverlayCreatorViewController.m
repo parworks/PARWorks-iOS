@@ -23,9 +23,6 @@
 #import "NSBundle+ARCoreResources.h"
 #import "UIImage+ARCoreResources.h"
 
-@interface AROverlayCreatorViewController ()
-
-@end
 
 @implementation AROverlayCreatorViewController
 {
