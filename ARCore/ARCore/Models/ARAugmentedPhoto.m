@@ -203,7 +203,11 @@
         return;
     }
     
-    ASIHTTPRequest * req = [[ARManager shared] createRequest:REQ_IMAGE_AUGMENT_RESULT withMethod:@"GET" withArguments:[self processArguments]];
+    NSMutableDictionary * args = [self processArguments];
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"static_result"])
+        [args setObject:@"true" forKey:@"specialResult"];
+    
+    ASIHTTPRequest * req = [[ARManager shared] createRequest:REQ_IMAGE_AUGMENT_RESULT withMethod:@"GET" withArguments:args];
     ASIHTTPRequest * __weak __req = req;
     
     [req setCompletionBlock: ^(void) {
@@ -242,6 +246,16 @@
         }
         [result setSite: self.site];
         [self addOverlay: result];
+    }
+    
+    if ([data objectForKey: @"image_override_url"]) {
+        NSString * path = [data objectForKey: @"image_override_url"];
+        NSData * imgData = [NSData dataWithContentsOfURL: [NSURL URLWithString: path]];
+        UIImage * img = [UIImage imageWithData: imgData];
+        if (img) {
+            self.image = img;
+            NSLog(@"Swapping in fake image %@ from URL: %@", img, path);
+        }
     }
 }
 

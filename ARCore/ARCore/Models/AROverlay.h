@@ -42,6 +42,7 @@ typedef enum {
     AROverlayContentSize_Small = 0,
     AROverlayContentSize_Medium,
     AROverlayContentSize_Large,
+    AROverlayContentSize_Large_Left,
     AROverlayContentSize_Fullscreen
 } AROverlayContentSize;
 
@@ -74,6 +75,7 @@ typedef enum {
 
 @property (nonatomic, assign) AROverlayCoverType coverType;
 @property (nonatomic, assign) NSInteger          coverTransparency;
+@property (nonatomic, assign) CGSize             centroidOffset;
 @property (nonatomic, strong) UIColor            * coverColor;
 @property (nonatomic, strong) NSString           * coverProvider;
 

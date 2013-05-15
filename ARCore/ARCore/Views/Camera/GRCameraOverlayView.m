@@ -66,15 +66,15 @@
     [_toolbar.flashButton addTarget:self action:@selector(flashButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
     [self addSubview:_toolbar];
     
-    CGRect cameraArea = CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.width * IOS_CAMERA_ASPECT_RATIO);
-
+    CGRect cameraArea = [self cameraArea];
+    
     // on the iphone 5, the best we can do is center the damn thing...
     if (_isiPhone5)
         cameraArea.origin.y += 23;
     
     _takenPhotoLayer = [CALayer layer];
     _takenPhotoLayer.frame = cameraArea;
-    _takenPhotoLayer.contentsGravity = kCAGravityResizeAspect;
+    _takenPhotoLayer.contentsGravity = kCAGravityResizeAspectFill;
     _takenPhotoLayer.opacity = 0.0;
     [self.layer addSublayer:_takenPhotoLayer];
     
@@ -87,14 +87,14 @@
     _tooltip.alpha = 0.0;
     [self addSubview:_tooltip];
     
-    double delayInSeconds = 4.0;
-    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        if (!_augmentedPhoto) {
-            NSString *name = (_site.name && (_site.name.length > 0)) ? _site.name : @"the site";
-            [self showTooltipWithString: [NSString stringWithFormat: @"Take a picture of %@ to see overlays!", name]];
-        }
-    });
+//    double delayInSeconds = 4.0;
+//    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+//    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+//        if (!_augmentedPhoto) {
+//            NSString *name = (_site.name && (_site.name.length > 0)) ? _site.name : @"the site";
+//            [self showTooltipWithString: [NSString stringWithFormat: @"Take a picture of %@ to see overlays!", name]];
+//        }
+//    });
     
     // Augmented view that will show the augmented results in this view.
     _augmentedView = [[ARAugmentedView alloc] initWithFrame:self.bounds];
@@ -107,6 +107,16 @@
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(relayoutForCurrentOrientation:) name:UIDeviceOrientationDidChangeNotification object:nil];
     [self relayoutForCurrentOrientation:nil];
+}
+
+- (CGRect)cameraArea
+{
+    return CGRectMake(0, 0, self.bounds.size.width, self.bounds.size.width * IOS_CAMERA_ASPECT_RATIO);
+}
+
+- (ARAugmentedView*)augmentedView
+{
+    return _augmentedView;
 }
 
 - (void)dealloc
@@ -170,7 +180,7 @@
         }
         
         float shortSide = self.bounds.size.width;
-        float longSide = shortSide * IOS_CAMERA_ASPECT_RATIO;
+        float longSide = self.bounds.size.height;
 
         _toolbar.flashButton.transform = t;
         _toolbar.cancelButton.transform = t;

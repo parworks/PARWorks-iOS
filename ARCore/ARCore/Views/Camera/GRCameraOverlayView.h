@@ -49,10 +49,19 @@
 
 /// Convenience Class Methods
 + (UIImagePickerController *)defaultImagePicker;
+- (CGRect)cameraArea;
+- (ARAugmentedView*)augmentedView;
 
-- (void)resetToLiveCameraInterface;
+- (void)sharedInit;
+
 - (void)showTooltipWithString:(NSString *)string;
 - (UIImagePickerControllerCameraFlashMode)flashModeFromDefaults;
+
+
+#pragma mark - Convenience
+
+- (void)showAugmentingInterface;
+- (void)resetToLiveCameraInterface;
 
 @end
 
