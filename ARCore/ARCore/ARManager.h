@@ -42,6 +42,13 @@
 
 @property(nonatomic, readonly) NSString * apiKey;
 
+/**
+ The last known device orientation that wasn't faceup, facedown, or unknown. We
+ track this value for the purposes of uploading images to the PARWorks API in the correct
+ orientation (it doesn't handle EXIF data currently so we rotate the image before uploading it).
+ */
+@property(nonatomic, readonly) UIDeviceOrientation lastKnownRotationSpecificDeviceOrientation;
+
 
 // ================================
 // @name Authentication
@@ -66,6 +73,7 @@
 @return The current heading of the device.
 */
 - (CLHeading*)deviceHeading;
+
 
 // ========================
 // @name Creating Requests

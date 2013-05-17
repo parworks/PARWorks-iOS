@@ -66,6 +66,15 @@ static ARManager * sharedManager;
 	if (self) {
         _appVersion = [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleVersion"];
         _appUsername = @"joon";
+        
+        if (![UIDevice currentDevice].generatesDeviceOrientationNotifications) {
+            [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
+        }
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(deviceOrientationChanged)
+                                                     name:UIDeviceOrientationDidChangeNotification
+                                                   object:nil];
     }
 	return self;
 }
@@ -116,6 +125,16 @@ static ARManager * sharedManager;
 - (CLHeading*)deviceHeading
 {
     return [_locationManager heading];
+}
+
+- (void)deviceOrientationChanged
+{
+    UIDeviceOrientation orientation = [[UIDevice currentDevice] orientation];
+    if (orientation != UIDeviceOrientationFaceUp &&
+        orientation != UIDeviceOrientationFaceDown &&
+        orientation != UIDeviceOrientationUnknown) {
+        _lastKnownRotationSpecificDeviceOrientation = orientation;
+    }
 }
 
 

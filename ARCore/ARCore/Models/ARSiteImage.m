@@ -162,8 +162,9 @@
     return _dict[key];
 }
 
-- (NSTimeInterval)timestamp{
-    return [[_dict objectForKey: @"timestamp"] doubleValue];
+- (NSTimeInterval)timestamp {
+    // Dividing by 1000 since the API returns timestamps in milliseconds.
+    return ([[_dict objectForKey: @"timestamp"] doubleValue]/1000.0);
 }
 
 @end

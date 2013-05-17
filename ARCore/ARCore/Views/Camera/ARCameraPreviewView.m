@@ -117,7 +117,7 @@ static NSString * const AVCaptureStillImageIsCapturingStillImageContext = @"AVCa
 - (void)teardownAVCapture
 {
     @try {
-        [_stillImageOutput removeObserver:self forKeyPath:@"isCapturingStillImage"];
+        [_stillImageOutput removeObserver:self forKeyPath:@"capturingStillImage"];
     }
     @catch (NSException *exception) {}
     @finally {
