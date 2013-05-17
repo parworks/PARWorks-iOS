@@ -83,8 +83,24 @@
     if (_overlay.coverType == AROverlayCoverType_Centroid && !_overlay.coverProvider) {
         _coverView = [[ARCentroidView alloc] initWithFrame: CGRectMake(0, 0, 30, 30)];
         _coverView.autoresizingMask = UIViewAutoresizingNone;
-        [_coverView shiftFrame:CGPointMake(_overlay.centroidOffset.width, _overlay.centroidOffset.height)];
         
+        UIImageView * imageView = [[UIImageView alloc] initWithFrame: CGRectMake(0, 0, 100, 100)];
+        [imageView shiftFrame: CGPointMake(_overlay.centroidOffset.width, _overlay.centroidOffset.height)];
+        [_coverView addSubview: imageView];
+        
+        if (_overlay.coverProvider) {
+            NSURLRequest *req = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:_overlay.coverProvider]];
+            [NSURLConnection sendAsynchronousRequest:req queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *err) {
+                UIImage *img = [UIImage imageWithData:data];
+                if (img != nil) {
+                    CGPoint c = [imageView center];
+                    [imageView setImage: img];
+                    [imageView setFrameSize: img.size];
+                    [imageView setCenter: c];
+                }
+            }];
+        }
+
     } else {
         self.coverView = [[UIView alloc] initWithFrame:self.bounds];
         _coverView.backgroundColor = _overlay.coverColor;
