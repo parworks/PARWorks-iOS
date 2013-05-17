@@ -163,7 +163,11 @@
 }
 
 - (NSTimeInterval)timestamp{
-    return [[_dict objectForKey: @"timestamp"] doubleValue];
+    double time = [[_dict objectForKey: @"timestamp"] doubleValue];
+    if(time > 0)
+        return time/1000.0;
+    else
+        return time;
 }
 
 @end
