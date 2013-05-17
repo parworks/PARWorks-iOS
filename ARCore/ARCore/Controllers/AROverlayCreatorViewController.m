@@ -33,7 +33,7 @@
 
 - (id)initWithSiteImage:(ARSiteImage*)s
 {
-    NSString *nibName = NSStringFromClass([self class]);
+    NSString *nibName = NSStringFromClass([AROverlayCreatorViewController class]);
     if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         nibName = [nibName stringByAppendingString:@"_iPhone"];
     } else {

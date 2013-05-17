@@ -23,12 +23,12 @@
 
 @interface AROverlayCreatorViewController : UIViewController <ARMagViewDelegate>
 {
-    ARSiteImage * _siteImage;
     BOOL    _isAnimating;
 }
 
 @property(nonatomic, weak) IBOutlet AROverlayBuilderView * overlayBuilderView;
 
+@property(nonatomic, retain) ARSiteImage * siteImage;
 @property(nonatomic, weak) IBOutlet UINavigationBar *navBar;
 @property(nonatomic, weak) IBOutlet UIToolbar *toolbar;
 @property(nonatomic, weak) IBOutlet UIBarButtonItem *toggleToolbarButton;
@@ -46,5 +46,8 @@
 - (IBAction)undoTapped:(id)sender;
 - (IBAction)doneTapped:(id)sender;
 - (IBAction)saveTapped:(id)sender;
+
+- (void)update;
+
 @end
 
