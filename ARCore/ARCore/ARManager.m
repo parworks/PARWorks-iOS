@@ -373,7 +373,7 @@ static ARManager * sharedManager;
             boundHeight = bounds.size.height;
             bounds.size.height = bounds.size.width;
             bounds.size.width = boundHeight;
-            transform = CGAffineTransformMakeTranslation(0.0, imageSize.width);
+            transform = CGAffineTransformMakeTranslation(0.0, imageSize.width/2);
             transform = CGAffineTransformRotate(transform, 3.0 * M_PI / 2.0);
             break;
             
