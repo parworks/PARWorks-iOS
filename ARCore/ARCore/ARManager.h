@@ -41,6 +41,8 @@
 - (id)init;
 
 @property(nonatomic, readonly) NSString * apiKey;
+@property(nonatomic, assign) BOOL addOverlaysToStagingArea;
+
 
 /**
  The last known device orientation that wasn't faceup, facedown, or unknown. We
