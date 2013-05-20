@@ -40,6 +40,7 @@
 }
 
 @property(nonatomic, strong) CachedImageView *imageView;
+@property(nonatomic, assign) int maxPointsPerOverlay;
 @property(nonatomic, strong) AROverlayBuilderAnnotationView * annotationView;
 @property(nonatomic, strong) ARMagnifiedLensView *lensView;
 @property(nonatomic, weak) id<ARMagViewDelegate> delegate;

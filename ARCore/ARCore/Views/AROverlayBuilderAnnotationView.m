@@ -139,6 +139,11 @@
 
 - (void)addScaledTouchPointToOverlay:(CGPoint)p
 {
+    if (_delegate && [_delegate respondsToSelector:@selector(canAddScaledTouchPoint)]) {
+        if (![_delegate canAddScaledTouchPoint])
+            return;
+    }
+
     if (([self currentOverlay] == nil) || ([[self currentOverlay] isSaved]))
         [_siteImage.site addOverlay: [[AROverlay alloc] initWithSiteImage: self.siteImage]];
     

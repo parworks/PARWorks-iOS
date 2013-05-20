@@ -38,9 +38,7 @@
         [self setSiteImageIdentifier: s.identifier];
         self.points = [NSMutableArray array];
         
-        if (_site.status != ARSiteStatusProcessed) {
-//            @throw [NSException exceptionWithName:@"PAR Works API Error" reason:@"You must process the base images in your site before creating an overlay." userInfo:nil];
-        }
+        
     }
     return self;
 }
@@ -144,35 +142,21 @@
 {
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
 
-    // Build boundary properties
-    NSDictionary *boundaryProperties = @{@"color" : [_boundaryColor stringValue],
-                                         @"type" : @(_boundaryType)};
-    
-    NSDictionary *contentProperties = @{@"size" : @(_contentSize),
-                                        @"type" : @(_contentType),
-                                        @"provider" : _contentProvider};
-    
-    NSDictionary *coverProperties = @{@"color": [_coverColor stringValue],
-                                      @"transparency" : @(_coverTransparency),
-                                      @"provider" : _coverProvider,
-                                      @"type" : @(_coverType)};
-    
     if (_ID) [dict setObject:_ID forKey:@"id"];
     if (_accuracy) [dict setObject:_accuracy forKey:@"accuracy"];
     [dict setObject:_name forKey:@"name"];
-    [dict setObject:_title forKey:@"title"];
-    [dict setObject:_siteImageIdentifier forKey:@"imageId"];
-    [dict setObject:@(_success) forKey:@"success"];
-    NSDictionary *description = @{@"boundary": boundaryProperties, @"content" : contentProperties, @"cover" : coverProperties};
-    [dict setObject:description forKey:@"description"];
+    [dict setObject:_siteImageIdentifier forKey:@"imgId"];
+    [dict setObject:_site.identifier forKey:@"site"];
+    
+    // IMPORTANT! THIS SHIT DOESN'T LOOK AT THE OVERLAY PROPERTIES!
+    NSDictionary * description = @{@"title":_title,@"boundary":@{@"color":@"GRAY",@"type":@"SOLID"},@"content":@{@"type":@"TEXT",@"size":@"LARGE",@"provider":@"REPORT_ID"},@"cover":@{@"type":@"REGULAR",@"color":@"GREEN",@"transparency":@(133),@"provider":@"",@"showPulse":@"true",@"offset":@"0,0"}};
+    [dict setObject:description forKey:@"content"];
 
-    NSMutableArray *points = [NSMutableArray array];
-    for (AROverlayPoint *p in _points) {
-        NSDictionary *dict = @{@"x": @(p.x), @"y" : @(p.y), @"z" : @(p.z)};
-        [points addObject:dict];
-    }
+    NSMutableArray * strings = [NSMutableArray array];
+    for (AROverlayPoint *p in _points)
+        [strings addObject: [NSString stringWithFormat:@"%d,%d", (int)p.x, (int)p.y]];
+    [dict setObject:[strings componentsJoinedByString:@"&v="] forKey:@"v"];
 
-    [dict setObject:points forKey:@"points"];
     return dict;
 }
 
@@ -345,8 +329,11 @@
 
    
     NSMutableDictionary *jsonDict = [self jsonRepresentation];
-    [jsonDict setObject:[[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:jsonDict[@"description"] options:0 error:nil] encoding:NSUTF8StringEncoding] forKey:@"description"];
-    [jsonDict setObject:[[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:jsonDict[@"points"] options:0 error:nil] encoding:NSUTF8StringEncoding] forKey:@"points"];
+    [jsonDict setObject:[[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:jsonDict[@"content"] options:0 error:nil] encoding:NSUTF8StringEncoding] forKey:@"content"];
+    
+    if ([[ARManager shared] addOverlaysToStagingArea])
+        [jsonDict setObject:@"true" forKey:@"isStaging"];
+    
     __weak ASIHTTPRequest * __req = [[ARManager shared] createRequest: REQ_SITE_OVERLAY_ADD withMethod:@"GET" withArguments: jsonDict];
     
     [__req setCompletionBlock: ^(void) {
@@ -355,10 +342,13 @@
             // of each image—that's all we need.
             NSDictionary * json = [__req responseJSON];
             if ([self ID] == nil) {
-                [self setID: [json objectForKey: @"id"]];
+                NSString * assignedID = [json objectForKey: @"id"];
+                if (!assignedID) // to support isStaging=true
+                    assignedID = @"PENDING";
+                [self setID: assignedID];
                 [[self site] addOverlay: self];
             }
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: self];
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: self.site];
         }
     }];
     [__req startAsynchronous];

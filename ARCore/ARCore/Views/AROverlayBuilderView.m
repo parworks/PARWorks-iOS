@@ -151,6 +151,11 @@ float pin( float minValue, float value, float maxValue )
 
 #pragma mark - AROverlayBuilderAnnotationViewDelegate
 
+- (BOOL)canAddScaledTouchPoint
+{
+    return ([[[_annotationView currentOverlay] points] count] < _maxPointsPerOverlay);
+}
+
 - (void)didAddScaledTouchPoint:(CGPoint)p
 {
     if (_delegate && [_delegate respondsToSelector:@selector(didUpdatePointWithOverlay:)]) {

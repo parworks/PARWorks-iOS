@@ -25,6 +25,7 @@
 @protocol AROverlayBuilderAnnotationViewDelegate <NSObject>
 
 - (void)didAddScaledTouchPoint:(CGPoint)p;
+- (BOOL)canAddScaledTouchPoint;
 
 @end
 
