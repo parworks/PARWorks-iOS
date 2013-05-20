@@ -85,7 +85,7 @@
 
     [_overlayBuilderView setNeedsDisplay];
     
-    _saveButton.enabled = (overlay.points.count >= 3);
+    _saveButton.enabled = (overlay.points.count == 4);
     _undoButton.enabled = (overlay.points.count >= 1) && ([overlay isSaved] == NO);
     _deleteButton.enabled = (overlay.points.count >= 1) && ([overlay isSaved] == NO);
 }
