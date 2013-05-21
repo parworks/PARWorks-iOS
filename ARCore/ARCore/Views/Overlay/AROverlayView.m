@@ -211,22 +211,42 @@
 - (CGRect)frameWithOverlayContentSize:(AROverlayContentSize)size
 {
     CGRect frame;
-    switch (size) {
-        case AROverlayContentSize_Small:
-            frame = CGRectMake(0, 0, 150, 150);
-            break;
-        case AROverlayContentSize_Medium:
-            frame = CGRectMake(0, 0, 200, 200);
-            break;
-        case AROverlayContentSize_Large:
-            frame = CGRectMake(0, 0, 280, 420);
-            break;
-        case AROverlayContentSize_Fullscreen:
-            frame = CGRectMake(0, 0, 320, 480);
-            break;
-        default:
-            break;
+    if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
+        switch (size) {
+            case AROverlayContentSize_Small:
+                frame = CGRectMake(0, 0, 150, 150);
+                break;
+            case AROverlayContentSize_Medium:
+                frame = CGRectMake(0, 0, 200, 200);
+                break;
+            case AROverlayContentSize_Large:
+                frame = CGRectMake(0, 0, 280, 420);
+                break;
+            case AROverlayContentSize_Fullscreen:
+                frame = CGRectMake(0, 0, 320, 480);
+                break;
+            default:
+                break;
+        }
+    } else {
+        switch (size) {
+            case AROverlayContentSize_Small:
+                frame = CGRectMake(0, 0, 200, 200);
+                break;
+            case AROverlayContentSize_Medium:
+                frame = CGRectMake(0, 0, 350, 350);
+                break;
+            case AROverlayContentSize_Large:
+                frame = CGRectMake(0, 0, 500, 500);
+                break;
+            case AROverlayContentSize_Fullscreen:
+                frame = CGRectMake(0, 0, 768, 1024);
+                break;
+            default:
+                break;
+        }
     }
+
     
     // If the orientation is landscape, flip to width and height. We don't need to handle rotation events
     // while an overlay is focused since a rotation unfocuses the overlay.

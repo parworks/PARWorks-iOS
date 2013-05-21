@@ -41,7 +41,7 @@
     
     _progressHUD = [[MBProgressHUD alloc] initWithView:self.view];
     _progressHUD.labelText = @"Augmenting";
-    _progressHUD.detailsLabelText = @"Tap to cancel";
+//    _progressHUD.detailsLabelText = @"Tap to cancel";
     _progressHUD.square = YES;
     
     if (_waitingImageContents) {
@@ -60,13 +60,14 @@
     
     // Augmented view that will show the augmented results in this view.
     _augmentedView = [[ARAugmentedView alloc] initWithFrame:self.view.bounds];
+    _augmentedView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
     _augmentedView.alpha = 0.0;
-    _augmentedView.backgroundColor = [UIColor redColor];
+    _augmentedView.backgroundColor = [UIColor clearColor];
     _augmentedView.shouldAnimateViewLayout = YES;
     [self.view addSubview:_augmentedView];
     
     _backButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
-    _backButton.titleLabel.text = @"Back";
+    [_backButton setTitle:@"Back" forState:UIControlStateNormal];
     [_backButton addTarget:self action:@selector(handleBackButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_backButton];
 }
@@ -91,6 +92,9 @@
         _takenBlackLayer.frame = self.view.bounds;
         _takenPhotoLayer.frame = self.view.bounds;
     } [CATransaction commit];
+    
+    [_augmentedView setViewLayoutAnimationDuration:0.0];
+    [_augmentedView setBounds:self.view.bounds];
 }
 
 
@@ -124,7 +128,7 @@
 - (void)willAnimateRotationToInterfaceOrientation:(UIInterfaceOrientation)toInterfaceOrientation duration:(NSTimeInterval)duration
 {
     [_augmentedView setViewLayoutAnimationDuration:duration];
-    [_augmentedView setBounds:self.view.bounds];
+//    [_augmentedView setBounds:self.view.bounds];
     
     _progressHUD.center = CGPointMake(self.view.bounds.size.width/2, self.view.bounds.size.height/2);
     _takenPhotoLayer.bounds = self.view.bounds;

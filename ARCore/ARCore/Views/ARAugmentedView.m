@@ -220,6 +220,7 @@
         }
     }
     [self setNeedsLayout];
+    [self layoutForCurrentViewMetrics];
 }
 
 - (void)removeSupplementalViews
