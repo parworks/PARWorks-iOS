@@ -23,9 +23,6 @@
 
 #define API_ROOT                        @"mars.parworksapi.com"
 
-#define REQ_BASE_PROCESS                @"/ar/site/process"
-#define REQ_BASE_PROCESS_STATE          @"/ar/site/process/state"
-
 #define REQ_SITE                        @"/ar/site"
 #define REQ_SITE_ADD                    @"/ar/site/add"
 #define REQ_SITE_LIST                   @"/ar/site/list"

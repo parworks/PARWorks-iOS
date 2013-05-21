@@ -139,14 +139,15 @@
 
 - (void)addScaledTouchPointToOverlay:(CGPoint)p
 {
-    if (_delegate && [_delegate respondsToSelector:@selector(canAddScaledTouchPoint)]) {
-        if (![_delegate canAddScaledTouchPoint])
-            return;
-    }
-
-    if (([self currentOverlay] == nil) || ([[self currentOverlay] isSaved]))
+    if (([self currentOverlay] == nil) || ([[self currentOverlay] isSaved])) {
         [_siteImage.site addOverlay: [[AROverlay alloc] initWithSiteImage: self.siteImage]];
-    
+
+    } else {
+        if (_delegate && [_delegate respondsToSelector:@selector(canAddScaledTouchPoint)]) {
+            if (![_delegate canAddScaledTouchPoint])
+                return;
+        }
+    }
     CGPoint fullPoint = CGPointMake(p.x/_imageScale, p.y/_imageScale);
     [[self currentOverlay] addPointWithX:fullPoint.x andY:fullPoint.y];
 
