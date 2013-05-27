@@ -55,6 +55,29 @@
     return orientation;
 }
 
++ (UIImageOrientation)imageOrientationFromDeviceOrientation:(UIDeviceOrientation)deviceOrientation
+{
+    // Figured out the mapping through trial and error...
+    UIImageOrientation orientation;
+    switch (deviceOrientation) {
+        case UIDeviceOrientationPortraitUpsideDown:
+            orientation = UIImageOrientationLeft;
+            break;
+        case UIDeviceOrientationLandscapeLeft:
+            orientation = UIImageOrientationUp;
+            break;
+        case UIDeviceOrientationLandscapeRight:
+            orientation = UIImageOrientationDown;
+            break;
+        case UIDeviceOrientationPortrait:
+        default:
+            orientation = UIImageOrientationRight;
+            break;
+    }
+    
+    return orientation;
+}
+
 + (CGFloat)rotationAngleForDeviceOrientation:(UIDeviceOrientation)orientation
 {
     CGFloat rotateAngle = 0.0;

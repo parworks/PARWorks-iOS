@@ -39,6 +39,7 @@ static NSString * const AVCaptureStillImageIsCapturingStillImageContext = @"AVCa
     
     [self setupAVCapture];
     
+    _canZoom = YES;
     _pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinchGesture:)];
     [self addGestureRecognizer:_pinch];
 }
@@ -57,7 +58,7 @@ static NSString * const AVCaptureStillImageIsCapturingStillImageContext = @"AVCa
 	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         session.sessionPreset = AVCaptureSessionPresetMedium;
     } else {
-        session.sessionPreset = AVCaptureSessionPreset1920x1080;
+        session.sessionPreset = AVCaptureSessionPresetPhoto;
     }
     
     // Select a video device, make an input
@@ -222,7 +223,7 @@ static NSString * const AVCaptureStillImageIsCapturingStillImageContext = @"AVCa
 #pragma mark - Zooming
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
-	if ([gestureRecognizer isKindOfClass:[UIPinchGestureRecognizer class]]) {
+	if ([gestureRecognizer isKindOfClass:[UIPinchGestureRecognizer class]] && _canZoom) {
 		_beginGestureScale = _effectiveScale;
 	}
 	return YES;
@@ -230,6 +231,10 @@ static NSString * const AVCaptureStillImageIsCapturingStillImageContext = @"AVCa
 
 - (void)handlePinchGesture:(UIPinchGestureRecognizer *)recognizer
 {
+    if (!_canZoom) {
+        return;
+    }
+    
     // Scale image depending on users pinch gesture
 	BOOL allTouchesAreOnThePreviewLayer = YES;
 	NSUInteger numTouches = [recognizer numberOfTouches], i;
@@ -244,16 +249,29 @@ static NSString * const AVCaptureStillImageIsCapturingStillImageContext = @"AVCa
 	
 	if ( allTouchesAreOnThePreviewLayer ) {
 		_effectiveScale = _beginGestureScale * recognizer.scale;
-		if (_effectiveScale < 1.0)
-			_effectiveScale = 1.0;
+		if (_effectiveScale < 1.0) {
+            _effectiveScale = 1.0;
+        }
+			
 		CGFloat maxScaleAndCropFactor = [[_stillImageOutput connectionWithMediaType:AVMediaTypeVideo] videoMaxScaleAndCropFactor];
-		if (_effectiveScale > maxScaleAndCropFactor)
-			_effectiveScale = maxScaleAndCropFactor;
-		[CATransaction begin];
-		[CATransaction setAnimationDuration:.025];
-		[_previewLayer setAffineTransform:CGAffineTransformMakeScale(_effectiveScale, _effectiveScale)];
-		[CATransaction commit];
+		if (_effectiveScale > maxScaleAndCropFactor) {
+            _effectiveScale = maxScaleAndCropFactor;
+        }
+			
+        [self zoomToEffectiveScale:_effectiveScale];
 	}
+}
+
+- (void)zoomToEffectiveScale:(CGFloat)scale
+{
+    if (_effectiveScale != scale) {
+        _effectiveScale = scale;
+    }
+    
+    [CATransaction begin];
+    [CATransaction setAnimationDuration:.025];
+    [_previewLayer setAffineTransform:CGAffineTransformMakeScale(scale, scale)];
+    [CATransaction commit];
 }
 
 

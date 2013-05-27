@@ -15,6 +15,7 @@ typedef void(^ARCameraCaptureCompleteBlock)(NSData *jpegData, NSError *error);
 
 + (AVCaptureVideoOrientation)avOrientationForInterfaceOrientation:(UIInterfaceOrientation)orientation;
 + (AVCaptureVideoOrientation)avOrientationForDeviceOrientation:(UIDeviceOrientation)deviceOrientation;
++ (UIImageOrientation)imageOrientationFromDeviceOrientation:(UIDeviceOrientation)deviceOrientation;
 
 + (CGFloat)rotationAngleForDeviceOrientation:(UIDeviceOrientation)orientation;
 

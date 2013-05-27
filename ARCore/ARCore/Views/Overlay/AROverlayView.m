@@ -231,13 +231,13 @@
     } else {
         switch (size) {
             case AROverlayContentSize_Small:
-                frame = CGRectMake(0, 0, 200, 200);
-                break;
-            case AROverlayContentSize_Medium:
                 frame = CGRectMake(0, 0, 350, 350);
                 break;
-            case AROverlayContentSize_Large:
+            case AROverlayContentSize_Medium:
                 frame = CGRectMake(0, 0, 500, 500);
+                break;
+            case AROverlayContentSize_Large:
+                frame = CGRectMake(0, 0, 576, 768); // 75% of screen size
                 break;
             case AROverlayContentSize_Fullscreen:
                 frame = CGRectMake(0, 0, 768, 1024);

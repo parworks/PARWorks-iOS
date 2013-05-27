@@ -38,6 +38,9 @@
 }
 
 @property(nonatomic, assign) AVCaptureFlashMode flashMode;
+
+/** When YES, a user can pinch to zoom the camera view. Defaults to YES. */
+@property(nonatomic, assign) BOOL canZoom;
 @property(nonatomic, weak) id<ARCameraPreviewViewDelegate> delegate;
 
 /// Lifecycle
@@ -45,5 +48,8 @@
 
 /// Camera Capture
 - (void)takePictureWithCompletionBlock:(ARCameraCaptureCompleteBlock)complete;
+
+/// Zooming
+- (void)zoomToEffectiveScale:(CGFloat)scale;
 
 @end
