@@ -40,7 +40,7 @@
 {
     UIWindow *w = [[UIApplication sharedApplication] windows][0];
     _isiPhone5 = w.bounds.size.height > 480;
-
+    
     self.backgroundColor = [UIColor clearColor];
     self.autoresizingMask = UIViewAutoresizingFlexibleHeight|UIViewAutoresizingFlexibleWidth;
     self.userInteractionEnabled = YES;
@@ -87,14 +87,14 @@
     _tooltip.alpha = 0.0;
     [self addSubview:_tooltip];
     
-//    double delayInSeconds = 4.0;
-//    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
-//    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-//        if (!_augmentedPhoto) {
-//            NSString *name = (_site.name && (_site.name.length > 0)) ? _site.name : @"the site";
-//            [self showTooltipWithString: [NSString stringWithFormat: @"Take a picture of %@ to see overlays!", name]];
-//        }
-//    });
+    //    double delayInSeconds = 4.0;
+    //    dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+    //    dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+    //        if (!_augmentedPhoto) {
+    //            NSString *name = (_site.name && (_site.name.length > 0)) ? _site.name : @"the site";
+    //            [self showTooltipWithString: [NSString stringWithFormat: @"Take a picture of %@ to see overlays!", name]];
+    //        }
+    //    });
     
     // Augmented view that will show the augmented results in this view.
     _augmentedView = [[ARAugmentedView alloc] initWithFrame:self.bounds];
@@ -143,9 +143,15 @@
 #pragma mark - Layout
 - (void)relayoutForCurrentOrientation:(NSNotification *)note
 {
+    
+    if(YES){
+        //For GM Demo, I'm locking app in portrait
+        return;
+    }
+    
     UIDeviceOrientation orientation = [UIDevice currentDevice].orientation;
     // Default orientation for the camera overlay is portrait...
-
+    
     CGFloat rotateAngle;
     CGFloat tooltipTranslateOffset;
     switch (orientation) {
@@ -181,13 +187,13 @@
         
         float shortSide = self.bounds.size.width;
         float longSide = self.bounds.size.height;
-
+        
         _toolbar.flashButton.transform = t;
         _toolbar.cancelButton.transform = t;
         _progressHUD.transform = t;
         _takenPhotoLayer.transform = CATransform3DMakeAffineTransform(t);
         _augmentedView.layer.transform = CATransform3DMakeAffineTransform(t);
-
+        
         // In addition to the rotation, we also need to translate the tooltip so it doesn't
         // overlay the toolbar.
         _tooltip.transform = CGAffineTransformTranslate(t, tooltipTranslateOffset, 0);
@@ -243,7 +249,7 @@
     } completion:^(BOOL finished) {
         _tooltip.transform = t;
     }];
-
+    
 }
 
 #pragma mark - Convenience
@@ -266,7 +272,7 @@
     [[NSNotificationCenter defaultCenter] removeObserver: self name:NOTIF_AUGMENTED_PHOTO_UPDATED object:nil];
     [self removeGestureRecognizer:_tap];
     [_progressHUD hide:YES];
-
+    
     [CATransaction begin];
     [CATransaction setAnimationDuration:0.4];
     _takenPhotoLayer.opacity = 0.0;
@@ -296,15 +302,15 @@
 - (void)cancelButtonTapped:(id)sender
 {
     [self resetToLiveCameraInterface];
-
+    
     [_takenBlackLayer removeFromSuperlayer];
     [self.layer insertSublayer:_takenBlackLayer above:_toolbar.layer];
-
+    
     [CATransaction begin];
     [CATransaction setAnimationDuration:0.35];
     _takenBlackLayer.opacity = 0.85;
     [CATransaction commit];
-
+    
     [_delegate dismissImagePicker];
 }
 
@@ -366,7 +372,7 @@
     [originalImage drawInRect: CGRectMake(0, 0, sizeFor1000.width, sizeFor1000.height)];
     UIImage *image1000 = UIGraphicsGetImageFromCurrentImageContext();
     UIGraphicsEndImageContext();
-
+    
     if ([_delegate respondsToSelector: @selector(contentsForWaitingOnImage:)]) {
         [CATransaction begin];
         [CATransaction setDisableActions: YES];
@@ -379,7 +385,7 @@
         [self bringSubviewToFront:_toolbar];
         [self bringSubviewToFront:_progressHUD];
     }
-
+    
     // Upload the original image to the AR API for processing. We'll animate the
     // resized image back on screen once it's finished.
     [self setAugmentedPhoto:[_site augmentImage:image1000]];
@@ -416,7 +422,7 @@
         } else {
             _takenPhotoLayer.opacity = 0.0;
             [_progressHUD hide:YES];
-
+            
             [self setAugmentedPhoto: _augmentedPhoto];
         }
         

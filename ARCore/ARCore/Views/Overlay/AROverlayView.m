@@ -216,7 +216,9 @@
             frame = CGRectMake(0, 0, 270, 270);
             break;
         case AROverlayContentSize_Large:
-            frame = CGRectMake(0, 0, 270, 420);
+            //            frame = CGRectMake(0, 0, 270, 420);
+            //Done for GM Demo. Large will fill up screen but not present in modal like Fullscreen.
+            frame = CGRectMake(0, 0, 320, 480);
             break;
         case AROverlayContentSize_Fullscreen:
             frame = CGRectMake(0, 0, 320, 480);
@@ -229,11 +231,12 @@
     // while an overlay is focused since a rotation unfocuses the overlay.
     
     //WARNING SERIOUS HACK. Done for Cadillac app which is always in landscape
-    if (YES) {
-        CGFloat tmp = frame.size.width;
-        frame.size.width = frame.size.height;
-        frame.size.height = tmp;
-    }
+    //    if (YES) {
+    //        CGFloat tmp = frame.size.width;
+    //        frame.size.width = frame.size.height;
+    //        frame.size.height = tmp;
+    //    }
+    
     return frame;
 }
 
