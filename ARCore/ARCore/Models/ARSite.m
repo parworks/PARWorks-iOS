@@ -301,6 +301,12 @@
 
 #pragma mark Site Overlay Management
 
+- (void)invalidateOverlays
+{
+    _overlays = nil;
+    [self performSelector:@selector(fetchAvailableOverlays) withObject:nil afterDelay:1.5];
+}
+
 - (int)overlayCount
 {
     if (!_overlays || _overlays.count == 0) {

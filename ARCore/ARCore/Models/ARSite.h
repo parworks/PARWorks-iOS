@@ -121,6 +121,13 @@ typedef enum ARSiteStatus {
  */
 - (NSMutableArray*)images;
 
+/**
+  This method begins fetching the images and returns nil. When the images have been downloaded,
+  the ARSite object will send a NOTIF_SITE_UPDATED message, allowing the client to 
+  reload any view that is dependent on this data
+*/
+- (void)fetchImages;
+
 /** Used to add a brand new image to the base images for the site. Will be submitted
 to the server and added to the base images collection.
 
@@ -144,6 +151,11 @@ server again.
   @return true if the ARSite is still fetching it's images from the server.
 */
 - (BOOL)isFetchingImages;
+
+/** Destroys the local copy of the site's available overlays and fetches them from the 
+server again.
+*/
+- (void)invalidateOverlays;
 
 /** Returns an array of the overlays available at this site. If the overlays have
   not been loaded, this function initiates a request for the overlays. When overlays
@@ -170,6 +182,12 @@ server again.
 */
 - (void)deleteOverlay:(AROverlay*)ar;
 
+/**
+  This function initiates a request for the overlays. When overlays
+  are downloaded, a NOTIF_SITE_UPDATES notification will be sent, allowing the client
+  to reload any view that depends on this data.
+*/
+- (void)fetchAvailableOverlays;
 
 // ========================
 // @name Augmenting Images
