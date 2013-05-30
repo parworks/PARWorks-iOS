@@ -64,6 +64,7 @@ typedef enum {
 @property (nonatomic, strong) NSString * accuracy;
 @property (nonatomic, strong) NSString * title;
 @property (nonatomic, assign) BOOL success;
+@property (nonatomic, assign) BOOL processed;
 
 @property (nonatomic, assign) AROverlayBoundaryType boundaryType;
 @property (nonatomic, strong) UIColor               * boundaryColor;

@@ -37,8 +37,6 @@
         [self setSite: [s site]];
         [self setSiteImageIdentifier: s.identifier];
         self.points = [NSMutableArray array];
-        
-        
     }
     return self;
 }
@@ -60,7 +58,7 @@
 
         self.siteImageIdentifier = dict[@"imageId"];
         self.name = dict[@"name"];
-
+        
         self.accuracy = dict[@"accuracy"];
         self.success = [dict[@"success"] intValue];
         
@@ -85,6 +83,7 @@
         _accuracy = [aDecoder decodeObjectForKey:@"accuracy"];
         _title = [aDecoder decodeObjectForKey:@"title"];
         _success = [aDecoder decodeBoolForKey:@"success"];
+        _processed = [aDecoder decodeBoolForKey:@"processed"];
         
         _boundaryType = [aDecoder decodeIntegerForKey:@"boundaryType"];
         _boundaryColor = [aDecoder decodeObjectForKey:@"boundaryColor"];
@@ -112,6 +111,7 @@
     [aCoder encodeObject: _accuracy forKey: @"accuracy"];
     [aCoder encodeObject: _title forKey: @"title"];
     [aCoder encodeBool: _success forKey:@"success"];
+    [aCoder encodeBool: _processed forKey:@"processed"];
     
     [aCoder encodeInteger: _boundaryType forKey: @"boundaryType"];
     [aCoder encodeObject: _boundaryColor forKey: @"boundaryColor"];

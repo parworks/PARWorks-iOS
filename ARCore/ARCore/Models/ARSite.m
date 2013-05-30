@@ -348,10 +348,10 @@
     if ([[ARManager shared] addOverlaysToStagingArea])
         [dict setObject:@"true" forKey:@"isStaging"];
     _overlaysReq = [[ARManager shared] createRequest: REQ_SITE_OVERLAYS withMethod:@"GET" withArguments: dict];
-    
+
     __weak ASIHTTPRequest * __req = _overlaysReq;
     __weak ARSite * __self = self;
-
+    
     [_overlaysReq setCompletionBlock: ^(void) {
         if ([[ARManager shared] handleResponseErrors: __req]){
             // grab all the image dictionaries from the JSON and pull out just the ID
@@ -365,15 +365,51 @@
             }
             
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: __self];
-            [__self nilOverlayReqs];
+            if ([[ARManager shared] addOverlaysToStagingArea]) {
+                [__self fetchAndIntersectProcessedOverlays];
+            } else {
+                [__self setOverlayRequest: nil];
+            }
         }
     }];
     [_overlaysReq startAsynchronous];
 }
 
-- (void)nilOverlayReqs
+- (void)setOverlayRequest:(ASIHTTPRequest*)req
 {
-    _overlaysReq = nil;
+    _overlaysReq = req;
+}
+
+- (void)fetchAndIntersectProcessedOverlays
+{
+    NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithObject:self.identifier forKey:@"site"];
+    _overlaysReq = [[ARManager shared] createRequest: REQ_SITE_OVERLAYS withMethod:@"GET" withArguments: dict];
+    __weak ASIHTTPRequest * __req = _overlaysReq;
+    __weak ARSite * __self = self;
+
+    [_overlaysReq setCompletionBlock: ^(void) {
+        if ([[ARManager shared] handleResponseErrors: __req]){
+            NSDictionary * json = [__req responseJSON];
+
+            for (AROverlay * overlay in __self.overlays) {
+                [overlay setProcessed: NO];
+            }
+            
+            for (NSDictionary * overlayJSON in [json objectForKey: @"overlays"]) {
+                // we have to compare overlays based on their name because the ID seems to
+                // change when they're processed (which is annoying...)
+                NSString * name = [overlayJSON objectForKey: @"name"];
+                for (AROverlay * overlay in __self.overlays) {
+                    if ([[overlay name] isEqualToString:name])
+                        [overlay setProcessed: YES];
+                }
+            }
+
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: __self];
+        }
+    }];
+    
+    [_overlaysReq startAsynchronous];
 }
 
 

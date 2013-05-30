@@ -63,8 +63,10 @@
     for (AROverlay * overlay in _siteImage.overlays) {
         NSArray * scaledPoints = [self scaledPointsForOverlay: overlay];
 
-        if (![overlay isSaved]) {
+        if (([overlay isSaved]) && ([overlay processed])) {
             [[[UIColor greenColor] colorWithAlphaComponent:0.4] set];
+        } else if ([overlay isSaved]) {
+            [[UIColor colorWithRed:1 green:0.6 blue:0 alpha:0.5] set];
         } else {
             [[[UIColor redColor] colorWithAlphaComponent:0.4] set];
         }
