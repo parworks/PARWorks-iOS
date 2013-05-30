@@ -328,7 +328,14 @@
     [_overlays removeObject: ar];
     
     if ([ar isSaved]) {
-        // remove it from the server
+        if ([[ARManager shared] addOverlaysToStagingArea]) {
+            NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithObject:self.identifier forKey:@"site"];
+            [dict setObject:[ar ID] forKey:@"id"];
+            _deleteReq = [[ARManager shared] createRequest: REQ_SITE_OVERLAY_REMOVE withMethod:@"GET" withArguments: dict];
+            [_deleteReq startAsynchronous];
+        } else {
+            // removing not possible?
+        }
     }
 }
 

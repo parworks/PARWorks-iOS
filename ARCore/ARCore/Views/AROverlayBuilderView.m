@@ -82,6 +82,8 @@ float pin( float minValue, float value, float maxValue )
     [self addSubview:_lensView];
     [self hideLensViewAnimated:NO];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(setNeedsDisplay) name:NOTIF_SITE_UPDATED object:_siteImage.site];
+    
     [self addTarget:self action:@selector(touchDown:withEvent:) forControlEvents:UIControlEventTouchDown];
     [self addTarget:self action:@selector(touchMoved:withEvent:) forControlEvents:UIControlEventTouchDragInside];
     [self addTarget:self action:@selector(touchEnded:withEvent:) forControlEvents:UIControlEventTouchUpInside];
@@ -256,6 +258,7 @@ float pin( float minValue, float value, float maxValue )
 
 - (void)dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
     CGLayerRelease(_cacheLayer);
     _cacheLayer = nil;
 }
