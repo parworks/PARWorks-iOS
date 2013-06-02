@@ -29,6 +29,7 @@
 
 // Notification posted when overlay view is focused
 #define NOTIF_OVERLAY_VIEW_FOCUSED @"NOTIF_OVERLAY_VIEW_FOCUSED"
+#define NOTIF_OVERLAY_VIEW_UNFOCUSED @"NOTIF_OVERLAY_VIEW_UNFOCUSED"
 
 /** There are three main attachment styles used for displaying overlay views.
  

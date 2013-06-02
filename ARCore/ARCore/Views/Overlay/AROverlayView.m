@@ -160,8 +160,8 @@
     
     if (_animDelegate) {
         [_animDelegate focusOverlayView:self inParent:parent];
-        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_OVERLAY_VIEW_FOCUSED object: self];
     }
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_OVERLAY_VIEW_FOCUSED object: self];
 }
 
 - (void)unfocusInParent:(ARAugmentedView *)parent
@@ -169,6 +169,8 @@
     if (_animDelegate) {
         [_animDelegate unfocusOverlayView:self inParent:parent];
     }
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_OVERLAY_VIEW_UNFOCUSED object: self];
+
     [UIView animateWithDuration:0.2 delay:0.6 options:UIViewAnimationOptionCurveLinear animations:^{
         _outlineView.alpha = 1.0;
         if ([_overlay coverType] == AROverlayCoverType_Centroid)
