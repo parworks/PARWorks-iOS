@@ -80,11 +80,11 @@
 
 - (void)setupCoverView
 {
-    if (_overlay.coverType == AROverlayCoverType_Centroid && !_overlay.coverProvider) {
-        _coverView = [[ARCentroidView alloc] initWithFrame: CGRectMake(0, 0, 30, 30)];
+    if (_overlay.coverType == AROverlayCoverType_Centroid) {
+        _coverView = [[ARCentroidView alloc] initWithFrame: CGRectMake(10, 10, 30, 30)];
         _coverView.autoresizingMask = UIViewAutoresizingNone;
         
-        UIImageView * imageView = [[UIImageView alloc] initWithFrame: CGRectMake(0, 0, 100, 100)];
+        UIImageView * imageView = [[UIImageView alloc] initWithFrame: CGRectMake(0, 0, 50, 50)];
         [imageView shiftFrame: CGPointMake(_overlay.centroidOffset.width, _overlay.centroidOffset.height)];
         [_coverView addSubview: imageView];
         
@@ -95,7 +95,7 @@
                 if (img != nil) {
                     CGPoint c = [imageView center];
                     [imageView setImage: img];
-                    [imageView setFrameSize: img.size];
+                    [imageView setFrameSize: CGSizeMake(img.size.width / 2, img.size.height / 2)];
                     [imageView setCenter: c];
                 }
             }];
@@ -193,7 +193,7 @@
         [CATransaction setDisableActions: YES];
         [UIView setAnimationsEnabled: NO];
         self.layer.transform = CATransform3DIdentity;
-        [self setFrame: CGRectMake((tl.x + tr.x + br.x + bl.x) / 4 - 15, (tl.y + tr.y + br.y + bl.y) / 4 - 15, 30, 30)];
+        [self setFrame: CGRectMake((tl.x + tr.x + br.x + bl.x) / 4 - 25, (tl.y + tr.y + br.y + bl.y) / 4 - 25, 50, 50)];
         [UIView setAnimationsEnabled: YES];
         [CATransaction setDisableActions: NO];
         

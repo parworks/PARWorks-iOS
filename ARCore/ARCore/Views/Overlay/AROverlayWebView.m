@@ -30,9 +30,6 @@
     if(!_webView){
         self.webView = [[UIWebView alloc] initWithFrame:self.bounds];
         _webView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
-        _webView.opaque = NO;
-        _webView.backgroundColor = [UIColor clearColor];
-        _webView.scrollView.scrollEnabled = NO;
         _webView.scrollView.bounces = NO;
         _webView.delegate = self;
         [self addSubview:_webView];
@@ -49,11 +46,11 @@
     }
     
     if(!_closeButton){
-        self.closeButton = [[UIButton alloc] initWithFrame:CGRectMake(self.bounds.size.width - 45.0, 5.0, 40.0, 40.0)];
+        self.closeButton = [[UIButton alloc] initWithFrame:CGRectMake(self.bounds.size.width - 5, -25.0, 40.0, 40.0)];
         [_closeButton setBackgroundColor:[UIColor clearColor]];
         [_closeButton setBackgroundImage:[UIImage imageNamed:@"Button_Close-Overlay.png"] forState:UIControlStateNormal];
         [_closeButton addTarget:parent action:@selector(overlayTapped:) forControlEvents:UIControlEventTouchUpInside];
-        [self addSubview:_closeButton];
+//        [self addSubview:_closeButton];
         _closeButton.alpha = 0.0;
     }
     
