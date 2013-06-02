@@ -82,6 +82,7 @@
 {
     if (_overlay.coverType == AROverlayCoverType_Centroid) {
         _coverView = [[ARCentroidView alloc] initWithFrame: CGRectMake(10, 10, 30, 30)];
+        [(ARCentroidView*)_coverView setDrawPulsingCircle: _overlay.centroidPulse];
         _coverView.autoresizingMask = UIViewAutoresizingNone;
         
         UIImageView * imageView = [[UIImageView alloc] initWithFrame: CGRectMake(0, 0, 50, 50)];

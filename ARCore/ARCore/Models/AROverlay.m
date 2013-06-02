@@ -261,6 +261,9 @@
         _boundaryType = AROverlayBoundaryType_Hidden;
         _coverType = AROverlayCoverType_Centroid;
         _centroidOffset = [self centroidSizeFromProviderString:_coverProvider];
+        _centroidPulse = YES;
+        if ([dict objectForKey: @"showPulse"])
+            _centroidPulse = [[dict objectForKey: @"showPulse"] boolValue];
     } else if ([type.lowercaseString isEqualToString:@"image"]) {
         _coverType = AROverlayCoverType_Image;
     } else {
