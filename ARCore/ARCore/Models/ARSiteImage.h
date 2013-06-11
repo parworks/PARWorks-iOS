@@ -38,6 +38,7 @@ typedef enum {
 }
 
 @property (nonatomic, weak) ARSite * site;
+@property (nonatomic, retain) UIImage * imageToUpload;
 @property (nonatomic, assign) BackendResponse response;
 
 // ========================
@@ -59,6 +60,15 @@ typedef enum {
  */
 
 - (id)initWithSite:(ARSite*)site andImage:(UIImage*)img;
+
+/** Called when the upload of this image has started. */
+- (void)backgroundUploadStarted;
+
+/** Called when the upload of this image has failed. */
+- (void)backgroundUploadFailed;
+
+/** Called when the upload of this image has suceeded. */
+- (void)backgroundUploadSucceeded;
 
 
 /**

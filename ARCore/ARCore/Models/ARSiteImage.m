@@ -24,6 +24,7 @@
 #import "ARSite.h"
 #import "AROverlay.h"
 #import "NSBundle+ARCoreResources.h"
+#import <objc/runtime.h>
 
 @implementation ARSiteImage
 
@@ -43,36 +44,9 @@
     self = [super init];
     if (self) {
         self.site = s;
-        
-        img = [[ARManager shared] rotateImage:img byOrientationFlag:img.imageOrientation];
-        NSData * imgData = UIImageJPEGRepresentation(img, 0.7);
-        
-        NSMutableDictionary * args = [NSMutableDictionary dictionary];
-        [args setObject:_site.identifier forKey:@"site"];
-        [args setObject:[NSString stringWithFormat:@"%@%p", [NSNumber numberWithLong:time(0)], self] forKey:@"filename"];
-
-        ASIFormDataRequest * req = (ASIFormDataRequest*)[[ARManager shared] createRequest:REQ_SITE_IMAGE_ADD withMethod:@"POST" withArguments:args];
-        ASIFormDataRequest * __weak __req = req;
-        
-        [req setData:imgData forKey:@"image"];
-        [req setFailedBlock: ^(void) {
-            self.response = BackendResponseFailed;
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: _site];
-            [[ARManager shared] criticalRequestFailed: __req];
-        }];
-        [req setCompletionBlock: ^(void) {
-            if ([[ARManager shared] handleResponseErrors: __req]){
-                self.response = BackendResponseFinished;
-                [_site invalidateImages];
-            } else {
-                _response = BackendResponseFailed;
-            }
-        }];
-        
-        self.response = BackendResponseUploading;
-        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: _site];
-        
-        [req startAsynchronous];
+        self.imageToUpload = [[ARManager shared] rotateImage:img byOrientationFlag:img.imageOrientation];
+        self.response = WaitingToUpload;
+        [[ARManager shared] queueSiteImageForUpload: self];
     }
     return self;
 }
@@ -83,7 +57,8 @@
     if (self) {
         _dict = [aDecoder decodeObjectForKey: @"dict"];
         self.site = [aDecoder decodeObjectForKey: @"site"];
-        _response = BackendResponseFinished;
+        self.imageToUpload = [aDecoder decodeObjectForKey: @"image"];
+        _response = [aDecoder decodeIntForKey: @"response"];
     }
     return self;
 }
@@ -92,6 +67,29 @@
 {
     [aCoder encodeObject: _dict forKey: @"dict"];
     [aCoder encodeObject: _site forKey: @"site"];
+    [aCoder encodeInt:_response forKey: @"response"];
+    if (self.imageToUpload)
+        [aCoder encodeObject:_imageToUpload forKey:@"image"];
+}
+
+- (void)backgroundUploadStarted
+{
+    self.response = BackendResponseUploading;
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: _site];
+}
+
+- (void)backgroundUploadFailed
+{
+    self.response = BackendResponseFailed;
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: _site];
+}
+
+- (void)backgroundUploadSucceeded
+{
+    self.imageToUpload = nil;
+    self.response = BackendResponseFinished;
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: _site];
+    [_site invalidateImages];
 }
 
 - (NSString*)identifier

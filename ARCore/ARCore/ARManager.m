@@ -23,6 +23,7 @@
 #import "ASIHTTPRequest+JSONAdditions.h"
 #import "NSData+Base64Encode.h"
 #import <CommonCrypto/CommonHMAC.h>
+#import "ARSiteImage.h"
 
 static ARManager * sharedManager;
 
@@ -70,11 +71,18 @@ static ARManager * sharedManager;
         if (![UIDevice currentDevice].generatesDeviceOrientationNotifications) {
             [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
         }
+
+        _apiReachability = [Reachability reachabilityWithHostName: [NSString stringWithFormat: @"http://%@", API_ROOT]];
+        [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(reachabilityChanged:) name: kReachabilityChangedNotification object: nil];
+        [_apiReachability startNotifier];
+
+        _backgroundUploadQueue = [NSKeyedUnarchiver unarchiveObjectWithFile:BACKGROUND_QUEUE_FILE];
+        if (_backgroundUploadQueue)
+            [self queueTouched];
+        else
+            _backgroundUploadQueue = [NSMutableArray array];
         
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(deviceOrientationChanged)
-                                                     name:UIDeviceOrientationDidChangeNotification
-                                                   object:nil];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceOrientationChanged) name:UIDeviceOrientationDidChangeNotification object:nil];
     }
 	return self;
 }
@@ -225,6 +233,97 @@ static ARManager * sharedManager;
 }
 
 #pragma mark -
+#pragma mark Background Uploads
+
+- (BOOL)isConnectedToAPI
+{
+    return ([_apiReachability currentReachabilityStatus] != NotReachable);
+}
+
+- (void)reachabilityChanged:(NSNotification*)notif
+{
+    // if we're connected to the API but not uploading anything, bump the
+    // queue to start the next upload
+    if ([self isConnectedToAPI] && !_backgroundUpload && [_backgroundUploadQueue count])
+        [self queueTouched];
+}
+
+- (NSArray*)backgroundUploadQueue
+{
+    return _backgroundUploadQueue;
+}
+
+- (void)queueSiteImageForUpload:(ARSiteImage*)image
+{
+    [_backgroundUploadQueue addObject: image];
+    [self queueTouched];
+}
+
+- (void)queueTouched
+{
+    [NSKeyedArchiver archiveRootObject:_backgroundUploadQueue toFile:BACKGROUND_QUEUE_FILE];
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_UPLOADS_UPDATED object:nil];
+    
+    if ((!_backgroundUpload) && ([_backgroundUploadQueue count] > 0)){
+        ARSiteImage * current = [_backgroundUploadQueue objectAtIndex: 0];
+        [current backgroundUploadStarted];
+        
+        if (!current.imageToUpload) {
+            NSLog(@"Invalid ARSiteImage in the Upload Queue - No .imageToUpload!");
+            [_backgroundUploadQueue removeObjectAtIndex: 0];
+            [self queueTouched];
+            return;
+        }
+        
+        if (current.site == nil) {
+            NSLog(@"Invalid ARSiteImage in the Upload Queue - No .site!");
+        }
+        
+        NSData * imgData = UIImageJPEGRepresentation(current.imageToUpload, 0.7);
+        NSMutableDictionary * args = [NSMutableDictionary dictionary];
+        [args setObject: current.site.identifier forKey:@"site"];
+        [args setObject: [NSString stringWithFormat:@"%@%p", [NSNumber numberWithLong:time(0)], current] forKey:@"filename"];
+        
+        _backgroundUpload = (ASIFormDataRequest*)[[ARManager shared] createRequest:REQ_SITE_IMAGE_ADD withMethod:@"POST" withArguments:args];
+        [_backgroundUpload setData:imgData forKey:@"image"];
+        [_backgroundUpload setDidFinishSelector: @selector(queueUploadFinished:)];
+        [_backgroundUpload setDidFailSelector: @selector(queueUploadFailed:)];
+        [_backgroundUpload setDelegate: self];
+        [_backgroundUpload startAsynchronous];
+    }
+}
+
+- (void)queueUploadFinished:(ASIFormDataRequest*)req
+{
+    if ([self handleResponseErrors: req]){
+        ARSiteImage * current = [_backgroundUploadQueue objectAtIndex: 0];
+        [current backgroundUploadSucceeded];
+    } else {
+        [self queueUploadFailed: req];
+    }
+    
+    _backgroundUpload = nil;
+    [_backgroundUploadQueue removeObjectAtIndex: 0];
+    [self queueTouched];
+}
+
+- (void)queueUploadFailed:(ASIFormDataRequest*)req
+{
+    ARSiteImage * current = [_backgroundUploadQueue objectAtIndex: 0];
+    [current backgroundUploadFailed];
+
+    if ([req responseStatusCode] != 500) {
+        [_backgroundUploadQueue removeObjectAtIndex: 0];
+        [_backgroundUploadQueue addObject: current];
+    }
+
+    _backgroundUpload = nil;
+    
+    if ([req responseStatusCode] != 0) // host unreachable
+        [self queueTouched];
+}
+
+#pragma mark -
 #pragma mark Managing and Finding Sites
 
 - (void)addSite:(NSString*)identifier withCompletionBlock:(void (^)(void))completionBlock
@@ -352,8 +451,7 @@ static ARManager * sharedManager;
     switch(orient) {
             
         case UIImageOrientationUp: //EXIF = 1
-            transform = CGAffineTransformIdentity;
-            break;
+            return img;
             
         case UIImageOrientationDown: //EXIF = 3
             transform = CGAffineTransformMakeTranslation(imageSize.width, imageSize.height);
