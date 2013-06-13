@@ -38,6 +38,7 @@ typedef enum ARSiteStatus {
     ASIHTTPRequest * _imageReq;
     ASIHTTPRequest * _overlaysReq;
     ASIHTTPRequest * _deleteReq;
+    ASIHTTPRequest * _stagingDeleteReq;
     NSArray        * _recentAugmentationOutput;
     NSDictionary   * _posterImage;
 }
