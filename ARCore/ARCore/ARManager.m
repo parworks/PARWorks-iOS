@@ -288,6 +288,7 @@ static ARManager * sharedManager;
         [_backgroundUpload setData:imgData forKey:@"image"];
         [_backgroundUpload setDidFinishSelector: @selector(queueUploadFinished:)];
         [_backgroundUpload setDidFailSelector: @selector(queueUploadFailed:)];
+        [_backgroundUpload setShouldContinueWhenAppEntersBackground: YES];
         [_backgroundUpload setDelegate: self];
         [_backgroundUpload startAsynchronous];
     }
