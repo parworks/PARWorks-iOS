@@ -211,7 +211,7 @@
 
 - (NSURL*)posterImageURL
 {
-    NSLog(@"%@", [_posterImage description]);
+//    NSLog(@"%@", [_posterImage description]);
     return [NSURL URLWithString: [_posterImage objectForKey: @"imgContentPath" or: [_posterImage objectForKey: @"imgPath"]]];
 }
 
@@ -336,10 +336,8 @@
     if ([ar isSaved]) {
         NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithObject:self.identifier forKey:@"site"];
         [dict setObject:[ar ID] forKey:@"id"];
-        if ([[ARManager shared] addOverlaysToStagingArea]) {
-            _stagingDeleteReq = [[ARManager shared] createRequest: REQ_SITE_OVERLAY_REMOVE_STAGING withMethod:@"GET" withArguments: dict];
-            [_stagingDeleteReq startAsynchronous];
-        }
+        _stagingDeleteReq = [[ARManager shared] createRequest: REQ_SITE_OVERLAY_REMOVE_STAGING withMethod:@"GET" withArguments: dict];
+        [_stagingDeleteReq startAsynchronous];
         
         _deleteReq = [[ARManager shared] createRequest: REQ_SITE_OVERLAY_REMOVE withMethod:@"GET" withArguments: dict];
         [_deleteReq startAsynchronous];
