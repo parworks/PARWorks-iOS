@@ -255,73 +255,81 @@ static ARManager * sharedManager;
 
 - (void)queueSiteImageForUpload:(ARSiteImage*)image
 {
-    [_backgroundUploadQueue addObject: image];
-    [self queueTouched];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [_backgroundUploadQueue addObject: image];
+        [self queueTouched];
+    });
 }
 
 - (void)queueTouched
 {
-    [NSKeyedArchiver archiveRootObject:_backgroundUploadQueue toFile:BACKGROUND_QUEUE_FILE];
-    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_UPLOADS_UPDATED object:nil];
-    
-    if ((!_backgroundUpload) && ([_backgroundUploadQueue count] > 0)){
-        ARSiteImage * current = [_backgroundUploadQueue objectAtIndex: 0];
-        [current backgroundUploadStarted];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        [NSKeyedArchiver archiveRootObject:_backgroundUploadQueue toFile:BACKGROUND_QUEUE_FILE];
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_UPLOADS_UPDATED object:nil];
         
-        if (!current.imageToUpload) {
-            NSLog(@"Invalid ARSiteImage in the Upload Queue - No .imageToUpload!");
-            [_backgroundUploadQueue removeObjectAtIndex: 0];
-            [self queueTouched];
-            return;
+        if ((!_backgroundUpload) && ([_backgroundUploadQueue count] > 0)){
+            ARSiteImage * current = [_backgroundUploadQueue objectAtIndex: 0];
+            [current backgroundUploadStarted];
+            
+            if (!current.imageToUpload) {
+                NSLog(@"Invalid ARSiteImage in the Upload Queue - No .imageToUpload!");
+                [_backgroundUploadQueue removeObjectAtIndex: 0];
+                [self queueTouched];
+                return;
+            }
+            
+            if (current.site == nil) {
+                NSLog(@"Invalid ARSiteImage in the Upload Queue - No .site!");
+            }
+            
+            NSData * imgData = UIImageJPEGRepresentation(current.imageToUpload, 0.7);
+            NSMutableDictionary * args = [NSMutableDictionary dictionary];
+            [args setObject: current.site.identifier forKey:@"site"];
+            [args setObject: [NSString stringWithFormat:@"%@%p", [NSNumber numberWithLong:time(0)], current] forKey:@"filename"];
+            
+            _backgroundUpload = (ASIFormDataRequest*)[[ARManager shared] createRequest:REQ_SITE_IMAGE_ADD withMethod:@"POST" withArguments:args];
+            [_backgroundUpload setData:imgData forKey:@"image"];
+            [_backgroundUpload setDidFinishSelector: @selector(queueUploadFinished:)];
+            [_backgroundUpload setDidFailSelector: @selector(queueUploadFailed:)];
+            [_backgroundUpload setShouldContinueWhenAppEntersBackground: YES];
+            [_backgroundUpload setDelegate: self];
+            [_backgroundUpload startAsynchronous];
         }
-        
-        if (current.site == nil) {
-            NSLog(@"Invalid ARSiteImage in the Upload Queue - No .site!");
-        }
-        
-        NSData * imgData = UIImageJPEGRepresentation(current.imageToUpload, 0.7);
-        NSMutableDictionary * args = [NSMutableDictionary dictionary];
-        [args setObject: current.site.identifier forKey:@"site"];
-        [args setObject: [NSString stringWithFormat:@"%@%p", [NSNumber numberWithLong:time(0)], current] forKey:@"filename"];
-        
-        _backgroundUpload = (ASIFormDataRequest*)[[ARManager shared] createRequest:REQ_SITE_IMAGE_ADD withMethod:@"POST" withArguments:args];
-        [_backgroundUpload setData:imgData forKey:@"image"];
-        [_backgroundUpload setDidFinishSelector: @selector(queueUploadFinished:)];
-        [_backgroundUpload setDidFailSelector: @selector(queueUploadFailed:)];
-        [_backgroundUpload setShouldContinueWhenAppEntersBackground: YES];
-        [_backgroundUpload setDelegate: self];
-        [_backgroundUpload startAsynchronous];
-    }
+    });
 }
 
 - (void)queueUploadFinished:(ASIFormDataRequest*)req
 {
-    if ([self handleResponseErrors: req]){
-        ARSiteImage * current = [_backgroundUploadQueue objectAtIndex: 0];
-        [current backgroundUploadSucceeded];
-    } else {
-        [self queueUploadFailed: req];
-    }
-    
-    _backgroundUpload = nil;
-    [_backgroundUploadQueue removeObjectAtIndex: 0];
-    [self queueTouched];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        if ([self handleResponseErrors: req]){
+            ARSiteImage * current = [_backgroundUploadQueue objectAtIndex: 0];
+            [current backgroundUploadSucceeded];
+        } else {
+            [self queueUploadFailed: req];
+        }
+        
+        _backgroundUpload = nil;
+        [_backgroundUploadQueue removeObjectAtIndex: 0];
+        [self queueTouched];
+    });
 }
 
 - (void)queueUploadFailed:(ASIFormDataRequest*)req
 {
-    ARSiteImage * current = [_backgroundUploadQueue objectAtIndex: 0];
-    [current backgroundUploadFailed];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        ARSiteImage * current = [_backgroundUploadQueue objectAtIndex: 0];
+        [current backgroundUploadFailed];
 
-    if ([req responseStatusCode] != 500) {
-        [_backgroundUploadQueue removeObjectAtIndex: 0];
-        [_backgroundUploadQueue addObject: current];
-    }
+        if ([req responseStatusCode] != 500) {
+            [_backgroundUploadQueue removeObjectAtIndex: 0];
+            [_backgroundUploadQueue addObject: current];
+        }
 
-    _backgroundUpload = nil;
-    
-    if ([req responseStatusCode] != 0) // host unreachable
-        [self queueTouched];
+        _backgroundUpload = nil;
+        
+        if ([req responseStatusCode] != 0) // host unreachable
+            [self queueTouched];
+    });
 }
 
 #pragma mark -
