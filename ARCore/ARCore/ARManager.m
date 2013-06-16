@@ -278,13 +278,12 @@ static ARManager * sharedManager;
                 return;
             }
             
-            if (current.site == nil) {
-                NSLog(@"Invalid ARSiteImage in the Upload Queue - No .site!");
-            }
+            if (current.siteIdentifier == nil)
+                NSLog(@"Invalid ARSiteImage in the Upload Queue - No siteIdentifier!");
             
             NSData * imgData = UIImageJPEGRepresentation(current.imageToUpload, 0.7);
             NSMutableDictionary * args = [NSMutableDictionary dictionary];
-            [args setObject: current.site.identifier forKey:@"site"];
+            [args setObject: current.siteIdentifier forKey:@"site"];
             [args setObject: [NSString stringWithFormat:@"%@%p", [NSNumber numberWithLong:time(0)], current] forKey:@"filename"];
             
             _backgroundUpload = (ASIFormDataRequest*)[[ARManager shared] createRequest:REQ_SITE_IMAGE_ADD withMethod:@"POST" withArguments:args];

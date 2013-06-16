@@ -91,6 +91,12 @@ typedef enum ARSiteStatus {
  */
 - (id)initWithSummaryDictionary:(NSDictionary *)dict;
 
+
+/** Update the properties of the site using the values found in another site. Does not
+invalidate the overlays or site images that have been downloaded to this site. */
+- (void)updateFromSite:(ARSite*)site;
+
+
 // ========================
 // @name Site Information
 // ========================

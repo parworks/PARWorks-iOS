@@ -88,6 +88,14 @@
     return self;    
 }
 
+- (void)updateFromSite:(ARSite*)site
+{
+    _status = site.status;
+    _siteDescription = site.siteDescription;
+    _summaryOverlayCount = site.summaryOverlayCount;
+    _summaryImageCount = site.summaryImageCount;
+}
+
 - (void)encodeWithCoder:(NSCoder *)aCoder
 {
     [aCoder encodeObject: _identifier forKey: @"identifier"];

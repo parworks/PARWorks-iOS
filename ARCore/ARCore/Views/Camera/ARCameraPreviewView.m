@@ -183,6 +183,18 @@ static NSString * const AVCaptureStillImageIsCapturingStillImageContext = @"AVCa
                 }
             }];
     }];
+    
+    // simulator scenario
+    if (_stillImageOutput == nil) {
+        NSData * jpegData = [NSData dataWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"chipotle-franchise1" ofType:@"jpg"]];
+        if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didCaptureImageWithData:error:)]) {
+            [weakSelf.delegate didCaptureImageWithData:jpegData error: NULL];
+        }
+        
+        if (complete) {
+            complete(jpegData, NULL);
+        }
+    }
 }
 
 

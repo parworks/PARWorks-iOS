@@ -57,6 +57,7 @@
     if (self) {
         _dict = [aDecoder decodeObjectForKey: @"dict"];
         self.site = [aDecoder decodeObjectForKey: @"site"];
+        self.siteIdentifier = [aDecoder decodeObjectForKey: @"siteIdentifier"];
         self.imageToUpload = [aDecoder decodeObjectForKey: @"image"];
         _response = [aDecoder decodeIntForKey: @"response"];
     }
@@ -67,9 +68,17 @@
 {
     [aCoder encodeObject: _dict forKey: @"dict"];
     [aCoder encodeObject: _site forKey: @"site"];
+    [aCoder encodeObject: _siteIdentifier forKey: @"siteIdentifier"];
     [aCoder encodeInt:_response forKey: @"response"];
     if (self.imageToUpload)
         [aCoder encodeObject:_imageToUpload forKey:@"image"];
+}
+
+- (void)setSite:(ARSite *)site
+{
+    _site = site;
+    if (site)
+        _siteIdentifier = [site identifier];
 }
 
 - (void)backgroundUploadStarted

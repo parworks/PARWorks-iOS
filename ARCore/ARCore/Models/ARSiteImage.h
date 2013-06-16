@@ -38,7 +38,8 @@ typedef enum {
 }
 
 @property (nonatomic, weak) ARSite * site;
-@property (nonatomic, retain) UIImage * imageToUpload;
+@property (nonatomic, strong) NSString * siteIdentifier;
+@property (nonatomic, strong) UIImage * imageToUpload;
 @property (nonatomic, assign) BackendResponse response;
 
 // ========================
