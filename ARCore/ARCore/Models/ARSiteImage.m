@@ -39,18 +39,6 @@
     return self;
 }
 
-- (id)initWithSite:(ARSite*)s andImage:(UIImage*)img
-{
-    self = [super init];
-    if (self) {
-        self.site = s;
-        self.imageToUpload = [[ARManager shared] rotateImage:img byOrientationFlag:img.imageOrientation];
-        self.response = WaitingToUpload;
-        [[ARManager shared] queueSiteImageForUpload: self];
-    }
-    return self;
-}
-
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super init];
@@ -58,7 +46,6 @@
         _dict = [aDecoder decodeObjectForKey: @"dict"];
         self.site = [aDecoder decodeObjectForKey: @"site"];
         self.siteIdentifier = [aDecoder decodeObjectForKey: @"siteIdentifier"];
-        self.imageToUpload = [aDecoder decodeObjectForKey: @"image"];
         _response = [aDecoder decodeIntForKey: @"response"];
     }
     return self;
@@ -70,8 +57,6 @@
     [aCoder encodeObject: _site forKey: @"site"];
     [aCoder encodeObject: _siteIdentifier forKey: @"siteIdentifier"];
     [aCoder encodeInt:_response forKey: @"response"];
-    if (self.imageToUpload)
-        [aCoder encodeObject:_imageToUpload forKey:@"image"];
 }
 
 - (void)setSite:(ARSite *)site
@@ -79,26 +64,6 @@
     _site = site;
     if (site)
         _siteIdentifier = [site identifier];
-}
-
-- (void)backgroundUploadStarted
-{
-    self.response = BackendResponseUploading;
-    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: _site];
-}
-
-- (void)backgroundUploadFailed
-{
-    self.response = BackendResponseFailed;
-    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: _site];
-}
-
-- (void)backgroundUploadSucceeded
-{
-    self.imageToUpload = nil;
-    self.response = BackendResponseFinished;
-    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: _site];
-    [_site invalidateImages];
 }
 
 - (NSString*)identifier

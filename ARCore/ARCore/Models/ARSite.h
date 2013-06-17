@@ -135,15 +135,6 @@ invalidate the overlays or site images that have been downloaded to this site. *
 */
 - (void)fetchImages;
 
-/** Used to add a brand new image to the base images for the site. Will be submitted
-to the server and added to the base images collection.
-
-  @param img The image to add to the base images set. Will be synced to the server 
-  asynchronously.
-
-*/
-- (void)addImage:(UIImage*)img;
-
 /** Begins the process of processing base images added to the site. Listen for 
 NOTIF_SITE_UPDATED to receive notifications when the site is ready. 
 */
