@@ -82,9 +82,9 @@ static NSString * const AVCaptureStillImageIsCapturingStillImageContext = @"AVCa
 - (IBAction)takePicture:(id)sender
 {
     ARCameraVCPhotoTakenBlock __weak weakBlock = _photoTakenBlock;
-    [_previewView takePictureWithCompletionBlock:^(NSData *jpegData, NSError *error) {
+    [_previewView takePictureWithCompletionBlock:^(UIImage *image, NSError *error) {
         if (weakBlock) {
-            weakBlock(jpegData, error);
+            weakBlock(image, error);
         }
     }];
 }

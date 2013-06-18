@@ -173,16 +173,28 @@ static NSString * const AVCaptureStillImageIsCapturingStillImageContext = @"AVCa
 	
     ARCameraPreviewView * __weak weakSelf = self;
 	[_stillImageOutput captureStillImageAsynchronouslyFromConnection:stillImageConnection completionHandler:^(CMSampleBufferRef imageDataSampleBuffer, NSError *error) {
-            [ARCameraViewUtil saveBufferToLibrary:imageDataSampleBuffer complete:^(NSData *jpegData, NSError *error) {
-                if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didCaptureImageWithData:error:)]) {
-                    [weakSelf.delegate didCaptureImageWithData:jpegData error:error];
+            [ARCameraViewUtil saveBufferToLibrary:imageDataSampleBuffer complete:^(UIImage *image, NSError *error) {
+                if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didCaptureImageWithImage:error:)]) {
+                    [weakSelf.delegate didCaptureImageWithImage:image error:error];
                 }
                 
                 if (complete) {
-                    complete(jpegData, error);
+                    complete(image, error);
                 }
             }];
     }];
+    
+    // simulator scenario
+    if (_stillImageOutput == nil) {
+//        NSData * jpegData = [NSData dataWithContentsOfFile: [[NSBundle mainBundle] pathForResource:@"chipotle-franchise1" ofType:@"jpg"]];
+//        if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didCaptureImageWithData:error:)]) {
+//            [weakSelf.delegate didCaptureImageWithImage:jpegData error: NULL];
+//        }
+//        
+//        if (complete) {
+//            complete(jpegData, NULL);
+//        }
+    }
 }
 
 
