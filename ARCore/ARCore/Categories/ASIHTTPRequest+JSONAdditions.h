@@ -24,6 +24,5 @@
 
 - (id)responseJSON;
 - (void)setPostJSONObject:(id)obj;
-- (BOOL)responseCodeIsSuccess;
 
 @end

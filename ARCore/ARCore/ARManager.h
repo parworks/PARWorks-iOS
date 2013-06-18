@@ -145,10 +145,12 @@
  
   @param identifier The identifier of the site you'd like to create.
   
+  @param name The name of the site you'd like to create.
+ 
   @param completionBlock A block to call when the server response has been received.
   
 */
-- (void)addSite:(NSString*)identifier withCompletionBlock:(void (^)(void))completionBlock;
+- (void)addSite:(NSString*)identifier withName:(NSString*)identifier withCompletionBlock:(void (^)(void))completionBlock;
 
 
 /** Removes a site to your account on the server with the given identifier.
