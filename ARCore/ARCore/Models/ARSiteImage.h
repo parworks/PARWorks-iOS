@@ -38,7 +38,7 @@ typedef enum {
 }
 
 @property (nonatomic, weak) ARSite * site;
-@property (nonatomic, retain) UIImage * imageToUpload;
+@property (nonatomic, strong) NSString * siteIdentifier;
 @property (nonatomic, assign) BackendResponse response;
 
 // ========================
@@ -52,23 +52,6 @@ typedef enum {
 */
 - (id)initWithDictionary:(NSDictionary*)dict;
 
-/** Creates an ARSiteImage and sends it to the server in the current site.
- 
- @param site A site to add the image to.
- @param img An image captured at the site.
- @return A newly initialized ARSiteImage instance
- */
-
-- (id)initWithSite:(ARSite*)site andImage:(UIImage*)img;
-
-/** Called when the upload of this image has started. */
-- (void)backgroundUploadStarted;
-
-/** Called when the upload of this image has failed. */
-- (void)backgroundUploadFailed;
-
-/** Called when the upload of this image has suceeded. */
-- (void)backgroundUploadSucceeded;
 
 
 /**

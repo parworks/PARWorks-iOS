@@ -25,7 +25,7 @@
 #import "ARSite.h"
 #import "Reachability.h"
 
-#define BACKGROUND_QUEUE_FILE [@"~/Documents/BackgroundQueue.plist" stringByExpandingTildeInPath]
+#define BACKGROUND_QUEUE_FOLDER [@"~/Documents/BackgroundQueue" stringByExpandingTildeInPath]
 
 @interface ARManager : NSObject <CLLocationManagerDelegate>
 {
@@ -33,9 +33,8 @@
     NSString * _appVersion;
     NSString * _appUsername;
     
-    ASIFormDataRequest * _backgroundUpload;
-    NSMutableArray * _backgroundUploadQueue;
-    Reachability * _apiReachability;
+    NSOperationQueue * _backgroundUploadQueue;
+    Reachability     * _apiReachability;
     
     NSDate * _lastConnectionAlertDate;
     CLLocationManager * _locationManager;
@@ -218,11 +217,10 @@
 #pragma mark Background Uploads
 
 /** The existing background upload queue. Do not mutate this array. */
-- (NSArray*)backgroundUploadQueue;
+- (NSOperationQueue*)backgroundUploadQueue;
 
 /** A method for queuing a new ARSiteImage to be uploaded. */
-- (void)queueSiteImageForUpload:(ARSiteImage*)image;
-
+- (void)addSiteImageWithData:(NSData*)data toSite:(NSString*)siteIdentifier;
 
 #pragma mark Convenience Functions for Image Picking
 

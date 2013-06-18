@@ -37,6 +37,7 @@
     self = [super init];
     if (self) {
         self.identifier = ident;
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(invalidateImages:) name:NOTIF_UPLOAD_COMPLETED_IN_SITE object:nil];
         self.status = ARSiteStatusUnknown;
         _summaryImageCount = 0;
         _summaryOverlayCount = 0;
@@ -49,6 +50,7 @@
     self = [super init];
     if (self) {
         self.identifier = [dict objectForKey: @"id"];
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(invalidateImages:) name:NOTIF_UPLOAD_COMPLETED_IN_SITE object:nil];
         self.status = ARSiteStatusUnknown;
         [self parseInfo: dict];
     }
@@ -63,6 +65,8 @@
         _summaryOverlayCount = [dict[@"numOverlays"] intValue];
         self.identifier = dict[@"id"];
         self.status = [self siteStatusForString:dict[@"siteState"]];
+
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(invalidateImages:) name:NOTIF_UPLOAD_COMPLETED_IN_SITE object:nil];
 
         if ([[dict objectForKey:@"posterImageUrl"] isKindOfClass: [NSString class]]) {
             NSString * url = [dict objectForKey:@"posterImageUrl"];
@@ -84,8 +88,18 @@
         _summaryImageCount = [aDecoder decodeIntForKey: @"summaryImageCount"];
         _summaryOverlayCount = [aDecoder decodeIntForKey: @"summaryOverlayCount"];
         _posterImage = [aDecoder decodeObjectForKey:@"_posterImage"];
+
+        [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(invalidateImages:) name:NOTIF_UPLOAD_COMPLETED_IN_SITE object:nil];
     }
     return self;    
+}
+
+- (void)updateFromSite:(ARSite*)site
+{
+    _status = site.status;
+    _siteDescription = site.siteDescription;
+    _summaryOverlayCount = site.summaryOverlayCount;
+    _summaryImageCount = site.summaryImageCount;
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
@@ -139,6 +153,10 @@
         _posterImage = [NSDictionary dictionaryWithObject:[dict objectForKey:@"posterImageUrl"] forKey:@"imgContentPath"];
 }
 
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver: self];
+}
 #pragma mark Site Status
 
 - (void)checkStatus
@@ -276,18 +294,12 @@
     [_imageReq startAsynchronous];
 }
 
-- (void)addImage:(UIImage*)img
+- (void)invalidateImages:(NSNotification*)notif
 {
-    ARSiteImage * i = [[ARSiteImage alloc] initWithSite: self andImage: img];
-    [_images addObject: i];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: self];
-}
-
-- (void)invalidateImages
-{
-    _images = nil;
-    [self performSelector:@selector(fetchImages) withObject:nil afterDelay:1.5];
+    if ([[notif object] isEqualToString: _identifier]) {
+        _images = nil;
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: self];
+    }
 }
 
 - (int)imageCount
@@ -304,7 +316,6 @@
 - (void)invalidateOverlays
 {
     _overlays = nil;
-    [self performSelector:@selector(fetchAvailableOverlays) withObject:nil afterDelay:1.5];
 }
 
 - (int)overlayCount

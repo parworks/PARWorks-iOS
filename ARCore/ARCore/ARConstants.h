@@ -52,6 +52,7 @@
 #define NOTIF_SITE_UPDATED              @"nbu"
 #define NOTIF_SITES_UPDATED             @"nbua"
 #define NOTIF_AUGMENTED_PHOTO_UPDATED   @"napu"
+#define NOTIF_UPLOAD_COMPLETED_IN_SITE  @"ucis"
 #define NOTIF_UPLOADS_UPDATED           @"nuu"
 
 typedef enum BackendResponse {

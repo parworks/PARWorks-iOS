@@ -149,7 +149,7 @@
     [dict setObject:_site.identifier forKey:@"site"];
     
     // IMPORTANT! THIS SHIT DOESN'T LOOK AT THE OVERLAY PROPERTIES!
-    NSDictionary * description = @{@"title":_title,@"boundary":@{@"color":@"GRAY",@"type":@"SOLID"},@"content":@{@"type":@"url",@"size":@"large",@"provider":_contentProvider},@"cover":@{@"type":@"regular",@"color":@"green",@"transparency":@(40),@"provider":@"",@"showPulse":@"true",@"offset":@"0,0"}};
+    NSDictionary * description = @{@"title":_title,@"boundary":@{@"color":@"GRAY",@"type":@"SOLID"},@"content":@{@"type":@"URL",@"size":@"large",@"provider":_contentProvider},@"cover":@{@"type":@"regular",@"color":@"green",@"transparency":@(40),@"provider":@"",@"showPulse":@"true",@"offset":@"0,0"}};
     [dict setObject:description forKey:@"content"];
 
     NSMutableArray * strings = [NSMutableArray array];

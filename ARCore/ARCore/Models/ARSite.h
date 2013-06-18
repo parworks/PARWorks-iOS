@@ -91,6 +91,12 @@ typedef enum ARSiteStatus {
  */
 - (id)initWithSummaryDictionary:(NSDictionary *)dict;
 
+
+/** Update the properties of the site using the values found in another site. Does not
+invalidate the overlays or site images that have been downloaded to this site. */
+- (void)updateFromSite:(ARSite*)site;
+
+
 // ========================
 // @name Site Information
 // ========================
@@ -128,15 +134,6 @@ typedef enum ARSiteStatus {
   reload any view that is dependent on this data
 */
 - (void)fetchImages;
-
-/** Used to add a brand new image to the base images for the site. Will be submitted
-to the server and added to the base images collection.
-
-  @param img The image to add to the base images set. Will be synced to the server 
-  asynchronously.
-
-*/
-- (void)addImage:(UIImage*)img;
 
 /** Begins the process of processing base images added to the site. Listen for 
 NOTIF_SITE_UPDATED to receive notifications when the site is ready. 

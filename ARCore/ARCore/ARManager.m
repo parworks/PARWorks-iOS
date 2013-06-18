@@ -76,12 +76,10 @@ static ARManager * sharedManager;
         [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(reachabilityChanged:) name: kReachabilityChangedNotification object: nil];
         [_apiReachability startNotifier];
 
-        _backgroundUploadQueue = [NSKeyedUnarchiver unarchiveObjectWithFile:BACKGROUND_QUEUE_FILE];
-        if (_backgroundUploadQueue)
-            [self queueTouched];
-        else
-            _backgroundUploadQueue = [NSMutableArray array];
-        
+        _backgroundUploadQueue = [[NSOperationQueue alloc] init];
+        [_backgroundUploadQueue setMaxConcurrentOperationCount: 2];
+        [_backgroundUploadQueue setName: @"Site Image Upload Queue"];
+                
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(deviceOrientationChanged) name:UIDeviceOrientationDidChangeNotification object:nil];
     }
 	return self;
@@ -94,6 +92,17 @@ static ARManager * sharedManager;
 {
     _apiKey = key;
     _apiSecret = secret;
+    
+    // now that we can make API requests, look and see if we have any that are
+    // still pending. (Site image uploads only for now)
+    [[NSFileManager defaultManager] createDirectoryAtPath:BACKGROUND_QUEUE_FOLDER withIntermediateDirectories:YES attributes:nil error:NULL];
+    NSArray * files = [[NSFileManager defaultManager] contentsOfDirectoryAtPath:BACKGROUND_QUEUE_FOLDER error:NULL];
+    
+    for (NSString * file in files) {
+        NSString * path = [BACKGROUND_QUEUE_FOLDER stringByAppendingPathComponent: file];
+        [self addSiteImageAtPath: path];
+    }
+
 }
 
 - (BOOL)locationEnabled
@@ -244,84 +253,68 @@ static ARManager * sharedManager;
 {
     // if we're connected to the API but not uploading anything, bump the
     // queue to start the next upload
-    if ([self isConnectedToAPI] && !_backgroundUpload && [_backgroundUploadQueue count])
-        [self queueTouched];
+    [_backgroundUploadQueue setSuspended: ![self isConnectedToAPI]];
 }
 
-- (NSArray*)backgroundUploadQueue
+- (NSOperationQueue*)backgroundUploadQueue
 {
     return _backgroundUploadQueue;
 }
 
-- (void)queueSiteImageForUpload:(ARSiteImage*)image
+- (void)addSiteImageWithData:(NSData*)data toSite:(NSString*)siteIdentifier
 {
-    [_backgroundUploadQueue addObject: image];
-    [self queueTouched];
+    NSString * path = [BACKGROUND_QUEUE_FOLDER stringByAppendingPathComponent: [NSString stringWithFormat:@"%@---%p%d.jpg", siteIdentifier, data, (int)[data length]]];
+    [data writeToFile:path atomically:NO];
+    [self addSiteImageAtPath: path];
+
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_UPLOADS_UPDATED object:nil];
 }
 
-- (void)queueTouched
+- (void)addSiteImageAtPath:(NSString*)path
 {
-    [NSKeyedArchiver archiveRootObject:_backgroundUploadQueue toFile:BACKGROUND_QUEUE_FILE];
-    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_UPLOADS_UPDATED object:nil];
-    
-    if ((!_backgroundUpload) && ([_backgroundUploadQueue count] > 0)){
-        ARSiteImage * current = [_backgroundUploadQueue objectAtIndex: 0];
-        [current backgroundUploadStarted];
+    [_backgroundUploadQueue addOperationWithBlock:^{
         
-        if (!current.imageToUpload) {
-            NSLog(@"Invalid ARSiteImage in the Upload Queue - No .imageToUpload!");
-            [_backgroundUploadQueue removeObjectAtIndex: 0];
-            [self queueTouched];
+        NSData * imgData = [NSData dataWithContentsOfFile: path];
+        NSString * imgSiteIdentifier = [[path lastPathComponent] componentsSeparatedByString:@"---"][0];
+        
+        if ((imgData == nil) || ([imgData length] == 0) || ([imgSiteIdentifier length] == 0)) {
+            [[NSFileManager defaultManager]removeItemAtPath:path error:NULL];
             return;
         }
         
-        if (current.site == nil) {
-            NSLog(@"Invalid ARSiteImage in the Upload Queue - No .site!");
-        }
-        
-        NSData * imgData = UIImageJPEGRepresentation(current.imageToUpload, 0.7);
         NSMutableDictionary * args = [NSMutableDictionary dictionary];
-        [args setObject: current.site.identifier forKey:@"site"];
-        [args setObject: [NSString stringWithFormat:@"%@%p", [NSNumber numberWithLong:time(0)], current] forKey:@"filename"];
+        [args setObject: imgSiteIdentifier forKey:@"site"];
+        [args setObject: [path lastPathComponent] forKey:@"filename"];
+
+        ASIFormDataRequest * req = (ASIFormDataRequest*)[[ARManager shared] createRequest:REQ_SITE_IMAGE_ADD withMethod:@"POST" withArguments:args];
+        [req setData:imgData forKey:@"image"];
+        [req setShouldContinueWhenAppEntersBackground: YES];
+        [req startSynchronous];
         
-        _backgroundUpload = (ASIFormDataRequest*)[[ARManager shared] createRequest:REQ_SITE_IMAGE_ADD withMethod:@"POST" withArguments:args];
-        [_backgroundUpload setData:imgData forKey:@"image"];
-        [_backgroundUpload setDidFinishSelector: @selector(queueUploadFinished:)];
-        [_backgroundUpload setDidFailSelector: @selector(queueUploadFailed:)];
-        [_backgroundUpload setShouldContinueWhenAppEntersBackground: YES];
-        [_backgroundUpload setDelegate: self];
-        [_backgroundUpload startAsynchronous];
-    }
-}
+        if ([self handleResponseErrors: req]){
+            [[NSFileManager defaultManager]removeItemAtPath:path error:NULL];
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_UPLOAD_COMPLETED_IN_SITE object: imgSiteIdentifier];
+        } else {
+        
+            if ([req responseStatusCode] >= 500)
+                // something weird happened. Continue to the next image and don't re-queue this one.
+                [[NSFileManager defaultManager]removeItemAtPath:path error:NULL];
 
-- (void)queueUploadFinished:(ASIFormDataRequest*)req
-{
-    if ([self handleResponseErrors: req]){
-        ARSiteImage * current = [_backgroundUploadQueue objectAtIndex: 0];
-        [current backgroundUploadSucceeded];
-    } else {
-        [self queueUploadFailed: req];
-    }
-    
-    _backgroundUpload = nil;
-    [_backgroundUploadQueue removeObjectAtIndex: 0];
-    [self queueTouched];
-}
+            else if ([self isConnectedToAPI] == NO) {
+                // we don't have a connection to the API. Pause the queue and requeue
+                [_backgroundUploadQueue setSuspended: YES];
+                [self addSiteImageAtPath: path];
 
-- (void)queueUploadFailed:(ASIFormDataRequest*)req
-{
-    ARSiteImage * current = [_backgroundUploadQueue objectAtIndex: 0];
-    [current backgroundUploadFailed];
-
-    if ([req responseStatusCode] != 500) {
-        [_backgroundUploadQueue removeObjectAtIndex: 0];
-        [_backgroundUploadQueue addObject: current];
-    }
-
-    _backgroundUpload = nil;
-    
-    if ([req responseStatusCode] != 0) // host unreachable
-        [self queueTouched];
+            } else {
+                // try again...
+                [self addSiteImageAtPath: path];
+            }
+        }
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_UPLOADS_UPDATED object:nil];
+        });
+    }];
+    [_backgroundUploadQueue setSuspended: NO];
 }
 
 #pragma mark -
