@@ -72,7 +72,7 @@ static ARManager * sharedManager;
             [[UIDevice currentDevice] beginGeneratingDeviceOrientationNotifications];
         }
 
-        _apiReachability = [Reachability reachabilityWithHostName: [NSString stringWithFormat: @"http://%@", API_ROOT]];
+        _apiReachability = [Reachability reachabilityWithHostName: API_ROOT];
         [[NSNotificationCenter defaultCenter] addObserver: self selector: @selector(reachabilityChanged:) name: kReachabilityChangedNotification object: nil];
         [_apiReachability startNotifier];
 
@@ -246,7 +246,7 @@ static ARManager * sharedManager;
 
 - (BOOL)isConnectedToAPI
 {
-    return ([_apiReachability currentReachabilityStatus] != NotReachable);
+    return ([_apiReachability isReachable]);
 }
 
 - (void)reachabilityChanged:(NSNotification*)notif
@@ -311,10 +311,13 @@ static ARManager * sharedManager;
             }
         }
         dispatch_async(dispatch_get_main_queue(), ^{
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_UPLOADS_UPDATED object:nil];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_UPLOADS_UPDATED object:nil];
+            });
         });
     }];
     [_backgroundUploadQueue setSuspended: NO];
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_UPLOADS_UPDATED object:nil];
 }
 
 #pragma mark -

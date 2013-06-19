@@ -173,7 +173,7 @@ static NSString * const AVCaptureStillImageIsCapturingStillImageContext = @"AVCa
 	
     ARCameraPreviewView * __weak weakSelf = self;
 	[_stillImageOutput captureStillImageAsynchronouslyFromConnection:stillImageConnection completionHandler:^(CMSampleBufferRef imageDataSampleBuffer, NSError *error) {
-            [ARCameraViewUtil saveBufferToLibrary:imageDataSampleBuffer complete:^(UIImage *image, NSError *error) {
+            [ARCameraViewUtil processBuffer:imageDataSampleBuffer complete:^(UIImage *image, NSError *error) {
                 if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didCaptureImageWithImage:error:)]) {
                     [weakSelf.delegate didCaptureImageWithImage:image error:error];
                 }

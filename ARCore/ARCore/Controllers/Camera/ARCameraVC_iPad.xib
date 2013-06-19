@@ -49,7 +49,6 @@
 										<int key="NSvFlags">289</int>
 										<string key="NSFrame">{{695, 5}, {67, 34}}</string>
 										<reference key="NSSuperview" ref="1014098372"/>
-										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="765162208"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<bool key="IBUIOpaque">NO</bool>
@@ -83,7 +82,6 @@
 								</array>
 								<string key="NSFrameSize">{768, 44}</string>
 								<reference key="NSSuperview" ref="1046013135"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="451829752"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<object class="NSColor" key="IBUIBackgroundColor">
@@ -97,8 +95,6 @@
 								<int key="NSvFlags">297</int>
 								<string key="NSFrame">{{678, 467}, {70, 70}}</string>
 								<reference key="NSSuperview" ref="1046013135"/>
-								<reference key="NSWindow"/>
-								<reference key="NSNextKeyView"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<bool key="IBUIOpaque">NO</bool>
 								<string key="targetRuntimeIdentifier">IBIPadFramework</string>
@@ -126,7 +122,6 @@
 										<int key="NSvFlags">294</int>
 										<string key="NSFrame">{{9, 5}, {163, 21}}</string>
 										<reference key="NSSuperview" ref="765162208"/>
-										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="955588917"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<bool key="IBUIOpaque">NO</bool>
@@ -158,7 +153,6 @@
 										<int key="NSvFlags">294</int>
 										<string key="NSFrame">{{9, 34}, {163, 21}}</string>
 										<reference key="NSSuperview" ref="765162208"/>
-										<reference key="NSWindow"/>
 										<reference key="NSNextKeyView" ref="515188124"/>
 										<string key="NSReuseIdentifierKey">_NS:9</string>
 										<bool key="IBUIOpaque">NO</bool>
@@ -184,7 +178,6 @@
 								</array>
 								<string key="NSFrame">{{15, 54}, {180, 65}}</string>
 								<reference key="NSSuperview" ref="1046013135"/>
-								<reference key="NSWindow"/>
 								<reference key="NSNextKeyView" ref="351106492"/>
 								<string key="NSReuseIdentifierKey">_NS:9</string>
 								<object class="NSColor" key="IBUIBackgroundColor">
@@ -196,7 +189,6 @@
 						</array>
 						<string key="NSFrameSize">{768, 1004}</string>
 						<reference key="NSSuperview" ref="766721923"/>
-						<reference key="NSWindow"/>
 						<reference key="NSNextKeyView" ref="1014098372"/>
 						<string key="NSReuseIdentifierKey">_NS:9</string>
 						<object class="NSColor" key="IBUIBackgroundColor">
@@ -211,7 +203,6 @@
 				</array>
 				<string key="NSFrame">{{0, 20}, {768, 1004}}</string>
 				<reference key="NSSuperview"/>
-				<reference key="NSWindow"/>
 				<reference key="NSNextKeyView" ref="1046013135"/>
 				<object class="NSColor" key="IBUIBackgroundColor">
 					<int key="NSColorSpace">3</int>
@@ -391,6 +382,7 @@
 				<string key="16.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="2.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 				<string key="26.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
+				<real value="3" key="26.IBUIButtonInspectorSelectedStateConfigurationMetadataKey"/>
 				<string key="4.CustomClassName">DMRotatableCameraHUD</string>
 				<string key="4.IBPluginDependency">com.apple.InterfaceBuilder.IBCocoaTouchPlugin</string>
 			</dictionary>
@@ -400,89 +392,7 @@
 			<nil key="sourceID"/>
 			<int key="maxID">30</int>
 		</object>
-		<object class="IBClassDescriber" key="IBDocument.Classes">
-			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
-				<object class="IBPartialClassDescription">
-					<string key="className">ARCameraVC</string>
-					<string key="superclassName">UIViewController</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">takePicture:</string>
-						<string key="NS.object.0">id</string>
-					</object>
-					<object class="NSMutableDictionary" key="actionInfosByName">
-						<string key="NS.key.0">takePicture:</string>
-						<object class="IBActionInfo" key="NS.object.0">
-							<string key="name">takePicture:</string>
-							<string key="candidateClassName">id</string>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/ARCameraVC.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">ARCameraVC_iPad</string>
-					<string key="superclassName">ARCameraVC</string>
-					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="cameraButton">UIButton</string>
-						<string key="doneButton">UIButton</string>
-						<string key="hud">DMRotatableCameraHUD</string>
-						<string key="projectLocationLabel">UILabel</string>
-						<string key="projectNameLabel">UILabel</string>
-						<string key="projectView">UIView</string>
-						<string key="segmentedControl">UISegmentedControl</string>
-						<string key="toolbarView">UIView</string>
-					</dictionary>
-					<dictionary class="NSMutableDictionary" key="toOneOutletInfosByName">
-						<object class="IBToOneOutletInfo" key="cameraButton">
-							<string key="name">cameraButton</string>
-							<string key="candidateClassName">UIButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="doneButton">
-							<string key="name">doneButton</string>
-							<string key="candidateClassName">UIButton</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="hud">
-							<string key="name">hud</string>
-							<string key="candidateClassName">DMRotatableCameraHUD</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="projectLocationLabel">
-							<string key="name">projectLocationLabel</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="projectNameLabel">
-							<string key="name">projectNameLabel</string>
-							<string key="candidateClassName">UILabel</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="projectView">
-							<string key="name">projectView</string>
-							<string key="candidateClassName">UIView</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="segmentedControl">
-							<string key="name">segmentedControl</string>
-							<string key="candidateClassName">UISegmentedControl</string>
-						</object>
-						<object class="IBToOneOutletInfo" key="toolbarView">
-							<string key="name">toolbarView</string>
-							<string key="candidateClassName">UIView</string>
-						</object>
-					</dictionary>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/ARCameraVC_iPad.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">DMRotatableCameraHUD</string>
-					<string key="superclassName">UIView</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">./Classes/DMRotatableCameraHUD.h</string>
-					</object>
-				</object>
-			</array>
-		</object>
+		<object class="IBClassDescriber" key="IBDocument.Classes"/>
 		<int key="IBDocument.localizationMode">0</int>
 		<string key="IBDocument.TargetRuntimeIdentifier">IBIPadFramework</string>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>

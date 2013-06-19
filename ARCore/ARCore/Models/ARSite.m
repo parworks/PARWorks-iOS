@@ -297,10 +297,8 @@
 
 - (void)invalidateImages:(NSNotification*)notif
 {
-    if ([[notif object] isEqualToString: _identifier]) {
-        _images = nil;
-        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: self];
-    }
+    if ([[notif object] isEqualToString: _identifier])
+        [self fetchImages];
 }
 
 - (int)imageCount
