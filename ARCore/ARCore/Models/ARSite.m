@@ -64,6 +64,7 @@
         _summaryImageCount = [dict[@"numImages"] intValue];
         _summaryOverlayCount = [dict[@"numOverlays"] intValue];
         self.identifier = dict[@"id"];
+        self.name = dict[@"name"];
         self.status = [self siteStatusForString:dict[@"siteState"]];
 
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(invalidateImages:) name:NOTIF_UPLOAD_COMPLETED_IN_SITE object:nil];

@@ -320,10 +320,11 @@ static ARManager * sharedManager;
 #pragma mark -
 #pragma mark Managing and Finding Sites
 
-- (void)addSite:(NSString*)identifier withCompletionBlock:(void (^)(void))completionBlock
+- (void)addSite:(NSString*)identifier withName:(NSString*)name withCompletionBlock:(void (^)(void))completionBlock
 {
     NSMutableDictionary * args = [NSMutableDictionary dictionaryWithCapacity: 2];
     [args setObject:identifier forKey:@"id"];
+    [args setObject:name forKey:@"name"];
     [args setObject:@"surf" forKey:@"feature"];
     if (_locationEnabled) {
         [args setObject:[NSString stringWithFormat: @"%f", [[ARManager shared] deviceLocation].coordinate.latitude] forKey:@"lat"];
