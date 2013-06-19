@@ -143,7 +143,7 @@ NOTIF_SITE_UPDATED to receive notifications when the site is ready.
 /** Destroys the local copy of the site's base images and fetches them from the 
 server again.
 */
-- (void)invalidateImages;
+- (void)invalidateImages:(NSNotification*)notif;
 
 /**
   @return true if the ARSite is still fetching it's images from the server.

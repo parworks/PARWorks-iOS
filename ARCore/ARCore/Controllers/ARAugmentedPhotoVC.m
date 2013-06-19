@@ -41,7 +41,6 @@
     
     _progressHUD = [[MBProgressHUD alloc] initWithView:self.view];
     _progressHUD.labelText = @"Augmenting";
-//    _progressHUD.detailsLabelText = @"Tap to cancel";
     _progressHUD.square = YES;
     
     if (_waitingImageContents) {
@@ -66,7 +65,7 @@
     _augmentedView.shouldAnimateViewLayout = YES;
     [self.view addSubview:_augmentedView];
     
-    _backButton = [UIButton buttonWithType:UIButtonTypeRoundedRect];
+    _backButton = [UIButton buttonWithType:UIButtonTypeCustom];
     [_backButton setTitle:@"Back" forState:UIControlStateNormal];
     [_backButton addTarget:self action:@selector(handleBackButtonTapped) forControlEvents:UIControlEventTouchUpInside];
     [self.view addSubview:_backButton];
@@ -76,7 +75,7 @@
 {
     [super viewWillAppear:animated];
     _progressHUD.center = CGPointMake(self.view.bounds.size.width/2, self.view.bounds.size.height/2);
-    _backButton.frame = CGRectMake(10, 10, 60, 40);
+    _backButton.frame = CGRectMake(15, 10, 60, 30);
     
     [self setAugmentedPhoto:[_site augmentImage:_imageToAugment]];
     [self showAugmentingInterface];
@@ -99,9 +98,11 @@
 
 
 #pragma mark - Interaction
+
 - (void)handleBackButtonTapped
 {
-    [self dismissViewControllerAnimated:YES completion:nil];
+    BOOL isPad = fmaxf([[UIScreen mainScreen] bounds].size.height, [[UIScreen mainScreen] bounds].size.width) > 1000;
+    [self dismissViewControllerAnimated:!isPad completion:nil];
 }
 
 - (void)showAugmentingInterface
@@ -109,7 +110,7 @@
     double delayInSeconds = 0.3;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-        _tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(cancelAugmenting)];
+        _tap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(handleBackButtonTapped)];
         [self.view addGestureRecognizer:_tap];
         
         [_progressHUD show:YES];

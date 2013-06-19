@@ -20,8 +20,6 @@
     UIImage *_imageToAugment;
     id _waitingImageContents;
 
-    UIButton *_backButton;
-    
     UITapGestureRecognizer  *_tap;
     MBProgressHUD           *_progressHUD;
     CALayer                 *_takenBlackLayer;
@@ -29,6 +27,7 @@
 }
 
 @property(nonatomic, strong) ARAugmentedPhoto *augmentedPhoto;
+@property(nonatomic, strong) UIButton * backButton;
 @property(nonatomic, strong) NSMutableArray *siteSet;
 @property(nonatomic, strong) id <ARAugmentedPhotoSource> site;
 

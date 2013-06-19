@@ -60,7 +60,6 @@
         self.name = dict[@"name"];
         
         self.accuracy = dict[@"accuracy"];
-        self.success = [dict[@"success"] intValue];
         
         self.title = [description objectForKey:@"title" or: nil];
         [self setBoundaryPropertiesWithDictionary:description[@"boundary"]];
@@ -82,7 +81,6 @@
         
         _accuracy = [aDecoder decodeObjectForKey:@"accuracy"];
         _title = [aDecoder decodeObjectForKey:@"title"];
-        _success = [aDecoder decodeBoolForKey:@"success"];
         _processed = [aDecoder decodeBoolForKey:@"processed"];
         
         _boundaryType = [aDecoder decodeIntegerForKey:@"boundaryType"];
@@ -110,7 +108,6 @@
 
     [aCoder encodeObject: _accuracy forKey: @"accuracy"];
     [aCoder encodeObject: _title forKey: @"title"];
-    [aCoder encodeBool: _success forKey:@"success"];
     [aCoder encodeBool: _processed forKey:@"processed"];
     
     [aCoder encodeInteger: _boundaryType forKey: @"boundaryType"];
