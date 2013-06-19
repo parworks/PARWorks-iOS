@@ -185,7 +185,7 @@ UIImage *scaleAndRotateImage(UIImage *image, UIImageOrientation orientation)
             
     }
     
-    UIGraphicsBeginImageContextWithOptions(bounds.size, YES, 0);
+    UIGraphicsBeginImageContextWithOptions(bounds.size, YES, 1);
     
     CGContextRef context = UIGraphicsGetCurrentContext();
     
