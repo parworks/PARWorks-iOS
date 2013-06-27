@@ -158,8 +158,9 @@
     
     if (_animDelegate) {
         [_animDelegate focusOverlayView:self inParent:parent];
-        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_OVERLAY_VIEW_FOCUSED object: self];
     }
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_OVERLAY_VIEW_FOCUSED object: self];
+
     [UIView animateWithDuration:0.1 animations:^{
         _outlineView.alpha = 0.0;
     }];
@@ -175,7 +176,9 @@
         if ([_coverView isKindOfClass: [ARCentroidView class]])
             _coverView.alpha = 1.0;
         
-    } completion:nil];
+    } completion:^(BOOL finished) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_OVERLAY_VIEW_UNFOCUSED object: self];
+    }];
     [parent.overlayImageView bringSubviewToFront:_outlineView];
 }
 
