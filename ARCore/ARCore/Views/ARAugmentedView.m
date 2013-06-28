@@ -146,7 +146,8 @@
 // Layout our subviews based on the current frame of the view
 - (void)layoutForCurrentViewMetrics
 {
-    [_dimView setFrame: [self bounds]];
+//FIXME: For some reason bounds aren't filling rect so just making dimView really big for now
+//    [_dimView setFrame: [self bounds]];
     [super layoutSubviews];
 
     if(CGPointEqualToPoint(_loadingViewPoint, CGPointMake(0, 0)))
