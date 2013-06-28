@@ -17,4 +17,6 @@
 @property(nonatomic, strong) UIWebView *webView;
 @property(nonatomic, strong) ARLoadingView *loadingView;
 
+- (void)focusOverlayViewCompleted:(AROverlayWebView*)overlayWebView;
+
 @end

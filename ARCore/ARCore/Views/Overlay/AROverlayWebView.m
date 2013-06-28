@@ -24,25 +24,56 @@
 }
 
 
-#pragma mark - AROverlayViewAnimationDelegate
-- (void)focusOverlayView:(AROverlayView *)overlayView inParent:(ARAugmentedView *)parent
+#pragma mark - Accessors
+- (UIWebView *)webView
 {
     if(!_webView){
-        self.webView = [[UIWebView alloc] initWithFrame:self.bounds];
+        _webView = [[UIWebView alloc] initWithFrame:self.bounds];
         _webView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+        _webView.opaque = NO;
+        _webView.backgroundColor = [UIColor whiteColor];
+        _webView.scrollView.scrollEnabled = YES;
+        _webView.scrollView.bounces = YES;
         _webView.delegate = self;
         [self addSubview:_webView];
-        _webView.alpha = 0.0;
     }
-    
+    return _webView;
+}
+
+- (UIButton *)closeButton
+{
+    if(!_closeButton){
+        //For GM Demo, I changed closeButton from X to full screen invisible button
+        self.closeButton = [[UIButton alloc] initWithFrame:CGRectMake(self.bounds.size.width - 45.0, 5.0, 40.0, 40.0)];
+        //        self.closeButton = [[UIButton alloc] initWithFrame:self.bounds];
+        [_closeButton setBackgroundColor:[UIColor clearColor]];
+        [_closeButton setBackgroundImage:[UIImage imageNamed:@"Button_Close-Overlay.png"] forState:UIControlStateNormal];
+        [self addSubview:_closeButton];
+    }
+    return _closeButton;
+}
+
+- (ARLoadingView *)loadingView
+{
     if(!_loadingView){
         self.loadingView = [[ARLoadingView alloc] initWithFrame: CGRectMake(0, 0, 36, 36)];
         _loadingView.center = _webView.center;
         [_loadingView setLoadingViewStyle:ARLoadingViewStyleBlack];
         [self addSubview:_loadingView];
-        _loadingView.alpha = 0.0;
     }
-    
+    return _loadingView;
+}
+
+
+#pragma mark - AROverlayViewAnimationDelegate
+- (void)focusOverlayView:(AROverlayView *)overlayView inParent:(ARAugmentedView *)parent
+{
+    // Property accessor triggers lazy loading
+    self.webView.alpha = 0;
+    self.loadingView.alpha = 0;
+    self.closeButton.alpha = 0.0;
+    [_closeButton addTarget:parent action:@selector(overlayTapped:) forControlEvents:UIControlEventTouchUpInside];
+
     __weak AROverlayWebView * weakSelf = self;
     [self animateBounceFocusWithParent:parent centeredBlock:^{
         if(overlayView.overlay.contentSize == AROverlayContentSize_Fullscreen){
@@ -65,6 +96,8 @@
 - (void)unfocusOverlayView:(AROverlayView *)overlayView inParent:(ARAugmentedView *)parent
 {
     __weak AROverlayWebView * weakSelf = self;
+
+    [_closeButton removeTarget:parent action:@selector(overlayTapped:) forControlEvents:UIControlEventTouchUpInside];
     [self animateBounceUnfocusWithParent:parent uncenteredBlock:^{
         weakSelf.webView.alpha = 0.0;
         weakSelf.loadingView.alpha = 0.0;
@@ -79,6 +112,8 @@
         [overlayWebView.webView loadRequest:[NSURLRequest requestWithURL:url]];
 }
 
+
+#pragma mark - UIWebViewDelegate
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
     return YES;
