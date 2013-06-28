@@ -87,7 +87,7 @@
     _overlayImageView.userInteractionEnabled = YES;
     [self addSubview: _overlayImageView];
     
-    self.dimView = [[UIControl alloc] initWithFrame:_overlayImageView.bounds];
+    self.dimView = [[UIControl alloc] initWithFrame: CGRectMake(0, 0, 3000, 3000)];
     [_dimView addTarget:self action:@selector(dimViewTapped:) forControlEvents:UIControlEventTouchUpInside];
     _dimView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
     _dimView.alpha = 0.0;
@@ -147,6 +147,8 @@
 - (void)layoutForCurrentViewMetrics
 {
     [_dimView setFrame: [self bounds]];
+    [super layoutSubviews];
+
     if(CGPointEqualToPoint(_loadingViewPoint, CGPointMake(0, 0)))
         [_loadingView setCenter:CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2)];
     else
