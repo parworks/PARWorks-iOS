@@ -12,10 +12,12 @@
 @interface AROverlayWebView : AROverlayView <AROverlayViewAnimationDelegate, UIWebViewDelegate>{
     UIWebView *_webView;
     ARLoadingView *_loadingView;
+    UIButton *_closeButton;
 }
 
 @property(nonatomic, strong) UIWebView *webView;
 @property(nonatomic, strong) ARLoadingView *loadingView;
+@property(nonatomic, strong) UIButton *closeButton;
 
 - (void)focusOverlayViewCompleted:(AROverlayWebView*)overlayWebView;
 

@@ -49,13 +49,13 @@
         
         NSData * descriptionData = [dict[@"description"] dataUsingEncoding: NSUTF8StringEncoding];
         NSDictionary * description = nil;
-
+        
         if (descriptionData)
             description = [NSJSONSerialization JSONObjectWithData:descriptionData options:NSJSONReadingAllowFragments error:nil];
         else
             description = dict;
         
-
+        
         self.siteImageIdentifier = dict[@"imageId"];
         self.name = dict[@"name"];
         
@@ -105,14 +105,14 @@
     [aCoder encodeObject: _siteImageIdentifier forKey: @"siteImageIdentifier"];
     [aCoder encodeObject: _name forKey: @"name"];
     [aCoder encodeObject: _points forKey: @"points"];
-
+    
     [aCoder encodeObject: _accuracy forKey: @"accuracy"];
     [aCoder encodeObject: _title forKey: @"title"];
     [aCoder encodeBool: _processed forKey:@"processed"];
     
     [aCoder encodeInteger: _boundaryType forKey: @"boundaryType"];
     [aCoder encodeObject: _boundaryColor forKey: @"boundaryColor"];
-
+    
     [aCoder encodeInteger: _contentType forKey: @"contentType"];
     [aCoder encodeInteger: _contentSize forKey: @"contentSize"];
     [aCoder encodeObject: _contentProvider forKey: @"contentProvider"];
@@ -164,9 +164,9 @@
         _boundaryType = AROverlayBoundaryType_Solid;
         return;
     }
-
+    
     _boundaryColor = [UIColor colorWithString:[dict objectForKey:@"color" or: nil]];
-
+    
     NSString *type = [dict objectForKey:@"type" or: nil];
     if ([type.lowercaseString isEqualToString:@"hide"]) {
         _boundaryType = AROverlayBoundaryType_Hidden;
@@ -188,12 +188,14 @@
     }
     
     _contentProvider = [dict objectForKey:@"provider" or: nil];
-
+    
     NSString *size = [dict objectForKey:@"size" or: nil];
     if ([size.lowercaseString isEqualToString:@"small"]) {
         _contentSize = AROverlayContentSize_Small;
     } else if ([size.lowercaseString isEqualToString:@"large"]) {
         _contentSize = AROverlayContentSize_Large;
+    } else if ([size.lowercaseString isEqualToString:@"large_left"]) {
+        _contentSize = AROverlayContentSize_Large_Left;
     } else if ([size.lowercaseString isEqualToString:@"full_screen"]) {
         _contentSize = AROverlayContentSize_Fullscreen;
     } else {
@@ -320,11 +322,11 @@
 {
     if ([_points count] < 3)
         @throw [NSException exceptionWithName:@"PARWorks API Error" reason:@"Please add at least three AROverlayPoints to your overlay before saving it." userInfo:nil];
-
+    
     if (!_name)
         @throw [NSException exceptionWithName:@"PARWorks API Error" reason:@"Please add a name before saving." userInfo:nil];
-
-   
+    
+    
     NSMutableDictionary *jsonDict = [self jsonRepresentation];
     [jsonDict setObject:[[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:jsonDict[@"content"] options:0 error:nil] encoding:NSUTF8StringEncoding] forKey:@"content"];
     
