@@ -304,4 +304,40 @@
     
 }
 
+
+#pragma mark - Overlay Information
+- (NSSet *)groupNamesForOverlays
+{
+    NSMutableSet *set = [NSMutableSet set];
+    for (AROverlay *overlay in _overlays) {
+        if (overlay.name && overlay.name.length > 0) {
+            [set addObject:overlay.name];
+        }
+    }
+    return set;
+}
+
+- (NSArray *)overlaysForName:(NSString *)name
+{
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"name LIKE %@", name];
+    NSArray *matchedOverlays = [_overlays filteredArrayUsingPredicate:pred];
+    return matchedOverlays;
+}
+
+- (NSDictionary *)overlaysSortedByGroupName
+{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    for (NSString *name in [self groupNamesForOverlays]) {
+        NSArray *array = [self overlaysForName:name];
+        [dict setObject:array forKey:name];
+    }
+    
+    NSPredicate *unknownPred = [NSPredicate predicateWithFormat:@"(name = nil) || (name.length == 0)"];
+    NSArray *unknown = [_overlays filteredArrayUsingPredicate:unknownPred];
+    if (unknown.count > 0) {
+        [dict setObject:unknown forKey:@"unknown"];
+    }
+    
+    return dict;
+}
 @end

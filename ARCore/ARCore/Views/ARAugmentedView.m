@@ -295,14 +295,27 @@
     _focusedOverlayView = nil;
 }
 
-- (void)setVisibile:(BOOL)visible forOverlayViewsWithName:(NSString *)name
+- (void)setOverlaysVisibleWithNames:(NSArray *)names animated:(BOOL)animated
 {
+    if (animated) {
+        [UIView beginAnimations:@"overlayVisibility" context:nil];
+        [UIView setAnimationDuration:0.3];
+    }
+
     for (AROverlayView *v in _overlayViews) {
-        if ([v.overlay.name isEqualToString:name]) {
-            v.hidden = !visible;
+        NSString *name = v.overlay.name;
+        if (name && [names containsObject:name]) {
+            v.alpha = 1.0;
+        } else {
+            v.alpha = 0.0;
         }
     }
+    
+    if (animated) {
+        [UIView commitAnimations];
+    }
 }
+
 
 #pragma mark - Convenience
 

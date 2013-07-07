@@ -105,7 +105,7 @@
 // The loading view that displays during loading
 @property(nonatomic, strong) ARLoadingView *loadingView;
 
-- (void)setVisibile:(BOOL)visible forOverlayViewsWithName:(NSString *)name;
+- (void)setOverlaysVisibleWithNames:(NSArray *)names animated:(BOOL)animated;
 
 /// Posts notification to present a navigation controller fullscreen
 - (void)presentFullscreenNavigationController:(UINavigationController*)controller;

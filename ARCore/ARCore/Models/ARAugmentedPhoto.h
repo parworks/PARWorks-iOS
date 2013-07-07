@@ -123,4 +123,31 @@ typedef void(^ARProcessingCompletionBlock)(ARAugmentedPhoto *augmentedPhoto);
 */
 - (void)startPollForImageIdentifier:(NSString*)ident;
 
+
+// ========================
+// @name Overlay Information
+// ========================
+
+/** Examines all the overlays for this photo and puts together a set of all the unique names.
+ 
+    @return A unique list of all overlay names. If none of the overlays for this photo
+    have a group name, an empty set is returned.
+ */
+- (NSSet *)groupNamesForOverlays;
+
+/** Examines all the overlays returning those that match the name passed. This method is case sensitive.
+ 
+    @return An array of all overlays matching the name passed in. 
+ */
+- (NSArray *)overlaysForName:(NSString *)name;
+
+/** Examines all overlays for the photo and sorts them into a dictionary where each key is the overlay
+    name and the value is an array of all overlays. Overlays without a name are put in a dictionary 
+    titled "unknown."
+ 
+    @return A dictionary where the key is the overlay name is the value is an array of all overlays with that
+    name. 
+ */
+- (NSDictionary *)overlaysSortedByGroupName;
+
 @end
