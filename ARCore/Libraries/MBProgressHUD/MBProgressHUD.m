@@ -287,15 +287,15 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 
 - (void)showUsingAnimation:(BOOL)animated {
 	if (animated && animationType == MBProgressHUDAnimationZoomIn) {
-		self.transform = CGAffineTransformConcat(rotationTransform, CGAffineTransformMakeScale(0.5f, 0.5f));
+		self.transform = CGAffineTransformConcat(rotationTransform, CGAffineTransformMakeScale(0.80f, 0.80f));
 	} else if (animated && animationType == MBProgressHUDAnimationZoomOut) {
-		self.transform = CGAffineTransformConcat(rotationTransform, CGAffineTransformMakeScale(1.5f, 1.5f));
+		self.transform = CGAffineTransformConcat(rotationTransform, CGAffineTransformMakeScale(1.2f, 1.2f));
 	}
 	self.showStarted = [NSDate date];
 	// Fade in
 	if (animated) {
 		[UIView beginAnimations:nil context:NULL];
-		[UIView setAnimationDuration:0.30];
+		[UIView setAnimationDuration:0.4];
 		self.alpha = 1.0f;
 		if (animationType == MBProgressHUDAnimationZoomIn || animationType == MBProgressHUDAnimationZoomOut) {
 			self.transform = rotationTransform;
@@ -311,15 +311,15 @@ static const CGFloat kDetailsLabelFontSize = 12.f;
 	// Fade out
 	if (animated && showStarted) {
 		[UIView beginAnimations:nil context:NULL];
-		[UIView setAnimationDuration:0.30];
+		[UIView setAnimationDuration:0.4];
 		[UIView setAnimationDelegate:self];
 		[UIView setAnimationDidStopSelector:@selector(animationFinished:finished:context:)];
 		// 0.02 prevents the hud from passing through touches during the animation the hud will get completely hidden
 		// in the done method
 		if (animationType == MBProgressHUDAnimationZoomIn) {
-			self.transform = CGAffineTransformConcat(rotationTransform, CGAffineTransformMakeScale(1.5f, 1.5f));
+			self.transform = CGAffineTransformConcat(rotationTransform, CGAffineTransformMakeScale(1.2f, 1.2f));
 		} else if (animationType == MBProgressHUDAnimationZoomOut) {
-			self.transform = CGAffineTransformConcat(rotationTransform, CGAffineTransformMakeScale(0.5f, 0.5f));
+			self.transform = CGAffineTransformConcat(rotationTransform, CGAffineTransformMakeScale(0.80f, 0.80f));
 		}
 
 		self.alpha = 0.02f;

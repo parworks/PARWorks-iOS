@@ -157,7 +157,7 @@
         
         if ([[_augmentedPhoto overlays] count] == 0) {
             UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Oops!"
-                                                         message:@"No overlays found. Make sure the object is focused and in the frame."
+                                                         message:@"No overlays! Make sure the object is focused and in the frame."
                                                         delegate:self
                                                cancelButtonTitle:@"Try again"
                                                otherButtonTitles:nil];
