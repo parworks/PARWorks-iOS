@@ -31,8 +31,10 @@
     SBJsonParser * parser = [SBJsonParser new];
     id obj = nil;
     
+    NSString *resp = [self responseString];
+   // NSLog(@"The response is %@",resp);
     @try {
-        obj = [parser objectWithString: [self responseString]];
+        obj = [parser objectWithString: resp];
     } @catch (NSException * e) {
         NSLog(@"JSON parse error: %@", [e description]);
         return [NSError errorWithDomain:@"JSONParseError" code:200 userInfo: nil];
@@ -43,7 +45,7 @@
         return [NSError errorWithDomain:@"JSONParseError" code:200 userInfo: nil];
     }
     
-//    NSLog(@"JSON parsed: %@ %@", [[self url] absoluteString], [obj description]);
+  //  NSLog(@"JSON parsed: %@ %@", [[self url] absoluteString], [obj description]);
     return obj;
 }
 
