@@ -24,6 +24,7 @@
 #import "ARAugmentedPhoto.h"
 #import "ARManager.h"
 #import "ARSite.h"
+#import "SBJSON.h"
 #import "ASIHTTPRequest+JSONAdditions.h"
 
 #define PHOTOS_DIRECTORY [@"~/Documents/Photos/" stringByExpandingTildeInPath]
@@ -139,6 +140,16 @@
     NSMutableDictionary * args = [self processArguments];
     if (_site == nil)
         return (ASIFormDataRequest*)[[ARManager shared] createRequest:REQ_IMAGE_AUGMENT_GEO withMethod:@"POST" withArguments:args];
+    else
+        return (ASIFormDataRequest*)[[ARManager shared] createRequest:REQ_IMAGE_AUGMENT withMethod:@"POST" withArguments:args];
+}
+- (ASIFormDataRequest*)requestForChangeDetectionProcessing
+{
+    NSString *isChangeDetection = @"true";
+    NSMutableDictionary * args = [self processArguments];
+    [args setObject:isChangeDetection forKey:@"withCD"];
+    if (_site == nil)
+        @throw [NSException exceptionWithName: @"ProcessChangeDetectionExcepion" reason: @"The site cannot be nil when processing change detection." userInfo:nil];
     else
         return (ASIFormDataRequest*)[[ARManager shared] createRequest:REQ_IMAGE_AUGMENT withMethod:@"POST" withArguments:args];
 }
@@ -288,6 +299,134 @@
         [self addOverlay: [[AROverlay alloc] initWithDictionary: overlayDict]];
     if (_overlays == nil)
         self.overlays = [NSMutableArray array];
+}
+- (void)processChangeDetection
+{
+    if (_image == nil)
+        @throw [NSException exceptionWithName: @"ProcessException" reason: @"You need to provide an image to the ARAugmentedPhoto before calling process." userInfo: nil];
+    
+    if (_site == nil )
+        @throw [NSException exceptionWithName: @"ProcessException" reason: @"You cannot process change detection on an image without specifying a site." userInfo: nil];
+    
+    _image = [[ARManager shared] rotateImage:_image byOrientationFlag:_image.imageOrientation];
+    
+    ASIFormDataRequest * req = [self requestForChangeDetectionProcessing];
+    ASIFormDataRequest * __weak __req = req;
+    
+    [req setData:UIImageJPEGRepresentation(_image, 0.45) forKey:@"image"];
+    [req setFailedBlock: ^(void) {
+        _response = BackendResponseFailed;
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_AUGMENTED_PHOTO_UPDATED object: self];
+        [[ARManager shared] criticalRequestFailed: __req];
+        if (_processingCompletionBlock) _processingCompletionBlock(self);
+    }];
+    [req setCompletionBlock: ^(void) {
+        if ([[ARManager shared] handleResponseErrors: __req]) {
+            [self processChangeDetectionPostComplete: __req];
+            
+        } else {
+            _response = BackendResponseFailed;
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_AUGMENTED_PHOTO_UPDATED object: self];
+            if (_processingCompletionBlock) _processingCompletionBlock(self);
+        }
+    }];
+    
+    _response = BackendResponseUploading;
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_AUGMENTED_PHOTO_UPDATED object: self];
+    
+    [req startAsynchronous];
+}
+- (void)processChangeDetectionPostComplete:(ASIFormDataRequest*)req
+{
+    [self startPollForChangeDetectionImageIdentifier: [[req responseJSON] objectForKey: @"imgId"]];
+}
+- (void)startPollForChangeDetectionImageIdentifier:(NSString*)ident
+{
+    _response = BackendResponseProcessing;
+    _imageIdentifier = ident;
+    _pollCount = 0;
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_AUGMENTED_PHOTO_UPDATED object: self];
+    _pollTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(processChangeDetectionPoll) userInfo:nil repeats:NO];
+}
+- (void)processChangeDetectionPoll
+{
+    _pollTimer = nil;
+    if (_pollCount == 20) {
+        self.response = BackendResponseFailed;
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_AUGMENTED_PHOTO_UPDATED object: self];
+        return;
+    }
+    
+//    NSMutableDictionary * args = [self processArguments];
+//    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"static_result"])
+//        [args setObject:@"true" forKey:@"specialResult"];
+    
+    NSMutableDictionary * args = [NSMutableDictionary dictionary];
+    [args setObject:_site.identifier forKey:@"site"];
+    [args setObject:_imageIdentifier forKey:@"imgId"];
+
+    
+    ASIHTTPRequest * req = [[ARManager shared] createRequest:REQ_SITE_CHANGE_DETECT_RESULT withMethod:@"GET" withArguments:args];
+    ASIHTTPRequest * __weak __req = req;
+    
+    [req setCompletionBlock: ^(void) {
+        NSString * response = [__req responseString];
+        if ([response length] == 0) {
+            _pollTimer = [NSTimer scheduledTimerWithTimeInterval:0.8 target:self selector:@selector(processChangeDetectionPoll) userInfo:nil repeats:NO];
+            _pollCount ++;
+        } else {
+            [self processChangeDetectionJSONData: [__req responseJSON]];
+            self.response = BackendResponseFinished;
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_AUGMENTED_PHOTO_UPDATED object: self];
+            if (_processingCompletionBlock) _processingCompletionBlock(self);
+        }
+    }];
+    [req startAsynchronous];
+}
+- (void)processChangeDetectionJSONData:(NSDictionary*)data
+{
+    [self processChangeDetectionJSONData: data forDisplayWithScale:1];
+}
+
+- (void)processChangeDetectionJSONData:(NSDictionary*)data forDisplayWithScale:(float)scale
+{
+    if ([data isKindOfClass: [NSDictionary class]] == NO)
+        return;
+    
+    if (_overlays == nil)
+        self.overlays = [NSMutableArray array];
+    
+    NSString * resultData = [data objectForKey:@"resultData"];
+    SBJsonParser * parser = [SBJsonParser new];
+    id resultDataObject = nil;
+    
+    @try {
+        resultDataObject = [parser objectWithString: resultData];
+        
+        NSMutableDictionary *objects = [resultDataObject objectForKey: @"objects"];
+        for(NSMutableDictionary *object in objects) {
+            
+            NSString * objectId = [object objectForKey:@"objectId"];
+            NSString * objectLabel = [object objectForKey:@"objectLabel"];
+            
+            NSMutableDictionary *instances = [object objectForKey:@"instances"];
+            
+            for(NSMutableDictionary *instance in instances) {
+                
+                AROverlay *result = [[AROverlay alloc] initWithChangeDetectionDictionary:instance overlayId:objectId objectLabel:objectLabel];
+                [result setSite: self.site];
+                [self addOverlay: result];
+            }
+            
+            
+        }
+        
+        
+        
+    } @catch (NSException * e) {
+        NSLog(@"JSON parse error: %@", [e description]);
+    }
+
 }
 
 - (void)addOverlay:(AROverlay*)ar

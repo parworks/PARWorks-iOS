@@ -100,6 +100,14 @@ typedef void(^ARProcessingCompletionBlock)(ARAugmentedPhoto *augmentedPhoto);
 */
 - (void)process;
 
+/** Begins the change detection processing procedure by uploading the photo to the server,
+ creating a new work tast, and setting up a timer to periodically check for results. This method
+ returns immediately but the process of augmenting an image is asynchronous. To listen for results,
+ implement an NSNotificationCenter observer for the NOTIF_AUGMENTED_PHOTO_UPDATED notification with the ARAugmentedPhoto
+ instance as the notification object.
+ */
+- (void)processChangeDetection;
+
 /** Processes the JSON response from the server into overlays. 
 
  @param data The JSON dictionary that you would like to process to populate the overlays array.

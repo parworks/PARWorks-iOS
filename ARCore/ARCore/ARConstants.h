@@ -37,6 +37,8 @@
 #define REQ_SITE_OVERLAY_REMOVE_STAGING @"/ar/site/overlay/remove"
 #define REQ_SITE_OVERLAY_CLICK          @"/ar/site/overlay/click"
 #define REQ_SITE_PROCESS                @"/ar/site/process"
+#define REQ_SITE_CHANGE_DETECT          @"/ar/site/change/detect"
+#define REQ_SITE_CHANGE_DETECT_RESULT   @"/ar/site/change/detect/result"
 
 #define REQ_SITE_IMAGE                  @"/ar/site/image"
 #define REQ_SITE_IMAGE_ADD              @"/ar/site/image/add"
@@ -48,6 +50,7 @@
 
 #define REQ_USER_REGISTER               @"/ar/mars/user/account/create"
 #define REQ_USER_GETKEY                 @"/ar/mars/user/account/getkey"
+
 
 #define NOTIF_SITE_UPDATED              @"nbu"
 #define NOTIF_SITES_UPDATED             @"nbua"

@@ -70,6 +70,33 @@
     return self;
 }
 
+- (id)initWithChangeDetectionDictionary:(NSDictionary*)instanceDictionary overlayId: (NSString*)id objectLabel: (NSString*) label
+{
+    self = [super init];
+    if(self) {
+        self.ID = id;
+        
+        NSMutableArray * boundingBox = [instanceDictionary objectForKey:@"boundingBox"];
+        [self setupPointsFromChangeDetectionBoundingBoxArray:boundingBox];
+        
+        NSString * comment = [instanceDictionary objectForKey:@"comment"];
+        _contentProvider = comment;
+        _contentSize = AROverlayContentSize_Medium;
+        _contentType = AROverlayContentType_Text;
+        
+        NSString * result = [instanceDictionary objectForKey:@"result"];
+        if( [result isEqualToString:@"CORRECT"]) {
+            _boundaryColor = [UIColor colorWithRed:0 green:1 blue:0 alpha:1];
+        } else {
+            _boundaryColor = [UIColor colorWithRed:1 green:0 blue:0 alpha:1];
+        }
+        _boundaryType = AROverlayBoundaryType_Solid;
+        
+    }
+    return self;
+    
+}
+
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super init];
@@ -293,6 +320,31 @@
             [_points addObject: [AROverlayPoint pointWithX:x y:y z:z]];
         }
     }
+}
+-(void)setupPointsFromChangeDetectionBoundingBoxArray:(NSMutableArray *)boundingBox
+{
+    /**
+    Create a dictionary in the form that setupPointsFromDictionary accepts, then call that method
+    the desired form is x,y,z,x,y,z,x,y,z
+    the bounding box form is "x,y","x,y","x,y"
+    we put in 1.0 as a dummy variable for z
+     */
+    
+    
+    //setup the first item
+    NSString * allVertices = [boundingBox objectAtIndex:0];
+    allVertices = [NSString stringWithFormat:@"%@,1.0",allVertices];
+    [boundingBox removeObjectAtIndex:0];
+    
+    //then loop through the rest
+    for(NSString * vertex in boundingBox) {
+        allVertices = [NSString stringWithFormat:@"%@,%@,1.0", allVertices, vertex];
+    }
+    
+    NSDictionary * dictionary = [NSDictionary dictionaryWithObject:allVertices forKey:@"vertices"];
+    [self setupPointsFromDictionary:dictionary];
+    
+    
 }
 
 - (BOOL)isEqual:(id)object
