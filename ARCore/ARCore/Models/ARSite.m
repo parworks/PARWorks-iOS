@@ -444,6 +444,20 @@
     return a;
 }
 
+- (ARAugmentedPhoto*)changeDetectImage:(UIImage *)image
+{
+    ARAugmentedPhoto * a = [[ARAugmentedPhoto alloc] initWithImage: image];
+    [a setSite: self];
+    
+ //   if (!_augmentedPhotos) _augmentedPhotos = [[NSMutableArray alloc] init];
+ //   [_augmentedPhotos addObject: a];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: self];
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_AUGMENTED_PHOTO_UPDATED object: self];
+    [a processChangeDetection];
+    return a;
+}
+
 - (void)removeAllAugmentedPhotos
 {
     [_augmentedPhotos removeAllObjects];

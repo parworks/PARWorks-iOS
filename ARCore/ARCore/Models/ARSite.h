@@ -203,10 +203,16 @@ server again.
 */
 - (ARAugmentedPhoto*)augmentImage:(UIImage*)image;
 
+/**
+ @param image The image to use for change detection
+ 
+ @return An ARAugmentedPhoto object that represents the augmented image.
+*/
+- (ARAugmentedPhoto*)changeDetectImage:(UIImage*)image;
+
 /** Removes all the augmented photos stored with this site.
 */
 - (void)removeAllAugmentedPhotos;
-
 
 // ==================================================
 // @name Accessing Public, Recently Augmented Photos
