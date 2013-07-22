@@ -14,5 +14,6 @@
 
 - (NSString*)name;
 - (ARAugmentedPhoto*)augmentImage:(UIImage*)image;
+- (ARAugmentedPhoto*)changeDetectImage:(UIImage*)image;
 
 @end
