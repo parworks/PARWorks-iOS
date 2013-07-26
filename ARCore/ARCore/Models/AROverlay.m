@@ -26,6 +26,10 @@
 #import "UIColor+Utils.h"
 #import "NSContainers+NullHandlers.h"
 #import "ARCentroidView.h"
+#import "NSString+UrlEncoding.h"
+
+#define CHANGE_DETECTION_URL_PLACED_INCORRECTLY @"https://dl.dropboxusercontent.com/u/43145866/dunkindemo/placed_incorrectly.html?";
+#define CHANGE_DETECTION_URL_PLACED_CORRECTLY @"https://dl.dropboxusercontent.com/u/43145866/dunkindemo/placed_correctly.html?"
 
 @implementation AROverlay
 
@@ -75,22 +79,33 @@
     self = [super init];
     if(self) {
         self.ID = id;
+        NSString * baseUrl;
+        NSString * result = [instanceDictionary objectForKey:@"result"];
+        if( [result isEqualToString:@"CORRECT"]) {
+            _boundaryColor = [UIColor colorWithRed:0 green:1 blue:0 alpha:1];
+            baseUrl = CHANGE_DETECTION_URL_PLACED_CORRECTLY;
+        } else {
+            _boundaryColor = [UIColor colorWithRed:1 green:0 blue:0 alpha:1];
+            baseUrl = CHANGE_DETECTION_URL_PLACED_INCORRECTLY;
+        }
+        _boundaryType = AROverlayBoundaryType_Solid;
         
         NSMutableArray * boundingBox = [instanceDictionary objectForKey:@"boundingBox"];
         [self setupPointsFromChangeDetectionBoundingBoxArray:boundingBox];
         
         NSString * comment = [instanceDictionary objectForKey:@"comment"];
-        _contentProvider = comment;
-        _contentSize = AROverlayContentSize_Medium;
-        _contentType = AROverlayContentType_Text;
+        comment = [comment URLEncodedString_ch];
         
-        NSString * result = [instanceDictionary objectForKey:@"result"];
-        if( [result isEqualToString:@"CORRECT"]) {
-            _boundaryColor = [UIColor colorWithRed:0 green:1 blue:0 alpha:1];
-        } else {
-            _boundaryColor = [UIColor colorWithRed:1 green:0 blue:0 alpha:1];
-        }
-        _boundaryType = AROverlayBoundaryType_Solid;
+        NSString* providerUrl = [NSString stringWithFormat:@"%@id=%@&comment=%@",baseUrl,id,comment];
+        _contentProvider = providerUrl;
+        
+        NSLog(@"content provider is %@",_contentProvider);
+        
+        
+        _contentSize = AROverlayContentSize_Medium;
+        _contentType = AROverlayContentType_URL;
+        
+
         
     }
     return self;
