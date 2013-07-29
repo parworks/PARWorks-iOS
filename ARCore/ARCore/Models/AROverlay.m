@@ -26,6 +26,10 @@
 #import "UIColor+Utils.h"
 #import "NSContainers+NullHandlers.h"
 #import "ARCentroidView.h"
+#import "NSString+UrlEncoding.h"
+
+#define CHANGE_DETECTION_URL_PLACED_INCORRECTLY @"https://dl.dropboxusercontent.com/u/43145866/dunkindemo/placed_incorrectly.html?";
+#define CHANGE_DETECTION_URL_PLACED_CORRECTLY @"https://dl.dropboxusercontent.com/u/43145866/dunkindemo/placed_correctly.html?"
 
 @implementation AROverlay
 
@@ -75,22 +79,33 @@
     self = [super init];
     if(self) {
         self.ID = id;
+        NSString * baseUrl;
+        NSString * result = [instanceDictionary objectForKey:@"result"];
+        if( [result isEqualToString:@"CORRECT"]) {
+            _boundaryColor = [UIColor colorWithRed:0 green:1 blue:0 alpha:1];
+            baseUrl = CHANGE_DETECTION_URL_PLACED_CORRECTLY;
+        } else {
+            _boundaryColor = [UIColor colorWithRed:1 green:0 blue:0 alpha:1];
+            baseUrl = CHANGE_DETECTION_URL_PLACED_INCORRECTLY;
+        }
+        _boundaryType = AROverlayBoundaryType_Solid;
         
         NSMutableArray * boundingBox = [instanceDictionary objectForKey:@"boundingBox"];
         [self setupPointsFromChangeDetectionBoundingBoxArray:boundingBox];
         
         NSString * comment = [instanceDictionary objectForKey:@"comment"];
-        _contentProvider = comment;
-        _contentSize = AROverlayContentSize_Medium;
-        _contentType = AROverlayContentType_Text;
+        comment = [comment URLEncodedString_ch];
         
-        NSString * result = [instanceDictionary objectForKey:@"result"];
-        if( [result isEqualToString:@"CORRECT"]) {
-            _boundaryColor = [UIColor colorWithRed:0 green:1 blue:0 alpha:1];
-        } else {
-            _boundaryColor = [UIColor colorWithRed:1 green:0 blue:0 alpha:1];
-        }
-        _boundaryType = AROverlayBoundaryType_Solid;
+        NSString* providerUrl = [NSString stringWithFormat:@"%@id=%@&comment=%@",baseUrl,id,comment];
+        _contentProvider = providerUrl;
+        
+        NSLog(@"content provider is %@",_contentProvider);
+        
+        
+        _contentSize = AROverlayContentSize_Medium;
+        _contentType = AROverlayContentType_URL;
+        
+        
         
     }
     return self;
@@ -165,7 +180,7 @@
 - (NSMutableDictionary *)jsonRepresentation
 {
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-
+    
     if (_ID) [dict setObject:_ID forKey:@"id"];
     if (_accuracy) [dict setObject:_accuracy forKey:@"accuracy"];
     [dict setObject:_name forKey:@"name"];
@@ -175,12 +190,12 @@
     // IMPORTANT! THIS SHIT DOESN'T LOOK AT THE OVERLAY PROPERTIES!
     NSDictionary * description = @{@"title":_title,@"boundary":@{@"color":@"GRAY",@"type":@"SOLID"},@"content":@{@"type":@"URL",@"size":@"large",@"provider":_contentProvider},@"cover":@{@"type":@"regular",@"color":@"green",@"transparency":@(40),@"provider":@"",@"showPulse":@"true",@"offset":@"0,0"}};
     [dict setObject:description forKey:@"content"];
-
+    
     NSMutableArray * strings = [NSMutableArray array];
     for (AROverlayPoint *p in _points)
         [strings addObject: [NSString stringWithFormat:@"%d,%d", (int)p.x, (int)p.y]];
     [dict setObject:[strings componentsJoinedByString:@"&v="] forKey:@"v"];
-
+    
     return dict;
 }
 
@@ -232,6 +247,13 @@
     NSString *type = [dict objectForKey:@"type" or: nil];
     if ([type.lowercaseString isEqualToString:@"url"]) {
         _contentType = AROverlayContentType_URL;
+        
+        NSArray *fileFormats = [NSArray arrayWithObjects:@"png", @"jpg", @"jpeg", @"gif", @"tiff", nil];
+        if(_contentSize == AROverlayContentSize_Fullscreen &&
+           [fileFormats containsObject:[_contentProvider.lowercaseString pathExtension]]){
+            _contentSize = AROverlayContentSize_Fullscreen_No_Modal;
+        }
+        
     } else if ([type.lowercaseString isEqualToString:@"video"]) {
         _contentType = AROverlayContentType_Video;
     } else if ([type.lowercaseString isEqualToString:@"image"]) {
@@ -324,10 +346,10 @@
 -(void)setupPointsFromChangeDetectionBoundingBoxArray:(NSMutableArray *)boundingBox
 {
     /**
-    Create a dictionary in the form that setupPointsFromDictionary accepts, then call that method
-    the desired form is x,y,z,x,y,z,x,y,z
-    the bounding box form is "x,y","x,y","x,y"
-    we put in 1.0 as a dummy variable for z
+     Create a dictionary in the form that setupPointsFromDictionary accepts, then call that method
+     the desired form is x,y,z,x,y,z,x,y,z
+     the bounding box form is "x,y","x,y","x,y"
+     we put in 1.0 as a dummy variable for z
      */
     
     
