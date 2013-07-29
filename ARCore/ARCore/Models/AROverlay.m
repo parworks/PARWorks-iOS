@@ -74,11 +74,11 @@
     return self;
 }
 
-- (id)initWithChangeDetectionDictionary:(NSDictionary*)instanceDictionary overlayId: (NSString*)id objectLabel: (NSString*) label
+- (id)initWithChangeDetectionDictionary:(NSDictionary*)instanceDictionary overlayId: (NSString*)overlayId objectLabel: (NSString*) label
 {
     self = [super init];
     if(self) {
-        self.ID = id;
+        self.ID = overlayId;
         NSString * baseUrl;
         NSString * result = [instanceDictionary objectForKey:@"result"];
         if( [result isEqualToString:@"CORRECT"]) {
@@ -96,13 +96,13 @@
         NSString * comment = [instanceDictionary objectForKey:@"comment"];
         comment = [comment URLEncodedString_ch];
         
-        NSString* providerUrl = [NSString stringWithFormat:@"%@id=%@&comment=%@",baseUrl,id,comment];
+        NSString* providerUrl = [NSString stringWithFormat:@"%@id=%@&comment=%@",baseUrl,overlayId,comment];
         _contentProvider = providerUrl;
         
         NSLog(@"content provider is %@",_contentProvider);
         
         
-        _contentSize = AROverlayContentSize_Medium;
+        _contentSize = AROverlayContentSize_Small;
         _contentType = AROverlayContentType_URL;
         
         
