@@ -202,6 +202,8 @@
     _imageIdentifier = ident;
     _pollCount = 0;
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_AUGMENTED_PHOTO_UPDATED object: self];
+    
+    [_pollTimer invalidate];
     _pollTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(processPoll) userInfo:nil repeats:NO];
 }
 
@@ -336,20 +338,26 @@
     
     [req startAsynchronous];
 }
+
 - (void)processChangeDetectionPostComplete:(ASIFormDataRequest*)req
 {
     [self startPollForChangeDetectionImageIdentifier: [[req responseJSON] objectForKey: @"imgId"]];
 }
+
 - (void)startPollForChangeDetectionImageIdentifier:(NSString*)ident
 {
     _response = BackendResponseProcessing;
     _imageIdentifier = ident;
     _pollCount = 0;
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_AUGMENTED_PHOTO_UPDATED object: self];
+    
+    [_pollTimer invalidate];
     _pollTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(processChangeDetectionPoll) userInfo:nil repeats:NO];
 }
+
 - (void)processChangeDetectionPoll
 {
+    [_pollTimer invalidate];
     _pollTimer = nil;
     if (_pollCount == 20) {
         self.response = BackendResponseFailed;
@@ -440,7 +448,7 @@
 - (void)dealloc
 {
     [_pollTimer invalidate];
-    
+    _pollTimer = nil;
 }
 
 
