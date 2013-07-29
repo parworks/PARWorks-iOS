@@ -43,11 +43,16 @@
 - (UIButton *)closeButton
 {
     if(!_closeButton){
-        //For GM Demo, I changed closeButton from X to full screen invisible button
-        self.closeButton = [[UIButton alloc] initWithFrame:CGRectMake(self.bounds.size.width - 45.0, 5.0, 40.0, 40.0)];
-        //        self.closeButton = [[UIButton alloc] initWithFrame:self.bounds];
+        //For GM Demo, I changed closeButton from X to full screen invisible button        
+        if(self.overlay.contentSize == AROverlayContentSize_Fullscreen_No_Modal){
+            self.closeButton = [[UIButton alloc] initWithFrame:self.bounds];
+            [_closeButton setBackgroundImage:nil forState:UIControlStateNormal];
+        }
+        else{
+            self.closeButton = [[UIButton alloc] initWithFrame:CGRectMake(self.bounds.size.width - 45.0, 5.0, 40.0, 40.0)];
+            [_closeButton setBackgroundImage:[UIImage imageNamed:@"Button_Close-Overlay.png"] forState:UIControlStateNormal];
+        }
         [_closeButton setBackgroundColor:[UIColor clearColor]];
-        [_closeButton setBackgroundImage:[UIImage imageNamed:@"Button_Close-Overlay.png"] forState:UIControlStateNormal];
         [self addSubview:_closeButton];
     }
     return _closeButton;
@@ -74,7 +79,7 @@
     self.loadingView.alpha = 0;
     self.closeButton.alpha = 0.0;
     [_closeButton addTarget:parent action:@selector(overlayTapped:) forControlEvents:UIControlEventTouchUpInside];
-
+    
     __weak AROverlayWebView * weakSelf = self;
     [self animateBounceFocusWithParent:parent centeredBlock:^{
         if(overlayView.overlay.contentSize == AROverlayContentSize_Fullscreen){
@@ -88,14 +93,14 @@
             weakSelf.webView.alpha = 1.0;
         }
     } complete:^{
-        [self focusOverlayViewCompleted:weakSelf];        
+        [self focusOverlayViewCompleted:weakSelf];
     }];
 }
 
 - (void)unfocusOverlayView:(AROverlayView *)overlayView inParent:(ARAugmentedView *)parent
 {
     __weak AROverlayWebView * weakSelf = self;
-
+    
     [_closeButton removeTarget:parent action:@selector(overlayTapped:) forControlEvents:UIControlEventTouchUpInside];
     [self animateBounceUnfocusWithParent:parent uncenteredBlock:^{
         weakSelf.webView.alpha = 0.0;

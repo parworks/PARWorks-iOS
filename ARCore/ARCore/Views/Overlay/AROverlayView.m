@@ -223,6 +223,7 @@
             case AROverlayContentSize_Large:
                 frame = CGRectMake(0, 0, 280, 420);
                 break;
+            case AROverlayContentSize_Fullscreen_No_Modal:
             case AROverlayContentSize_Fullscreen:
                 frame = CGRectMake(0, 0, 320, 480);
                 break;
@@ -240,6 +241,7 @@
             case AROverlayContentSize_Large:
                 frame = CGRectMake(0, 0, 576, 768); // 75% of screen size
                 break;
+            case AROverlayContentSize_Fullscreen_No_Modal:
             case AROverlayContentSize_Fullscreen:
                 frame = CGRectMake(0, 0, 768, 1024);
                 break;

@@ -43,6 +43,7 @@ typedef enum {
     AROverlayContentSize_Medium,
     AROverlayContentSize_Large,
     AROverlayContentSize_Large_Left,
+    AROverlayContentSize_Fullscreen_No_Modal,
     AROverlayContentSize_Fullscreen
 } AROverlayContentSize;
 
