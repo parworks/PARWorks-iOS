@@ -94,9 +94,13 @@
         [self setupPointsFromChangeDetectionBoundingBoxArray:boundingBox];
         
         NSString * comment = [instanceDictionary objectForKey:@"comment"];
-        comment = [comment URLEncodedString_ch];
         
-        NSString* providerUrl = [NSString stringWithFormat:@"%@id=%@&comment=%@",baseUrl,overlayId,comment];
+        NSString * predictedLabel = [instanceDictionary objectForKey:@"predictedLabel"];
+        
+        NSString * combinedCommentAndPredictedLabel = [NSString stringWithFormat:@"%@ - %@",comment,predictedLabel];
+        combinedCommentAndPredictedLabel = [combinedCommentAndPredictedLabel URLEncodedString_ch];
+        
+        NSString* providerUrl = [NSString stringWithFormat:@"%@id=%@&comment=%@",baseUrl,label,combinedCommentAndPredictedLabel];
         _contentProvider = providerUrl;
         
         NSLog(@"content provider is %@",_contentProvider);
