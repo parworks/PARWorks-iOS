@@ -166,13 +166,21 @@
 
     ASIFormDataRequest * req = [self requestForProcessing];
     ASIFormDataRequest * __weak __req = req;
-
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_UPLOAD_STATUS_CHANGE object: @"Upload Starting..."];
+    
     [req setData:UIImageJPEGRepresentation(_image, 0.45) forKey:@"image"];
     [req setFailedBlock: ^(void) {
         _response = BackendResponseFailed;
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_UPLOAD_STATUS_CHANGE object: @"Upload Failed."];
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_AUGMENTED_PHOTO_UPDATED object: self];
         [[ARManager shared] criticalRequestFailed: __req];
         if (_processingCompletionBlock) _processingCompletionBlock(self);
+    }];
+    __block unsigned long long bytesSent = 0;
+    [req setBytesSentBlock:^(unsigned long long length, unsigned long long total) {
+        bytesSent += length;
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_UPLOAD_STATUS_CHANGE object: [NSString stringWithFormat: @"%.1f%% Uploaded (%ull bytes)", ((float)bytesSent / (float)total) * 100.0, bytesSent]];
     }];
     [req setCompletionBlock: ^(void) {
         if ([[ARManager shared] handleResponseErrors: __req]) {
@@ -180,6 +188,7 @@
 
         } else {
             _response = BackendResponseFailed;
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_UPLOAD_STATUS_CHANGE object: @"Upload Finished. Polling for response."];
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_AUGMENTED_PHOTO_UPDATED object: self];
             if (_processingCompletionBlock) _processingCompletionBlock(self);
         }

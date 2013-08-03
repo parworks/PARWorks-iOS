@@ -57,6 +57,7 @@
 #define NOTIF_AUGMENTED_PHOTO_UPDATED   @"napu"
 #define NOTIF_UPLOAD_COMPLETED_IN_SITE  @"ucis"
 #define NOTIF_UPLOADS_UPDATED           @"nuu"
+#define NOTIF_UPLOAD_STATUS_CHANGE      @"nusc"
 
 typedef enum BackendResponse {
     WaitingToUpload = -1,
