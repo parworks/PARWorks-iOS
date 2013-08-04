@@ -11,7 +11,10 @@
 
 typedef void(^ARCameraCaptureCompleteBlock)(UIImage *image, NSError *error);
 
+
 @interface ARCameraViewUtil : NSObject
+
++ (UIImage *)fixPhotoLibraryOrientationBeforeUploadingImage:(UIImage *)image;
 
 + (AVCaptureVideoOrientation)avOrientationForInterfaceOrientation:(UIInterfaceOrientation)orientation;
 + (AVCaptureVideoOrientation)avOrientationForDeviceOrientation:(UIDeviceOrientation)deviceOrientation;
