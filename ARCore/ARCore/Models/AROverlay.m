@@ -26,6 +26,10 @@
 #import "UIColor+Utils.h"
 #import "NSContainers+NullHandlers.h"
 #import "ARCentroidView.h"
+#import "NSString+UrlEncoding.h"
+
+#define CHANGE_DETECTION_URL_PLACED_INCORRECTLY @"https://dl.dropboxusercontent.com/u/43145866/dunkindemo/placed_incorrectly.html?";
+#define CHANGE_DETECTION_URL_PLACED_CORRECTLY @"https://dl.dropboxusercontent.com/u/43145866/dunkindemo/placed_correctly.html?"
 
 @implementation AROverlay
 
@@ -49,18 +53,17 @@
         
         NSData * descriptionData = [dict[@"description"] dataUsingEncoding: NSUTF8StringEncoding];
         NSDictionary * description = nil;
-
+        
         if (descriptionData)
             description = [NSJSONSerialization JSONObjectWithData:descriptionData options:NSJSONReadingAllowFragments error:nil];
         else
             description = dict;
         
-
+        
         self.siteImageIdentifier = dict[@"imageId"];
         self.name = dict[@"name"];
         
         self.accuracy = dict[@"accuracy"];
-        self.success = [dict[@"success"] intValue];
         
         self.title = [description objectForKey:@"title" or: nil];
         [self setBoundaryPropertiesWithDictionary:description[@"boundary"]];
@@ -69,6 +72,48 @@
         [self setupPointsFromDictionary: dict];
     }
     return self;
+}
+
+- (id)initWithChangeDetectionDictionary:(NSDictionary*)instanceDictionary overlayId: (NSString*)overlayId objectLabel: (NSString*) label
+{
+    self = [super init];
+    if(self) {
+        self.ID = overlayId;
+        NSString * baseUrl;
+        NSString * result = [instanceDictionary objectForKey:@"result"];
+        if( [result isEqualToString:@"CORRECT"]) {
+            _boundaryColor = [UIColor colorWithRed:0 green:1 blue:0 alpha:1];
+            baseUrl = CHANGE_DETECTION_URL_PLACED_CORRECTLY;
+        } else {
+            _boundaryColor = [UIColor colorWithRed:1 green:0 blue:0 alpha:1];
+            baseUrl = CHANGE_DETECTION_URL_PLACED_INCORRECTLY;
+        }
+        _boundaryType = AROverlayBoundaryType_Solid;
+        
+        NSMutableArray * boundingBox = [instanceDictionary objectForKey:@"boundingBox"];
+        [self setupPointsFromChangeDetectionBoundingBoxArray:boundingBox];
+        
+        NSString * comment = [instanceDictionary objectForKey:@"comment"];
+        
+        NSString * predictedLabel = [instanceDictionary objectForKey:@"predictedLabel"];
+        
+        NSString * combinedCommentAndPredictedLabel = [NSString stringWithFormat:@"%@ - %@",comment,predictedLabel];
+        combinedCommentAndPredictedLabel = [combinedCommentAndPredictedLabel URLEncodedString_ch];
+        
+        NSString* providerUrl = [NSString stringWithFormat:@"%@id=%@&comment=%@",baseUrl,label,combinedCommentAndPredictedLabel];
+        _contentProvider = providerUrl;
+        
+        NSLog(@"content provider is %@",_contentProvider);
+        
+        
+        _contentSize = AROverlayContentSize_Small;
+        _contentType = AROverlayContentType_URL;
+        
+        
+        
+    }
+    return self;
+    
 }
 
 - (id)initWithCoder:(NSCoder *)aDecoder
@@ -82,7 +127,6 @@
         
         _accuracy = [aDecoder decodeObjectForKey:@"accuracy"];
         _title = [aDecoder decodeObjectForKey:@"title"];
-        _success = [aDecoder decodeBoolForKey:@"success"];
         _processed = [aDecoder decodeBoolForKey:@"processed"];
         
         _boundaryType = [aDecoder decodeIntegerForKey:@"boundaryType"];
@@ -107,15 +151,14 @@
     [aCoder encodeObject: _siteImageIdentifier forKey: @"siteImageIdentifier"];
     [aCoder encodeObject: _name forKey: @"name"];
     [aCoder encodeObject: _points forKey: @"points"];
-
+    
     [aCoder encodeObject: _accuracy forKey: @"accuracy"];
     [aCoder encodeObject: _title forKey: @"title"];
-    [aCoder encodeBool: _success forKey:@"success"];
     [aCoder encodeBool: _processed forKey:@"processed"];
     
     [aCoder encodeInteger: _boundaryType forKey: @"boundaryType"];
     [aCoder encodeObject: _boundaryColor forKey: @"boundaryColor"];
-
+    
     [aCoder encodeInteger: _contentType forKey: @"contentType"];
     [aCoder encodeInteger: _contentSize forKey: @"contentSize"];
     [aCoder encodeObject: _contentProvider forKey: @"contentProvider"];
@@ -141,7 +184,7 @@
 - (NSMutableDictionary *)jsonRepresentation
 {
     NSMutableDictionary *dict = [NSMutableDictionary dictionary];
-
+    
     if (_ID) [dict setObject:_ID forKey:@"id"];
     if (_accuracy) [dict setObject:_accuracy forKey:@"accuracy"];
     [dict setObject:_name forKey:@"name"];
@@ -151,12 +194,12 @@
     // IMPORTANT! THIS SHIT DOESN'T LOOK AT THE OVERLAY PROPERTIES!
     NSDictionary * description = @{@"title":_title,@"boundary":@{@"color":@"GRAY",@"type":@"SOLID"},@"content":@{@"type":@"URL",@"size":@"large",@"provider":_contentProvider},@"cover":@{@"type":@"regular",@"color":@"green",@"transparency":@(40),@"provider":@"",@"showPulse":@"true",@"offset":@"0,0"}};
     [dict setObject:description forKey:@"content"];
-
+    
     NSMutableArray * strings = [NSMutableArray array];
     for (AROverlayPoint *p in _points)
         [strings addObject: [NSString stringWithFormat:@"%d,%d", (int)p.x, (int)p.y]];
     [dict setObject:[strings componentsJoinedByString:@"&v="] forKey:@"v"];
-
+    
     return dict;
 }
 
@@ -167,9 +210,9 @@
         _boundaryType = AROverlayBoundaryType_Solid;
         return;
     }
-
+    
     _boundaryColor = [UIColor colorWithString:[dict objectForKey:@"color" or: nil]];
-
+    
     NSString *type = [dict objectForKey:@"type" or: nil];
     if ([type.lowercaseString isEqualToString:@"hide"]) {
         _boundaryType = AROverlayBoundaryType_Hidden;
@@ -191,12 +234,14 @@
     }
     
     _contentProvider = [dict objectForKey:@"provider" or: nil];
-
+    
     NSString *size = [dict objectForKey:@"size" or: nil];
     if ([size.lowercaseString isEqualToString:@"small"]) {
         _contentSize = AROverlayContentSize_Small;
     } else if ([size.lowercaseString isEqualToString:@"large"]) {
         _contentSize = AROverlayContentSize_Large;
+    } else if ([size.lowercaseString isEqualToString:@"large_left"]) {
+        _contentSize = AROverlayContentSize_Large_Left;
     } else if ([size.lowercaseString isEqualToString:@"full_screen"]) {
         _contentSize = AROverlayContentSize_Fullscreen;
     } else {
@@ -206,6 +251,13 @@
     NSString *type = [dict objectForKey:@"type" or: nil];
     if ([type.lowercaseString isEqualToString:@"url"]) {
         _contentType = AROverlayContentType_URL;
+        
+        NSArray *fileFormats = [NSArray arrayWithObjects:@"png", @"jpg", @"jpeg", @"gif", @"tiff", nil];
+        if(_contentSize == AROverlayContentSize_Fullscreen &&
+           [fileFormats containsObject:[_contentProvider.lowercaseString pathExtension]]){
+            _contentSize = AROverlayContentSize_Fullscreen_No_Modal;
+        }
+        
     } else if ([type.lowercaseString isEqualToString:@"video"]) {
         _contentType = AROverlayContentType_Video;
     } else if ([type.lowercaseString isEqualToString:@"image"]) {
@@ -295,6 +347,31 @@
         }
     }
 }
+-(void)setupPointsFromChangeDetectionBoundingBoxArray:(NSMutableArray *)boundingBox
+{
+    /**
+     Create a dictionary in the form that setupPointsFromDictionary accepts, then call that method
+     the desired form is x,y,z,x,y,z,x,y,z
+     the bounding box form is "x,y","x,y","x,y"
+     we put in 1.0 as a dummy variable for z
+     */
+    
+    
+    //setup the first item
+    NSString * allVertices = [boundingBox objectAtIndex:0];
+    allVertices = [NSString stringWithFormat:@"%@,1.0",allVertices];
+    [boundingBox removeObjectAtIndex:0];
+    
+    //then loop through the rest
+    for(NSString * vertex in boundingBox) {
+        allVertices = [NSString stringWithFormat:@"%@,%@,1.0", allVertices, vertex];
+    }
+    
+    NSDictionary * dictionary = [NSDictionary dictionaryWithObject:allVertices forKey:@"vertices"];
+    [self setupPointsFromDictionary:dictionary];
+    
+    
+}
 
 - (BOOL)isEqual:(id)object
 {
@@ -323,11 +400,11 @@
 {
     if ([_points count] < 3)
         @throw [NSException exceptionWithName:@"PARWorks API Error" reason:@"Please add at least three AROverlayPoints to your overlay before saving it." userInfo:nil];
-
+    
     if (!_name)
         @throw [NSException exceptionWithName:@"PARWorks API Error" reason:@"Please add a name before saving." userInfo:nil];
-
-   
+    
+    
     NSMutableDictionary *jsonDict = [self jsonRepresentation];
     [jsonDict setObject:[[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:jsonDict[@"content"] options:0 error:nil] encoding:NSUTF8StringEncoding] forKey:@"content"];
     

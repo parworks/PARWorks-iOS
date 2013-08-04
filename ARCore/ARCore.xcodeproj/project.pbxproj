@@ -169,6 +169,7 @@
 		A0EC45941734B962006D9DB9 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0EC45911734B962006D9DB9 /* CoreVideo.framework */; };
 		A0EC45961734B962006D9DB9 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0EC45931734B962006D9DB9 /* AVFoundation.framework */; };
 		A0EC45991734BA57006D9DB9 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A057A66E1724595E00662670 /* CoreFoundation.framework */; };
+		D140791D17A1F39E000A4BD3 /* NSString+UrlEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = D140791C17A1F39E000A4BD3 /* NSString+UrlEncoding.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -446,6 +447,8 @@
 		A0EC45911734B962006D9DB9 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/CoreVideo.framework; sourceTree = "<absolute>"; };
 		A0EC45931734B962006D9DB9 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/AVFoundation.framework; sourceTree = "<absolute>"; };
 		A0EC45B1173890FA006D9DB9 /* AROverlayCreatorViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AROverlayCreatorViewController_iPad.xib; sourceTree = "<group>"; };
+		D140791B17A1F39E000A4BD3 /* NSString+UrlEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+UrlEncoding.h"; sourceTree = "<group>"; };
+		D140791C17A1F39E000A4BD3 /* NSString+UrlEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+UrlEncoding.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -814,6 +817,8 @@
 				A057A663172450EE00662670 /* NSBundle+ARCoreResources.m */,
 				A057A6681724522C00662670 /* UIImage+ARCoreResources.h */,
 				A057A6691724522C00662670 /* UIImage+ARCoreResources.m */,
+				D140791B17A1F39E000A4BD3 /* NSString+UrlEncoding.h */,
+				D140791C17A1F39E000A4BD3 /* NSString+UrlEncoding.m */,
 			);
 			path = Categories;
 			sourceTree = "<group>";
@@ -1190,6 +1195,7 @@
 				A0EC457C173307DD006D9DB9 /* DMRotatableCameraHUD.m in Sources */,
 				A0EC457F173308B4006D9DB9 /* ARCameraPreviewView.m in Sources */,
 				A0EC45821734A104006D9DB9 /* ARAugmentedPhotoVC.m in Sources */,
+				D140791D17A1F39E000A4BD3 /* NSString+UrlEncoding.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

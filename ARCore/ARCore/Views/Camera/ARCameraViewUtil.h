@@ -22,5 +22,5 @@ typedef void(^ARCameraCaptureCompleteBlock)(UIImage *image, NSError *error);
 
 + (CGFloat)rotationAngleForDeviceOrientation:(UIDeviceOrientation)orientation;
 
-+ (void)saveBufferToLibrary:(CMSampleBufferRef)imageDataSampleBuffer complete:(ARCameraCaptureCompleteBlock)complete;
++ (void)processBuffer:(CMSampleBufferRef)imageDataSampleBuffer complete:(ARCameraCaptureCompleteBlock)complete;
 @end

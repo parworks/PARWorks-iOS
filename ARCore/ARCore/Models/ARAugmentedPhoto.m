@@ -24,6 +24,7 @@
 #import "ARAugmentedPhoto.h"
 #import "ARManager.h"
 #import "ARSite.h"
+#import "SBJSON.h"
 #import "ASIHTTPRequest+JSONAdditions.h"
 
 #define PHOTOS_DIRECTORY [@"~/Documents/Photos/" stringByExpandingTildeInPath]
@@ -142,6 +143,16 @@
     else
         return (ASIFormDataRequest*)[[ARManager shared] createRequest:REQ_IMAGE_AUGMENT withMethod:@"POST" withArguments:args];
 }
+- (ASIFormDataRequest*)requestForChangeDetectionProcessing
+{
+    NSString *isChangeDetection = @"true";
+    NSMutableDictionary * args = [self processArguments];
+    [args setObject:isChangeDetection forKey:@"withCD"];
+    if (_site == nil)
+        @throw [NSException exceptionWithName: @"ProcessChangeDetectionExcepion" reason: @"The site cannot be nil when processing change detection." userInfo:nil];
+    else
+        return (ASIFormDataRequest*)[[ARManager shared] createRequest:REQ_IMAGE_AUGMENT withMethod:@"POST" withArguments:args];
+}
 
 - (void)process
 {
@@ -155,13 +166,21 @@
 
     ASIFormDataRequest * req = [self requestForProcessing];
     ASIFormDataRequest * __weak __req = req;
-
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_UPLOAD_STATUS_CHANGE object: @"Upload Starting..."];
+    
     [req setData:UIImageJPEGRepresentation(_image, 0.45) forKey:@"image"];
     [req setFailedBlock: ^(void) {
         _response = BackendResponseFailed;
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_UPLOAD_STATUS_CHANGE object: @"Upload Failed."];
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_AUGMENTED_PHOTO_UPDATED object: self];
         [[ARManager shared] criticalRequestFailed: __req];
         if (_processingCompletionBlock) _processingCompletionBlock(self);
+    }];
+    __block unsigned long long bytesSent = 0;
+    [req setBytesSentBlock:^(unsigned long long length, unsigned long long total) {
+        bytesSent += length;
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_UPLOAD_STATUS_CHANGE object: [NSString stringWithFormat: @"%.1f%% Uploaded (%ull bytes)", ((float)bytesSent / (float)total) * 100.0, bytesSent]];
     }];
     [req setCompletionBlock: ^(void) {
         if ([[ARManager shared] handleResponseErrors: __req]) {
@@ -169,6 +188,7 @@
 
         } else {
             _response = BackendResponseFailed;
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_UPLOAD_STATUS_CHANGE object: @"Upload Finished. Polling for response."];
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_AUGMENTED_PHOTO_UPDATED object: self];
             if (_processingCompletionBlock) _processingCompletionBlock(self);
         }
@@ -191,6 +211,8 @@
     _imageIdentifier = ident;
     _pollCount = 0;
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_AUGMENTED_PHOTO_UPDATED object: self];
+    
+    [_pollTimer invalidate];
     _pollTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(processPoll) userInfo:nil repeats:NO];
 }
 
@@ -203,7 +225,11 @@
         return;
     }
     
-    ASIHTTPRequest * req = [[ARManager shared] createRequest:REQ_IMAGE_AUGMENT_RESULT withMethod:@"GET" withArguments:[self processArguments]];
+    NSMutableDictionary * args = [self processArguments];
+    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"static_result"])
+        [args setObject:@"true" forKey:@"specialResult"];
+    
+    ASIHTTPRequest * req = [[ARManager shared] createRequest:REQ_IMAGE_AUGMENT_RESULT withMethod:@"GET" withArguments:args];
     ASIHTTPRequest * __weak __req = req;
     
     [req setCompletionBlock: ^(void) {
@@ -243,6 +269,16 @@
         [result setSite: self.site];
         [self addOverlay: result];
     }
+    
+    if ([data objectForKey: @"image_override_url"]) {
+        NSString * path = [data objectForKey: @"image_override_url"];
+        NSData * imgData = [NSData dataWithContentsOfURL: [NSURL URLWithString: path]];
+        UIImage * img = [UIImage imageWithData: imgData];
+        if (img) {
+            self.image = img;
+            NSLog(@"Swapping in fake image %@ from URL: %@", img, path);
+        }
+    }
 }
 
 - (void)processPMData:(NSString*)data
@@ -275,6 +311,140 @@
     if (_overlays == nil)
         self.overlays = [NSMutableArray array];
 }
+- (void)processChangeDetection
+{
+    if (_image == nil)
+        @throw [NSException exceptionWithName: @"ProcessException" reason: @"You need to provide an image to the ARAugmentedPhoto before calling process." userInfo: nil];
+    
+    if (_site == nil )
+        @throw [NSException exceptionWithName: @"ProcessException" reason: @"You cannot process change detection on an image without specifying a site." userInfo: nil];
+    
+    _image = [[ARManager shared] rotateImage:_image byOrientationFlag:_image.imageOrientation];
+    
+    ASIFormDataRequest * req = [self requestForChangeDetectionProcessing];
+    ASIFormDataRequest * __weak __req = req;
+    
+    [req setData:UIImageJPEGRepresentation(_image, 0.45) forKey:@"image"];
+    [req setFailedBlock: ^(void) {
+        _response = BackendResponseFailed;
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_AUGMENTED_PHOTO_UPDATED object: self];
+        [[ARManager shared] criticalRequestFailed: __req];
+        if (_processingCompletionBlock) _processingCompletionBlock(self);
+    }];
+    [req setCompletionBlock: ^(void) {
+        if ([[ARManager shared] handleResponseErrors: __req]) {
+            [self processChangeDetectionPostComplete: __req];
+            
+        } else {
+            _response = BackendResponseFailed;
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_AUGMENTED_PHOTO_UPDATED object: self];
+            if (_processingCompletionBlock) _processingCompletionBlock(self);
+        }
+    }];
+    
+    _response = BackendResponseUploading;
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_AUGMENTED_PHOTO_UPDATED object: self];
+    
+    [req startAsynchronous];
+}
+
+- (void)processChangeDetectionPostComplete:(ASIFormDataRequest*)req
+{
+    [self startPollForChangeDetectionImageIdentifier: [[req responseJSON] objectForKey: @"imgId"]];
+}
+
+- (void)startPollForChangeDetectionImageIdentifier:(NSString*)ident
+{
+    _response = BackendResponseProcessing;
+    _imageIdentifier = ident;
+    _pollCount = 0;
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_AUGMENTED_PHOTO_UPDATED object: self];
+    
+    [_pollTimer invalidate];
+    _pollTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(processChangeDetectionPoll) userInfo:nil repeats:NO];
+}
+
+- (void)processChangeDetectionPoll
+{
+    [_pollTimer invalidate];
+    _pollTimer = nil;
+    if (_pollCount == 20) {
+        self.response = BackendResponseFailed;
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_AUGMENTED_PHOTO_UPDATED object: self];
+        return;
+    }
+    
+//    NSMutableDictionary * args = [self processArguments];
+//    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"static_result"])
+//        [args setObject:@"true" forKey:@"specialResult"];
+    
+    NSMutableDictionary * args = [NSMutableDictionary dictionary];
+    [args setObject:_site.identifier forKey:@"site"];
+    [args setObject:_imageIdentifier forKey:@"imgId"];
+
+    
+    ASIHTTPRequest * req = [[ARManager shared] createRequest:REQ_SITE_CHANGE_DETECT_RESULT withMethod:@"GET" withArguments:args];
+    ASIHTTPRequest * __weak __req = req;
+    
+    [req setCompletionBlock: ^(void) {
+        NSString * response = [__req responseString];
+        if ([response length] == 0) {
+            _pollTimer = [NSTimer scheduledTimerWithTimeInterval:0.8 target:self selector:@selector(processChangeDetectionPoll) userInfo:nil repeats:NO];
+            _pollCount ++;
+        } else {
+            [self processChangeDetectionJSONData: [__req responseJSON]];
+            self.response = BackendResponseFinished;
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_AUGMENTED_PHOTO_UPDATED object: self];
+            if (_processingCompletionBlock) _processingCompletionBlock(self);
+        }
+    }];
+    [req startAsynchronous];
+}
+- (void)processChangeDetectionJSONData:(NSDictionary*)data
+{
+    [self processChangeDetectionJSONData: data forDisplayWithScale:1];
+}
+
+- (void)processChangeDetectionJSONData:(NSDictionary*)data forDisplayWithScale:(float)scale
+{
+    if ([data isKindOfClass: [NSDictionary class]] == NO)
+        return;
+    
+    if (_overlays == nil)
+        self.overlays = [NSMutableArray array];
+    
+    NSString * resultData = [data objectForKey:@"resultData"];
+    SBJsonParser * parser = [SBJsonParser new];
+    id resultDataObject = nil;
+    
+    @try {
+        resultDataObject = [parser objectWithString: resultData];
+        
+        NSMutableDictionary *objects = [resultDataObject objectForKey: @"objects"];
+        for(NSMutableDictionary *object in objects) {
+            
+            NSString * objectId = [object objectForKey:@"objectId"];
+            NSString * objectLabel = [object objectForKey:@"objectLabel"];
+            
+            NSMutableDictionary *instances = [object objectForKey:@"instances"];
+            
+            for(NSMutableDictionary *instance in instances) {
+                
+                AROverlay *result = [[AROverlay alloc] initWithChangeDetectionDictionary:instance overlayId:objectId objectLabel:objectLabel];
+                [result setSite: self.site];
+                [self addOverlay: result];
+            }
+            
+            
+        }
+        
+        
+        
+    } @catch (NSException * e) {
+        NSLog(@"JSON parse error: %@", [e description]);
+    }
+
+}
 
 - (void)addOverlay:(AROverlay*)ar
 {
@@ -287,7 +457,43 @@
 - (void)dealloc
 {
     [_pollTimer invalidate];
-    
+    _pollTimer = nil;
 }
 
+
+#pragma mark - Overlay Information
+- (NSSet *)groupNamesForOverlays
+{
+    NSMutableSet *set = [NSMutableSet set];
+    for (AROverlay *overlay in _overlays) {
+        if (overlay.name && overlay.name.length > 0) {
+            [set addObject:overlay.name];
+        }
+    }
+    return set;
+}
+
+- (NSArray *)overlaysForName:(NSString *)name
+{
+    NSPredicate *pred = [NSPredicate predicateWithFormat:@"name LIKE %@", name];
+    NSArray *matchedOverlays = [_overlays filteredArrayUsingPredicate:pred];
+    return matchedOverlays;
+}
+
+- (NSDictionary *)overlaysSortedByGroupName
+{
+    NSMutableDictionary *dict = [NSMutableDictionary dictionary];
+    for (NSString *name in [self groupNamesForOverlays]) {
+        NSArray *array = [self overlaysForName:name];
+        [dict setObject:array forKey:name];
+    }
+    
+    NSPredicate *unknownPred = [NSPredicate predicateWithFormat:@"(name = nil) || (name.length == 0)"];
+    NSArray *unknown = [_overlays filteredArrayUsingPredicate:unknownPred];
+    if (unknown.count > 0) {
+        [dict setObject:unknown forKey:@"unknown"];
+    }
+    
+    return dict;
+}
 @end

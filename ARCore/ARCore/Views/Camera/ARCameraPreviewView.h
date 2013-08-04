@@ -41,6 +41,10 @@
 
 /** When YES, a user can pinch to zoom the camera view. Defaults to YES. */
 @property(nonatomic, assign) BOOL canZoom;
+
+/** When YES, a white view flashes on screen when a photo is taken. Defaults to YES. */
+@property(nonatomic, assign) BOOL showFlash;
+
 @property(nonatomic, weak) id<ARCameraPreviewViewDelegate> delegate;
 
 /// Lifecycle
@@ -51,5 +55,8 @@
 
 /// Zooming
 - (void)zoomToEffectiveScale:(CGFloat)scale;
+
+/// Config
+- (void)setVideoOrientation:(AVCaptureVideoOrientation)orientation;
 
 @end

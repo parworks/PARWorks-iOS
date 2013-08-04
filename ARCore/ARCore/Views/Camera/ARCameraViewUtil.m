@@ -287,38 +287,21 @@ UIImage *scaleAndRotateImage(UIImage *image, UIImageOrientation orientation)
     return imageCopy;
 }
 
-+ (void)saveBufferToLibrary:(CMSampleBufferRef)imageDataSampleBuffer complete:(ARCameraCaptureCompleteBlock)complete
++ (void)processBuffer:(CMSampleBufferRef)imageDataSampleBuffer complete:(ARCameraCaptureCompleteBlock)complete
 {    
     // trivial simple JPEG case
     NSData *jpegData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
-    CFDictionaryRef attachments = CMCopyDictionaryOfAttachments(kCFAllocatorDefault,
-                                                                imageDataSampleBuffer,
-                                                                kCMAttachmentMode_ShouldPropagate);
+    CFDictionaryRef attachments = CMCopyDictionaryOfAttachments(kCFAllocatorDefault, imageDataSampleBuffer, kCMAttachmentMode_ShouldPropagate);
     
     // For some idiotic reason, images captured from the camera at the foundation level are always oriented landscape
     // right. Create a background queue for rotating the image to the "up" orientation.
-    dispatch_queue_t conversionQueue = dispatch_queue_create("com.parworks.arcore.image_rotation", NULL);
-    dispatch_async(conversionQueue, ^{
-        UIImage *incorrectImage = [UIImage imageWithData:jpegData];
-        
-        id value = CFDictionaryGetValue(attachments, (__bridge CFStringRef)@"Orientation");
-        UIImage *correctImage = scaleAndRotateImage(incorrectImage, [[self class] orientationForExifOrientation:[value integerValue]]);
-        ALAssetsLibrary *library = [[ALAssetsLibrary alloc] init];
-        [library writeImageToSavedPhotosAlbum:correctImage.CGImage orientation:(ALAssetOrientation)correctImage.imageOrientation completionBlock:^(NSURL *assetURL, NSError *error) {
-//            NSLog(@"wrote image with exif %d", [value integerValue]);
-            if (error) {
-                NSLog(@"Error saving to photo album");
-            }
-            
-            if (complete) {
-                complete(correctImage, error);
-            }
-        }];
-        
-        if (attachments) {
-            CFRelease(attachments);
-        }
-    });
+    UIImage *incorrectImage = [UIImage imageWithData:jpegData];
+    id value = CFDictionaryGetValue(attachments, (__bridge CFStringRef)@"Orientation");
+    UIImage *correctImage = scaleAndRotateImage(incorrectImage, [[self class] orientationForExifOrientation:[value integerValue]]);
+    if (complete)
+        complete(correctImage, NULL);
+    if (attachments)
+        CFRelease(attachments);
 }
 
 + (UIImageOrientation)orientationForExifOrientation:(int)tag

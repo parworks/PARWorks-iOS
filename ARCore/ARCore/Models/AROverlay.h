@@ -42,6 +42,8 @@ typedef enum {
     AROverlayContentSize_Small = 0,
     AROverlayContentSize_Medium,
     AROverlayContentSize_Large,
+    AROverlayContentSize_Large_Left,
+    AROverlayContentSize_Fullscreen_No_Modal,
     AROverlayContentSize_Fullscreen
 } AROverlayContentSize;
 
@@ -63,7 +65,6 @@ typedef enum {
 
 @property (nonatomic, strong) NSString * accuracy;
 @property (nonatomic, strong) NSString * title;
-@property (nonatomic, assign) BOOL success;
 @property (nonatomic, assign) BOOL processed;
 
 @property (nonatomic, assign) AROverlayBoundaryType boundaryType;
@@ -93,6 +94,13 @@ typedef enum {
  @return A newly initialized AROverlay instance
  */
 - (id)initWithDictionary:(NSDictionary*)dict;
+
+/** Creates a new AROverlay object using change detection JSON data provided by the server.
+ 
+ @param dict - An 'instance' dictionary containing the values provided from the change detection endpoint. 
+ @return A newly initialized AROverlay instance
+ */
+- (id)initWithChangeDetectionDictionary:(NSDictionary*)instanceDictionary overlayId: (NSString*)id objectLabel: (NSString*) label;
 
 /** Initializes the points array using the vertex data in the object's _dict.
 */

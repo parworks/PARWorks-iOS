@@ -87,7 +87,7 @@
     _overlayImageView.userInteractionEnabled = YES;
     [self addSubview: _overlayImageView];
     
-    self.dimView = [[UIControl alloc] initWithFrame:_overlayImageView.bounds];
+    self.dimView = [[UIControl alloc] initWithFrame: CGRectMake(0, 0, 3000, 3000)];
     [_dimView addTarget:self action:@selector(dimViewTapped:) forControlEvents:UIControlEventTouchUpInside];
     _dimView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
     _dimView.alpha = 0.0;
@@ -146,7 +146,10 @@
 // Layout our subviews based on the current frame of the view
 - (void)layoutForCurrentViewMetrics
 {
-    [_dimView setFrame: [self bounds]];
+//FIXME: For some reason bounds aren't filling rect so just making dimView really big for now
+//    [_dimView setFrame: [self bounds]];
+    [super layoutSubviews];
+
     if(CGPointEqualToPoint(_loadingViewPoint, CGPointMake(0, 0)))
         [_loadingView setCenter:CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2)];
     else
@@ -293,14 +296,27 @@
     _focusedOverlayView = nil;
 }
 
-- (void)setVisibile:(BOOL)visible forOverlayViewsWithName:(NSString *)name
+- (void)setOverlaysVisibleWithNames:(NSArray *)names animated:(BOOL)animated
 {
+    if (animated) {
+        [UIView beginAnimations:@"overlayVisibility" context:nil];
+        [UIView setAnimationDuration:0.3];
+    }
+
     for (AROverlayView *v in _overlayViews) {
-        if ([v.overlay.name isEqualToString:name]) {
-            v.hidden = !visible;
+        NSString *name = v.overlay.name;
+        if (name && [names containsObject:name]) {
+            v.alpha = 1.0;
+        } else {
+            v.alpha = 0.0;
         }
     }
+    
+    if (animated) {
+        [UIView commitAnimations];
+    }
 }
+
 
 #pragma mark - Convenience
 

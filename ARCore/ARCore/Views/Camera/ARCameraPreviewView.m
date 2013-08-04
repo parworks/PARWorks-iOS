@@ -40,6 +40,7 @@ static NSString * const AVCaptureStillImageIsCapturingStillImageContext = @"AVCa
     [self setupAVCapture];
     
     _canZoom = YES;
+    _showFlash = YES;
     _pinch = [[UIPinchGestureRecognizer alloc] initWithTarget:self action:@selector(handlePinchGesture:)];
     [self addGestureRecognizer:_pinch];
 }
@@ -56,7 +57,7 @@ static NSString * const AVCaptureStillImageIsCapturingStillImageContext = @"AVCa
 	NSError *error = nil;
 	AVCaptureSession *session = [AVCaptureSession new];
 	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        session.sessionPreset = AVCaptureSessionPresetMedium;
+        session.sessionPreset = AVCaptureSessionPresetHigh;
     } else {
         session.sessionPreset = AVCaptureSessionPresetPhoto;
     }
@@ -173,7 +174,7 @@ static NSString * const AVCaptureStillImageIsCapturingStillImageContext = @"AVCa
 	
     ARCameraPreviewView * __weak weakSelf = self;
 	[_stillImageOutput captureStillImageAsynchronouslyFromConnection:stillImageConnection completionHandler:^(CMSampleBufferRef imageDataSampleBuffer, NSError *error) {
-            [ARCameraViewUtil saveBufferToLibrary:imageDataSampleBuffer complete:^(UIImage *image, NSError *error) {
+            [ARCameraViewUtil processBuffer:imageDataSampleBuffer complete:^(UIImage *image, NSError *error) {
                 if (weakSelf.delegate && [weakSelf.delegate respondsToSelector:@selector(didCaptureImageWithImage:error:)]) {
                     [weakSelf.delegate didCaptureImageWithImage:image error:error];
                 }
@@ -209,7 +210,7 @@ static NSString * const AVCaptureStillImageIsCapturingStillImageContext = @"AVCa
             [_delegate capturingStateDidChange:isCapturingStillImage];
         }
         
-		if (isCapturingStillImage) {
+		if (isCapturingStillImage && _showFlash) {
 			// Do flash bulb like animation
 			_flashView = [[UIView alloc] initWithFrame:self.bounds];
             _flashView.backgroundColor = [UIColor whiteColor];
@@ -286,6 +287,10 @@ static NSString * const AVCaptureStillImageIsCapturingStillImageContext = @"AVCa
     [CATransaction commit];
 }
 
+- (void)setVideoOrientation:(AVCaptureVideoOrientation)orientation
+{
+    _previewLayer.connection.videoOrientation = orientation;
+}
 
 
 @end

@@ -143,7 +143,7 @@ NOTIF_SITE_UPDATED to receive notifications when the site is ready.
 /** Destroys the local copy of the site's base images and fetches them from the 
 server again.
 */
-- (void)invalidateImages;
+- (void)invalidateImages:(NSNotification*)notif;
 
 /**
   @return true if the ARSite is still fetching it's images from the server.
@@ -203,10 +203,16 @@ server again.
 */
 - (ARAugmentedPhoto*)augmentImage:(UIImage*)image;
 
+/**
+ @param image The image to use for change detection
+ 
+ @return An ARAugmentedPhoto object that represents the augmented image.
+*/
+- (ARAugmentedPhoto*)changeDetectImage:(UIImage*)image;
+
 /** Removes all the augmented photos stored with this site.
 */
 - (void)removeAllAugmentedPhotos;
-
 
 // ==================================================
 // @name Accessing Public, Recently Augmented Photos
