@@ -170,6 +170,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_UPLOAD_STATUS_CHANGE object: @"Upload Starting..."];
     
     [req setData:UIImageJPEGRepresentation(_image, 0.45) forKey:@"image"];
+    [req setShowAccurateProgress: YES];
     [req setFailedBlock: ^(void) {
         _response = BackendResponseFailed;
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_UPLOAD_STATUS_CHANGE object: @"Upload Failed."];
@@ -177,18 +178,21 @@
         [[ARManager shared] criticalRequestFailed: __req];
         if (_processingCompletionBlock) _processingCompletionBlock(self);
     }];
-    __block unsigned long long bytesSent = 0;
-    [req setBytesSentBlock:^(unsigned long long length, unsigned long long total) {
-        bytesSent += length;
-        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_UPLOAD_STATUS_CHANGE object: [NSString stringWithFormat: @"%.1f%% Uploaded (%ull bytes)", ((float)bytesSent / (float)total) * 100.0, bytesSent]];
+
+    ASIHTTPRequest*  __block __breq = req;
+    [req setBytesSentBlock:^(unsigned long long size, unsigned long long total) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_UPLOAD_STATUS_CHANGE object: [NSString stringWithFormat: @"%.1f%% Uploaded (%lld KB)", ((float)([__breq totalBytesSent]) / (float)[__breq postLength]) * 100.0, [__breq totalBytesSent] / 1024]];
     }];
+
     [req setCompletionBlock: ^(void) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_UPLOAD_STATUS_CHANGE object: @"Upload Finished."];
+
         if ([[ARManager shared] handleResponseErrors: __req]) {
             [self processPostComplete: __req];
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_UPLOAD_STATUS_CHANGE object: @"Polling for response..."];
 
         } else {
             _response = BackendResponseFailed;
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_UPLOAD_STATUS_CHANGE object: @"Upload Finished. Polling for response."];
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_AUGMENTED_PHOTO_UPDATED object: self];
             if (_processingCompletionBlock) _processingCompletionBlock(self);
         }
