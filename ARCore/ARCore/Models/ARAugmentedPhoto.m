@@ -28,7 +28,7 @@
 #import "ASIHTTPRequest+JSONAdditions.h"
 
 #define PHOTOS_DIRECTORY [@"~/Documents/Photos/" stringByExpandingTildeInPath]
-
+#define DEFAULT_JPEG_QUALITY 0.45
 
 @implementation ARAugmentedPhoto
 
@@ -169,7 +169,11 @@
     
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_UPLOAD_STATUS_CHANGE object: @"Upload Starting..."];
     
-    [req setData:UIImageJPEGRepresentation(_image, 0.45) forKey:@"image"];
+    CGFloat jpegQuality = DEFAULT_JPEG_QUALITY;
+    if ([[NSUserDefaults standardUserDefaults] floatForKey:@"jpegQuality"])
+        jpegQuality = [[NSUserDefaults standardUserDefaults] floatForKey:@"jpegQuality"];
+    
+    [req setData:UIImageJPEGRepresentation(_image, jpegQuality) forKey:@"image"];
     [req setShowAccurateProgress: YES];
     [req setFailedBlock: ^(void) {
         _response = BackendResponseFailed;
@@ -328,7 +332,11 @@
     ASIFormDataRequest * req = [self requestForChangeDetectionProcessing];
     ASIFormDataRequest * __weak __req = req;
     
-    [req setData:UIImageJPEGRepresentation(_image, 0.45) forKey:@"image"];
+    CGFloat jpegQuality = DEFAULT_JPEG_QUALITY;
+    if ([[NSUserDefaults standardUserDefaults] floatForKey:@"jpegQuality"])
+        jpegQuality = [[NSUserDefaults standardUserDefaults] floatForKey:@"jpegQuality"];
+    
+    [req setData:UIImageJPEGRepresentation(_image, jpegQuality) forKey:@"image"];
     [req setFailedBlock: ^(void) {
         _response = BackendResponseFailed;
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_AUGMENTED_PHOTO_UPDATED object: self];
