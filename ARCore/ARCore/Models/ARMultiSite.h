@@ -16,5 +16,6 @@
 
 - (id)initWithSiteIdentifiers:(NSArray*)identifiers;
 - (ARAugmentedPhoto*)augmentImage:(UIImage *)image;
+- (ARAugmentedPhoto*)changeDetectImage:(UIImage*)image;
 
 @end

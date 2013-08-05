@@ -140,6 +140,9 @@ NOTIF_SITE_UPDATED to receive notifications when the site is ready.
 */
 - (void)processBaseImages;
 
+/** Removes a base image */
+- (void)removeBaseImage:(ARSiteImage*)image;
+
 /** Destroys the local copy of the site's base images and fetches them from the 
 server again.
 */

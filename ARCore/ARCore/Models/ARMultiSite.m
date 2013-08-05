@@ -26,5 +26,8 @@
     [a process];
     return a;
 }
-
+- (ARAugmentedPhoto*)changeDetectImage:(UIImage*)image
+{
+    NSLog(@"Change detection doesn't work on multisites yet!");
+}
 @end

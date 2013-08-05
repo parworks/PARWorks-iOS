@@ -487,6 +487,16 @@
     [weak startAsynchronous];
 }
 
+- (void)removeBaseImage:(ARSiteImage*)image
+{
+    NSDictionary * args = @{@"site": [self identifier], @"id": [image identifier]};
+    __weak ASIHTTPRequest * weak = [[ARManager shared] createRequest: REQ_SITE_IMAGE_REMOVE withMethod:@"GET" withArguments: args];
+    [weak setCompletionBlock: ^(void) {
+        [[self images] removeObject: image];
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: self];
+    }];
+    [weak startAsynchronous];
+}
 
 #pragma mark Accessing Public, Recently Augmented Photos
 
