@@ -221,7 +221,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_AUGMENTED_PHOTO_UPDATED object: self];
     
     [_pollTimer invalidate];
-    _pollTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(processPoll) userInfo:nil repeats:NO];
+    _pollTimer = [NSTimer scheduledTimerWithTimeInterval:0.25 target:self selector:@selector(processPoll) userInfo:nil repeats:NO];
 }
 
 - (void)processPoll
@@ -242,7 +242,7 @@
     
     [req setCompletionBlock: ^(void) {
         if ([__req responseStatusCode] != 200) {
-            _pollTimer = [NSTimer scheduledTimerWithTimeInterval:0.8 target:self selector:@selector(processPoll) userInfo:nil repeats:NO];
+            _pollTimer = [NSTimer scheduledTimerWithTimeInterval:0.25 target:self selector:@selector(processPoll) userInfo:nil repeats:NO];
             _pollCount ++;
         } else {
             [self processJSONData: [__req responseJSON]];
@@ -373,7 +373,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_AUGMENTED_PHOTO_UPDATED object: self];
     
     [_pollTimer invalidate];
-    _pollTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(processChangeDetectionPoll) userInfo:nil repeats:NO];
+    _pollTimer = [NSTimer scheduledTimerWithTimeInterval:0.25 target:self selector:@selector(processChangeDetectionPoll) userInfo:nil repeats:NO];
 }
 
 - (void)processChangeDetectionPoll
@@ -401,7 +401,7 @@
     [req setCompletionBlock: ^(void) {
         NSString * response = [__req responseString];
         if ([response length] == 0) {
-            _pollTimer = [NSTimer scheduledTimerWithTimeInterval:0.8 target:self selector:@selector(processChangeDetectionPoll) userInfo:nil repeats:NO];
+            _pollTimer = [NSTimer scheduledTimerWithTimeInterval:0.25 target:self selector:@selector(processChangeDetectionPoll) userInfo:nil repeats:NO];
             _pollCount ++;
         } else {
             [self processChangeDetectionJSONData: [__req responseJSON]];
