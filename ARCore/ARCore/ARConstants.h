@@ -48,6 +48,7 @@
 #define REQ_IMAGE_AUGMENT_GEO           @"/ar/image/augment/geo"
 #define REQ_IMAGE_AUGMENT_MULTI         @"/ar/image/augment/group?site="
 #define REQ_IMAGE_AUGMENT_RESULT        @"/ar/image/augment/result"
+#define REQ_IMAGE_AUGMENT_MULTI_RESULT_NO_POLL @"/ar/image/augment/group/result?site="
 
 #define REQ_USER_REGISTER               @"/ar/mars/user/account/create"
 #define REQ_USER_GETKEY                 @"/ar/mars/user/account/getkey"
