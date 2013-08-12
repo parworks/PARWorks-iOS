@@ -23,6 +23,7 @@
 #import <UIKit/UIKit.h>
 #import "GridCellView.h"
 #import "ARConstants.h"
+#import "AROverlay.h"
 
 @class ARAugmentedPhoto;
 @class ARSite;
@@ -157,5 +158,9 @@ typedef void(^ARProcessingCompletionBlock)(ARAugmentedPhoto *augmentedPhoto);
     name. 
  */
 - (NSDictionary *)overlaysSortedByGroupName;
+/**
+   Adds an overlay to this augmented photo
+ */
+- (void)addOverlay:(AROverlay*)ar;
 
 @end

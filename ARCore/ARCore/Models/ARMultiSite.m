@@ -7,6 +7,7 @@
 //
 
 #import "ARMultiSite.h"
+#import "ARMultisiteAugmentedPhotoNoPolling.h"
 #import "ARMultisiteAugmentedPhoto.h"
 
 @implementation ARMultiSite
