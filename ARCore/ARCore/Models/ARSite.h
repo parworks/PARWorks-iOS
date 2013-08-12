@@ -217,6 +217,11 @@ server again.
 */
 - (void)removeAllAugmentedPhotos;
 
+
+/** Sets the poster image for the site */
+- (void)setPosterImage:(ARSiteImage*)image;
+
+
 // ==================================================
 // @name Accessing Public, Recently Augmented Photos
 // ==================================================

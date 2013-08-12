@@ -37,6 +37,7 @@
 #define REQ_SITE_OVERLAY_REMOVE_STAGING @"/ar/site/overlay/remove"
 #define REQ_SITE_OVERLAY_CLICK          @"/ar/site/overlay/click"
 #define REQ_SITE_PROCESS                @"/ar/site/process"
+#define REQ_SITE_POSTER                 @"/ar/site/info/poster"
 #define REQ_SITE_CHANGE_DETECT          @"/ar/site/change/detect"
 #define REQ_SITE_CHANGE_DETECT_RESULT   @"/ar/site/change/detect/result"
 

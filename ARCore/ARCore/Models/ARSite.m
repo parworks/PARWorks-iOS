@@ -458,6 +458,15 @@
     return a;
 }
 
+- (void)setPosterImage:(ARSiteImage*)image
+{
+    NSDictionary * dict = @{@"site": self.identifier, @"imageId": image.identifier};
+    __weak ASIHTTPRequest * weak = [[ARManager shared] createRequest: REQ_SITE_POSTER withMethod:@"GET" withArguments: dict];
+    [weak startAsynchronous];
+    
+    _posterImage = @{@"imgContentPath": [[image urlForSize: 1000] absoluteString]};
+}
+
 - (void)removeAllAugmentedPhotos
 {
     [_augmentedPhotos removeAllObjects];
