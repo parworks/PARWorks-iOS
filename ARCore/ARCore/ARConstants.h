@@ -37,17 +37,20 @@
 #define REQ_SITE_OVERLAY_REMOVE_STAGING @"/ar/site/overlay/remove"
 #define REQ_SITE_OVERLAY_CLICK          @"/ar/site/overlay/click"
 #define REQ_SITE_PROCESS                @"/ar/site/process"
+#define REQ_SITE_POSTER                 @"/ar/site/info/poster"
 #define REQ_SITE_CHANGE_DETECT          @"/ar/site/change/detect"
 #define REQ_SITE_CHANGE_DETECT_RESULT   @"/ar/site/change/detect/result"
 
 #define REQ_SITE_IMAGE                  @"/ar/site/image"
 #define REQ_SITE_IMAGE_ADD              @"/ar/site/image/add"
+#define REQ_SITE_IMAGE_REMOVE           @"/ar/site/image/remove"
 #define REQ_SITE_IMAGE_LIST_AUGMENTED   @"/ar/site/image/augmented/list"
 
 #define REQ_IMAGE_AUGMENT               @"/ar/image/augment"
 #define REQ_IMAGE_AUGMENT_GEO           @"/ar/image/augment/geo"
 #define REQ_IMAGE_AUGMENT_MULTI         @"/ar/image/augment/group?site="
 #define REQ_IMAGE_AUGMENT_RESULT        @"/ar/image/augment/result"
+#define REQ_IMAGE_AUGMENT_MULTI_RESULT_NO_POLL @"/ar/image/augment/group/result?site="
 
 #define REQ_USER_REGISTER               @"/ar/mars/user/account/create"
 #define REQ_USER_GETKEY                 @"/ar/mars/user/account/getkey"

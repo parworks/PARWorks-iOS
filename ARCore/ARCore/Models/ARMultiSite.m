@@ -7,6 +7,7 @@
 //
 
 #import "ARMultiSite.h"
+#import "ARMultisiteAugmentedPhotoNoPolling.h"
 #import "ARMultisiteAugmentedPhoto.h"
 
 @implementation ARMultiSite
@@ -26,5 +27,8 @@
     [a process];
     return a;
 }
-
+- (ARAugmentedPhoto*)changeDetectImage:(UIImage*)image
+{
+    NSLog(@"Change detection doesn't work on multisites yet!");
+}
 @end

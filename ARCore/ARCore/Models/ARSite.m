@@ -541,6 +541,15 @@
     return a;
 }
 
+- (void)setPosterImage:(ARSiteImage*)image
+{
+    NSDictionary * dict = @{@"site": self.identifier, @"imageId": image.identifier};
+    __weak ASIHTTPRequest * weak = [[ARManager shared] createRequest: REQ_SITE_POSTER withMethod:@"GET" withArguments: dict];
+    [weak startAsynchronous];
+    
+    _posterImage = @{@"imgContentPath": [[image urlForSize: 1000] absoluteString]};
+}
+
 - (void)removeAllAugmentedPhotos
 {
     [_augmentedPhotos removeAllObjects];
@@ -570,6 +579,16 @@
     [weak startAsynchronous];
 }
 
+- (void)removeBaseImage:(ARSiteImage*)image
+{
+    NSDictionary * args = @{@"site": [self identifier], @"id": [image identifier]};
+    __weak ASIHTTPRequest * weak = [[ARManager shared] createRequest: REQ_SITE_IMAGE_REMOVE withMethod:@"GET" withArguments: args];
+    [weak setCompletionBlock: ^(void) {
+        [[self images] removeObject: image];
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: self];
+    }];
+    [weak startAsynchronous];
+}
 
 #pragma mark Accessing Public, Recently Augmented Photos
 

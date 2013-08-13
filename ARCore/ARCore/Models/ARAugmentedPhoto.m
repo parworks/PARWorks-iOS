@@ -28,7 +28,7 @@
 #import "ASIHTTPRequest+JSONAdditions.h"
 
 #define PHOTOS_DIRECTORY [@"~/Documents/Photos/" stringByExpandingTildeInPath]
-
+#define DEFAULT_JPEG_QUALITY 0.45
 
 @implementation ARAugmentedPhoto
 
@@ -169,7 +169,12 @@
     
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_UPLOAD_STATUS_CHANGE object: @"Upload Starting..."];
     
-    [req setData:UIImageJPEGRepresentation(_image, 0.45) forKey:@"image"];
+    CGFloat jpegQuality = DEFAULT_JPEG_QUALITY;
+    if ([[NSUserDefaults standardUserDefaults] floatForKey:@"jpegQuality"])
+        jpegQuality = [[NSUserDefaults standardUserDefaults] floatForKey:@"jpegQuality"];
+    
+    [req setData:UIImageJPEGRepresentation(_image, jpegQuality) forKey:@"image"];
+    [req setShowAccurateProgress: YES];
     [req setFailedBlock: ^(void) {
         _response = BackendResponseFailed;
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_UPLOAD_STATUS_CHANGE object: @"Upload Failed."];
@@ -177,18 +182,21 @@
         [[ARManager shared] criticalRequestFailed: __req];
         if (_processingCompletionBlock) _processingCompletionBlock(self);
     }];
-    __block unsigned long long bytesSent = 0;
-    [req setBytesSentBlock:^(unsigned long long length, unsigned long long total) {
-        bytesSent += length;
-        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_UPLOAD_STATUS_CHANGE object: [NSString stringWithFormat: @"%.1f%% Uploaded (%ull bytes)", ((float)bytesSent / (float)total) * 100.0, bytesSent]];
+
+    ASIHTTPRequest*  __block __breq = req;
+    [req setBytesSentBlock:^(unsigned long long size, unsigned long long total) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_UPLOAD_STATUS_CHANGE object: [NSString stringWithFormat: @"%.1f%% Uploaded (%lld KB)", ((float)([__breq totalBytesSent]) / (float)[__breq postLength]) * 100.0, [__breq totalBytesSent] / 1024]];
     }];
+
     [req setCompletionBlock: ^(void) {
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_UPLOAD_STATUS_CHANGE object: @"Upload Finished."];
+
         if ([[ARManager shared] handleResponseErrors: __req]) {
             [self processPostComplete: __req];
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_UPLOAD_STATUS_CHANGE object: @"Polling for response..."];
 
         } else {
             _response = BackendResponseFailed;
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_UPLOAD_STATUS_CHANGE object: @"Upload Finished. Polling for response."];
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_AUGMENTED_PHOTO_UPDATED object: self];
             if (_processingCompletionBlock) _processingCompletionBlock(self);
         }
@@ -213,7 +221,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_AUGMENTED_PHOTO_UPDATED object: self];
     
     [_pollTimer invalidate];
-    _pollTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(processPoll) userInfo:nil repeats:NO];
+    _pollTimer = [NSTimer scheduledTimerWithTimeInterval:0.25 target:self selector:@selector(processPoll) userInfo:nil repeats:NO];
 }
 
 - (void)processPoll
@@ -234,7 +242,7 @@
     
     [req setCompletionBlock: ^(void) {
         if ([__req responseStatusCode] != 200) {
-            _pollTimer = [NSTimer scheduledTimerWithTimeInterval:0.8 target:self selector:@selector(processPoll) userInfo:nil repeats:NO];
+            _pollTimer = [NSTimer scheduledTimerWithTimeInterval:0.25 target:self selector:@selector(processPoll) userInfo:nil repeats:NO];
             _pollCount ++;
         } else {
             [self processJSONData: [__req responseJSON]];
@@ -324,7 +332,11 @@
     ASIFormDataRequest * req = [self requestForChangeDetectionProcessing];
     ASIFormDataRequest * __weak __req = req;
     
-    [req setData:UIImageJPEGRepresentation(_image, 0.45) forKey:@"image"];
+    CGFloat jpegQuality = DEFAULT_JPEG_QUALITY;
+    if ([[NSUserDefaults standardUserDefaults] floatForKey:@"jpegQuality"])
+        jpegQuality = [[NSUserDefaults standardUserDefaults] floatForKey:@"jpegQuality"];
+    
+    [req setData:UIImageJPEGRepresentation(_image, jpegQuality) forKey:@"image"];
     [req setFailedBlock: ^(void) {
         _response = BackendResponseFailed;
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_AUGMENTED_PHOTO_UPDATED object: self];
@@ -361,7 +373,7 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_AUGMENTED_PHOTO_UPDATED object: self];
     
     [_pollTimer invalidate];
-    _pollTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(processChangeDetectionPoll) userInfo:nil repeats:NO];
+    _pollTimer = [NSTimer scheduledTimerWithTimeInterval:0.25 target:self selector:@selector(processChangeDetectionPoll) userInfo:nil repeats:NO];
 }
 
 - (void)processChangeDetectionPoll
@@ -389,7 +401,7 @@
     [req setCompletionBlock: ^(void) {
         NSString * response = [__req responseString];
         if ([response length] == 0) {
-            _pollTimer = [NSTimer scheduledTimerWithTimeInterval:0.8 target:self selector:@selector(processChangeDetectionPoll) userInfo:nil repeats:NO];
+            _pollTimer = [NSTimer scheduledTimerWithTimeInterval:0.25 target:self selector:@selector(processChangeDetectionPoll) userInfo:nil repeats:NO];
             _pollCount ++;
         } else {
             [self processChangeDetectionJSONData: [__req responseJSON]];

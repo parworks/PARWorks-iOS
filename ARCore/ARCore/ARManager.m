@@ -316,7 +316,9 @@ static ARManager * sharedManager;
             });
         });
     }];
-    [_backgroundUploadQueue setSuspended: NO];
+
+    if ([self isConnectedToAPI])
+        [_backgroundUploadQueue setSuspended: NO];
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_UPLOADS_UPDATED object:nil];
 }
 
@@ -527,8 +529,9 @@ static ARManager * sharedManager;
         msg = @"The PAR Works server could not be reached. Make sure you have an internet connection and try again.";
 
     if ((!_lastConnectionAlertDate) || ([[NSDate new] timeIntervalSinceDate: _lastConnectionAlertDate] > 15)) {
-        UIAlertView * v = [[UIAlertView alloc] initWithTitle:@"Connection Error" message:msg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil];
-        [v show];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [[[UIAlertView alloc] initWithTitle:@"Connection Error" message:msg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
+        });
         _lastConnectionAlertDate = [NSDate new];
     } else {
         // do nothing... we don't want to overwhelm the user with errors. One message

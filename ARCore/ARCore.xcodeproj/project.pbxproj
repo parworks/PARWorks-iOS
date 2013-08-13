@@ -171,6 +171,7 @@
 		A0EC45961734B962006D9DB9 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0EC45931734B962006D9DB9 /* AVFoundation.framework */; };
 		A0EC45991734BA57006D9DB9 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A057A66E1724595E00662670 /* CoreFoundation.framework */; };
 		D140791D17A1F39E000A4BD3 /* NSString+UrlEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = D140791C17A1F39E000A4BD3 /* NSString+UrlEncoding.m */; };
+		D14C0CD517B42870005EA6FA /* ARMultisiteAugmentedPhotoNoPolling.m in Sources */ = {isa = PBXBuildFile; fileRef = D14C0CD417B42870005EA6FA /* ARMultisiteAugmentedPhotoNoPolling.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -452,6 +453,8 @@
 		A0EC45B1173890FA006D9DB9 /* AROverlayCreatorViewController_iPad.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = AROverlayCreatorViewController_iPad.xib; sourceTree = "<group>"; };
 		D140791B17A1F39E000A4BD3 /* NSString+UrlEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+UrlEncoding.h"; sourceTree = "<group>"; };
 		D140791C17A1F39E000A4BD3 /* NSString+UrlEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+UrlEncoding.m"; sourceTree = "<group>"; };
+		D14C0CD317B42870005EA6FA /* ARMultisiteAugmentedPhotoNoPolling.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARMultisiteAugmentedPhotoNoPolling.h; sourceTree = "<group>"; };
+		D14C0CD417B42870005EA6FA /* ARMultisiteAugmentedPhotoNoPolling.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARMultisiteAugmentedPhotoNoPolling.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -772,6 +775,8 @@
 				A09A8A5F17230A6B000D9AF7 /* ARSiteImage.m */,
 				A09A8A6017230A6B000D9AF7 /* ARSiteOverlayPoint.h */,
 				A09A8A6117230A6B000D9AF7 /* ARSiteOverlayPoint.m */,
+				D14C0CD317B42870005EA6FA /* ARMultisiteAugmentedPhotoNoPolling.h */,
+				D14C0CD417B42870005EA6FA /* ARMultisiteAugmentedPhotoNoPolling.m */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -1202,6 +1207,7 @@
 				A0EC457F173308B4006D9DB9 /* ARCameraPreviewView.m in Sources */,
 				A0EC45821734A104006D9DB9 /* ARAugmentedPhotoVC.m in Sources */,
 				D140791D17A1F39E000A4BD3 /* NSString+UrlEncoding.m in Sources */,
+				D14C0CD517B42870005EA6FA /* ARMultisiteAugmentedPhotoNoPolling.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
