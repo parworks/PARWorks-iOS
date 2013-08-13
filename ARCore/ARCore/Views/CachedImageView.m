@@ -92,7 +92,7 @@ static NSCache * _imageCache = nil;
     
     if (!resourceExists) {
         [[NSFileManager defaultManager] createDirectoryAtPath:[cachePath stringByDeletingLastPathComponent] withIntermediateDirectories:YES attributes:nil error:nil];
-        NSLog(@"Seeking at: %@", cachePath);
+//        NSLog(@"Seeking at: %@", cachePath);
         resourceExists = [[NSFileManager defaultManager] fileExistsAtPath: cachePath];
     }
     

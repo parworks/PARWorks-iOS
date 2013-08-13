@@ -77,7 +77,10 @@
     _progressHUD.center = CGPointMake(self.view.bounds.size.width/2, self.view.bounds.size.height/2);
     _backButton.frame = CGRectMake(15, 10, 60, 30);
     
-    [self setAugmentedPhoto:[_site augmentImage:_imageToAugment]];
+    if ([self imageNeedsAugmentation]) {
+        [self setAugmentedPhoto:[_site augmentImage:_imageToAugment]];
+    }
+
     [self showAugmentingInterface];
     
     [CATransaction begin]; {
@@ -138,6 +141,11 @@
 
 
 #pragma mark - Augmentation
+- (BOOL)imageNeedsAugmentation
+{
+    return YES;
+}
+
 - (void)imageAugmentationStatusChanged:(NSNotification*)notif
 {
     if (_augmentedPhoto == nil) {
