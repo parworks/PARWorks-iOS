@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		A03C980D17B2038700196729 /* ARAugmentedImage.m in Sources */ = {isa = PBXBuildFile; fileRef = A03C980C17B2038700196729 /* ARAugmentedImage.m */; };
 		A057A61217244FD500662670 /* bubble.png in Resources */ = {isa = PBXBuildFile; fileRef = A09A89DB17230A6A000D9AF7 /* bubble.png */; };
 		A057A61317244FD500662670 /* cow.ply in Resources */ = {isa = PBXBuildFile; fileRef = A09A8A0D17230A6A000D9AF7 /* cow.ply */; };
 		A057A61417244FD500662670 /* jquery-1.9.0.min.js in Resources */ = {isa = PBXBuildFile; fileRef = A09A8A1D17230A6A000D9AF7 /* jquery-1.9.0.min.js */; };
@@ -195,6 +196,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		A03C980B17B2038600196729 /* ARAugmentedImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARAugmentedImage.h; sourceTree = "<group>"; };
+		A03C980C17B2038700196729 /* ARAugmentedImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARAugmentedImage.m; sourceTree = "<group>"; };
 		A057A60117244FAB00662670 /* ARCore.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ARCore.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		A057A60217244FAB00662670 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = Library/Frameworks/Cocoa.framework; sourceTree = DEVELOPER_DIR; };
 		A057A60517244FAB00662670 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -748,6 +751,8 @@
 		A09A8A4E17230A6B000D9AF7 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				A03C980B17B2038600196729 /* ARAugmentedImage.h */,
+				A03C980C17B2038700196729 /* ARAugmentedImage.m */,
 				A09A8A4F17230A6B000D9AF7 /* ARAugmentedPhoto.h */,
 				A09A8A5017230A6B000D9AF7 /* ARAugmentedPhoto.m */,
 				A09A8A5117230A6B000D9AF7 /* ARAugmentedPhotoSource.h */,
@@ -1181,6 +1186,7 @@
 				A09A8B0317230B06000D9AF7 /* NSObject+SBJSON.m in Sources */,
 				A09A8B0417230B06000D9AF7 /* NSString+SBJSON.m in Sources */,
 				A09A8B0517230B06000D9AF7 /* SBJSON.m in Sources */,
+				A03C980D17B2038700196729 /* ARAugmentedImage.m in Sources */,
 				A09A8B0617230B06000D9AF7 /* SBJsonBase.m in Sources */,
 				A09A8B0717230B06000D9AF7 /* SBJsonParser.m in Sources */,
 				A09A8B0817230B06000D9AF7 /* SBJsonWriter.m in Sources */,

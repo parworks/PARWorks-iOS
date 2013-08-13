@@ -32,10 +32,13 @@ typedef enum ARSiteStatus {
     ARSiteStatusProcessed = 3,
     ARSiteStatusCreating = 4
 } ARSiteStatus;
-    
+
+typedef void(^ImageLoadCompletionBlock)(NSArray *images);
+
 @interface ARSite : NSObject <NSCoding, ARAugmentedPhotoSource>
 {
     ASIHTTPRequest * _imageReq;
+    ASIHTTPRequest * _augmentedImageReq;
     ASIHTTPRequest * _overlaysReq;
     ASIHTTPRequest * _deleteReq;
     ASIHTTPRequest * _stagingDeleteReq;
@@ -55,6 +58,7 @@ typedef enum ARSiteStatus {
 @property (nonatomic, assign) float posterImageOriginalWidth;
 
 @property (nonatomic, strong) NSMutableArray * images;
+@property (nonatomic, strong) NSMutableArray * augmentedImages;
 @property (nonatomic, strong) NSMutableArray * augmentedPhotos;
 @property (nonatomic, strong) NSMutableArray * overlays;
 @property (nonatomic, assign) ARSiteStatus status;
@@ -134,6 +138,23 @@ invalidate the overlays or site images that have been downloaded to this site. *
   reload any view that is dependent on this data
 */
 - (void)fetchImages;
+
+/**
+    Returns an array of augmented images for this site. If the images have not yet
+    been fetched from the server, this method begins fetching the images and returns nil.
+    When the images have been downloaded, the ARSite object will send a NOTIF_SITE_UPDATED message,
+    allowing the client to reload any view dependent on this data.
+ 
+    @return NSArray of ARAugmentedImage objects, or nil if the images have not been loaded.
+ */
+- (NSMutableArray *)augmentedImages;
+
+/**
+    This method begins fetching the augmented images and returns nil. When the images have been downloaded,
+    the ARSite object will send a NOTIF_SITE_UPDATED message, allowing the client to
+    reload any view that is dependent on this data
+ */
+- (void)fetchAugmentedImagesWithCompletion:(ImageLoadCompletionBlock)completion;
 
 /** Begins the process of processing base images added to the site. Listen for 
 NOTIF_SITE_UPDATED to receive notifications when the site is ready. 

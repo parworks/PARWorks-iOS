@@ -36,4 +36,6 @@
 /// Lifecycle
 - (id)initWithSite:(id<ARAugmentedPhotoSource>)site imageToAugment:(UIImage *)image waitingImageContents:(id)contents;
 
+- (BOOL)imageNeedsAugmentation;
+
 @end
