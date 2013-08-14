@@ -12,6 +12,32 @@
 @implementation ARAugmentedImage
 
 #pragma mark - Overrides
+- (id)initWithDictionary:(NSDictionary *)dict
+{
+    self = [super initWithDictionary:dict];
+    if (self) {
+        [self deserializeOutput];
+    }
+    return self;
+}
+
+- (void)deserializeOutput
+{
+    NSError *err;
+    NSDictionary *output = [NSJSONSerialization JSONObjectWithData:[_dict[@"output"] dataUsingEncoding:NSUTF8StringEncoding]
+                                                           options:0
+                                                             error:&err];
+    NSMutableDictionary *mutable = [_dict mutableCopy];
+    if (err) {
+        NSLog(@"%@", err.localizedDescription);
+        mutable[@"output"] = [NSNull null];
+    } else {
+        mutable[@"output"] = output;
+    }
+    
+    _dict = mutable;
+}
+
 - (NSDictionary *)output
 {
     return _dict[@"output"];
