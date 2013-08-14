@@ -34,6 +34,7 @@
 @implementation AROverlay
 
 #pragma mark - Lifecycle
+
 - (id)initWithSiteImage:(ARSiteImage *)s
 {
     self = [super init];
