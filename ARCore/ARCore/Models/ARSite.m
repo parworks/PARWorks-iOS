@@ -17,7 +17,8 @@
 //  limitations under the License.
 //
 
-
+#import "ARAugmentedImage.h"
+#import "ARAugmentedPhoto.h"
 #import "ARSite.h"
 #import "ARSiteImage.h"
 #import "ARConstants.h"
@@ -26,7 +27,6 @@
 #import "ARSiteImage.h"
 #import "ASIHTTPRequest.h"
 #import "ASIHTTPRequest+JSONAdditions.h"
-#import "ARAugmentedPhoto.h"
 #import "NSContainers+NullHandlers.h"
 
 @implementation ARSite
@@ -245,7 +245,7 @@
 
 - (NSMutableArray*)images
 {
-    if ((_images == nil) && (!_invalid))
+    if (!_images && ![self isFetchingImages] && !_invalid)
         [self fetchImages];
     return _images;
 }
@@ -262,6 +262,9 @@
 
 - (void)fetchImages
 {
+    if (_imageReq)
+        return;
+    
     NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithObject:self.identifier forKey:@"site"];
     _imageReq = [[ARManager shared] createRequest: REQ_SITE_IMAGE withMethod:@"GET" withArguments: dict];
 
@@ -308,6 +311,86 @@
     } else {
         return _images.count;
     }
+}
+
+
+#pragma mark - Augmented Images Management
+
+- (NSMutableArray *)augmentedImages
+{
+    if (!_augmentedImages && ![self isFetchingAugmentedImages] && !_invalid) {
+        [self fetchAugmentedImagesWithCompletion:nil];
+    }
+    return _augmentedImages;
+}
+
+- (BOOL)isFetchingAugmentedImages
+{
+    return (_augmentedImageReq != nil);
+}
+
+- (void)finishedFetchingAugmentedImages
+{
+    _augmentedImageReq = nil;
+}
+
+- (void)fetchAugmentedImagesWithCompletion:(ImageLoadCompletionBlock)completion
+{
+    if (_augmentedImageReq)
+        return;
+
+    NSMutableDictionary *dict = [NSMutableDictionary dictionaryWithObject:self.identifier forKey:@"site"];
+    ImageLoadCompletionBlock completionCopy = [completion copy];
+    
+    _augmentedImageReq = [[ARManager shared] createRequest:REQ_SITE_IMAGE_LIST_AUGMENTED withMethod:@"GET" withArguments:dict];
+    
+    typeof(self) __weak __site = self;
+    typeof(ASIHTTPRequest *) __weak __req = _augmentedImageReq;
+    
+    [_augmentedImageReq setCompletionBlock:^{
+        NSArray *json = [__req responseJSON];
+        if (![json isKindOfClass:[NSArray class]]) {
+            __site.invalid = YES;
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object:__site];
+            return;
+        }
+        
+        // Grab all the image dictionaries from the JSON and create our ARAugmentedImage objects.
+        __site.augmentedImages = [NSMutableArray array];
+        for (NSDictionary *imgJson in json) {
+            ARAugmentedImage *img = [[ARAugmentedImage alloc] initWithDictionary:imgJson];
+            [img setSite:__site];
+            [[__site augmentedImages] addObject:img];
+        }
+
+        if (completionCopy) {
+            completionCopy([__site augmentedImages]);
+        }
+        [__site finishedFetchingAugmentedImages];
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: __site];
+    }];
+    
+    [_augmentedImageReq setFailedBlock: ^(void) {
+        [__site finishedFetchingImages];
+        if (completionCopy) {
+            completionCopy([__site augmentedImages]);
+        }
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: __site];
+    }];
+    
+    [_augmentedImageReq startAsynchronous];
+    
+}
+
+- (void)invalidateAugmentedImages:(NSNotification *)note
+{
+    if ([[note object] isEqualToString: _identifier])
+        [self fetchAugmentedImagesWithCompletion:nil];
+}
+
+- (int)augmentedImagesCount
+{
+    return _augmentedImages.count;
 }
 
 #pragma mark Site Overlay Management
@@ -456,6 +539,15 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_AUGMENTED_PHOTO_UPDATED object: self];
     [a processChangeDetection];
     return a;
+}
+
+- (void)setPosterImage:(ARSiteImage*)image
+{
+    NSDictionary * dict = @{@"site": self.identifier, @"imageId": image.identifier};
+    __weak ASIHTTPRequest * weak = [[ARManager shared] createRequest: REQ_SITE_POSTER withMethod:@"GET" withArguments: dict];
+    [weak startAsynchronous];
+    
+    _posterImage = @{@"imgContentPath": [[image urlForSize: 1000] absoluteString]};
 }
 
 - (void)removeAllAugmentedPhotos

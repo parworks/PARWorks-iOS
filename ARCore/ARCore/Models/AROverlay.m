@@ -34,6 +34,7 @@
 @implementation AROverlay
 
 #pragma mark - Lifecycle
+
 - (id)initWithSiteImage:(ARSiteImage *)s
 {
     self = [super init];
@@ -192,6 +193,9 @@
     [dict setObject:_site.identifier forKey:@"site"];
     
     // IMPORTANT! THIS SHIT DOESN'T LOOK AT THE OVERLAY PROPERTIES!
+    if (!_title)
+        _title = @"";
+    
     NSDictionary * description = @{@"title":_title,@"boundary":@{@"color":@"GRAY",@"type":@"SOLID"},@"content":@{@"type":@"URL",@"size":@"large",@"provider":_contentProvider},@"cover":@{@"type":@"regular",@"color":@"green",@"transparency":@(40),@"provider":@"",@"showPulse":@"true",@"offset":@"0,0"}};
     [dict setObject:description forKey:@"content"];
     
@@ -337,13 +341,22 @@
             CGFloat z = [[components objectAtIndex:i + 2] floatValue];
             [_points addObject:[AROverlayPoint pointWithX:x y:y z:z]];
         }
+    } else if ([_dict objectForKey: @"v"]) {
+        NSString * line = [_dict objectForKey: @"v"];
+        NSArray * points = [line componentsSeparatedByString:@"&v="];
+        for (NSString * point in points) {
+            NSArray * components = [point componentsSeparatedByString: @","];
+            CGFloat x = [[components objectAtIndex:0] floatValue];
+            CGFloat y = [[components objectAtIndex:1] floatValue];
+            [_points addObject:[AROverlayPoint pointWithX:x y:y z: 0]];
+        }
+
     } else {
         NSArray * pointsArray = [_dict objectForKey: @"points"];
         for (NSDictionary * point in pointsArray) {
             CGFloat x = [[point objectForKey: @"x"] floatValue];
             CGFloat y = [[point objectForKey: @"y"] floatValue];
-            CGFloat z = 0;
-            [_points addObject: [AROverlayPoint pointWithX:x y:y z:z]];
+            [_points addObject: [AROverlayPoint pointWithX:x y:y z:0]];
         }
     }
 }
