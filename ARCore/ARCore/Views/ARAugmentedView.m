@@ -39,6 +39,7 @@
 
 @interface ARAugmentedView()
 @property(nonatomic, strong) UIControl *dimView;
+@property(nonatomic, strong) UIControl *overlayDimView;
 @property(nonatomic, strong) AROverlayAnimation *overlayAnimation;
 @end
 
@@ -76,7 +77,7 @@
     self.showOutlineViewsOnly = NO;
     self.animateOutlineViewDrawing = YES;
     self.overlayImageViewContentMode = UIViewContentModeScaleAspectFit;
-    [self addTarget:self action:@selector(blackBackgroundTapped) forControlEvents:UIControlEventTouchUpInside];
+//    [self addTarget:self action:@selector(blackBackgroundTapped) forControlEvents:UIControlEventTouchUpInside];
 
     self.overlayAnimation = [[AROverlayAnimation alloc] init];
     _overlayViews = [[NSMutableArray alloc] init];
@@ -87,11 +88,20 @@
     _overlayImageView.userInteractionEnabled = YES;
     [self addSubview: _overlayImageView];
     
-    self.dimView = [[UIControl alloc] initWithFrame: CGRectMake(0, 0, 3000, 3000)];
+    self.dimView = [[UIControl alloc] initWithFrame: self.bounds];
     [_dimView addTarget:self action:@selector(dimViewTapped:) forControlEvents:UIControlEventTouchUpInside];
-    _dimView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
+    _dimView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+    _dimView.backgroundColor = [UIColor clearColor];
     _dimView.alpha = 0.0;
-    [_overlayImageView addSubview: _dimView];
+    [self addSubview: _dimView];
+
+    self.overlayDimView = [[UIControl alloc] initWithFrame: _overlayImageView.bounds];
+    [_overlayDimView addTarget:self action:@selector(dimViewTapped:) forControlEvents:UIControlEventTouchUpInside];
+    _overlayDimView.autoresizingMask = UIViewAutoresizingFlexibleWidth|UIViewAutoresizingFlexibleHeight;
+    _overlayDimView.backgroundColor = [[UIColor blackColor] colorWithAlphaComponent:0.5];
+    _overlayDimView.alpha = 0.0;
+    [_overlayImageView addSubview: _overlayDimView];
+
     
     self.totalAugmentedImagesView = [[ARTotalAugmentedImagesView alloc] init];
     _totalAugmentedImagesView.hidden = YES;
@@ -113,6 +123,19 @@
     } else if (!_augmentedPhoto) {
         [self removeSupplementalViews];
     }
+}
+
+
+#pragma mark - Hit Testing
+- (UIView *)hitTest:(CGPoint)point withEvent:(UIEvent *)event
+{
+    CGRect frameInSelf = [self convertRect:_focusedOverlayView.frame fromView:_overlayImageView];
+    if (_focusedOverlayView && CGRectContainsPoint(frameInSelf, point)) {
+        CGPoint convertedPoint = [self convertPoint:point toView:_focusedOverlayView];
+        return [_focusedOverlayView hitTest:convertedPoint withEvent:event];
+    } else {
+        return [super hitTest:point withEvent:event];
+    } 
 }
 
 #pragma mark - Layout
@@ -269,10 +292,12 @@
 {
     [UIView animateWithDuration:0.3 animations:^{
         _dimView.alpha = 1.0;
+        _overlayDimView.alpha = 1.0;
         _overlayZoomed = YES;
         [_overlayTitleViews makeObjectsPerformSelector:@selector(dismiss)];
     }];
  
+    [self insertSubview:_dimView belowSubview:_overlayImageView];
     [_overlayImageView bringSubviewToFront:overlay];
     
     // TODO: Animation needs a completion block.
@@ -286,6 +311,7 @@
     
     [UIView animateWithDuration:0.3 animations:^{
         _dimView.alpha = 0.0;
+        _overlayDimView.alpha = 0.0;
     } completion:^(BOOL finished) {
         _overlayZoomed = NO;
         [_overlayTitleViews makeObjectsPerformSelector:@selector(layoutWithinParent:) withObject: self];
