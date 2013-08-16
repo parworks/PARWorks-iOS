@@ -164,6 +164,11 @@ NOTIF_SITE_UPDATED to receive notifications when the site is ready.
 /** Removes a base image */
 - (void)removeBaseImage:(ARSiteImage*)image;
 
+/** Repeats the process of processing reports added to the site. Listen for 
+NOTIF_SITE_UPDATED to receive notifications when the site is ready. 
+*/
+- (void)reprocessReports;
+
 /** Destroys the local copy of the site's base images and fetches them from the 
 server again.
 */
