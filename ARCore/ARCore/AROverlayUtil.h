@@ -21,6 +21,8 @@
 #import <Foundation/Foundation.h>
 #import "AROverlayView.h"
 
+bool lineSegmentIntersection(double Ax, double Ay,double Bx, double By,double Cx, double Cy,double Dx, double Dy,double *X, double *Y);
+
 @interface AROverlayUtil : NSObject
 
 + (CGFloat)scaleFactorForBounds:(CGRect)bounds withImage:(UIImage *)image;
@@ -53,4 +55,7 @@ to say "fit this UIView into the shape defined by these four points." Used for m
  other parameters.
 */
 + (CATransform3D)rectToQuad:(CGRect)rect quadTLX:(double)x1a quadTLY:(double)y1a quadTRX:(double)x2a quadTRY:(double)y2a quadBLX:(double)x3a quadBLY:(double)y3a quadBRX:(double)x4a quadBRY:(double)y4a;
+
++ (BOOL)isPoint:(CGPoint)p withinOverlay:(AROverlay*)overlay;
+
 @end

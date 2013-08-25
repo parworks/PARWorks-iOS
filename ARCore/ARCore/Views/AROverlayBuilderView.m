@@ -22,6 +22,8 @@
 #import "AROverlayBuilderView.h"
 #import "AROverlayBuilderAnnotationView.h"
 #import "UIView+ContentScaling.h"
+#import "AROverlayUtil.h"
+#import "AROverlayPoint.h"
 
 // Convenience method for pinning a value between a min and max.
 float pin( float minValue, float value, float maxValue )
@@ -110,6 +112,7 @@ float pin( float minValue, float value, float maxValue )
 
 
 #pragma mark - Convenience
+
 - (void)showLensViewAnimated:(BOOL)animated
 {
     CGFloat duration = animated ? 0.1 : 0.0;
@@ -145,9 +148,9 @@ float pin( float minValue, float value, float maxValue )
     [_annotationView setSiteImage: _siteImage];
 }
 
-- (AROverlay *)currentOverlay
+- (AROverlay*)lastInteractedOverlay
 {
-    return [_annotationView currentOverlay];
+    return _lastInteractedOverlay;
 }
 
 - (void)dealloc
@@ -165,38 +168,91 @@ float pin( float minValue, float value, float maxValue )
 - (void)didAddScaledTouchPoint:(CGPoint)p
 {
     if (_delegate && [_delegate respondsToSelector:@selector(didUpdatePointWithOverlay:)]) {
-        [_delegate didUpdatePointWithOverlay: [_annotationView currentOverlay]];
+        [_delegate didUpdatePointWithOverlay: _lastInteractedOverlay];
     }
 }
-
 
 
 #pragma mark - Zooming
 - (void)touchDown:(id)sender withEvent:(UIEvent *)event
 {
-    [self showLensViewAnimated:YES];
-    [self refreshLensViewForTouches:event.allTouches];
+    // identify the closest point to the user's finger. That's gonna be the one they're now dragging
+    UITouch *t = [event.allTouches anyObject];
+    CGPoint p = [t locationInView:self];
+    CGPoint pScaled = [self scaledTouchPointForPointOverlayView: p withScaledImageFrame: [_imageView aspectFitFrameForCurrentImage]];
+    float scale = [_imageView aspectFitScaleForCurrentImage];
+    pScaled.x /= scale;
+    pScaled.y /= scale;
+    
+    _pointIndex = NSNotFound;
+    _overlayIndex = NSNotFound;
+    
+    float pointDist = INT_MAX;
+    
+    for (int x = 0; x < [[_siteImage overlays] count]; x ++) {
+        AROverlay * overlay = [[_siteImage overlays] objectAtIndex: x];
+        if ([overlay processed])
+            continue;
+        
+        for (int ii = 0; ii < [[overlay points] count]; ii ++) {
+            AROverlayPoint * point = [[overlay points] objectAtIndex: ii];
+            float dist = sqrtf(powf(point.x - pScaled.x, 2) + powf(point.y - pScaled.y, 2));
+            
+            if ((dist < pointDist) && (dist < 44)) {
+                _pointIndex = ii;
+                _overlayIndex = x;
+                pointDist = dist;
+            }
+        }
+    }
+
+    if (_pointIndex == NSNotFound) {
+        BOOL withinAnotherOverlay = NO;
+        for (AROverlay * o in [_siteImage overlays]) {
+            if ([AROverlayUtil isPoint:pScaled withinOverlay: o]) {
+                withinAnotherOverlay = YES;
+                if ([NSDate timeIntervalSinceReferenceDate] - _lastInsideTouchTimestamp > 1.0)
+                    _lastInsideTouchTimestamp = [NSDate timeIntervalSinceReferenceDate];
+                else {
+                    [_delegate didDoubleTapOverlay: o];
+                }
+            }
+        }
+        if (!withinAnotherOverlay) {
+            [_annotationView beginNewOverlay: pScaled];
+            _lastInteractedOverlay = [[_siteImage overlays] lastObject];
+        }
+    } else {
+        [self showLensViewAnimated:YES];
+        [self refreshLensViewForTouchPoint: p];
+
+        _lastInteractedOverlay = [[_siteImage overlays] objectAtIndex: _overlayIndex];
+    }
+
 }
 
 - (void)touchMoved:(id)sender withEvent:(UIEvent *)event
 {
     // Move the magnifying glass to be above the touch point.
-    [self refreshLensViewForTouches:event.allTouches];
+    if (_pointIndex != NSNotFound) {
+        UITouch *t = [event.allTouches anyObject];
+        CGPoint p = [t locationInView:self];
+        CGPoint pScaled = [self scaledTouchPointForPointOverlayView: p withScaledImageFrame: [_imageView aspectFitFrameForCurrentImage]];
+
+        [self refreshLensViewForTouchPoint: p];
+        [_annotationView updatePoint:_pointIndex ofOverlay: _overlayIndex to: pScaled];
+    }
 }
 
 - (void)touchEnded:(id)sender withEvent:(UIEvent *)event
 {
-    // If the touch is close enough to the first touch point, go ahead and close this point.
     UITouch *t = [event.allTouches anyObject];
     CGPoint p = [t locationInView:self];
 
-    CGPoint scaledPoint = [self scaledTouchPointForPointOverlayView:p withScaledImageFrame:[_imageView aspectFitFrameForCurrentImage]];
-    float scale = [_imageView aspectFitScaleForCurrentImage];
-    _annotationView.imageScale = scale;
-    [_annotationView addScaledTouchPoint: scaledPoint];
-
     [self hideLensViewAnimated:YES];
-    [self refreshLensViewForTouches:event.allTouches];
+    [self refreshLensViewForTouchPoint: p];
+
+    [_delegate didUpdatePointWithOverlay: _lastInteractedOverlay];
 }
 
 - (CGPoint)cappedTouchPointForPoint:(CGPoint)p withScaledImageFrame:(CGRect)scaledFrame
@@ -214,13 +270,10 @@ float pin( float minValue, float value, float maxValue )
 }
 
 // Frame the zoome view so it's centered above out touch point.
-- (void)refreshLensViewForTouches:(NSSet *)touches
+- (void)refreshLensViewForTouchPoint:(CGPoint)p
 {
-    CGRect scaledFrame = [_imageView aspectFitFrameForCurrentImage];
-    UITouch *t = [touches anyObject];
-    CGPoint p = [t locationInView:self];
-
     // Cap the touch points.
+    CGRect scaledFrame = [_imageView aspectFitFrameForCurrentImage];
     CGPoint imageZoomPoint = [self cappedTouchPointForPoint:p withScaledImageFrame:scaledFrame];
     _lensView.currentZoomPoint = imageZoomPoint;
     

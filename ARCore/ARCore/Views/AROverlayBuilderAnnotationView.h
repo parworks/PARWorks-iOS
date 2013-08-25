@@ -42,10 +42,11 @@
 @property(nonatomic, weak) id<AROverlayBuilderAnnotationViewDelegate> delegate;
 
 - (id)initWithFrame:(CGRect)frame andSiteImage:(ARSiteImage*)siteImage backingImageView:(UIImageView *)imageView;
-
 - (AROverlay*)currentOverlay;
-- (void)closeCurrentOverlay;
 
-- (void)addScaledTouchPoint:(CGPoint)p;
+
+- (void)beginNewOverlay:(CGPoint)center;
+- (void)updatePoint:(int)index ofOverlay:(int)oindex to:(CGPoint)point;
+
 
 @end
