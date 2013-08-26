@@ -21,6 +21,52 @@
 #import "AROverlayUtil.h"
 #import "AROverlayPoint.h"
 
+bool lineSegmentIntersection(double Ax, double Ay,double Bx, double By,double Cx, double Cy,double Dx, double Dy,double *X, double *Y) {
+    
+    double  distAB, theCos, theSin, newX, ABpos ;
+    
+    //  Fail if either line segment is zero-length.
+    if ((Ax==Bx && Ay==By) || (Cx==Dx && Cy==Dy)) return NO;
+    
+    //  Fail if the segments share an end-point.
+    if ((Ax==Cx && Ay==Cy) || (Bx==Cx && By==Cy)
+        ||  (Ax==Dx && Ay==Dy) || (Bx==Dx && By==Dy)) {
+        return NO; }
+    
+    //  (1) Translate the system so that point A is on the origin.
+    Bx-=Ax; By-=Ay;
+    Cx-=Ax; Cy-=Ay;
+    Dx-=Ax; Dy-=Ay;
+    
+    //  Discover the length of segment A-B.
+    distAB=sqrt(Bx*Bx+By*By);
+    
+    //  (2) Rotate the system so that point B is on the positive X axis.
+    theCos=Bx/distAB;
+    theSin=By/distAB;
+    newX=Cx*theCos+Cy*theSin;
+    Cy  =Cy*theCos-Cx*theSin; Cx=newX;
+    newX=Dx*theCos+Dy*theSin;
+    Dy  =Dy*theCos-Dx*theSin; Dx=newX;
+    
+    //  Fail if segment C-D doesn't cross line A-B.
+    if ((Cy<0. && Dy<0.) || (Cy>=0. && Dy>=0.)) return NO;
+    
+    //  (3) Discover the position of the intersection point along line A-B.
+    ABpos=Dx+(Cx-Dx)*Dy/(Dy-Cy);
+    
+    //  Fail if segment C-D crosses line A-B outside of segment A-B.
+    if (ABpos<0. || ABpos>distAB) return NO;
+    
+    //  (4) Apply the discovered position to line A-B in the original coordinate system.
+    if (X != NULL) {
+        *X=Ax+ABpos*theCos;
+        *Y=Ay+ABpos*theSin;
+    }
+    //  Success.
+    return YES;
+}
+
 @implementation AROverlayUtil
 
 + (CGFloat)scaleFactorForBounds:(CGRect)bounds withImage:(UIImage *)image
@@ -131,6 +177,31 @@
     transform.m43 = 0;
     transform.m44 = i / i;
     return transform;
+}
+
++ (BOOL)isPoint:(CGPoint)p withinOverlay:(AROverlay*)overlay
+{
+    AROverlayPoint * previous = [[overlay points] lastObject];
+    
+    NSAssert( lineSegmentIntersection(50, 50, 0, 0, 0, 50, 50, 0, NULL, NULL) == 1, @"Crossing lines == 1");
+    NSAssert( lineSegmentIntersection(350,509, 524,514, 416,0, 416,617, NULL, NULL) == 1, @"Crossing lines == 1");
+    NSAssert( lineSegmentIntersection(50, 50, 0, 0, 100, 150, 150, 100, NULL, NULL) == 0, @"Non crossing lines == 0");
+     
+    int intersections = 0;
+
+    for (int ii = 0; ii < [[overlay points] count]; ii++) {
+        AROverlayPoint * current = [[overlay points] objectAtIndex: ii];
+        if (lineSegmentIntersection(current.x, current.y, previous.x, previous.y, p.x, 0, p.x, p.y, NULL, NULL) == YES)
+            intersections ++;
+        
+        previous = current;
+    }
+    
+    if ((intersections & 1) == 1) {
+        return YES;
+    } else {
+        return NO;
+    }
 }
 
 

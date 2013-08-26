@@ -59,7 +59,7 @@ static NSString * const AVCaptureStillImageIsCapturingStillImageContext = @"AVCa
 	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
         session.sessionPreset = AVCaptureSessionPresetHigh;
     } else {
-        session.sessionPreset = AVCaptureSessionPresetPhoto;
+        session.sessionPreset = AVCaptureSessionPresetHigh;
     }
     
     // Select a video device, make an input

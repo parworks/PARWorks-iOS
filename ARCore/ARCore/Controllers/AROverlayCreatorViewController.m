@@ -86,7 +86,6 @@
     [_overlayBuilderView setNeedsDisplay];
     
     _saveButton.enabled = (overlay.points.count == 4) && ([overlay isSaved] == NO);
-    _undoButton.enabled = (overlay.points.count >= 1) && ([overlay isSaved] == NO);
     _deleteButton.enabled = (overlay.points.count >= 1) && ([overlay isSaved] == NO);
 }
 
@@ -95,7 +94,7 @@
 
 - (void)showOverlayDataEditorAnimated:(BOOL)animated
 {
-    AROverlayDataEditorViewController *vc = [[AROverlayDataEditorViewController alloc] initWithOverlay:[_overlayBuilderView currentOverlay]];
+    AROverlayDataEditorViewController *vc = [[AROverlayDataEditorViewController alloc] initWithOverlay:[_overlayBuilderView lastInteractedOverlay]];
     vc.modalTransitionStyle = UIModalTransitionStyleFlipHorizontal;
     [self presentViewController:vc animated:YES completion:nil];
 }
@@ -106,6 +105,12 @@
 - (void)didUpdatePointWithOverlay:(AROverlay *)overlay
 {
     [self update];
+}
+
+- (void)didDoubleTapOverlay:(AROverlay *)overlay
+{
+    if ([overlay processed] == NO)
+        [self showOverlayDataEditorAnimated: YES];
 }
 
 #pragma mark - User Interaction
@@ -144,16 +149,6 @@
     }
 }
 
-- (IBAction)undoTapped:(id)sender
-{
-    AROverlay * overlay = [[_siteImage overlays] lastObject];
-    
-    if ((overlay.points.count > 0) && (![overlay isSaved])) {
-        [overlay.points removeLastObject];
-        [self update];
-    }
-}
-
 - (IBAction)doneTapped:(id)sender
 {
     [self dismissViewControllerAnimated:YES completion:nil];
@@ -165,7 +160,6 @@
 }
 
 - (void)viewDidUnload {
-    [self setUndoButton:nil];
     [self setDeleteButton:nil];
     [super viewDidUnload];
 }

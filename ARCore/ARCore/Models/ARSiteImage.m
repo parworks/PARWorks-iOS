@@ -145,6 +145,12 @@
 - (NSTimeInterval)timestamp
 {
     // Dividing by 1000 since the API returns timestamps in milliseconds.
+    return [[_dict objectForKey: @"width"] floatValue];
+}
+
+- (NSTimeInterval)timestamp
+{
+    // Dividing by 1000 since the API returns timestamps in milliseconds.
     return ([[_dict objectForKey: @"timestamp"] doubleValue]/1000.0);
 }
 

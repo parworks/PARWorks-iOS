@@ -34,6 +34,7 @@
 #define REQ_SITE_OVERLAYS               @"/ar/site/overlay"
 #define REQ_SITE_OVERLAY_ADD            @"/ar/site/overlay/add"
 #define REQ_SITE_OVERLAY_REMOVE         @"/ar/site/overlay/staging/remove"
+#define REQ_SITE_OVERLAY_REPROCESS      @"/ar/site/overlay/staging/add"
 #define REQ_SITE_OVERLAY_REMOVE_STAGING @"/ar/site/overlay/remove"
 #define REQ_SITE_OVERLAY_CLICK          @"/ar/site/overlay/click"
 #define REQ_SITE_PROCESS                @"/ar/site/process"

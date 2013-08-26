@@ -132,50 +132,26 @@
 }
 
 #pragma mark - Point Management
-- (void)addScaledTouchPoint:(CGPoint)p
+
+- (void)beginNewOverlay:(CGPoint)center
 {
-    // Size the point to the original image scale before adding it.
-    [self addScaledTouchPointToOverlay: p];
-    [self setNeedsDisplay];
-}
-
-- (void)addScaledTouchPointToOverlay:(CGPoint)p
-{
-    if (([self currentOverlay] == nil) || ([[self currentOverlay] isSaved])) {
-        [_siteImage.site addOverlay: [[AROverlay alloc] initWithSiteImage: self.siteImage]];
-
-    } else {
-        if (_delegate && [_delegate respondsToSelector:@selector(canAddScaledTouchPoint)]) {
-            if (![_delegate canAddScaledTouchPoint])
-                return;
-        }
-    }
-    CGPoint fullPoint = CGPointMake(p.x/_imageScale, p.y/_imageScale);
-    [[self currentOverlay] addPointWithX:fullPoint.x andY:fullPoint.y];
-
-    if (_delegate && [_delegate respondsToSelector:@selector(didAddScaledTouchPoint:)]) {
-        [_delegate didAddScaledTouchPoint:p];
-    }
-}
-
-- (void)closeCurrentOverlay
-{
-    // Create a new overlay and add it to our points array.
-    AROverlay *overlay = [[AROverlay alloc] initWithSiteImage: self.siteImage];
+    AROverlay * overlay = [[AROverlay alloc] initWithSiteImage: self.siteImage];
+    [overlay addPointWithX:center.x - 10 andY:center.y - 10];
+    [overlay addPointWithX:center.x - 10 andY:center.y + 10];
+    [overlay addPointWithX:center.x + 10 andY:center.y + 10];
+    [overlay addPointWithX:center.x + 10 andY:center.y - 10];
     [_siteImage.site addOverlay: overlay];
-    
     [self setNeedsDisplay];
 }
 
-- (BOOL)isClosingTouchPoint:(CGPoint)p
+- (void)updatePoint:(int)index ofOverlay:(int)oindex to:(CGPoint)point
 {
-    NSArray *scaledPoints = [self scaledPointsForOverlay:[self currentOverlay]];
-    if (scaledPoints.count > 1) {
-        AROverlayPoint *firstPoint = scaledPoints[0];
-        CGRect firstPointRect = CGRectMake(firstPoint.x - 20, firstPoint.y - 20, 40, 40);
-        return CGRectContainsPoint(firstPointRect, p);
-    }
-    return NO;
+    AROverlay * o = [[_siteImage overlays] objectAtIndex: oindex];
+    CGPoint fullPoint = CGPointMake(point.x/_imageScale, point.y/_imageScale);
+    AROverlayPoint * arpoint = [[o points] objectAtIndex: index];
+    arpoint.x = fullPoint.x;
+    arpoint.y = fullPoint.y;
+    [self setNeedsDisplay];
 }
 
 @end

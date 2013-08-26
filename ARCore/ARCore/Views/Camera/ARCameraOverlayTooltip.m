@@ -77,13 +77,13 @@
             fillColor = [UIColor colorWithHexRGBValue:0x1e1e1e];
             break;
         case UIDeviceOrientationLandscapeRight:
-            rotateAngle = -M_PI/2.0f;
-            center = CGPointMake(-_arrow.bounds.size.height/2, self.bounds.size.height/2);
+            rotateAngle = M_PI/2.0f;
+            center = CGPointMake(self.bounds.size.width + _arrow.bounds.size.height/2, self.bounds.size.height/2);
             fillColor = [UIColor colorWithHexRGBValue:0x191919];
             break;
         case UIDeviceOrientationLandscapeLeft:
-            rotateAngle = M_PI/2.0f;
-            center = CGPointMake(self.bounds.size.width + _arrow.bounds.size.height/2, self.bounds.size.height/2);
+            rotateAngle = -M_PI/2.0f;
+            center = CGPointMake(-_arrow.bounds.size.height/2, self.bounds.size.height/2);
             fillColor = [UIColor colorWithHexRGBValue:0x191919];
             break;
         case UIDeviceOrientationPortrait:

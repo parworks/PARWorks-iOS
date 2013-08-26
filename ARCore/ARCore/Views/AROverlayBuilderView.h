@@ -30,6 +30,7 @@
 @protocol ARMagViewDelegate <NSObject>
 @optional
 - (void)didUpdatePointWithOverlay:(AROverlay *)overlay;
+- (void)didDoubleTapOverlay:(AROverlay*)overlay;
 @end
 
 
@@ -37,6 +38,12 @@
 @interface AROverlayBuilderView : UIControl <AROverlayBuilderAnnotationViewDelegate>
 {
     ARSiteImage * _siteImage;
+    
+    int _pointIndex;
+    int _overlayIndex;
+    
+    NSTimeInterval _lastInsideTouchTimestamp;
+    AROverlay * _lastInteractedOverlay;
 }
 
 @property(nonatomic, strong) CachedImageView *imageView;
@@ -50,7 +57,7 @@ float pin(float minValue, float value, float maxValue);
 - (id)initWithFrame:(CGRect)frame;
 - (void)setSiteImage:(ARSiteImage*)siteImage;
 
-- (AROverlay *)currentOverlay;
+- (AROverlay *)lastInteractedOverlay;
 
 @end
 

@@ -680,6 +680,20 @@
     [weak startAsynchronous];
 }
 
+- (void)reprocessReports
+{
+     NSDictionary * args = @{@"site": [self identifier], @"cleanOverlays": @"true"};
+        
+    __weak ASIHTTPRequest * __req = [[ARManager shared] createRequest: REQ_SITE_OVERLAY_REPROCESS withMethod:@"GET" withArguments:args];
+    
+    [__req setCompletionBlock: ^(void) {
+        if ([[ARManager shared] handleResponseErrors: __req]){           
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: self];
+        }
+    }];
+    [__req startAsynchronous];
+}
+
 #pragma mark Accessing Public, Recently Augmented Photos
 
 - (int)recentlyAugmentedImageCount
