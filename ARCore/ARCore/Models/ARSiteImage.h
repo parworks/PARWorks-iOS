@@ -39,6 +39,7 @@ typedef enum {
 
 @property (nonatomic, weak) ARSite * site;
 @property (nonatomic, strong) NSString * siteIdentifier;
+@property (nonatomic, assign) BOOL registered;
 @property (nonatomic, assign) BackendResponse response;
 
 // ========================

@@ -38,6 +38,7 @@ typedef void(^ImageLoadCompletionBlock)(NSArray *images);
 @interface ARSite : NSObject <NSCoding, ARAugmentedPhotoSource>
 {
     ASIHTTPRequest * _imageReq;
+    ASIHTTPRequest * _registeredImageReq;
     ASIHTTPRequest * _augmentedImageReq;
     ASIHTTPRequest * _overlaysReq;
     ASIHTTPRequest * _deleteReq;
@@ -132,12 +133,28 @@ invalidate the overlays or site images that have been downloaded to this site. *
  */
 - (NSMutableArray*)images;
 
+
+/** Convenience method that returns only registered base images. If no images are registered or
+    images have not yet been fetched from the server, this method will begin fetching images
+    and return nil.
+ */
+- (NSMutableArray *)registeredImages;
+
+/** Convenience method that returns only unregistered base images. If all images are registered or
+    images have not yet been fetched from the server, this method will begin fetching images
+    and return nil.
+ */
+- (NSMutableArray *)unregisteredImages;
+
+/** Returns YES if the site images have been fetched and the site has unregistered images. */
+- (BOOL)hasUnregisteredImages;
+
 /**
-  This method begins fetching the images and returns nil. When the images have been downloaded,
-  the ARSite object will send a NOTIF_SITE_UPDATED message, allowing the client to 
-  reload any view that is dependent on this data
-*/
-- (void)fetchImages;
+    This method begins fetching the images and returns nil. When the images have been downloaded,
+    the ARSite object will send a NOTIF_SITE_UPDATED message, allowing the client to
+    reload any view that is dependent on this data.
+ */
+- (void)fetchImagesWithCompletion:(ImageLoadCompletionBlock)completion;
 
 /**
     Returns an array of augmented images for this site. If the images have not yet

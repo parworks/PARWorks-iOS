@@ -34,6 +34,7 @@
     self = [super init];
     if (self) {
         _dict = dict;
+        _registered = NO;
         _response = BackendResponseFinished;
     }
     return self;
@@ -46,6 +47,7 @@
         _dict = [aDecoder decodeObjectForKey: @"dict"];
         self.site = [aDecoder decodeObjectForKey: @"site"];
         self.siteIdentifier = [aDecoder decodeObjectForKey: @"siteIdentifier"];
+        _registered = [aDecoder decodeBoolForKey:@"registered"];
         _response = [aDecoder decodeIntForKey: @"response"];
     }
     return self;
@@ -56,6 +58,7 @@
     [aCoder encodeObject: _dict forKey: @"dict"];
     [aCoder encodeObject: _site forKey: @"site"];
     [aCoder encodeObject: _siteIdentifier forKey: @"siteIdentifier"];
+    [aCoder encodeBool: _registered forKey:@"registered"];
     [aCoder encodeInt:_response forKey: @"response"];
 }
 
@@ -134,7 +137,13 @@
     return _dict[key];
 }
 
-- (NSTimeInterval)timestamp {
+- (float)width
+{
+    return [[_dict objectForKey: @"width"] floatValue];
+}
+
+- (NSTimeInterval)timestamp
+{
     // Dividing by 1000 since the API returns timestamps in milliseconds.
     return ([[_dict objectForKey: @"timestamp"] doubleValue]/1000.0);
 }

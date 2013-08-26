@@ -246,13 +246,48 @@
 - (NSMutableArray*)images
 {
     if (!_images && ![self isFetchingImages] && !_invalid)
-        [self fetchImages];
+        [self fetchImagesWithCompletion:nil];
     return _images;
+}
+
+- (NSMutableArray *)registeredImages
+{
+    NSMutableArray *registered;
+    if ([self images]) {
+        registered = [NSMutableArray array];
+        for (ARSiteImage *img in [self images]) {
+            if (img.registered) {
+                [registered addObject:img];
+            }
+        }
+    }
+    
+    return registered;
+}
+
+- (NSMutableArray *)unregisteredImages
+{
+    NSMutableArray *unregistered;
+    if (self.images) {
+        unregistered = [NSMutableArray array];
+        for (ARSiteImage *img in self.images) {
+            if (!img.registered) {
+                [unregistered addObject:img];
+            }
+        }
+    }
+    
+    return unregistered;
+}
+
+- (BOOL)hasUnregisteredImages
+{
+    return ([self unregisteredImages] && [self unregisteredImages].count > 0);
 }
 
 - (BOOL)isFetchingImages
 {
-    return (_imageReq != nil);
+    return (_imageReq != nil || _registeredImageReq != nil);
 }
 
 - (void)finishedFetchingImages
@@ -260,16 +295,23 @@
     _imageReq = nil;
 }
 
-- (void)fetchImages
+- (void)finishedFetchingRegisteredImages
 {
-    if (_imageReq)
+    _registeredImageReq = nil;
+}
+
+- (void)fetchImagesWithCompletion:(ImageLoadCompletionBlock)completion
+{
+    if (_imageReq || _registeredImageReq)
         return;
     
     NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithObject:self.identifier forKey:@"site"];
     _imageReq = [[ARManager shared] createRequest: REQ_SITE_IMAGE withMethod:@"GET" withArguments: dict];
-
+    _registeredImageReq = [self registeredImagesRequestWithArgs:dict completion:completion];
+    
     ARSite * __weak __site = self;
     ASIHTTPRequest * __weak req = _imageReq;
+    ASIHTTPRequest * __weak registeredReq = _registeredImageReq;
     
     [_imageReq setCompletionBlock: ^(void) {
         NSDictionary * json = [req responseJSON];
@@ -278,6 +320,7 @@
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: __site];
             return;
         }
+        
         // grab all the image dictionaries from the JSON and pull out just the ID
         // of each image—that's all we need.
         __site.images = [NSMutableArray array];
@@ -287,21 +330,68 @@
             [[__site images] addObject: img];
         }
         [__site finishedFetchingImages];
-        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: __site];
+        
+        [registeredReq startAsynchronous];
     }];
     
     [_imageReq setFailedBlock: ^(void) {
         [__site finishedFetchingImages];
+        if (completion) {
+            completion(__site.images);
+        }
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: __site];
     }];
 
+      
     [_imageReq startAsynchronous];
+}
+
+- (ASIHTTPRequest *)registeredImagesRequestWithArgs:(NSDictionary *)args completion:(ImageLoadCompletionBlock)completion
+{
+    ASIHTTPRequest *request = [[ARManager shared] createRequest: REQ_SITE_IMAGE_REGISTERED withMethod:@"GET" withArguments:args];
+
+    typeof(self) __weak __site = self;
+    ASIHTTPRequest * __weak req = request;
+
+    [request setCompletionBlock:^{
+        NSDictionary *json = [req responseJSON];
+        if (![json isKindOfClass:[NSDictionary  class]]) {
+            __site.invalid = YES;
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object:__site];
+            return;
+        }
+        
+        // At this point the images should have already been loaded.
+        NSSet *imageIDs = [NSSet setWithArray:json[@"images"]];
+        for (ARSiteImage *img in __site.images) {
+            img.registered = [imageIDs containsObject:img.identifier];
+        }
+        
+        [__site finishedFetchingRegisteredImages];
+        
+        if (completion) {
+            completion(__site.images);
+        }
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: __site];
+        
+    }];
+    
+    
+    [request setFailedBlock:^{
+        [__site finishedFetchingRegisteredImages];
+        if (completion) {
+            completion(__site.images);
+        }
+        [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: __site];
+    }];
+    
+    return request;
 }
 
 - (void)invalidateImages:(NSNotification*)notif
 {
     if ([[notif object] isEqualToString: _identifier])
-        [self fetchImages];
+        [self fetchImagesWithCompletion:nil];
 }
 
 - (int)imageCount
