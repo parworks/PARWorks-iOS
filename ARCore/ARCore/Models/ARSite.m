@@ -31,6 +31,10 @@
 
 @implementation ARSite
 
++ (BOOL)automaticallyNotifiesObserversForKey:(NSString *)key
+{
+    return ![key isEqualToString:@"status"];
+}
 
 - (id)initWithIdentifier:(NSString*)ident
 {
@@ -161,6 +165,18 @@
 {
     [[NSNotificationCenter defaultCenter] removeObserver: self];
 }
+
+
+#pragma mark - Getters/Setters
+- (void)setStatus:(ARSiteStatus)status
+{
+    if (_status != status) {
+        [self willChangeValueForKey:@"status"];
+        _status = status;
+        [self didChangeValueForKey:@"status"];
+    }
+}
+
 #pragma mark Site Status
 
 - (void)checkStatus
@@ -173,13 +189,18 @@
     [req setCompletionBlock: ^(void) {
         NSDictionary * json = [__req responseJSON];
         if (![json isKindOfClass: [NSDictionary class]]) {
-            _status = ARSiteStatusUnknown;
+            __site.status = ARSiteStatusUnknown;
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: __site];
             return;
         }
         
-        _status = [__site siteStatusForString:[json objectForKey:@"state"]];
-        if (_status == ARSiteStatusProcessing)
+        // Some entities use KVO on the status. Make sure we don't generate excessive calls
+        ARSiteStatus s = [__site siteStatusForString:[json objectForKey:@"state"]];
+        if (__site.status != s) {
+            __site.status = s;
+        }
+
+        if (__site.status == ARSiteStatusProcessing)
             [__site checkStatusIn20Seconds];
         
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: __site];
