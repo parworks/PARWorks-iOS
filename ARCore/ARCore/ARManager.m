@@ -340,9 +340,8 @@ static ARManager * sharedManager;
     ASIHTTPRequest * __weak __req = req;
     [req setCompletionBlock: ^(void) {
         [self handleResponseErrors: __req];
-        
+
         BOOL success = [[[__req responseJSON] objectForKey: @"success"] boolValue];
-        
         if (completionBlock)
             completionBlock(success);
     }];
