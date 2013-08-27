@@ -43,7 +43,6 @@
 /// User Interaction
 - (IBAction)toggleToolbarTapped:(id)sender;
 - (IBAction)deleteOverlayTapped:(id)sender;
-- (IBAction)undoTapped:(id)sender;
 - (IBAction)doneTapped:(id)sender;
 - (IBAction)saveTapped:(id)sender;
 

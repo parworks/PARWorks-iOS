@@ -44,7 +44,6 @@ typedef void(^ImageLoadCompletionBlock)(NSArray *images);
     ASIHTTPRequest * _deleteReq;
     ASIHTTPRequest * _stagingDeleteReq;
     NSArray        * _recentAugmentationOutput;
-    NSDictionary   * _posterImage;
 }
 
 @property (nonatomic, strong) NSString * identifier;
@@ -56,6 +55,7 @@ typedef void(^ImageLoadCompletionBlock)(NSArray *images);
 @property (nonatomic, strong) NSURL * logoURL;
 @property (nonatomic, assign) CLLocationCoordinate2D location;
 @property (nonatomic, assign) long totalAugmentedImages;
+@property (nonatomic, strong) NSDictionary * posterImage;
 @property (nonatomic, assign) float posterImageOriginalWidth;
 
 @property (nonatomic, strong) NSMutableArray * images;
@@ -262,7 +262,7 @@ server again.
 
 
 /** Sets the poster image for the site */
-- (void)setPosterImage:(ARSiteImage*)image;
+- (void)setPosterImageWithImage:(ARSiteImage*)image;
 
 
 // ==================================================

@@ -336,10 +336,12 @@ static ARManager * sharedManager;
         [args setObject:[NSString stringWithFormat: @"%f", [[ARManager shared] deviceLocation].coordinate.longitude] forKey:@"lon"];
     }
 
-    ASIHTTPRequest * req = [self createRequest:REQ_SITE_ADD withMethod:@"PUT" withArguments: args];
+    ASIHTTPRequest * req = [self createRequest:REQ_SITE_ADD withMethod:@"POST" withArguments: args];
     ASIHTTPRequest * __weak __req = req;
     [req setCompletionBlock: ^(void) {
-        BOOL success = [self handleResponseErrors: __req];
+        [self handleResponseErrors: __req];
+
+        BOOL success = [[[__req responseJSON] objectForKey: @"success"] boolValue];
         if (completionBlock)
             completionBlock(success);
     }];

@@ -150,7 +150,7 @@
   @param completionBlock A block to call when the server response has been received.
   
 */
-- (void)addSite:(NSString*)identifier withName:(NSString*)identifier withCompletionBlock:(void (^)(BOOL success))completionBlock;
+- (void)addSite:(NSString*)identifier withName:(NSString*)name withCompletionBlock:(void (^)(BOOL success))completionBlock;
 
 
 /** Removes a site to your account on the server with the given identifier.

@@ -214,6 +214,7 @@ float pin( float minValue, float value, float maxValue )
                 if ([NSDate timeIntervalSinceReferenceDate] - _lastInsideTouchTimestamp > 1.0)
                     _lastInsideTouchTimestamp = [NSDate timeIntervalSinceReferenceDate];
                 else {
+                    _lastInteractedOverlay = o;
                     [_delegate didDoubleTapOverlay: o];
                 }
             }
