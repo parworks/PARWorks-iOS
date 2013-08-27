@@ -73,7 +73,9 @@
             NSString * url = [dict objectForKey:@"posterImageUrl"];
             _posterImage = [NSDictionary dictionaryWithObject:url forKey:@"imgContentPath"];
         }
-        [self checkStatusIn20Seconds];
+        
+        if ((self.status == ARSiteStatusUnknown) || (self.status == ARSiteStatusProcessing))
+            [self checkStatusIn20Seconds];
     }
     return self;
 }
