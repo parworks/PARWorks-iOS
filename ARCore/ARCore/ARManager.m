@@ -325,7 +325,7 @@ static ARManager * sharedManager;
 #pragma mark -
 #pragma mark Managing and Finding Sites
 
-- (void)addSite:(NSString*)identifier withName:(NSString*)name withCompletionBlock:(void (^)(void))completionBlock
+- (void)addSite:(NSString*)identifier withName:(NSString*)name withCompletionBlock:(void (^)(BOOL success))completionBlock
 {
     NSMutableDictionary * args = [NSMutableDictionary dictionaryWithCapacity: 2];
     [args setObject:identifier forKey:@"id"];
@@ -336,12 +336,15 @@ static ARManager * sharedManager;
         [args setObject:[NSString stringWithFormat: @"%f", [[ARManager shared] deviceLocation].coordinate.longitude] forKey:@"lon"];
     }
 
-    ASIHTTPRequest * req = [self createRequest:REQ_SITE_ADD withMethod:@"PUT" withArguments: args];
+    ASIHTTPRequest * req = [self createRequest:REQ_SITE_ADD withMethod:@"POST" withArguments: args];
     ASIHTTPRequest * __weak __req = req;
     [req setCompletionBlock: ^(void) {
         [self handleResponseErrors: __req];
+        
+        BOOL success = [[[__req responseJSON] objectForKey: @"success"] boolValue];
+        
         if (completionBlock)
-            completionBlock();
+            completionBlock(success);
     }];
     [req startAsynchronous];
 }

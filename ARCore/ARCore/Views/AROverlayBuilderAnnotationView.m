@@ -136,10 +136,10 @@
 - (void)beginNewOverlay:(CGPoint)center
 {
     AROverlay * overlay = [[AROverlay alloc] initWithSiteImage: self.siteImage];
-    [overlay addPointWithX:center.x - 10 andY:center.y - 10];
-    [overlay addPointWithX:center.x - 10 andY:center.y + 10];
-    [overlay addPointWithX:center.x + 10 andY:center.y + 10];
-    [overlay addPointWithX:center.x + 10 andY:center.y - 10];
+    [overlay addPointWithX:center.x - 30 andY:center.y - 30];
+    [overlay addPointWithX:center.x - 30 andY:center.y + 30];
+    [overlay addPointWithX:center.x + 30 andY:center.y + 30];
+    [overlay addPointWithX:center.x + 30 andY:center.y - 30];
     [_siteImage.site addOverlay: overlay];
     [self setNeedsDisplay];
 }

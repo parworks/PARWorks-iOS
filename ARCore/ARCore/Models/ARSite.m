@@ -514,7 +514,14 @@
 
 - (void)deleteOverlay:(AROverlay*)ar
 {
+    // delete any overlay that is exactly equal to ar, or any overlay
+    // that has the same ID (in case the _overlays list has been reloaded
+    // and this particular instance of the object is not in the array.)
     [_overlays removeObject: ar];
+    for (int ii = [_overlays count] - 1; ii>=0;ii--) {
+        if ([[[_overlays objectAtIndex: ii] ID] isEqualToString: [ar ID]])
+            [_overlays removeObjectAtIndex: ii];
+    }
     
     if ([ar isSaved]) {
         NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithObject:self.identifier forKey:@"site"];
