@@ -101,6 +101,7 @@
     _siteDescription = site.siteDescription;
     _summaryOverlayCount = site.summaryOverlayCount;
     _summaryImageCount = site.summaryImageCount;
+    _posterImage = site.posterImage;
 }
 
 - (void)encodeWithCoder:(NSCoder *)aCoder
@@ -638,7 +639,7 @@
     return a;
 }
 
-- (void)setPosterImage:(ARSiteImage*)image
+- (void)setPosterImageWithImage:(ARSiteImage*)image
 {
     NSDictionary * dict = @{@"site": self.identifier, @"imageId": image.identifier};
     __weak ASIHTTPRequest * weak = [[ARManager shared] createRequest: REQ_SITE_POSTER withMethod:@"GET" withArguments: dict];
