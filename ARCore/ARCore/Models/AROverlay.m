@@ -53,17 +53,17 @@
         self.ID = dict[@"id"];
         
         NSData * descriptionData = [dict[@"description"] dataUsingEncoding: NSUTF8StringEncoding];
+        if (descriptionData == nil)
+            descriptionData = [dict[@"content"] dataUsingEncoding: NSUTF8StringEncoding];
+
         NSDictionary * description = nil;
-        
         if (descriptionData)
             description = [NSJSONSerialization JSONObjectWithData:descriptionData options:NSJSONReadingAllowFragments error:nil];
         else
             description = dict;
-        
-        
+
         self.siteImageIdentifier = dict[@"imageId"];
         self.name = dict[@"name"];
-        
         self.accuracy = dict[@"accuracy"];
         
         self.title = [description objectForKey:@"title" or: nil];
