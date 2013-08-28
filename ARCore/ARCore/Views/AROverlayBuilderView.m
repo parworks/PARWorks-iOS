@@ -198,7 +198,7 @@ float pin( float minValue, float value, float maxValue )
             AROverlayPoint * point = [[overlay points] objectAtIndex: ii];
             float dist = sqrtf(powf(point.x - pScaled.x, 2) + powf(point.y - pScaled.y, 2));
             
-            if ((dist < pointDist) && (dist < 44)) {
+            if ((dist < pointDist) && (dist < 55)) {
                 _pointIndex = ii;
                 _overlayIndex = x;
                 pointDist = dist;
