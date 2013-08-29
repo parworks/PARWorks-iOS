@@ -66,6 +66,8 @@
         self.name = dict[@"name"];
         self.accuracy = dict[@"accuracy"];
         
+        self.processed = [dict[@"state"] isEqualToString: @"PROCESSED"];
+        
         self.title = [description objectForKey:@"title" or: nil];
         [self setBoundaryPropertiesWithDictionary:description[@"boundary"]];
         [self setContentPropertiesWithDictionary:description[@"content"]];
