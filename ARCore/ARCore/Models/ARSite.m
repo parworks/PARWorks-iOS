@@ -682,8 +682,8 @@
     NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithObject:self.identifier forKey:@"site"];
     
     if ([[ARManager shared] addOverlaysToStagingArea]) {
-//        [dict setObject:@"true" forKey:@"processStaging"];
-//        [dict setObject:@"true" forKey:@"cleanOverlays"];
+        [dict setObject:@"true" forKey:@"processStaging"];
+        [dict setObject:@"true" forKey:@"cleanOverlays"];
         [dict setObject:@"indoor" forKey:@"profile"];
     }
     __weak ASIHTTPRequest * weak = [[ARManager shared] createRequest: REQ_SITE_PROCESS withMethod:@"GET" withArguments: dict];
