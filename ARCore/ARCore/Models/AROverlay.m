@@ -35,20 +35,30 @@
 
 #pragma mark - Lifecycle
 
-- (id)initWithSiteImage:(ARSiteImage *)s
+- (id)init
 {
     self = [super init];
     if (self) {
+        self.points = [NSMutableArray array];
+        self.coverTransparency = 40;
+
+    }
+    return self;
+}
+
+- (id)initWithSiteImage:(ARSiteImage *)s
+{
+    self = [self init];
+    if (self) {
         [self setSite: [s site]];
         [self setSiteImageIdentifier: s.identifier];
-        self.points = [NSMutableArray array];
     }
     return self;
 }
 
 - (id)initWithDictionary:(NSDictionary*)dict
 {
-    self = [super init];
+    self = [self init];
     if (self) {
         self.ID = dict[@"id"];
         
@@ -195,12 +205,29 @@
     [dict setObject:_site.identifier forKey:@"site"];
     
     // IMPORTANT! THIS SHIT DOESN'T LOOK AT THE OVERLAY PROPERTIES!
-    if (!_title)
-        _title = @"";
-    
-    NSDictionary * description = @{@"title":_title,@"boundary":@{@"color":@"GRAY",@"type":@"SOLID"},@"content":@{@"type":@"URL",@"size":@"large",@"provider":_contentProvider},@"cover":@{@"type":@"regular",@"color":@"green",@"transparency":@(40),@"provider":@"",@"showPulse":@"true",@"offset":@"0,0"}};
+
+    NSDictionary * description = @{
+       @"title": (_title ? _title : @""),
+       @"boundary": @{
+               @"color":@"GRAY",
+               @"type":@[@"HIDE",@"DASHED",@"SOLID"][self.boundaryType]
+               },
+       @"content":@{
+               @"type":@[@"URL",@"VIDEO",@"IMAGE", @"AUDIO", @"TEXT"][self.contentType],
+               @"size":@[@"SMALL",@"MEDIUM",@"LARGE", @"LARGE_LEFT", @"FULL_SCREEN", @"FULL_SCREEN"][self.contentSize],
+               @"provider":_contentProvider
+               },
+        @"cover":@{
+               @"type":@[@"HIDDEN",@"IMAGE",@"CENTROID", @"REGULAR"][self.coverType],
+               @"color":@"green",
+               @"transparency":@(self.coverTransparency),
+               @"provider": ( self.coverProvider ? self.coverProvider : @""),
+               @"showPulse":@"true",
+               @"offset":[NSString stringWithFormat: @"%d,%d", (int)_centroidOffset.width, (int)_centroidOffset.height]
+               }
+        };
+
     [dict setObject:description forKey:@"content"];
-    
     NSMutableArray * strings = [NSMutableArray array];
     for (AROverlayPoint *p in _points)
         [strings addObject: [NSString stringWithFormat:@"%d,%d", (int)p.x, (int)p.y]];
