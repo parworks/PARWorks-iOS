@@ -99,6 +99,11 @@
     [self presentViewController:vc animated:YES completion:nil];
 }
 
+- (void)showOverlayViewAnimated:(BOOL)animated withOverlay:(AROverlay*)overlay
+{
+    NSLog(@"AROverlayCreatorViewController - showOverlayViewAnimated. Unimplemented. Override this method.");
+}
+
 
 #pragma mark - ARMagViewDelegate
 
@@ -109,8 +114,11 @@
 
 - (void)didDoubleTapOverlay:(AROverlay *)overlay
 {
-    if ([overlay processed] == NO)
+    if ([overlay processed] == NO) {
         [self showOverlayDataEditorAnimated: YES];
+    } else {
+        [self showOverlayViewAnimated: YES withOverlay:overlay];
+    }
 }
 
 #pragma mark - User Interaction
