@@ -73,8 +73,8 @@
 
         [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(invalidateImages:) name:NOTIF_UPLOAD_COMPLETED_IN_SITE object:nil];
 
-        if ([[dict objectForKey:@"posterImageUrl"] isKindOfClass: [NSString class]]) {
-            NSString * url = [dict objectForKey:@"posterImageUrl"];
+        if ([[dict objectForKey:@"posterImageURL"] isKindOfClass: [NSString class]]) {
+            NSString * url = [dict objectForKey:@"posterImageURL"];
             _posterImage = [NSDictionary dictionaryWithObject:url forKey:@"imgContentPath"];
         }
         
@@ -157,8 +157,8 @@
     if (_posterImage == nil)
         _posterImage = [_recentAugmentationOutput lastObject];
     
-    if ((_posterImage == nil) && ([dict objectForKey:@"posterImageUrl"]))
-        _posterImage = [NSDictionary dictionaryWithObject:[dict objectForKey:@"posterImageUrl"] forKey:@"imgContentPath"];
+    if ((_posterImage == nil) && ([dict objectForKey:@"posterImageURL"]))
+        _posterImage = [NSDictionary dictionaryWithObject:[dict objectForKey:@"posterImageURL"] forKey:@"imgContentPath"];
 }
 
 - (void)dealloc
