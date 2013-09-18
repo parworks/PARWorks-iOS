@@ -71,14 +71,13 @@ float pin( float minValue, float value, float maxValue )
     __weak AROverlayBuilderView * _self = self;
     _imageView.loadCompletionBlock = ^(UIImage *image) {
         [_self setNeedsLayout];
+        _annotationView = [[AROverlayBuilderAnnotationView alloc] initWithFrame:self.bounds andSiteImage:_siteImage backingImageView:_imageView];
+        _annotationView.userInteractionEnabled = NO;
+        _annotationView.backgroundColor = [UIColor clearColor];
+        _annotationView.delegate = self;
+        [self addSubview:_annotationView];
     };
     [self addSubview:_imageView];
-    
-    _annotationView = [[AROverlayBuilderAnnotationView alloc] initWithFrame:self.bounds andSiteImage:_siteImage backingImageView:_imageView];
-    _annotationView.userInteractionEnabled = NO;
-    _annotationView.backgroundColor = [UIColor clearColor];
-    _annotationView.delegate = self;
-    [self addSubview:_annotationView];
     
     self.lensView = [[ARMagnifiedLensView alloc] initWithFrame:CGRectMake(0, 0, 100, 100) zoomableImageView:_imageView];
     [self addSubview:_lensView];
