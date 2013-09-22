@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		420BE00D17EEF05200F89E46 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0EC45931734B962006D9DB9 /* AVFoundation.framework */; };
 		A03C980D17B2038700196729 /* ARAugmentedImage.m in Sources */ = {isa = PBXBuildFile; fileRef = A03C980C17B2038700196729 /* ARAugmentedImage.m */; };
 		A057A61217244FD500662670 /* bubble.png in Resources */ = {isa = PBXBuildFile; fileRef = A09A89DB17230A6A000D9AF7 /* bubble.png */; };
 		A057A61317244FD500662670 /* cow.ply in Resources */ = {isa = PBXBuildFile; fileRef = A09A8A0D17230A6A000D9AF7 /* cow.ply */; };
@@ -168,7 +169,6 @@
 		A0EC458C1734B8BF006D9DB9 /* CoreImage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0EC458B1734B8BF006D9DB9 /* CoreImage.framework */; };
 		A0EC45901734B955006D9DB9 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0EC458F1734B955006D9DB9 /* CoreMedia.framework */; };
 		A0EC45941734B962006D9DB9 /* CoreVideo.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0EC45911734B962006D9DB9 /* CoreVideo.framework */; };
-		A0EC45961734B962006D9DB9 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0EC45931734B962006D9DB9 /* AVFoundation.framework */; };
 		A0EC45991734BA57006D9DB9 /* CoreFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A057A66E1724595E00662670 /* CoreFoundation.framework */; };
 		D140791D17A1F39E000A4BD3 /* NSString+UrlEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = D140791C17A1F39E000A4BD3 /* NSString+UrlEncoding.m */; };
 		D14C0CD517B42870005EA6FA /* ARMultisiteAugmentedPhotoNoPolling.m in Sources */ = {isa = PBXBuildFile; fileRef = D14C0CD417B42870005EA6FA /* ARMultisiteAugmentedPhotoNoPolling.m */; };
@@ -469,7 +469,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				A0EC45961734B962006D9DB9 /* AVFoundation.framework in Frameworks */,
+				420BE00D17EEF05200F89E46 /* AVFoundation.framework in Frameworks */,
 				A0EC45901734B955006D9DB9 /* CoreMedia.framework in Frameworks */,
 				A0EC458C1734B8BF006D9DB9 /* CoreImage.framework in Frameworks */,
 				A0EC45881734B7E1006D9DB9 /* AssetsLibrary.framework in Frameworks */,
@@ -482,7 +482,6 @@
 				A09A8AB017230A99000D9AF7 /* QuartzCore.framework in Frameworks */,
 				A09A89CD1723094A000D9AF7 /* Foundation.framework in Frameworks */,
 				A0EC45941734B962006D9DB9 /* CoreVideo.framework in Frameworks */,
-				A0EC45961734B962006D9DB9 /* AVFoundation.framework in Frameworks */,
 				A0EC45991734BA57006D9DB9 /* CoreFoundation.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1014,7 +1013,7 @@
 		A09A89C11723094A000D9AF7 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 0460;
+				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = PARWorks;
 			};
 			buildConfigurationList = A09A89C41723094A000D9AF7 /* Build configuration list for PBXProject "ARCore" */;
@@ -1336,6 +1335,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DSTROOT = /tmp/ARCore.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_DIR)/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ARCore/ARCore-Prefix.pch";
 				LIBRARY_SEARCH_PATHS = (
@@ -1353,6 +1356,10 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				DSTROOT = /tmp/ARCore.dst;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(DEVELOPER_DIR)/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "ARCore/ARCore-Prefix.pch";
 				LIBRARY_SEARCH_PATHS = (
