@@ -512,7 +512,11 @@ static ARManager * sharedManager;
     id json = [req responseJSON];
     if (([req responseStatusCode] != 200) || ([json isKindOfClass: [NSError class]]) ||
         ([json isKindOfClass: [NSDictionary class]] && [json objectForKey: @"reason"])) {
-        [self criticalRequestFailed: req];
+        if([req responseStatusCode] == 403) {
+            [self displayErrorWithMessage:@"Permission Denied"];
+        } else {
+            [self criticalRequestFailed: req];
+        }
         return NO;
     }
     return YES;
@@ -529,7 +533,12 @@ static ARManager * sharedManager;
         msg = [json objectForKey: @"reason"];
     else
         msg = @"The PAR Works server could not be reached. Make sure you have an internet connection and try again.";
+    
+    [self displayErrorWithMessage:msg];
+}
 
+- (void)displayErrorWithMessage:(NSString*)msg
+{
     if ((!_lastConnectionAlertDate) || ([[NSDate new] timeIntervalSinceDate: _lastConnectionAlertDate] > 15)) {
         dispatch_async(dispatch_get_main_queue(), ^{
             [[[UIAlertView alloc] initWithTitle:@"Connection Error" message:msg delegate:nil cancelButtonTitle:@"OK" otherButtonTitles:nil] show];
@@ -540,6 +549,7 @@ static ARManager * sharedManager;
         // every 15 seconds is enough for them to get the idea.
     }
 }
+
 
 #pragma mark -
 #pragma mark Convenience Functions for Networking
