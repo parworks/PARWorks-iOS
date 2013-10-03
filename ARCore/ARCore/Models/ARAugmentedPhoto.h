@@ -40,6 +40,7 @@ typedef void(^ARProcessingCompletionBlock)(ARAugmentedPhoto *augmentedPhoto);
 @property (nonatomic, strong) NSMutableArray * overlays;
 @property (nonatomic, strong) NSString * imageIdentifier;
 @property (nonatomic, strong) UIImage * image;
+@property (nonatomic, strong) NSDictionary *imageMetadata;
 @property (nonatomic, assign) BackendResponse response;
 @property (nonatomic, copy) ARProcessingCompletionBlock processingCompletionBlock;
 

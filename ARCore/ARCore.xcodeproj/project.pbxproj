@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		420BE00D17EEF05200F89E46 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A0EC45931734B962006D9DB9 /* AVFoundation.framework */; };
+		4272F92817FD3E80000AA819 /* NSMutableDictionary+ImageMetadata.m in Sources */ = {isa = PBXBuildFile; fileRef = 4272F92717FD3E80000AA819 /* NSMutableDictionary+ImageMetadata.m */; };
 		A03C980D17B2038700196729 /* ARAugmentedImage.m in Sources */ = {isa = PBXBuildFile; fileRef = A03C980C17B2038700196729 /* ARAugmentedImage.m */; };
 		A057A61217244FD500662670 /* bubble.png in Resources */ = {isa = PBXBuildFile; fileRef = A09A89DB17230A6A000D9AF7 /* bubble.png */; };
 		A057A61317244FD500662670 /* cow.ply in Resources */ = {isa = PBXBuildFile; fileRef = A09A8A0D17230A6A000D9AF7 /* cow.ply */; };
@@ -197,6 +198,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4272F92617FD3E80000AA819 /* NSMutableDictionary+ImageMetadata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableDictionary+ImageMetadata.h"; sourceTree = "<group>"; };
+		4272F92717FD3E80000AA819 /* NSMutableDictionary+ImageMetadata.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableDictionary+ImageMetadata.m"; sourceTree = "<group>"; };
 		A03C980B17B2038600196729 /* ARAugmentedImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARAugmentedImage.h; sourceTree = "<group>"; };
 		A03C980C17B2038700196729 /* ARAugmentedImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARAugmentedImage.m; sourceTree = "<group>"; };
 		A057A60117244FAB00662670 /* ARCore.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ARCore.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -806,6 +809,8 @@
 		A09A8A6F17230A6B000D9AF7 /* Categories */ = {
 			isa = PBXGroup;
 			children = (
+				4272F92617FD3E80000AA819 /* NSMutableDictionary+ImageMetadata.h */,
+				4272F92717FD3E80000AA819 /* NSMutableDictionary+ImageMetadata.m */,
 				A09A8A7017230A6B000D9AF7 /* AROverlayView+Animations.h */,
 				A09A8A7117230A6B000D9AF7 /* AROverlayView+Animations.m */,
 				A09A8A7217230A6B000D9AF7 /* ASIHTTPRequest+JSONAdditions.h */,
@@ -1190,6 +1195,7 @@
 				A09A8B0317230B06000D9AF7 /* NSObject+SBJSON.m in Sources */,
 				A09A8B0417230B06000D9AF7 /* NSString+SBJSON.m in Sources */,
 				A09A8B0517230B06000D9AF7 /* SBJSON.m in Sources */,
+				4272F92817FD3E80000AA819 /* NSMutableDictionary+ImageMetadata.m in Sources */,
 				A03C980D17B2038700196729 /* ARAugmentedImage.m in Sources */,
 				A09A8B0617230B06000D9AF7 /* SBJsonBase.m in Sources */,
 				A09A8B0717230B06000D9AF7 /* SBJsonParser.m in Sources */,

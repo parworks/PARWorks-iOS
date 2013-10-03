@@ -165,10 +165,14 @@
     if ((_site == nil) && ([[ARManager shared] locationEnabled] == NO))
         @throw [NSException exceptionWithName: @"ProcessException" reason: @"You cannot process an image without specifying a site or enabling location services in the ARManager." userInfo: nil];
 
-    _image = [[ARManager shared] rotateImage:_image byOrientationFlag:_image.imageOrientation];
+    NSDictionary *propDict = [_image.CIImage properties];
+    NSLog(@"Final properties %@", propDict);
 
-    [self addEXIFDataToImage];
-   
+    _image = [[ARManager shared] rotateImage:_image byOrientationFlag:_image.imageOrientation];
+    
+   NSURL *docsURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
+   NSURL *outputURL = [docsURL URLByAppendingPathComponent:@"imageWithEXIFData.jpg"];
+    
     ASIFormDataRequest * req = [self requestForProcessing];
     ASIFormDataRequest * __weak __req = req;
     
@@ -178,7 +182,10 @@
     if ([[NSUserDefaults standardUserDefaults] floatForKey:@"jpegQuality"])
         jpegQuality = [[NSUserDefaults standardUserDefaults] floatForKey:@"jpegQuality"];
     
-    [req setData:UIImageJPEGRepresentation(_image, jpegQuality) forKey:@"image"];
+    NSData *imageData = [NSData dataWithContentsOfURL:outputURL];
+    
+    
+    [req setData:imageData forKey:@"image"];
     [req setShowAccurateProgress: YES];
     [req setFailedBlock: ^(void) {
         _response = BackendResponseFailed;
@@ -213,8 +220,8 @@
     [req startAsynchronous];
 }
 
-- (void)addEXIFDataToImage{
-    NSData *jpeg = UIImageJPEGRepresentation(_image, 0.0);
+- (UIImage*)addEXIFDataToImage:(UIImage*)image{
+    NSData *jpeg = UIImageJPEGRepresentation(image, 0.0);
 
     CGImageSourceRef source;
     source = CGImageSourceCreateWithData((__bridge CFDataRef)jpeg, NULL);
@@ -242,6 +249,36 @@
     
     //add our modified EXIF data back into the image’s metadata
     [metadataAsMutable setObject:EXIFDictionary forKey:(NSString *)kCGImagePropertyExifDictionary];
+    
+      CFStringRef UTI = CGImageSourceGetType(source); //this is the type of image (e.g., public.jpeg)
+
+    //this will be the data CGImageDestinationRef will write into
+    NSMutableData *dest_data = [NSMutableData data];
+
+    CGImageDestinationRef destination = CGImageDestinationCreateWithData((__bridge CFMutableDataRef)dest_data,UTI,1,NULL);
+
+    if(!destination) {
+        NSLog(@"***Could not create image destination ***");
+    }
+
+    //add the image contained in the image source to the destination, overidding the old metadata with our modified metadata
+    CGImageDestinationAddImageFromSource(destination,source,0, (__bridge CFDictionaryRef) metadataAsMutable);
+
+    //tell the destination to write the image data and metadata into our data object.
+    //It will return false if something goes wrong
+    BOOL success = NO;
+    success = CGImageDestinationFinalize(destination);
+
+    if(!success) {
+        NSLog(@"***Could not create data from image destination ***");
+    }
+
+    //cleanup
+
+    CFRelease(destination);
+    CFRelease(source);
+
+    return [UIImage imageWithData:dest_data];
 }
 
 - (NSDictionary *)getGPSDictionaryForLocation:(CLLocation *)location {
