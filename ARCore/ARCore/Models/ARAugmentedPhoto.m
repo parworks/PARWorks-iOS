@@ -243,7 +243,7 @@
     }
 
     //Setup GPS dict
-    if ([[ARManager shared] locationEnabled]) {
+    if ([[ARManager shared] locationEnabled] && [CLLocationManager locationServicesEnabled] && ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized)) {
         [metadataAsMutable setObject:[self getGPSDictionaryForLocation:[[ARManager shared] deviceLocation]] forKey:(NSString *)kCGImagePropertyGPSDictionary];
     }
     
