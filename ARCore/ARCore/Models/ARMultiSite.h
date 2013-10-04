@@ -15,7 +15,7 @@
 @property NSArray * siteIdentifiers;
 
 - (id)initWithSiteIdentifiers:(NSArray*)identifiers;
-- (ARAugmentedPhoto*)augmentImage:(UIImage *)image;
+- (ARAugmentedPhoto*)augmentImage:(UIImage *)image withMetadata:(NSDictionary*)metadata;
 - (ARAugmentedPhoto*)changeDetectImage:(UIImage*)image;
 
 @end

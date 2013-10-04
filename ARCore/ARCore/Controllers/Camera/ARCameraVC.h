@@ -12,7 +12,7 @@
 
 @class ARCameraVC;
 
-typedef void(^ARCameraVCPhotoTakenBlock)(UIImage *image, NSError *error);
+typedef void(^ARCameraVCPhotoTakenBlock)(UIImage *image, NSDictionary *metadata, NSError *error);
 
 /** TODO: Implement this...
 @protocol ARCameraVCDelegate <NSObject>

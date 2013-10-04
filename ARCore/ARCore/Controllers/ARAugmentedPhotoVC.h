@@ -18,6 +18,7 @@
     ARAugmentedView  *_augmentedView;
     
     UIImage *_imageToAugment;
+    NSDictionary *_imageMetadataToAugment;
     id _waitingImageContents;
 
     UITapGestureRecognizer  *_tap;
@@ -34,7 +35,7 @@
 
 
 /// Lifecycle
-- (id)initWithSite:(id<ARAugmentedPhotoSource>)site imageToAugment:(UIImage *)image waitingImageContents:(id)contents;
+- (id)initWithSite:(id<ARAugmentedPhotoSource>)site imageToAugment:(UIImage *)image metadataToAugment:(NSDictionary*)metadata waitingImageContents:(id)contents;
 
 - (BOOL)imageNeedsAugmentation;
 

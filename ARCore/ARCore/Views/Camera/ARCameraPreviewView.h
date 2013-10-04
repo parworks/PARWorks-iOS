@@ -14,7 +14,7 @@
 
 @optional
 - (void)capturingStateDidChange:(BOOL)isCapturing;
-- (void)didCaptureImageWithImage:(UIImage *)image error:(NSError *)error;
+- (void)didCaptureImageWithImage:(UIImage *)image metadata:(NSDictionary*)metadata error:(NSError *)error;
 
 // In case the owning view controller needs to explicitly tell the preview view the orientation for the
 // image capture.

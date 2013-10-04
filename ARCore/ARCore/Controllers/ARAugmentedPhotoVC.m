@@ -21,13 +21,14 @@
 
 
 #pragma mark - Lifecycle
-- (id)initWithSite:(id<ARAugmentedPhotoSource>)site imageToAugment:(UIImage *)image waitingImageContents:(id)contents
+- (id)initWithSite:(id<ARAugmentedPhotoSource>)site imageToAugment:(UIImage *)image metadataToAugment:(NSDictionary*)metadata waitingImageContents:(id)contents
 {
     self = [super initWithNibName:nil bundle:[NSBundle arCoreResourcesBundle]];
     if (self) {
         _isFirstLoad = YES;
         _site = site;
         _imageToAugment = image;
+        _imageMetadataToAugment = metadata;
         _waitingImageContents = contents;
         NSLog(@"Showing image with size %@", NSStringFromCGSize(image.size));
     }
@@ -78,7 +79,7 @@
     _backButton.frame = CGRectMake(15, 10, 60, 30);
     
     if ([self imageNeedsAugmentation]) {
-        [self setAugmentedPhoto:[_site augmentImage:_imageToAugment]];
+        [self setAugmentedPhoto:[_site augmentImage:_imageToAugment withMetadata:_imageMetadataToAugment]];
     }
 
     [self showAugmentingInterface];

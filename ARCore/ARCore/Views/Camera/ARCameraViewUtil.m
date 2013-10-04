@@ -304,36 +304,13 @@ UIImage *scaleAndRotateImage(UIImage *image, UIImageOrientation orientation)
     UIImage *incorrectImage = [UIImage imageWithData:jpegData];
     id value = CFDictionaryGetValue(attachments, (__bridge CFStringRef)@"Orientation");
     
-    
-   NSURL *docsURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
-   NSURL *outputURL = [docsURL URLByAppendingPathComponent:@"imageWithEXIFData.jpg"];
-   NSMutableDictionary * metadata = [NSMutableDictionary dictionary];
-
-   [metadata setUserComment: @"My metadata has been saved."];
-    
     UIImage *correctImage = scaleAndRotateImage(incorrectImage, [[self class] orientationForExifOrientation:[value integerValue]]);
     
-     // Create an image destination.
-   CGImageDestinationRef imageDestination = CGImageDestinationCreateWithURL((__bridge CFURLRef)outputURL, kUTTypeJPEG , 1, NULL);
-   CGImageDestinationAddImage(imageDestination, correctImage.CGImage, (__bridge CFDictionaryRef)metadata);
-   if (CGImageDestinationFinalize(imageDestination) == NO) {
-       NSLog(@"Error -> failed to finalize the image.");
-   }
-   CFRelease(imageDestination);
-    
-    correctImage = [UIImage imageWithData:[NSData dataWithContentsOfURL:outputURL]];
-    
-    NSDictionary *propDict = [correctImage.CIImage properties];
-    NSLog(@"Final properties %@", propDict);
-    
-//    CGImageSourceRef imgSource1 = CGImageSourceCreateWithData((__bridge_retained CFDataRef)newImageData, NULL);
-//    
-//    //get all the metadata in the image
-//    NSDictionary *metadata1 = (__bridge NSDictionary *)CGImageSourceCopyPropertiesAtIndex(imgSource1, 0, NULL);
-
+    NSMutableDictionary * metadata = [NSMutableDictionary dictionaryWithDictionary:(__bridge NSDictionary *)(attachments)];
+   [metadata setImageOrientation:correctImage.imageOrientation];
     
     if (complete)
-        complete(correctImage, NULL);
+        complete(correctImage, metadata, NULL);
     if (attachments)
         CFRelease(attachments);
 }
@@ -367,148 +344,6 @@ UIImage *scaleAndRotateImage(UIImage *image, UIImageOrientation orientation)
             break;
     }
     return orientation;
-}
-
-+ (UIImage*)addEXIFDataToImage:(UIImage*)image withAdditionalEXIF:(NSDictionary*)properties{
-    NSData *imageNSData = UIImageJPEGRepresentation(image, 0.0);
-    
-    CGImageSourceRef imgSource = CGImageSourceCreateWithData((__bridge_retained CFDataRef)imageNSData, NULL);
-    
-    //get all the metadata in the image
-    NSDictionary *metadata = (__bridge NSDictionary *)CGImageSourceCopyPropertiesAtIndex(imgSource, 0, NULL);
-    
-    //make the metadata dictionary mutable so we can add properties to it
-    NSMutableDictionary *metadataAsMutable = [metadata mutableCopy];
-    
-    NSMutableDictionary *EXIFDictionary = [[metadataAsMutable objectForKey:(NSString *)kCGImagePropertyExifDictionary]mutableCopy];
-    NSMutableDictionary *GPSDictionary = [[metadataAsMutable objectForKey:(NSString *)kCGImagePropertyGPSDictionary]mutableCopy];
-    NSMutableDictionary *RAWDictionary = [[metadataAsMutable objectForKey:(NSString *)kCGImagePropertyRawDictionary]mutableCopy];
-    
-    if(!EXIFDictionary)
-        EXIFDictionary = [[NSMutableDictionary dictionary] init];
-    
-    if(!GPSDictionary)
-        GPSDictionary = [[NSMutableDictionary dictionary] init];
-    
-    if(!RAWDictionary)
-        RAWDictionary = [[NSMutableDictionary dictionary] init];
-    
-    //Setup GPS dict
-    if ([[ARManager shared] locationEnabled]) {
-        [metadataAsMutable setObject:[self getGPSDictionaryForLocation:[[ARManager shared] deviceLocation]] forKey:(NSString *)kCGImagePropertyGPSDictionary];
-    }
-    
-    NSLog(@"%@", properties);
-    EXIFDictionary = [NSMutableDictionary dictionaryWithDictionary: [properties objectForKey:(NSString *)kCGImagePropertyExifDictionary]];
-    
-    [EXIFDictionary setObject:@"[S.D.] kCGImagePropertyExifUserComment"
-                       forKey:(NSString *)kCGImagePropertyExifUserComment];
-    
-    [EXIFDictionary setObject:[NSNumber numberWithFloat:69.999]
-                       forKey:(NSString*)kCGImagePropertyExifSubjectDistance];
-    
-    
-    //Add the modified Data back into the image’s metadata
-    [metadataAsMutable setObject:EXIFDictionary forKey:(NSString *)kCGImagePropertyExifDictionary];
-    [metadataAsMutable setObject:GPSDictionary forKey:(NSString *)kCGImagePropertyGPSDictionary];
-    [metadataAsMutable setObject:RAWDictionary forKey:(NSString *)kCGImagePropertyRawDictionary];
-    
-    
-    CFStringRef UTI = CGImageSourceGetType(imgSource); //this is the type of image (e.g., public.jpeg)
-    
-    //this will be the data CGImageDestinationRef will write into
-    NSMutableData *newImageData = [NSMutableData data];
-    
-    CGImageDestinationRef destination = CGImageDestinationCreateWithData((__bridge CFMutableDataRef)newImageData, UTI, 1, NULL);
-    
-    if(!destination)
-        NSLog(@"***Could not create image destination ***");
-    
-    //add the image contained in the image source to the destination, overidding the old metadata with our modified metadata
-    CGImageDestinationAddImageFromSource(destination, imgSource, 0, (__bridge CFDictionaryRef) metadataAsMutable);
-    
-    //tell the destination to write the image data and metadata into our data object.
-    //It will return false if something goes wrong
-    BOOL success = NO;
-    success = CGImageDestinationFinalize(destination);
-    
-    if(!success)
-        NSLog(@"***Could not create data from image destination ***");
-    
-    CIImage *testImage = [CIImage imageWithData:newImageData];
-    NSDictionary *propDict = [testImage properties];
-    NSLog(@"Final properties %@", propDict);
-    
-    CGImageSourceRef imgSource1 = CGImageSourceCreateWithData((__bridge_retained CFDataRef)newImageData, NULL);
-    
-    //get all the metadata in the image
-    NSDictionary *metadata1 = (__bridge NSDictionary *)CGImageSourceCopyPropertiesAtIndex(imgSource1, 0, NULL);
-    
-
-    
-    
-    return [UIImage imageWithData:newImageData];
-}
-
-+ (NSDictionary *)getGPSDictionaryForLocation:(CLLocation *)location {
-    NSMutableDictionary *gps = [NSMutableDictionary dictionary];
-    
-    // GPS tag version
-    [gps setObject:@"2.2.0.0" forKey:(NSString *)kCGImagePropertyGPSVersion];
-    
-    // Time and date must be provided as strings, not as an NSDate object
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"HH:mm:ss.SSSSSS"];
-    [formatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
-    [gps setObject:[formatter stringFromDate:location.timestamp] forKey:(NSString *)kCGImagePropertyGPSTimeStamp];
-    [formatter setDateFormat:@"yyyy:MM:dd"];
-    [gps setObject:[formatter stringFromDate:location.timestamp] forKey:(NSString *)kCGImagePropertyGPSDateStamp];
-    
-    // Latitude
-    CGFloat latitude = location.coordinate.latitude;
-    if (latitude < 0) {
-        latitude = -latitude;
-        [gps setObject:@"S" forKey:(NSString *)kCGImagePropertyGPSLatitudeRef];
-    } else {
-        [gps setObject:@"N" forKey:(NSString *)kCGImagePropertyGPSLatitudeRef];
-    }
-    [gps setObject:[NSNumber numberWithFloat:latitude] forKey:(NSString *)kCGImagePropertyGPSLatitude];
-    
-    // Longitude
-    CGFloat longitude = location.coordinate.longitude;
-    if (longitude < 0) {
-        longitude = -longitude;
-        [gps setObject:@"W" forKey:(NSString *)kCGImagePropertyGPSLongitudeRef];
-    } else {
-        [gps setObject:@"E" forKey:(NSString *)kCGImagePropertyGPSLongitudeRef];
-    }
-    [gps setObject:[NSNumber numberWithFloat:longitude] forKey:(NSString *)kCGImagePropertyGPSLongitude];
-    
-    // Altitude
-    CGFloat altitude = location.altitude;
-    if (!isnan(altitude)){
-        if (altitude < 0) {
-            altitude = -altitude;
-            [gps setObject:@"1" forKey:(NSString *)kCGImagePropertyGPSAltitudeRef];
-        } else {
-            [gps setObject:@"0" forKey:(NSString *)kCGImagePropertyGPSAltitudeRef];
-        }
-        [gps setObject:[NSNumber numberWithFloat:altitude] forKey:(NSString *)kCGImagePropertyGPSAltitude];
-    }
-    
-    // Speed, must be converted from m/s to km/h
-    if (location.speed >= 0){
-        [gps setObject:@"K" forKey:(NSString *)kCGImagePropertyGPSSpeedRef];
-        [gps setObject:[NSNumber numberWithFloat:location.speed*3.6] forKey:(NSString *)kCGImagePropertyGPSSpeed];
-    }
-    
-    // Heading
-    if (location.course >= 0){
-        [gps setObject:@"T" forKey:(NSString *)kCGImagePropertyGPSTrackRef];
-        [gps setObject:[NSNumber numberWithFloat:location.course] forKey:(NSString *)kCGImagePropertyGPSTrack];
-    }
-    
-    return gps;
 }
 
 @end

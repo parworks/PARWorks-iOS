@@ -21,9 +21,10 @@
     return self;
 }
 
-- (ARAugmentedPhoto*)augmentImage:(UIImage *)image
+- (ARAugmentedPhoto*)augmentImage:(UIImage *)image withMetadata:(NSDictionary*)metadata
 {
     ARMultisiteAugmentedPhoto * a = [[ARMultisiteAugmentedPhoto alloc] initWithImage:image andSiteIdentifiers:self.siteIdentifiers];
+    [a setImageMetadata:metadata];
     [a process];
     return a;
 }
