@@ -279,6 +279,12 @@ static ARManager * sharedManager;
         
         if ((imgData == nil) || ([imgData length] == 0) || ([imgSiteIdentifier length] == 0)) {
             [[NSFileManager defaultManager]removeItemAtPath:path error:NULL];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[[UIAlertView alloc] initWithTitle:@"Invalid Upload" message:[NSString stringWithFormat: @"An invalid file %@ was in the upload queue, and was removed.", path] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_UPLOADS_UPDATED object:nil];
+                });
+            });
             return;
         }
         
@@ -291,11 +297,11 @@ static ARManager * sharedManager;
         [req setShouldContinueWhenAppEntersBackground: YES];
         [req startSynchronous];
         
-        if ([self handleResponseErrors: req]){
-            [[NSFileManager defaultManager]removeItemAtPath:path error:NULL];
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_UPLOAD_COMPLETED_IN_SITE object: imgSiteIdentifier];
-        } else {
+        BOOL successful = [self handleResponseErrors: req];
         
+        if (successful) {
+            [[NSFileManager defaultManager]removeItemAtPath:path error:NULL];
+        } else {
             if ([req responseStatusCode] >= 500)
                 // something weird happened. Continue to the next image and don't re-queue this one.
                 [[NSFileManager defaultManager]removeItemAtPath:path error:NULL];
@@ -310,9 +316,12 @@ static ARManager * sharedManager;
                 [self addSiteImageAtPath: path];
             }
         }
+        
         dispatch_async(dispatch_get_main_queue(), ^{
             dispatch_async(dispatch_get_main_queue(), ^{
                 [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_UPLOADS_UPDATED object:nil];
+                if (successful)
+                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_UPLOAD_COMPLETED_IN_SITE object: imgSiteIdentifier];
             });
         });
     }];
