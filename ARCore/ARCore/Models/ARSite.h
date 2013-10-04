@@ -244,10 +244,11 @@ server again.
   results of augmentation have been received.
 
  @param image The image to be augmented.
+ @param metadata The metadata of the image to be augmented
 
  @return An ARAugmentedPhoto object that represents the augmented image.
 */
-- (ARAugmentedPhoto*)augmentImage:(UIImage*)image;
+- (ARAugmentedPhoto*)augmentImage:(UIImage*)image withMetadata:(NSDictionary*)metadata;
 
 /**
  @param image The image to use for change detection

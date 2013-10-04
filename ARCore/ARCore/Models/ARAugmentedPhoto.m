@@ -28,7 +28,7 @@
 #import "ASIHTTPRequest+JSONAdditions.h"
 #import <ImageIO/ImageIO.h>
 #import <AVFoundation/AVFoundation.h>
-
+#import <MobileCoreServices/MobileCoreServices.h>
 
 #define PHOTOS_DIRECTORY [@"~/Documents/Photos/" stringByExpandingTildeInPath]
 #define DEFAULT_JPEG_QUALITY 0.45
@@ -41,7 +41,7 @@
     if (self) {
         self.image = i;
         self.imageIdentifier = [NSString stringWithFormat: @"%x.jpg", (unsigned int)_image];
-    
+        
         if (([i size].width < 1000) && ([i size].height < 1000))
             NSLog(@"HDAR: The image you are augmenting is smaller than 1000px, and will probably not be augmented successfully.");
     }
@@ -89,7 +89,7 @@
         self.site = [aDecoder decodeObjectForKey: @"site"];
         self.overlays = [aDecoder decodeObjectForKey: @"overlays"];
         self.response = [aDecoder decodeIntForKey: @"response"];
-
+        
         NSString * path = [PHOTOS_DIRECTORY stringByAppendingPathComponent: self.imageIdentifier];
         self.image = [UIImage imageWithContentsOfFile: path];
         
@@ -98,7 +98,7 @@
         } else if (self.response == BackendResponseUploading) {
             [self process];
         }
-            
+        
     }
     return self;
 }
@@ -164,14 +164,11 @@
     
     if ((_site == nil) && ([[ARManager shared] locationEnabled] == NO))
         @throw [NSException exceptionWithName: @"ProcessException" reason: @"You cannot process an image without specifying a site or enabling location services in the ARManager." userInfo: nil];
-
+    
     NSDictionary *propDict = [_image.CIImage properties];
     NSLog(@"Final properties %@", propDict);
-
-    _image = [[ARManager shared] rotateImage:_image byOrientationFlag:_image.imageOrientation];
     
-   NSURL *docsURL = [[[NSFileManager defaultManager] URLsForDirectory:NSDocumentDirectory inDomains:NSUserDomainMask] lastObject];
-   NSURL *outputURL = [docsURL URLByAppendingPathComponent:@"imageWithEXIFData.jpg"];
+    _image = [[ARManager shared] rotateImage:_image byOrientationFlag:_image.imageOrientation];
     
     ASIFormDataRequest * req = [self requestForProcessing];
     ASIFormDataRequest * __weak __req = req;
@@ -182,8 +179,42 @@
     if ([[NSUserDefaults standardUserDefaults] floatForKey:@"jpegQuality"])
         jpegQuality = [[NSUserDefaults standardUserDefaults] floatForKey:@"jpegQuality"];
     
-    NSData *imageData = [NSData dataWithContentsOfURL:outputURL];
+    // Create your file URL.
+    NSFileManager *defaultManager = [NSFileManager defaultManager];
+    NSURL *docsURL = [[defaultManager URLsForDirectory:NSDocumentDirectory
+                                             inDomains:NSUserDomainMask] lastObject];
+    NSURL *outputURL = [docsURL URLByAppendingPathComponent:@"imageWithEXIFData.jpg"];
     
+    // Set your compression quuality (0.0 to 1.0).
+    NSMutableDictionary *mutableMetadata = [_imageMetadata mutableCopy];
+    [mutableMetadata setObject:@(jpegQuality) forKey:(__bridge NSString *)kCGImageDestinationLossyCompressionQuality];
+    //Setup GPS dict
+    if ([[ARManager shared] locationEnabled] && [CLLocationManager locationServicesEnabled] && ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized)) {
+        [mutableMetadata setObject:[self getGPSDictionaryForLocation:[[ARManager shared] deviceLocation]] forKey:(NSString *)kCGImagePropertyGPSDictionary];
+    }
+    
+    // Create an image destination.
+    CGImageDestinationRef imageDestination = CGImageDestinationCreateWithURL((__bridge CFURLRef)outputURL, kUTTypeJPEG , 1, NULL);
+    if (imageDestination == NULL ) {
+        
+        // Handle failure.
+        NSLog(@"Error -> failed to create image destination.");
+        return;
+    }
+    
+    // Add your image to the destination.
+    CGImageDestinationAddImage(imageDestination, _image.CGImage, (__bridge CFDictionaryRef)mutableMetadata);
+    
+    // Finalize the destination.
+    if (CGImageDestinationFinalize(imageDestination) == NO) {
+        
+        // Handle failure.
+        NSLog(@"Error -> failed to finalize the image.");
+    }
+    
+    CFRelease(imageDestination);
+    
+    NSData *imageData = [NSData dataWithContentsOfURL:outputURL];
     
     [req setData:imageData forKey:@"image"];
     [req setShowAccurateProgress: YES];
@@ -194,99 +225,38 @@
         [[ARManager shared] criticalRequestFailed: __req];
         if (_processingCompletionBlock) _processingCompletionBlock(self);
     }];
-
+    
     ASIHTTPRequest*  __block __breq = req;
     [req setBytesSentBlock:^(unsigned long long size, unsigned long long total) {
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_UPLOAD_STATUS_CHANGE object: [NSString stringWithFormat: @"%.1f%% Uploaded (%lld KB)", ((float)([__breq totalBytesSent]) / (float)[__breq postLength]) * 100.0, [__breq totalBytesSent] / 1024]];
     }];
-
+    
     [req setCompletionBlock: ^(void) {
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_UPLOAD_STATUS_CHANGE object: @"Upload Finished."];
-
+        
         if ([[ARManager shared] handleResponseErrors: __req]) {
             [self processPostComplete: __req];
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_UPLOAD_STATUS_CHANGE object: @"Polling for response..."];
-
+            
         } else {
             _response = BackendResponseFailed;
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_AUGMENTED_PHOTO_UPDATED object: self];
             if (_processingCompletionBlock) _processingCompletionBlock(self);
         }
     }];
-
+    
     _response = BackendResponseUploading;
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_AUGMENTED_PHOTO_UPDATED object: self];
     
     [req startAsynchronous];
 }
 
-- (UIImage*)addEXIFDataToImage:(UIImage*)image{
-    NSData *jpeg = UIImageJPEGRepresentation(image, 0.0);
-
-    CGImageSourceRef source;
-    source = CGImageSourceCreateWithData((__bridge CFDataRef)jpeg, NULL);
-
-    //get all the metadata in the image
-    NSDictionary *metadata = (__bridge NSDictionary *) CGImageSourceCopyPropertiesAtIndex(source,0,NULL);
-
-    //make the metadata dictionary mutable so we can add properties to it
-    NSMutableDictionary *metadataAsMutable = [metadata mutableCopy];
-
-    NSMutableDictionary *EXIFDictionary = [[metadataAsMutable objectForKey:(NSString *)kCGImagePropertyExifDictionary]mutableCopy];
-    NSMutableDictionary *GPSDictionary = [[metadataAsMutable objectForKey:(NSString *)kCGImagePropertyGPSDictionary]mutableCopy];
-    if(!EXIFDictionary) {
-        //if the image does not have an EXIF dictionary (not all images do), then create one for us to use
-        EXIFDictionary = [NSMutableDictionary dictionary];
-    }
-    if(!GPSDictionary) {
-        GPSDictionary = [NSMutableDictionary dictionary];
-    }
-
-    //Setup GPS dict
-    if ([[ARManager shared] locationEnabled] && [CLLocationManager locationServicesEnabled] && ([CLLocationManager authorizationStatus] == kCLAuthorizationStatusAuthorized)) {
-        [metadataAsMutable setObject:[self getGPSDictionaryForLocation:[[ARManager shared] deviceLocation]] forKey:(NSString *)kCGImagePropertyGPSDictionary];
-    }
-    
-    //add our modified EXIF data back into the image’s metadata
-    [metadataAsMutable setObject:EXIFDictionary forKey:(NSString *)kCGImagePropertyExifDictionary];
-    
-      CFStringRef UTI = CGImageSourceGetType(source); //this is the type of image (e.g., public.jpeg)
-
-    //this will be the data CGImageDestinationRef will write into
-    NSMutableData *dest_data = [NSMutableData data];
-
-    CGImageDestinationRef destination = CGImageDestinationCreateWithData((__bridge CFMutableDataRef)dest_data,UTI,1,NULL);
-
-    if(!destination) {
-        NSLog(@"***Could not create image destination ***");
-    }
-
-    //add the image contained in the image source to the destination, overidding the old metadata with our modified metadata
-    CGImageDestinationAddImageFromSource(destination,source,0, (__bridge CFDictionaryRef) metadataAsMutable);
-
-    //tell the destination to write the image data and metadata into our data object.
-    //It will return false if something goes wrong
-    BOOL success = NO;
-    success = CGImageDestinationFinalize(destination);
-
-    if(!success) {
-        NSLog(@"***Could not create data from image destination ***");
-    }
-
-    //cleanup
-
-    CFRelease(destination);
-    CFRelease(source);
-
-    return [UIImage imageWithData:dest_data];
-}
-
 - (NSDictionary *)getGPSDictionaryForLocation:(CLLocation *)location {
     NSMutableDictionary *gps = [NSMutableDictionary dictionary];
-
+    
     // GPS tag version
     [gps setObject:@"2.2.0.0" forKey:(NSString *)kCGImagePropertyGPSVersion];
-
+    
     // Time and date must be provided as strings, not as an NSDate object
     NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
     [formatter setDateFormat:@"HH:mm:ss.SSSSSS"];
@@ -294,7 +264,7 @@
     [gps setObject:[formatter stringFromDate:location.timestamp] forKey:(NSString *)kCGImagePropertyGPSTimeStamp];
     [formatter setDateFormat:@"yyyy:MM:dd"];
     [gps setObject:[formatter stringFromDate:location.timestamp] forKey:(NSString *)kCGImagePropertyGPSDateStamp];
-
+    
     // Latitude
     CGFloat latitude = location.coordinate.latitude;
     if (latitude < 0) {
@@ -304,7 +274,7 @@
         [gps setObject:@"N" forKey:(NSString *)kCGImagePropertyGPSLatitudeRef];
     }
     [gps setObject:[NSNumber numberWithFloat:latitude] forKey:(NSString *)kCGImagePropertyGPSLatitude];
-
+    
     // Longitude
     CGFloat longitude = location.coordinate.longitude;
     if (longitude < 0) {
@@ -314,7 +284,7 @@
         [gps setObject:@"E" forKey:(NSString *)kCGImagePropertyGPSLongitudeRef];
     }
     [gps setObject:[NSNumber numberWithFloat:longitude] forKey:(NSString *)kCGImagePropertyGPSLongitude];
-
+    
     // Altitude
     CGFloat altitude = location.altitude;
     if (!isnan(altitude)){
@@ -326,19 +296,19 @@
         }
         [gps setObject:[NSNumber numberWithFloat:altitude] forKey:(NSString *)kCGImagePropertyGPSAltitude];
     }
-
+    
     // Speed, must be converted from m/s to km/h
     if (location.speed >= 0){
         [gps setObject:@"K" forKey:(NSString *)kCGImagePropertyGPSSpeedRef];
         [gps setObject:[NSNumber numberWithFloat:location.speed*3.6] forKey:(NSString *)kCGImagePropertyGPSSpeed];
     }
-
+    
     // Heading
     if (location.course >= 0){
         [gps setObject:@"T" forKey:(NSString *)kCGImagePropertyGPSTrackRef];
         [gps setObject:[NSNumber numberWithFloat:location.course] forKey:(NSString *)kCGImagePropertyGPSTrack];
     }
-
+    
     return gps;
 }
 
@@ -388,7 +358,7 @@
     [req startAsynchronous];
 }
 
-- (void)processJSONData:(NSDictionary*)data 
+- (void)processJSONData:(NSDictionary*)data
 {
     [self processJSONData: data forDisplayWithScale: 1];
 }
@@ -397,10 +367,10 @@
 {
     if ([data isKindOfClass: [NSDictionary class]] == NO)
         return;
-
+    
     if (_overlays == nil)
         self.overlays = [NSMutableArray array];
-
+    
     NSMutableDictionary * overlayDicts = [data objectForKey: @"overlays"];
     for (NSDictionary * overlay in overlayDicts) {
         AROverlay * result = [[AROverlay alloc] initWithDictionary: overlay];
@@ -520,14 +490,14 @@
         return;
     }
     
-//    NSMutableDictionary * args = [self processArguments];
-//    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"static_result"])
-//        [args setObject:@"true" forKey:@"specialResult"];
+    //    NSMutableDictionary * args = [self processArguments];
+    //    if ([[NSUserDefaults standardUserDefaults] boolForKey:@"static_result"])
+    //        [args setObject:@"true" forKey:@"specialResult"];
     
     NSMutableDictionary * args = [NSMutableDictionary dictionary];
     [args setObject:_site.identifier forKey:@"site"];
     [args setObject:_imageIdentifier forKey:@"imgId"];
-
+    
     
     ASIHTTPRequest * req = [[ARManager shared] createRequest:REQ_SITE_CHANGE_DETECT_RESULT withMethod:@"GET" withArguments:args];
     ASIHTTPRequest * __weak __req = req;
@@ -589,7 +559,7 @@
     } @catch (NSException * e) {
         NSLog(@"JSON parse error: %@", [e description]);
     }
-
+    
 }
 
 - (void)addOverlay:(AROverlay*)ar

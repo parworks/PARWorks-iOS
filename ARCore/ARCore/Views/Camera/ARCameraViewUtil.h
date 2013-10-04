@@ -9,7 +9,7 @@
 #import <AVFoundation/AVFoundation.h>
 #import <Foundation/Foundation.h>
 
-typedef void(^ARCameraCaptureCompleteBlock)(UIImage *image, NSError *error);
+typedef void(^ARCameraCaptureCompleteBlock)(UIImage *image, NSDictionary* metadata, NSError *error);
 
 
 @interface ARCameraViewUtil : NSObject

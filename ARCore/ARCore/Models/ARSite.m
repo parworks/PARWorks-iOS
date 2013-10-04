@@ -634,9 +634,10 @@
 
 #pragma mark Augmenting and Processing
 
-- (ARAugmentedPhoto*)augmentImage:(UIImage*)image
+- (ARAugmentedPhoto*)augmentImage:(UIImage*)image withMetadata:(NSDictionary*)metadata
 {
     ARAugmentedPhoto * a = [[ARAugmentedPhoto alloc] initWithImage: image];
+    [a setImageMetadata:metadata];
     [a setSite: self];
     
     if (!_augmentedPhotos) _augmentedPhotos = [[NSMutableArray alloc] init];

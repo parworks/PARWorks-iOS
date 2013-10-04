@@ -13,7 +13,7 @@
 @protocol ARAugmentedPhotoSource <NSObject>
 
 - (NSString*)name;
-- (ARAugmentedPhoto*)augmentImage:(UIImage*)image;
+- (ARAugmentedPhoto*)augmentImage:(UIImage*)image withMetadata:(NSDictionary*)metadata;
 - (ARAugmentedPhoto*)changeDetectImage:(UIImage*)image;
 
 @end
