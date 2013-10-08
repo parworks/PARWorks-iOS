@@ -237,7 +237,7 @@
             [_overlayImageView addSubview: outlineView];
         }
         
-        if (!_showOutlineViewsOnly && overlay.title) {
+        if (!_showOutlineViewsOnly && !_hideTitleViews && overlay.title) {
             AROverlayTitleView * tv = [[AROverlayTitleView alloc] initWithOverlay: overlay];
             [tv addTarget:self action:@selector(overlayTapped:) forControlEvents:UIControlEventTouchUpInside];
             [tv setTag: i];
@@ -398,7 +398,8 @@
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_PRESENT_NAVCONTROLLER_FULLSCREEN object:controller];
 }
 
-- (void)willExitFullscreen {
+- (void)willExitFullscreen
+{
     [self resetFocusedOverlay];
 }
 

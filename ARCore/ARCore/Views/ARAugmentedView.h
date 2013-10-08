@@ -88,6 +88,9 @@
 @property(nonatomic, assign) CGPoint loadingViewPoint;
 
 /// The view will only display outline views. AROverlayViews are not displayed. Defaults to NO.
+@property(nonatomic, assign) BOOL hideTitleViews;
+
+/// The view will only display outline views. AROverlayViews are not displayed. Defaults to NO.
 @property(nonatomic, assign) BOOL showOutlineViewsOnly;
 
 /// Tells the view whether or not it should animate the drawing of outline views. Defaults to YES.
