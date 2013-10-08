@@ -26,6 +26,7 @@
 #import "Reachability.h"
 
 #define BACKGROUND_QUEUE_FOLDER [@"~/Documents/BackgroundQueue" stringByExpandingTildeInPath]
+#define DEFAULT_JPEG_QUALITY 0.7
 
 @interface ARManager : NSObject <CLLocationManagerDelegate>
 {
@@ -227,7 +228,8 @@
 #pragma mark Convenience Functions for Image Picking
 
 - (UIImage*)rotateImage:(UIImage*)img byOrientationFlag:(UIImageOrientation)orient;
-
+- (NSData*)imageDataFromImage:(UIImage*)image metadata:(NSDictionary*)metadata;
+- (NSDictionary *)getGPSDictionaryForLocation:(CLLocation *)location;
 
 // ========================
 // @name Handling Errors

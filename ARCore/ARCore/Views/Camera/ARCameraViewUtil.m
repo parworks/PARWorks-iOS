@@ -298,7 +298,7 @@ UIImage *scaleAndRotateImage(UIImage *image, UIImageOrientation orientation)
     // trivial simple JPEG case
     NSData *jpegData = [AVCaptureStillImageOutput jpegStillImageNSDataRepresentation:imageDataSampleBuffer];
     CFDictionaryRef attachments = CMCopyDictionaryOfAttachments(kCFAllocatorDefault, imageDataSampleBuffer, kCMAttachmentMode_ShouldPropagate);
-    
+
     // For some idiotic reason, images captured from the camera at the foundation level are always oriented landscape
     // right. Create a background queue for rotating the image to the "up" orientation.
     UIImage *incorrectImage = [UIImage imageWithData:jpegData];
@@ -307,7 +307,8 @@ UIImage *scaleAndRotateImage(UIImage *image, UIImageOrientation orientation)
     UIImage *correctImage = scaleAndRotateImage(incorrectImage, [[self class] orientationForExifOrientation:[value integerValue]]);
     
     NSMutableDictionary * metadata = [NSMutableDictionary dictionaryWithDictionary:(__bridge NSDictionary *)(attachments)];
-   [metadata setImageOrientation:correctImage.imageOrientation];
+    [metadata setImageOrientation:correctImage.imageOrientation];
+    [metadata setMake:@"Apple" model:[[UIDevice currentDevice] localizedModel] software:[[UIDevice currentDevice] systemVersion]];
     
     if (complete)
         complete(correctImage, metadata, NULL);
