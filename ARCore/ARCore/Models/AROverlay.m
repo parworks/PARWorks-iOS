@@ -108,9 +108,9 @@
         
         NSString * comment = [instanceDictionary objectForKey:@"comment"];
         
-        NSString * predictedLabel = [instanceDictionary objectForKey:@"predictedLabel"];
+//        NSString * predictedLabel = [instanceDictionary objectForKey:@"predictedLabel"];
         
-        NSString * combinedCommentAndPredictedLabel = [NSString stringWithFormat:@"%@ - %@",comment,predictedLabel];
+        NSString * combinedCommentAndPredictedLabel = [NSString stringWithFormat:@"%@ - %@",comment,label];
         combinedCommentAndPredictedLabel = [combinedCommentAndPredictedLabel URLEncodedString_ch];
         
         NSString* providerUrl = [NSString stringWithFormat:@"%@id=%@&comment=%@",baseUrl,label,combinedCommentAndPredictedLabel];
