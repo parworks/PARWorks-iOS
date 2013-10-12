@@ -525,6 +525,9 @@ static ARManager * sharedManager;
                                              inDomains:NSUserDomainMask] lastObject];
     NSURL *outputURL = [docsURL URLByAppendingPathComponent:@"imageWithEXIFData.jpg"];
     
+    if(!metadata)
+        metadata = [NSDictionary dictionary];
+    
     // Set your compression quuality (0.0 to 1.0).
     NSMutableDictionary *mutableMetadata = [metadata mutableCopy];
     [mutableMetadata setObject:@(jpegQuality) forKey:(__bridge NSString *)kCGImageDestinationLossyCompressionQuality];

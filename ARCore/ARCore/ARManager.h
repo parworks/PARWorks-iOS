@@ -26,7 +26,7 @@
 #import "Reachability.h"
 
 #define BACKGROUND_QUEUE_FOLDER [@"~/Documents/BackgroundQueue" stringByExpandingTildeInPath]
-#define DEFAULT_JPEG_QUALITY 0.7
+#define DEFAULT_JPEG_QUALITY 0.95
 
 @interface ARManager : NSObject <CLLocationManagerDelegate>
 {

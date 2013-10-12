@@ -108,9 +108,9 @@
         
         NSString * comment = [instanceDictionary objectForKey:@"comment"];
         
-        NSString * predictedLabel = [instanceDictionary objectForKey:@"predictedLabel"];
+//        NSString * predictedLabel = [instanceDictionary objectForKey:@"predictedLabel"];
         
-        NSString * combinedCommentAndPredictedLabel = [NSString stringWithFormat:@"%@ - %@",comment,predictedLabel];
+        NSString * combinedCommentAndPredictedLabel = [NSString stringWithFormat:@"%@ - %@",comment,label];
         combinedCommentAndPredictedLabel = [combinedCommentAndPredictedLabel URLEncodedString_ch];
         
         NSString* providerUrl = [NSString stringWithFormat:@"%@id=%@&comment=%@",baseUrl,label,combinedCommentAndPredictedLabel];
@@ -316,6 +316,7 @@
     _coverColor = [UIColor colorWithString:dict[@"color"]];
     _coverTransparency = dict[@"transparency"] ? [dict[@"transparency"] intValue] : 25;
     _coverProvider = dict[@"provider"];
+    NSString* offsetString = dict[@"offset"];
     
     if ([_coverProvider isKindOfClass: [NSString class]] && (_coverProvider.length == 0))
         _coverProvider = nil;
@@ -327,12 +328,21 @@
     } else if ([type.lowercaseString isEqualToString:@"centroid"]) {
         _boundaryType = AROverlayBoundaryType_Hidden;
         _coverType = AROverlayCoverType_Centroid;
-        _centroidOffset = [self centroidSizeFromProviderString:_coverProvider];
+        _centroidOffset = [self centroidSizeFromOffsetString:offsetString];
+//        _centroidPulse = YES;
+//        if ([dict objectForKey: @"showPulse"])
+//            _centroidPulse = [[dict objectForKey: @"showPulse"] boolValue];
     } else if ([type.lowercaseString isEqualToString:@"image"]) {
         _coverType = AROverlayCoverType_Image;
     } else {
         _coverType = AROverlayCoverType_Regular;
     }
+}
+
+- (CGSize)centroidSizeFromOffsetString:(NSString*)offsetString
+{
+    NSString* rawSize = [NSString stringWithFormat:@"{%@}",offsetString];
+    return CGSizeFromString(rawSize);
 }
 
 - (CGSize)centroidSizeFromProviderString:(NSString *)provider
