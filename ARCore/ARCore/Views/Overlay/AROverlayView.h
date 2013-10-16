@@ -22,7 +22,7 @@
 #import <QuartzCore/QuartzCore.h>
 #import "AROverlay.h"
 
-#define CENTROID_SIZE 50
+#define CENTROID_SIZE 40
 
 @class ARAugmentedView;
 @class AROverlayView;

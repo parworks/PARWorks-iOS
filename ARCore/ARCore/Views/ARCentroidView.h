@@ -13,5 +13,6 @@
     NSTimer * _timer;
     int _step;
 }
+@property (nonatomic, assign) BOOL drawPulsingCircle;
 
 @end
