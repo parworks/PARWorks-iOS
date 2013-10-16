@@ -201,7 +201,7 @@
         _augmentedView.alpha = 1;
         [self.view removeGestureRecognizer: _tap];
         [self.view bringSubviewToFront: _augmentedView];
-        [self.view bringSubviewToFront:_backButton];
+        [self.view bringSubviewToFront: _backButton];
     }
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(imageAugmentationStatusChanged:) name:NOTIF_AUGMENTED_PHOTO_UPDATED object:_augmentedPhoto];

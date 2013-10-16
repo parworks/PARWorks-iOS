@@ -567,12 +567,14 @@ static ARManager * sharedManager;
     [gps setObject:@"2.2.0.0" forKey:(NSString *)kCGImagePropertyGPSVersion];
     
     // Time and date must be provided as strings, not as an NSDate object
-    NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
-    [formatter setDateFormat:@"HH:mm:ss.SSSSSS"];
-    [formatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
-    [gps setObject:[formatter stringFromDate:location.timestamp] forKey:(NSString *)kCGImagePropertyGPSTimeStamp];
-    [formatter setDateFormat:@"yyyy:MM:dd"];
-    [gps setObject:[formatter stringFromDate:location.timestamp] forKey:(NSString *)kCGImagePropertyGPSDateStamp];
+    if (location.timestamp) {
+        NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+        [formatter setDateFormat:@"HH:mm:ss.SSSSSS"];
+        [formatter setTimeZone:[NSTimeZone timeZoneWithAbbreviation:@"UTC"]];
+        [gps setObject:[formatter stringFromDate:location.timestamp] forKey:(NSString *)kCGImagePropertyGPSTimeStamp];
+        [formatter setDateFormat:@"yyyy:MM:dd"];
+        [gps setObject:[formatter stringFromDate:location.timestamp] forKey:(NSString *)kCGImagePropertyGPSDateStamp];
+    }
     
     // Latitude
     CGFloat latitude = location.coordinate.latitude;
