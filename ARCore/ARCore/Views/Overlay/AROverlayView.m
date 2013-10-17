@@ -84,13 +84,13 @@
     if (_overlay.coverType == AROverlayCoverType_Centroid ) { //&& !_overlay.coverProvider) {
         
         //This controls the UIView which the centroid will be inside of. Most importantly, it controls where and how large the centroid pulse will be if it's enabled
-        _coverView = [[ARCentroidView alloc] initWithFrame: CGRectMake(-CENTROID_SIZE,-CENTROID_SIZE, 2*CENTROID_SIZE,2*CENTROID_SIZE)];
+        _coverView = [[ARCentroidView alloc] initWithFrame: CGRectMake(0,0, CENTROID_SIZE,CENTROID_SIZE)];
         [(ARCentroidView*)_coverView setDrawPulsingCircle: _overlay.centroidPulse];
         _coverView.autoresizingMask = UIViewAutoresizingNone;
         
         //this controls where and how large the centroid will be inside the uiview
-        //I setup the numbers so that the centroid will be in the middle of its pulse. Namely : -CENTROID_SIZE,-CENTROID_SIZE, 2*CENTROID_SIZE,2*CENTROID_SIZE for the UIView and CENTROID_SIZE/2,CENTROID_SIZE/2,CENTROID_SIZE,CENTROID_SIZE for the image view
-        UIImageView * imageView = [[UIImageView alloc] initWithFrame: CGRectMake(CENTROID_SIZE/2,CENTROID_SIZE/2,CENTROID_SIZE,CENTROID_SIZE)];
+        //I setup the numbers so that the centroid will be in the middle of its pulse.
+        UIImageView * imageView = [[UIImageView alloc] initWithFrame: CGRectMake(0,0,CENTROID_SIZE,CENTROID_SIZE)];
         [imageView shiftFrame: CGPointMake(_overlay.centroidOffset.width, _overlay.centroidOffset.height)];
         [_coverView addSubview: imageView];
         //

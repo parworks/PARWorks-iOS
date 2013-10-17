@@ -205,7 +205,15 @@
     [dict setObject:_site.identifier forKey:@"site"];
     
     // IMPORTANT! THIS SHIT DOESN'T LOOK AT THE OVERLAY PROPERTIES!
-
+    NSString* showTitle = @"false";
+    if(_showTitle){
+        showTitle = @"true";
+    }
+    
+    NSString* centroidPulse = @"false";
+    if(_centroidPulse) {
+        centroidPulse = @"true";
+    }
     NSDictionary * description = @{
        @"title": (_title ? _title : @""),
        @"boundary": @{
@@ -215,14 +223,15 @@
        @"content":@{
                @"type":@[@"URL",@"VIDEO",@"IMAGE", @"AUDIO", @"TEXT"][self.contentType],
                @"size":@[@"SMALL",@"MEDIUM",@"LARGE", @"LARGE_LEFT", @"FULL_SCREEN", @"FULL_SCREEN"][self.contentSize],
-               @"provider":_contentProvider
+               @"provider":_contentProvider,
+               @"showTitle":showTitle
                },
         @"cover":@{
                @"type":@[@"HIDDEN",@"IMAGE",@"CENTROID", @"REGULAR"][self.coverType],
                @"color":@"green",
                @"transparency":@(self.coverTransparency),
                @"provider": ( self.coverProvider ? self.coverProvider : @""),
-               @"showPulse":@"true",
+               @"showPulse":centroidPulse,
                @"offset":[NSString stringWithFormat: @"%d,%d", (int)_centroidOffset.width, (int)_centroidOffset.height]
                }
         };
@@ -267,6 +276,7 @@
     }
     
     _contentProvider = [dict objectForKey:@"provider" or: nil];
+    _showTitle = [[dict objectForKey:@"showTitle"]boolValue];
     
     NSString *size = [dict objectForKey:@"size" or: nil];
     if ([size.lowercaseString isEqualToString:@"small"]) {
