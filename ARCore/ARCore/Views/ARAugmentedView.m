@@ -23,11 +23,15 @@
 #import "ARLoadingView.h"
 #import "AROverlay.h"
 #import "AROverlayAnimation.h"
-#import "AROverlayViewFactory.h"
 #import "AROverlayOutlineView.h"
 #import "AROverlayPoint.h"
 #import "AROverlayUtil.h"
 #import "AROverlayView.h"
+#import "AROverlayWebView.h"
+#import "AROverlayVideoView.h"
+#import "AROverlayAudioView.h"
+#import "AROverlayImageView.h"
+#import "AROverlayTextView.h"
 #import "ARTotalAugmentedImagesView.h"
 #import "UIViewAdditions.h"
 #import "AROverlayTitleView.h"
@@ -76,10 +80,10 @@
     self.backgroundColor = [UIColor clearColor];
     self.showOutlineViewsOnly = NO;
     self.animateOutlineViewDrawing = YES;
-    self.overlayImageViewContentMode = UIViewContentModeScaleAspectFit;
-//    [self addTarget:self action:@selector(blackBackgroundTapped) forControlEvents:UIControlEventTouchUpInside];
 
+    self.overlayImageViewContentMode = UIViewContentModeScaleAspectFit;
     self.overlayAnimation = [[AROverlayAnimation alloc] init];
+
     _overlayViews = [[NSMutableArray alloc] init];
     _outlineViews = [[NSMutableArray alloc] init];
     _overlayTitleViews = [[NSMutableArray alloc] init];
@@ -213,14 +217,14 @@
             if (_delegate && [_delegate respondsToSelector:@selector(overlayViewForOverlay:)]) {
                 overlayView = [_delegate overlayViewForOverlay:overlay];
             } else {
-                overlayView = [AROverlayViewFactory viewWithOverlay:overlay];
+                overlayView = [self overlayViewForOverlay:overlay];
             }
         }
         
         if (_delegate && [_delegate respondsToSelector:@selector(outlineViewForOverlay:)]) {
             outlineView = [_delegate outlineViewForOverlay:overlay];
         } else {
-            outlineView = [[AROverlayOutlineView alloc] initWithOverlay:overlay];
+            outlineView = [self outlineViewForOverlay: overlay];
         }
         
         // the delegate has the option of returning nil to hide the overlay
@@ -260,6 +264,32 @@
     [_overlayTitleViews makeObjectsPerformSelector:@selector(removeFromSuperview)];
     [_overlayTitleViews removeAllObjects];
 }
+
+#pragma mark - Creation of Overlays when Delegate Not Provided
+
+- (AROverlayView *)overlayViewForOverlay:(AROverlay *)overlay
+{
+    switch (overlay.contentType) {
+        case AROverlayContentType_URL:
+            return [[AROverlayWebView alloc] initWithOverlay:overlay];
+        case AROverlayContentType_Video:
+            return [[AROverlayVideoView alloc] initWithOverlay:overlay];
+        case AROverlayContentType_Image:
+            return [[AROverlayImageView alloc] initWithOverlay:overlay];
+        case AROverlayContentType_Audio:
+            return [[AROverlayAudioView alloc] initWithOverlay:overlay];
+        case AROverlayContentType_Text:
+            return [[AROverlayTextView alloc] initWithOverlay:overlay];
+        default:
+            return nil;
+    }
+}
+
+- (AROverlayOutlineView*)outlineViewForOverlay:(AROverlay*)overlay
+{
+    return [[AROverlayOutlineView alloc] initWithOverlay:overlay];
+}
+
 
 #pragma mark - Dim View User Interaction
 - (void)dimViewTapped:(id)sender

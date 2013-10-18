@@ -15,6 +15,7 @@
     UIButton *_closeButton;
 }
 
+@property(nonatomic, assign) Class focusControllerClass;
 @property(nonatomic, strong) UIWebView *webView;
 @property(nonatomic, strong) ARLoadingView *loadingView;
 @property(nonatomic, strong) UIButton *closeButton;

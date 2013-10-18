@@ -17,12 +17,12 @@
 
 @implementation AROverlayViewFactory
 
-+ (AROverlayView *)viewWithOverlay:(AROverlay *)overlay
+- (AROverlayView *)viewWithOverlay:(AROverlay *)overlay
 {
     AROverlayView *view;
     switch (overlay.contentType) {
         case AROverlayContentType_URL:
-            view = [[AROverlayWebView alloc] initWithOverlay:overlay];
+            view = [[_webViewClass alloc] initWithOverlay:overlay];
             break;
         case AROverlayContentType_Video:
             view = [[AROverlayVideoView alloc] initWithOverlay:overlay];

@@ -113,5 +113,16 @@
 /// Posts notification to present a navigation controller fullscreen
 - (void)presentFullscreenNavigationController:(UINavigationController*)controller;
 
+
+#pragma mark - Creation of Overlays when Delegate Not Provided
+
+// Returns a standard view for displaying the overlay content. Typically, a delegate
+// may implement it's own overlayViewForOverlay method, and call this one when it does
+// not wish to provide a custom view.
+- (AROverlayView *)overlayViewForOverlay:(AROverlay *)overlay;
+
+// Returns a standard outline view that obeys the properties of the overlay
+- (AROverlayOutlineView*)outlineViewForOverlay:(AROverlay*)overlay;
+
 @end
 

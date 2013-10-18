@@ -9,20 +9,8 @@
 #import "ARWebViewController.h"
 #import "ARAugmentedView.h"
 
-@interface ARWebViewController ()
-
-@end
 
 @implementation ARWebViewController
-
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
-{
-    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
-    if (self) {
-        // Custom initialization        
-    }
-    return self;
-}
 
 - (void)viewDidLoad
 {
@@ -46,11 +34,12 @@
     // Dispose of any resources that can be recreated.
 }
 
-- (void)viewWillAppear:(BOOL)animated{
-    
+- (void)viewWillAppear:(BOOL)animated
+{
 }
 
-- (void)viewWillDisappear:(BOOL)animated{
+- (void)viewWillDisappear:(BOOL)animated
+{
     [super viewWillDisappear:animated];
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
     [_webView stopLoading];
@@ -87,6 +76,7 @@
         [_loadingView startAnimating];
     }];
 }
+
 - (void)webViewDidFinishLoad:(UIWebView *)webView
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
@@ -97,6 +87,7 @@
         [_loadingView stopAnimating];
     }];
 }
+
 - (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
 {
     [UIApplication sharedApplication].networkActivityIndicatorVisible = NO;
@@ -115,7 +106,8 @@
     _btnStop.enabled = _webView.loading;
 }
 
-- (void)backButtonPressed{
+- (void)backButtonPressed
+{
     [self dismissViewControllerAnimated:YES completion:^{
         [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_DISMISS_NAVCONTROLLER_FULLSCREEN object:nil];
     }];

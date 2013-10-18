@@ -13,6 +13,8 @@
 
 @interface AROverlayViewFactory : NSObject
 
-+ (AROverlayView *)viewWithOverlay:(AROverlay *)overlay;
+@property (nonatomic, assign) Class webViewClass;
+
+- (AROverlayView *)viewWithOverlay:(AROverlay *)overlay;
 
 @end

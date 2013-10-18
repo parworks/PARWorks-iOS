@@ -107,7 +107,6 @@
 		A09A8A9B17230A6B000D9AF7 /* ARMultisiteAugmentedPhoto.m in Sources */ = {isa = PBXBuildFile; fileRef = A09A8A5517230A6B000D9AF7 /* ARMultisiteAugmentedPhoto.m */; };
 		A09A8A9C17230A6B000D9AF7 /* AROverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = A09A8A5717230A6B000D9AF7 /* AROverlay.m */; };
 		A09A8A9D17230A6B000D9AF7 /* AROverlayPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = A09A8A5917230A6B000D9AF7 /* AROverlayPoint.m */; };
-		A09A8A9E17230A6B000D9AF7 /* AROverlayViewFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = A09A8A5B17230A6B000D9AF7 /* AROverlayViewFactory.m */; };
 		A09A8A9F17230A6B000D9AF7 /* ARSite.m in Sources */ = {isa = PBXBuildFile; fileRef = A09A8A5D17230A6B000D9AF7 /* ARSite.m */; };
 		A09A8AA017230A6B000D9AF7 /* ARSiteImage.m in Sources */ = {isa = PBXBuildFile; fileRef = A09A8A5F17230A6B000D9AF7 /* ARSiteImage.m */; };
 		A09A8AA117230A6B000D9AF7 /* ARSiteOverlayPoint.m in Sources */ = {isa = PBXBuildFile; fileRef = A09A8A6117230A6B000D9AF7 /* ARSiteOverlayPoint.m */; };
@@ -333,8 +332,6 @@
 		A09A8A5717230A6B000D9AF7 /* AROverlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AROverlay.m; sourceTree = "<group>"; };
 		A09A8A5817230A6B000D9AF7 /* AROverlayPoint.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AROverlayPoint.h; sourceTree = "<group>"; };
 		A09A8A5917230A6B000D9AF7 /* AROverlayPoint.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AROverlayPoint.m; sourceTree = "<group>"; };
-		A09A8A5A17230A6B000D9AF7 /* AROverlayViewFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AROverlayViewFactory.h; sourceTree = "<group>"; };
-		A09A8A5B17230A6B000D9AF7 /* AROverlayViewFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AROverlayViewFactory.m; sourceTree = "<group>"; };
 		A09A8A5C17230A6B000D9AF7 /* ARSite.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARSite.h; sourceTree = "<group>"; };
 		A09A8A5D17230A6B000D9AF7 /* ARSite.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ARSite.m; sourceTree = "<group>"; };
 		A09A8A5E17230A6B000D9AF7 /* ARSiteImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ARSiteImage.h; sourceTree = "<group>"; };
@@ -769,8 +766,6 @@
 				A09A8A5717230A6B000D9AF7 /* AROverlay.m */,
 				A09A8A5817230A6B000D9AF7 /* AROverlayPoint.h */,
 				A09A8A5917230A6B000D9AF7 /* AROverlayPoint.m */,
-				A09A8A5A17230A6B000D9AF7 /* AROverlayViewFactory.h */,
-				A09A8A5B17230A6B000D9AF7 /* AROverlayViewFactory.m */,
 				A09A8A5C17230A6B000D9AF7 /* ARSite.h */,
 				A09A8A5D17230A6B000D9AF7 /* ARSite.m */,
 				A09A8A5E17230A6B000D9AF7 /* ARSiteImage.h */,
@@ -1162,7 +1157,6 @@
 				A09A8A9B17230A6B000D9AF7 /* ARMultisiteAugmentedPhoto.m in Sources */,
 				A09A8A9C17230A6B000D9AF7 /* AROverlay.m in Sources */,
 				A09A8A9D17230A6B000D9AF7 /* AROverlayPoint.m in Sources */,
-				A09A8A9E17230A6B000D9AF7 /* AROverlayViewFactory.m in Sources */,
 				A09A8A9F17230A6B000D9AF7 /* ARSite.m in Sources */,
 				A09A8AA017230A6B000D9AF7 /* ARSiteImage.m in Sources */,
 				A09A8AA117230A6B000D9AF7 /* ARSiteOverlayPoint.m in Sources */,

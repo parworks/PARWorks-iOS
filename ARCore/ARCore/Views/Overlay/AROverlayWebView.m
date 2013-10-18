@@ -70,7 +70,6 @@
     return _loadingView;
 }
 
-
 #pragma mark - AROverlayViewAnimationDelegate
 - (void)focusOverlayView:(AROverlayView *)overlayView inParent:(ARAugmentedView *)parent
 {
@@ -82,11 +81,18 @@
     
     __weak AROverlayWebView * weakSelf = self;
     [self animateBounceFocusWithParent:parent centeredBlock:^{
-        if(overlayView.overlay.contentSize == AROverlayContentSize_Fullscreen){
-            ARWebViewController *webViewController = [[ARWebViewController alloc] initWithNibName:@"ARWebViewController" bundle:[NSBundle arCoreResourcesBundle]];
-            webViewController.sUrl = overlayView.overlay.contentProvider;
-            webViewController.sTitle = overlayView.overlay.name;
-            [parent presentFullscreenNavigationController:[[UINavigationController alloc] initWithRootViewController:webViewController]];
+        if (overlayView.overlay.contentSize == AROverlayContentSize_Fullscreen){
+
+            if (_focusControllerClass) {
+                UIViewController * controller = [[_focusControllerClass alloc] initWithOverlay: overlayView.overlay];
+                [parent presentFullscreenNavigationController:[[UINavigationController alloc] initWithRootViewController: controller]];
+
+            } else {
+                ARWebViewController * controller = [[ARWebViewController alloc] initWithNibName:@"ARWebViewController" bundle:[NSBundle arCoreResourcesBundle]];
+                controller.sUrl = overlayView.overlay.contentProvider;
+                controller.sTitle = overlayView.overlay.name;
+                [parent presentFullscreenNavigationController:[[UINavigationController alloc] initWithRootViewController: controller]];
+            }
             weakSelf.webView.alpha = 0.0;
         }
         else{
@@ -111,7 +117,8 @@
     } complete:nil];
 }
 
-- (void)focusOverlayViewCompleted:(AROverlayWebView*)overlayWebView{
+- (void)focusOverlayViewCompleted:(AROverlayWebView*)overlayWebView
+{
     NSURL *url = [NSURL URLWithString:overlayWebView.overlay.contentProvider];
     if (![overlayWebView.webView request]){
         [overlayWebView.webView setScalesPageToFit:YES];
