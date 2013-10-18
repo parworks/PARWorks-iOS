@@ -77,6 +77,8 @@ typedef enum {
 @property (nonatomic, assign) AROverlayCoverType coverType;
 @property (nonatomic, assign) NSInteger          coverTransparency;
 @property (nonatomic, assign) CGSize             centroidOffset;
+@property (nonatomic, assign) BOOL               centroidPulse;
+@property (nonatomic, assign) BOOL               showTitle;
 @property (nonatomic, strong) UIColor            * coverColor;
 @property (nonatomic, strong) NSString           * coverProvider;
 

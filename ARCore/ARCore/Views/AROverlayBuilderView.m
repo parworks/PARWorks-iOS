@@ -347,7 +347,14 @@ float pin( float minValue, float value, float maxValue )
     if (_cacheLayer == nil) {
         _cacheLayer = CGLayerCreateWithContext(context, _fullImageView.image.size, NULL);
         CGContextRef c = CGLayerGetContext(_cacheLayer);
-        CGContextDrawImage(c, CGRectMake(0, 0, _fullImageView.image.size.width, _fullImageView.image.size.height), _fullImageView.image.CGImage);
+        
+        //This if statement prevents the CGContextDrawImage: invalid context 0x0 error
+        if(_fullImageView.image != nil) {
+            CGRect rect = CGRectMake(0, 0, _fullImageView.image.size.width, _fullImageView.image.size.height);
+            CGContextDrawImage(c, rect, _fullImageView.image.CGImage);
+        } else {
+            //Not sure what to do here. Doing nothing seems to be ok.
+        }
     }
     
     CGContextTranslateCTM(context, -p.x, -imageSize.height + p.y);

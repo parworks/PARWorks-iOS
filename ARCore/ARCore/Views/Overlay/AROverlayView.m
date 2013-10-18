@@ -80,14 +80,20 @@
 
 - (void)setupCoverView
 {
-    if (_overlay.coverType == AROverlayCoverType_Centroid && !_overlay.coverProvider) {
-        _coverView = [[ARCentroidView alloc] initWithFrame: CGRectMake(0, 0, CENTROID_SIZE, CENTROID_SIZE)];
+    //commented out && !_overlay.coverProvider because it was sending all the centroid overlays into the else statement
+    if (_overlay.coverType == AROverlayCoverType_Centroid ) { //&& !_overlay.coverProvider) {
+        
+        //This controls the UIView which the centroid will be inside of. Most importantly, it controls where and how large the centroid pulse will be if it's enabled
+        _coverView = [[ARCentroidView alloc] initWithFrame: CGRectMake(0,0, CENTROID_SIZE,CENTROID_SIZE)];
+        [(ARCentroidView*)_coverView setDrawPulsingCircle: _overlay.centroidPulse];
         _coverView.autoresizingMask = UIViewAutoresizingNone;
         
-        UIImageView * imageView = [[UIImageView alloc] initWithFrame: CGRectMake(0, 0, 100, 100)];
+        //this controls where and how large the centroid will be inside the uiview
+        //I setup the numbers so that the centroid will be in the middle of its pulse.
+        UIImageView * imageView = [[UIImageView alloc] initWithFrame: CGRectMake(0,0,CENTROID_SIZE,CENTROID_SIZE)];
         [imageView shiftFrame: CGPointMake(_overlay.centroidOffset.width, _overlay.centroidOffset.height)];
         [_coverView addSubview: imageView];
-
+        //
         if (_overlay.coverProvider) {
             NSURLRequest *req = [[NSURLRequest alloc] initWithURL:[NSURL URLWithString:_overlay.coverProvider]];
             [NSURLConnection sendAsynchronousRequest:req queue:[NSOperationQueue mainQueue] completionHandler:^(NSURLResponse *response, NSData *data, NSError *err) {
@@ -95,12 +101,12 @@
                 if (img != nil) {
                     CGPoint c = [imageView center];
                     [imageView setImage: img];
-                    [imageView setFrameSize: img.size];
+                    //                    [imageView setFrameSize: img.size];
                     [imageView setCenter: c];
                 }
             }];
         }
-
+        
     } else {
         self.coverView = [[UIView alloc] initWithFrame:self.bounds];
         _coverView.backgroundColor = _overlay.coverColor;
@@ -122,6 +128,7 @@
     
     [self addSubview:_coverView];
 }
+
 
 
 #pragma mark - Layout
