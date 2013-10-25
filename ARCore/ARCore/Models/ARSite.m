@@ -564,7 +564,7 @@
         return;
     
     NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithObject:self.identifier forKey:@"site"];
-    if ([[ARManager shared] addOverlaysToStagingArea])
+    if ([[ARManager shared] fetchStagingAndAttachedOverlays])
         [dict setObject:@"true" forKey:@"isStaging"];
     _overlaysReq = [[ARManager shared] createRequest: REQ_SITE_OVERLAYS withMethod:@"GET" withArguments: dict];
 
@@ -572,25 +572,28 @@
     __weak ARSite * __self = self;
     
     [_overlaysReq setCompletionBlock: ^(void) {
-        if ([[ARManager shared] handleResponseErrors: __req]){
-            // grab all the image dictionaries from the JSON and pull out just the ID
-            // of each image—that's all we need.
-            NSDictionary * json = [__req responseJSON];
-            __self.overlays = [NSMutableArray array];
-            for (NSDictionary * overlayJSON in [json objectForKey: @"overlays"]) {
-                AROverlay * overlay = [[AROverlay alloc] initWithDictionary: overlayJSON];
-                [overlay setSite: __self];
-                [(NSMutableArray*)__self.overlays addObject: overlay];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if ([[ARManager shared] handleResponseErrors: __req]){
+                // grab all the image dictionaries from the JSON and pull out just the ID
+                // of each image—that's all we need.
+                NSDictionary * json = [__req responseJSON];
+                __self.overlays = [NSMutableArray array];
+                for (NSDictionary * overlayJSON in [json objectForKey: @"overlays"]) {
+                    AROverlay * overlay = [[AROverlay alloc] initWithDictionary: overlayJSON];
+                    [overlay setSite: __self];
+                    [(NSMutableArray*)__self.overlays addObject: overlay];
+                }
+                
+                if ([[ARManager shared] fetchStagingAndAttachedOverlays]) {
+                    [__self fetchAndIntersectProcessedOverlays];
+                } else {
+                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: __self];
+                    [__self setOverlayRequest: nil];
+                }
             }
-            
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: __self];
-            if ([[ARManager shared] addOverlaysToStagingArea]) {
-                [__self fetchAndIntersectProcessedOverlays];
-            } else {
-                [__self setOverlayRequest: nil];
-            }
-        }
+        });
     }];
+    
     [_overlaysReq startAsynchronous];
 }
 
@@ -607,25 +610,36 @@
     __weak ARSite * __self = self;
 
     [_overlaysReq setCompletionBlock: ^(void) {
-        if ([[ARManager shared] handleResponseErrors: __req]){
-            NSDictionary * json = [__req responseJSON];
-
-            for (AROverlay * overlay in __self.overlays) {
-                [overlay setProcessed: NO];
-            }
-            
-            for (NSDictionary * overlayJSON in [json objectForKey: @"overlays"]) {
-                // we have to compare overlays based on their name because the ID seems to
-                // change when they're processed (which is annoying...)
-                NSString * name = [overlayJSON objectForKey: @"name"];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            if ([[ARManager shared] handleResponseErrors: __req]){
+                NSDictionary * json = [__req responseJSON];
                 for (AROverlay * overlay in __self.overlays) {
-                    if ([[overlay name] isEqualToString:name])
+                    [overlay setProcessed: NO];
+                }
+                
+                for (NSDictionary * overlayJSON in [json objectForKey: @"overlays"]) {
+                    // we have to compare overlays based on their name because the ID seems to
+                    // change when they're processed (which is annoying...)
+                    NSString * name = [overlayJSON objectForKey: @"name"];
+                    BOOL found = NO;
+                    for (AROverlay * overlay in __self.overlays) {
+                        if ([[overlay name] isEqualToString:name]) {
+                            [overlay setProcessed: YES];
+                            found = YES;
+                        }
+                    }
+                    
+                    if (found == NO) {
+                        AROverlay * overlay = [[AROverlay alloc] initWithDictionary: overlayJSON];
+                        [overlay setSite: __self];
                         [overlay setProcessed: YES];
+                        [(NSMutableArray*)__self.overlays addObject: overlay];
+                    }
                 }
             }
-
             [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: __self];
-        }
+            [__self setOverlayRequest: nil];
+        });
     }];
     
     [_overlaysReq startAsynchronous];
@@ -681,12 +695,9 @@
 - (void)processBaseImages
 {
     NSMutableDictionary * dict = [NSMutableDictionary dictionaryWithObject:self.identifier forKey:@"site"];
-    
-    if ([[ARManager shared] addOverlaysToStagingArea]) {
-//        [dict setObject:@"true" forKey:@"processStaging"];
-//        [dict setObject:@"true" forKey:@"cleanOverlays"];
+    if ([[ARManager shared] useIndoorProfile])
         [dict setObject:@"indoor" forKey:@"profile"];
-    }
+
     __weak ASIHTTPRequest * weak = [[ARManager shared] createRequest: REQ_SITE_PROCESS withMethod:@"GET" withArguments: dict];
     
     [self setStatus: ARSiteStatusProcessing];

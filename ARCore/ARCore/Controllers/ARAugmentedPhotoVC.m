@@ -109,6 +109,12 @@
     [self dismissViewControllerAnimated:!isPad completion:nil];
 }
 
+- (void)handleAugmentedPhotoReturnedNoOverlays
+{
+    [[[UIAlertView alloc] initWithTitle:@"Nothing Found" message:@"Sorry, no overlays were found in your photo." delegate:nil cancelButtonTitle:@"Try Again" otherButtonTitles:nil] show];
+    [self dismissViewControllerAnimated:NO completion:NULL];
+}
+
 - (void)showAugmentingInterface
 {
     double delayInSeconds = 0.3;
@@ -165,13 +171,9 @@
         }
         
         if ([[_augmentedPhoto overlays] count] == 0) {
-            UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Oops!"
-                                                         message:@"No overlays! Make sure the object is focused and in the frame."
-                                                        delegate:self
-                                               cancelButtonTitle:@"Try again"
-                                               otherButtonTitles:nil];
-            [av show];
+            [self handleAugmentedPhotoReturnedNoOverlays];
             return;
+
         } else {
             _takenPhotoLayer.opacity = 0.0;
             [_progressHUD hide:YES];
@@ -181,12 +183,12 @@
         
     } else if (_augmentedPhoto.response == BackendResponseFailed){
         // Show an alert view that will dismiss this view controller when it is dismissed
-        UIAlertView *av = [[UIAlertView alloc] initWithTitle:@"Oops!"
+        [[[UIAlertView alloc] initWithTitle:@"Oops!"
                                                      message:@"Sorry, we couldn't augment your photo."
-                                                    delegate:self
+                                                    delegate:nil
                                            cancelButtonTitle:@"Try again"
-                                           otherButtonTitles:nil];
-        [av show];
+                                           otherButtonTitles:nil] show];
+        [self dismissViewControllerAnimated:YES completion:NULL];
     } else {
         // just wait...
     }
@@ -207,12 +209,6 @@
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(imageAugmentationStatusChanged:) name:NOTIF_AUGMENTED_PHOTO_UPDATED object:_augmentedPhoto];
 }
 
-
-#pragma mark - UIAlertViewDelegate
-- (void)alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
-{
-    [self dismissViewControllerAnimated:YES completion:nil];
-}
 
 
 @end

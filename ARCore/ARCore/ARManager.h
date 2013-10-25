@@ -48,7 +48,8 @@
 - (id)init;
 
 @property(nonatomic, readonly) NSString * apiKey;
-@property(nonatomic, assign) BOOL addOverlaysToStagingArea;
+@property(nonatomic, assign) BOOL useIndoorProfile;
+@property(nonatomic, assign) BOOL fetchStagingAndAttachedOverlays;
 
 
 /**

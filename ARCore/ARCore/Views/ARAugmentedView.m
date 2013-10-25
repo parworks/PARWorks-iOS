@@ -170,18 +170,21 @@
     }];
 }
 
-// Layout our subviews based on the current frame of the view
-- (void)layoutForCurrentViewMetrics
+- (void)layoutSubviews
 {
-//FIXME: For some reason bounds aren't filling rect so just making dimView really big for now
-//    [_dimView setFrame: [self bounds]];
     [super layoutSubviews];
 
     if(CGPointEqualToPoint(_loadingViewPoint, CGPointMake(0, 0)))
         [_loadingView setCenter:CGPointMake(self.bounds.size.width/2, self.bounds.size.height/2)];
     else
         [_loadingView setCenter:_loadingViewPoint];
-    
+}
+
+// Layout our subviews based on the current frame of the view
+- (void)layoutForCurrentViewMetrics
+{
+    [self layoutSubviews];
+
     CGFloat x = (self.bounds.size.width - _totalAugmentedImagesView.frame.size.width - 10);
     [_totalAugmentedImagesView setFrameX:x];
     [_totalAugmentedImagesView setFrameY:10];

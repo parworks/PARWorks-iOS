@@ -60,6 +60,7 @@ typedef enum {
 
 @property (nonatomic, strong) NSString * ID;
 @property (nonatomic, strong) NSString * siteImageIdentifier;
+@property (nonatomic, strong) NSString * nonsiteImageURL;
 @property (nonatomic, strong) NSString * name;
 @property (nonatomic, strong) NSMutableArray * points;
 
@@ -113,6 +114,10 @@ typedef enum {
 
 - (NSMutableDictionary *)jsonRepresentation;
 
+- (void)save;
+
+- (void)save:(BOOL)toStagingOverlays;
+
 - (BOOL)isSaved;
 
 - (BOOL)isEqual:(id)object;
@@ -122,7 +127,5 @@ typedef enum {
 - (void)addPointWithX:(float)x andY:(float)y;
 
 - (void)removeLastPoint;
-
-- (void)save;
 
 @end

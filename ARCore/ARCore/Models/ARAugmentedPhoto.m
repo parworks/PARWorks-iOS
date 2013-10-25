@@ -267,6 +267,8 @@
     if (_overlays == nil)
         self.overlays = [NSMutableArray array];
     
+    self.responseDictionary = data;
+    
     NSMutableDictionary * overlayDicts = [data objectForKey: @"overlays"];
     for (NSDictionary * overlay in overlayDicts) {
         AROverlay * result = [[AROverlay alloc] initWithDictionary: overlay];

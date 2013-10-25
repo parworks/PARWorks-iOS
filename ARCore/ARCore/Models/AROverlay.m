@@ -73,6 +73,8 @@
             description = dict;
 
         self.siteImageIdentifier = dict[@"imageId"];
+        self.nonsiteImageURL = dict[@"imgUrl"];
+        
         self.name = dict[@"name"];
         self.accuracy = dict[@"accuracy"];
         
@@ -135,6 +137,7 @@
     if (self) {
         _ID = [aDecoder decodeObjectForKey:@"id"];
         _siteImageIdentifier = [aDecoder decodeObjectForKey:@"siteImageIdentifier"];
+        _nonsiteImageURL = [aDecoder decodeObjectForKey: @"nonsiteImageURL"];
         _name = [aDecoder decodeObjectForKey:@"name"];
         _points = [aDecoder decodeObjectForKey:@"points"];
         
@@ -162,6 +165,7 @@
 {
     [aCoder encodeObject: _ID forKey: @"id"];
     [aCoder encodeObject: _siteImageIdentifier forKey: @"siteImageIdentifier"];
+    [aCoder encodeObject: _nonsiteImageURL forKey:@"nonsiteImageURL"];
     [aCoder encodeObject: _name forKey: @"name"];
     [aCoder encodeObject: _points forKey: @"points"];
     
@@ -368,6 +372,47 @@
     return size;
 }
 
+- (void)save
+{
+    [self save: NO];
+}
+
+- (void)save:(BOOL)toStagingOverlays
+{
+    if ([_points count] < 3)
+        @throw [NSException exceptionWithName:@"PARWorks API Error" reason:@"Please add at least three AROverlayPoints to your overlay before saving it." userInfo:nil];
+    
+    if (!_name)
+        @throw [NSException exceptionWithName:@"PARWorks API Error" reason:@"Please add a name before saving." userInfo:nil];
+    
+    
+    NSMutableDictionary *jsonDict = [self jsonRepresentation];
+    [jsonDict setObject:[[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:jsonDict[@"content"] options:0 error:nil] encoding:NSUTF8StringEncoding] forKey:@"content"];
+    
+    if (toStagingOverlays)
+        [jsonDict setObject:@"true" forKey:@"isStaging"];
+    
+    __weak ASIHTTPRequest * __req = [[ARManager shared] createRequest: REQ_SITE_OVERLAY_ADD withMethod:@"GET" withArguments: jsonDict];
+    
+    [__req setCompletionBlock: ^(void) {
+        if ([[ARManager shared] handleResponseErrors: __req]){
+            // grab all the image dictionaries from the JSON and pull out just the ID
+            // of each image—that's all we need.
+            NSDictionary * json = [__req responseJSON];
+            if ([self ID] == nil) {
+                NSString * assignedID = [json objectForKey: @"id"];
+                if (!assignedID) // to support isStaging=true
+                    assignedID = @"PENDING";
+                [self setID: assignedID];
+                [[self site] addOverlay: self];
+            }
+            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: self.site];
+        }
+    }];
+    [__req startAsynchronous];
+}
+
+
 - (BOOL)isSaved
 {
     return self.ID != nil;
@@ -458,40 +503,6 @@
         [_points removeLastObject];
 }
 
-- (void)save
-{
-    if ([_points count] < 3)
-        @throw [NSException exceptionWithName:@"PARWorks API Error" reason:@"Please add at least three AROverlayPoints to your overlay before saving it." userInfo:nil];
-    
-    if (!_name)
-        @throw [NSException exceptionWithName:@"PARWorks API Error" reason:@"Please add a name before saving." userInfo:nil];
-    
-    
-    NSMutableDictionary *jsonDict = [self jsonRepresentation];
-    [jsonDict setObject:[[NSString alloc] initWithData:[NSJSONSerialization dataWithJSONObject:jsonDict[@"content"] options:0 error:nil] encoding:NSUTF8StringEncoding] forKey:@"content"];
-    
-    if ([[ARManager shared] addOverlaysToStagingArea])
-        [jsonDict setObject:@"true" forKey:@"isStaging"];
-    
-    __weak ASIHTTPRequest * __req = [[ARManager shared] createRequest: REQ_SITE_OVERLAY_ADD withMethod:@"GET" withArguments: jsonDict];
-    
-    [__req setCompletionBlock: ^(void) {
-        if ([[ARManager shared] handleResponseErrors: __req]){
-            // grab all the image dictionaries from the JSON and pull out just the ID
-            // of each image—that's all we need.
-            NSDictionary * json = [__req responseJSON];
-            if ([self ID] == nil) {
-                NSString * assignedID = [json objectForKey: @"id"];
-                if (!assignedID) // to support isStaging=true
-                    assignedID = @"PENDING";
-                [self setID: assignedID];
-                [[self site] addOverlay: self];
-            }
-            [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_SITE_UPDATED object: self.site];
-        }
-    }];
-    [__req startAsynchronous];
-}
 
 
 @end

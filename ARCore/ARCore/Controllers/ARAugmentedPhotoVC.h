@@ -27,7 +27,7 @@
     CALayer                 *_takenPhotoLayer;
 }
 
-@property(nonatomic, strong) ARAugmentedPhoto *augmentedPhoto;
+@property(nonatomic, strong) ARAugmentedPhoto * augmentedPhoto;
 @property(nonatomic, strong) UIButton * backButton;
 @property(nonatomic, strong) NSMutableArray *siteSet;
 @property(nonatomic, strong) id <ARAugmentedPhotoSource> site;
@@ -38,5 +38,7 @@
 - (id)initWithSite:(id<ARAugmentedPhotoSource>)site imageToAugment:(UIImage *)image metadataToAugment:(NSDictionary*)metadata waitingImageContents:(id)contents;
 
 - (BOOL)imageNeedsAugmentation;
+
+- (void)handleAugmentedPhotoReturnedNoOverlays;
 
 @end
