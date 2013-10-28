@@ -9,6 +9,8 @@
 #import "AROverlayView.h"
 #import "ARLoadingView.h"
 
+typedef void (^VoidBlock)();
+
 @interface AROverlayWebView : AROverlayView <AROverlayViewAnimationDelegate, UIWebViewDelegate>{
     UIWebView *_webView;
     ARLoadingView *_loadingView;
@@ -16,7 +18,9 @@
 }
 
 @property(nonatomic, assign) Class focusControllerClass;
-@property(nonatomic, strong) UIWebView *webView;
+@property(nonatomic, strong) VoidBlock focusWebLoadCompleteBlock;
+
+@property(nonatomic, strong) UIWebView * webView;
 @property(nonatomic, strong) ARLoadingView *loadingView;
 @property(nonatomic, strong) UIButton *closeButton;
 

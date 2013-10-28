@@ -155,6 +155,9 @@
         _closeButton.alpha = 1.0;
     } completion:^(BOOL finished){
         [_loadingView stopAnimating];
+        
+        if (_focusWebLoadCompleteBlock)
+            _focusWebLoadCompleteBlock();
     }];
 }
 

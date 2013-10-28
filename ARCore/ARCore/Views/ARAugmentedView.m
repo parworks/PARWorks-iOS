@@ -427,7 +427,8 @@
     return frame;
 }
 
-- (void)presentFullscreenNavigationController:(UINavigationController*)controller{
+- (void)presentFullscreenNavigationController:(UINavigationController*)controller
+{
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_PRESENT_NAVCONTROLLER_FULLSCREEN object:controller];
 }
 

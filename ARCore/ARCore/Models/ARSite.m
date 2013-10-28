@@ -581,6 +581,7 @@
                 for (NSDictionary * overlayJSON in [json objectForKey: @"overlays"]) {
                     AROverlay * overlay = [[AROverlay alloc] initWithDictionary: overlayJSON];
                     [overlay setSite: __self];
+                    [overlay setProcessed: NO];
                     [(NSMutableArray*)__self.overlays addObject: overlay];
                 }
                 
@@ -613,17 +614,17 @@
         dispatch_async(dispatch_get_main_queue(), ^{
             if ([[ARManager shared] handleResponseErrors: __req]){
                 NSDictionary * json = [__req responseJSON];
-                for (AROverlay * overlay in __self.overlays) {
-                    [overlay setProcessed: NO];
-                }
                 
                 for (NSDictionary * overlayJSON in [json objectForKey: @"overlays"]) {
                     // we have to compare overlays based on their name because the ID seems to
                     // change when they're processed (which is annoying...)
-                    NSString * name = [overlayJSON objectForKey: @"name"];
+                    // EDIT: We no longer actually process staging overlays, so I'm going to
+                    // use the ID. The names may not be unique, which causes problems
+                    NSString * ID = [overlayJSON objectForKey: @"id"];
+
                     BOOL found = NO;
                     for (AROverlay * overlay in __self.overlays) {
-                        if ([[overlay name] isEqualToString:name]) {
+                        if ([[overlay ID] isEqualToString: ID]) {
                             [overlay setProcessed: YES];
                             found = YES;
                         }
