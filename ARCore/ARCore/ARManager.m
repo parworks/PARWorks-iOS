@@ -272,6 +272,79 @@ static ARManager * sharedManager;
 
     [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_UPLOADS_UPDATED object:nil];
 }
+- (void)addSiteVideoWithData: (NSData*)data toSite:(NSString*)siteIdentifier
+{
+    NSString * path = [BACKGROUND_QUEUE_FOLDER stringByAppendingPathComponent: [NSString stringWithFormat:@"%@---%p%d.mov", siteIdentifier, data, (int)[data length]]];
+    [data writeToFile:path atomically:NO];
+    [self addSiteVideoAtPath: path];
+}
+- (void)addSiteVideoAtPath:(NSString*)path
+{
+    [_backgroundUploadQueue addOperationWithBlock:^{
+        
+        NSData * imgData = [NSData dataWithContentsOfFile: path];
+        NSString * imgSiteIdentifier = [[path lastPathComponent] componentsSeparatedByString:@"---"][0];
+        
+        if ((imgData == nil) || ([imgData length] == 0) || ([imgSiteIdentifier length] == 0)) {
+            [[NSFileManager defaultManager]removeItemAtPath:path error:NULL];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [[[UIAlertView alloc] initWithTitle:@"Invalid Upload" message:[NSString stringWithFormat: @"An invalid file %@ was in the upload queue, and was removed.", path] delegate:nil cancelButtonTitle:@"OK" otherButtonTitles: nil] show];
+                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_UPLOADS_UPDATED object:nil];
+                });
+            });
+            return;
+        }
+        
+        NSMutableDictionary * args = [NSMutableDictionary dictionary];
+        [args setObject: imgSiteIdentifier forKey:@"site"];
+        [args setObject: [path lastPathComponent] forKey:@"filename"];
+        NSString* deviceModel = (NSString*)[UIDevice currentDevice].model;
+        [args setObject: deviceModel forKey:@"model"];
+        NSLog(@"Device model is : %@",deviceModel);
+        [args setObject: @"Apple" forKey: @"make"];
+        [args setObject: FOCAL_LENGTH forKey:@"focal"];
+        [args setObject: STEP_SIZE forKey:@"step"];
+        
+        ASIFormDataRequest * req = (ASIFormDataRequest*)[[ARManager shared] createRequest:REQ_SITE_VIDEO_ADD withMethod:@"POST" withArguments:args];
+        [req setData:imgData forKey:@"video"];
+        [req setShouldContinueWhenAppEntersBackground: YES];
+        [req startSynchronous];
+        
+        BOOL successful = [self handleResponseErrors: req];
+        
+        if (successful) {
+            [[NSFileManager defaultManager]removeItemAtPath:path error:NULL];
+        } else {
+            if ([req responseStatusCode] >= 500)
+                // something weird happened. Continue to the next image and don't re-queue this one.
+                [[NSFileManager defaultManager]removeItemAtPath:path error:NULL];
+            
+            else if ([self isConnectedToAPI] == NO) {
+                // we don't have a connection to the API. Pause the queue and requeue
+                [_backgroundUploadQueue setSuspended: YES];
+                [self addSiteImageAtPath: path];
+                
+            } else {
+                // try again...
+                [self addSiteImageAtPath: path];
+            }
+        }
+        
+        dispatch_async(dispatch_get_main_queue(), ^{
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_UPLOADS_UPDATED object:nil];
+                if (successful)
+                    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_UPLOAD_COMPLETED_IN_SITE object: imgSiteIdentifier];
+            });
+        });
+    }];
+    
+    if ([self isConnectedToAPI])
+        [_backgroundUploadQueue setSuspended: NO];
+    [[NSNotificationCenter defaultCenter] postNotificationName:NOTIF_UPLOADS_UPDATED object:nil];
+}
+
 
 - (void)addSiteImageAtPath:(NSString*)path
 {
@@ -558,6 +631,9 @@ static ARManager * sharedManager;
     CFRelease(imageDestination);
     
     return [NSData dataWithContentsOfURL:outputURL];
+}
+- (NSData*)videoDataFromVideoPath:(NSString*)videoPath metadata:(NSDictionary*)metadata {
+    return [NSData dataWithContentsOfFile:videoPath];
 }
 
 - (NSDictionary *)getGPSDictionaryForLocation:(CLLocation *)location {

@@ -47,6 +47,7 @@
 #define REQ_SITE_IMAGE_REMOVE           @"/ar/site/image/remove"
 #define REQ_SITE_IMAGE_REGISTERED       @"/ar/site/image/registered"
 #define REQ_SITE_IMAGE_LIST_AUGMENTED   @"/ar/site/image/augmented/list"
+#define REQ_SITE_VIDEO_ADD              @"/ar/site/video/add"
 
 #define REQ_IMAGE_AUGMENT               @"/ar/image/augment"
 #define REQ_IMAGE_AUGMENT_GEO           @"/ar/image/augment/geo"

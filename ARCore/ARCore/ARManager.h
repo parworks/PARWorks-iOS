@@ -27,6 +27,8 @@
 
 #define BACKGROUND_QUEUE_FOLDER [@"~/Documents/BackgroundQueue" stringByExpandingTildeInPath]
 #define DEFAULT_JPEG_QUALITY 0.95
+#define FOCAL_LENGTH @"4200"
+#define STEP_SIZE @"3"
 
 @interface ARManager : NSObject <CLLocationManagerDelegate>
 {
@@ -225,11 +227,14 @@
 
 /** A method for queuing a new ARSiteImage to be uploaded. */
 - (void)addSiteImageWithData:(NSData*)data toSite:(NSString*)siteIdentifier;
+/** A method for queuing a new video to be uploaded. */
+- (void)addSiteVideoWithData: (NSData*)data toSite:(NSString*)siteIdentifier;
 
 #pragma mark Convenience Functions for Image Picking
 
 - (UIImage*)rotateImage:(UIImage*)img byOrientationFlag:(UIImageOrientation)orient;
 - (NSData*)imageDataFromImage:(UIImage*)image metadata:(NSDictionary*)metadata;
+- (NSData*)videoDataFromVideoPath:(NSString*)videoPath metadata:(NSDictionary*)metadata;
 - (NSDictionary *)getGPSDictionaryForLocation:(CLLocation *)location;
 
 // ========================
