@@ -157,7 +157,7 @@
         [_loadingView stopAnimating];
         
         if (_focusWebLoadCompleteBlock)
-            _focusWebLoadCompleteBlock();
+            _focusWebLoadCompleteBlock(self);
     }];
 }
 
