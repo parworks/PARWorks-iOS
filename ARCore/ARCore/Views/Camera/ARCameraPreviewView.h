@@ -25,11 +25,11 @@
 
 @interface ARCameraPreviewView : UIView <AVCaptureVideoDataOutputSampleBufferDelegate>
 {
-    AVCaptureVideoPreviewLayer  *_previewLayer;
-	AVCaptureStillImageOutput   *_stillImageOutput;
-	AVCaptureVideoDataOutput    *_videoDataOutput;
-    dispatch_queue_t            _videoDataOutputQueue;
-	
+    AVCaptureVideoPreviewLayer  * _previewLayer;
+	AVCaptureStillImageOutput   * _stillImageOutput;
+	AVCaptureVideoDataOutput    * _videoDataOutput;
+    dispatch_queue_t              _videoDataOutputQueue;
+	AVCaptureSession            * _session;
     UIView *_flashView;
     
     UIPinchGestureRecognizer *_pinch;

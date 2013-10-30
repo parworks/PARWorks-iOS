@@ -52,14 +52,16 @@ static NSString * const AVCaptureStillImageIsCapturingStillImageContext = @"AVCa
 
 
 #pragma mark - View Setup
+
 - (void)setupAVCapture
 {
 	NSError *error = nil;
-	AVCaptureSession *session = [AVCaptureSession new];
+    
+	_session = [AVCaptureSession new];
 	if ([[UIDevice currentDevice] userInterfaceIdiom] == UIUserInterfaceIdiomPhone) {
-        session.sessionPreset = AVCaptureSessionPresetHigh;
+        _session.sessionPreset = AVCaptureSessionPresetHigh;
     } else {
-        session.sessionPreset = AVCaptureSessionPresetPhoto;
+        _session.sessionPreset = AVCaptureSessionPresetPhoto;
     }
     
     // Select a video device, make an input
@@ -73,15 +75,15 @@ static NSString * const AVCaptureStillImageIsCapturingStillImageContext = @"AVCa
         return;
     }
 	
-	if ([session canAddInput:deviceInput]) {
-        [session addInput:deviceInput];
+	if ([_session canAddInput:deviceInput]) {
+        [_session addInput:deviceInput];
     }
     
     // Make a still image output
 	_stillImageOutput = [AVCaptureStillImageOutput new];
 	[_stillImageOutput addObserver:self forKeyPath:@"capturingStillImage" options:NSKeyValueObservingOptionNew context:(__bridge void *)(AVCaptureStillImageIsCapturingStillImageContext)];
-	if ([session canAddOutput:_stillImageOutput]) {
-        [session addOutput:_stillImageOutput];
+	if ([_session canAddOutput:_stillImageOutput]) {
+        [_session addOutput:_stillImageOutput];
     }
     
     // Make a video data output
@@ -98,13 +100,13 @@ static NSString * const AVCaptureStillImageIsCapturingStillImageContext = @"AVCa
 	_videoDataOutputQueue = dispatch_queue_create("VideoDataOutputQueue", DISPATCH_QUEUE_SERIAL);
 	[_videoDataOutput setSampleBufferDelegate:self queue:_videoDataOutputQueue];
 	
-    if ([session canAddOutput:_videoDataOutput]) {
-        [session addOutput:_videoDataOutput];
+    if ([_session canAddOutput:_videoDataOutput]) {
+        [_session addOutput:_videoDataOutput];
     }
 	[[_videoDataOutput connectionWithMediaType:AVMediaTypeVideo] setEnabled:NO];
 	
 	_effectiveScale = 1.0;
-	_previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:session];
+	_previewLayer = [[AVCaptureVideoPreviewLayer alloc] initWithSession:_session];
     _previewLayer.backgroundColor = [[UIColor blackColor] CGColor];
     _previewLayer.videoGravity = AVLayerVideoGravityResizeAspectFill;
     
@@ -113,7 +115,7 @@ static NSString * const AVCaptureStillImageIsCapturingStillImageContext = @"AVCa
     _previewLayer.frame = rootLayer.bounds;
 	[rootLayer addSublayer:_previewLayer];
     
-	[session startRunning];
+	[_session startRunning];
 }
 
 - (void)teardownAVCapture
@@ -124,6 +126,8 @@ static NSString * const AVCaptureStillImageIsCapturingStillImageContext = @"AVCa
     @catch (NSException *exception) {}
     @finally {
         [_previewLayer removeFromSuperlayer];
+        [_session stopRunning];
+        _session = nil;
     }
 }
 
@@ -134,6 +138,7 @@ static NSString * const AVCaptureStillImageIsCapturingStillImageContext = @"AVCa
 }
 
 #pragma mark - Getters/Setters
+
 - (void)setFlashMode:(AVCaptureFlashMode)flashMode
 {
     AVCaptureDevice *device = [AVCaptureDevice defaultDeviceWithMediaType:AVMediaTypeVideo];
